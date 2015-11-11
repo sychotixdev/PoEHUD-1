@@ -1,5 +1,3 @@
-GET /repos/:vmv/:vmv-PoeHud/releases/latest
-
 PoeHud - Currently DETECTED, use it on your own risk!
 ======
 
