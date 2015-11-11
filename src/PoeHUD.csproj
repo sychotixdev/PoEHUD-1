@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{E86368B2-AE1E-4489-A749-E29A0AB48F83}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>PoeHUD</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>PoeHUD</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <LangVersion>default</LangVersion>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <WarningLevel>0</WarningLevel>
+    <DefineConstants>
+    </DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=e9931a4108ef2354, processorArchitecture=MSIL">
+      <HintPath>packages\Antlr4.Runtime.4.5-alpha002\lib\net45\Antlr4.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>packages\SharpDX.3.0.0-beta01\lib\net45\SharpDX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Desktop, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>packages\SharpDX.Desktop.3.0.0-beta01\lib\net45\SharpDX.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>packages\SharpDX.Direct3D9.3.0.0-beta01\lib\net45\SharpDX.Direct3D9.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>packages\SharpDX.Mathematics.3.0.0-beta01\lib\net45\SharpDX.Mathematics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\FsController.cs" />
+    <Compile Include="Framework\Aero.cs" />
+    <Compile Include="Framework\ChooseColor.cs" />
+    <Compile Include="Framework\Helpers\ActionHelper.cs" />
+    <Compile Include="Framework\Helpers\LinqHelper.cs" />
+    <Compile Include="Framework\Helpers\MathHepler.cs" />
+    <Compile Include="Framework\Helpers\ConvertHelper.cs" />
+    <Compile Include="Framework\Helpers\SoundHelper.cs" />
+    <Compile Include="Framework\InputHooks\HookProc.cs" />
+    <Compile Include="Framework\InputHooks\KeyInfo.cs" />
+    <Compile Include="Framework\InputHooks\MouseInfo.cs" />
+    <Compile Include="Framework\InputHooks\Structures\KeyboardHookStruct.cs" />
+    <Compile Include="Framework\InputHooks\MouseHook.cs" />
+    <Compile Include="Framework\InputHooks\Structures\MouseLLHookStruct.cs" />
+    <Compile Include="Framework\MemoryControl.cs" />
+    <Compile Include="Framework\WinApi.cs" />
+    <Compile Include="Hud\AdvancedTooltip\AdvancedTooltipPlugin.cs" />
+    <Compile Include="Hud\AdvancedTooltip\AdvancedTooltipSettings.cs" />
+    <Compile Include="Hud\CustomColorDialog.cs" />
+    <Compile Include="Hud\Dps\DpsMeterSettings.cs" />
+    <Compile Include="Hud\AdvancedTooltip\WeaponDpsSettings.cs" />
+    <Compile Include="Hud\ExternalOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hud\Health\DebuffPanelConfig.cs" />
+    <Compile Include="Hud\Health\HealthBarSettings.cs" />
+    <Compile Include="Hud\Health\UnitSettings.cs" />
+    <Compile Include="Hud\Icons\MapIconsSettings.cs" />
+    <Compile Include="Hud\Interfaces\IPanelChild.cs" />
+    <Compile Include="Hud\Interfaces\IPlugin.cs" />
+    <Compile Include="Hud\InventoryPreview\CellData.cs" />
+    <Compile Include="Hud\InventoryPreview\InventoryPreviewSettings.cs" />
+    <Compile Include="Hud\InventoryPreview\InventoryPreviewPlugin.cs" />
+    <Compile Include="Hud\Loot\BorderSettings.cs" />
+    <Compile Include="Hud\KillCounter\KillCounterSettings.cs" />
+    <Compile Include="Hud\KillCounter\KillCounterPlugin.cs" />
+    <Compile Include="Hud\Loot\ItemAlertSettings.cs" />
+    <Compile Include="Hud\AdvancedTooltip\ItemLevelSettings.cs" />
+    <Compile Include="Hud\Loot\PoeFilterVisitor.cs" />
+    <Compile Include="Hud\Loot\QualityItemSettings.cs" />
+    <Compile Include="Hud\Loot\QualityItemsSettings.cs" />
+    <Compile Include="Hud\AdvancedTooltip\ItemModsSettings.cs" />
+    <Compile Include="Hud\Menu\FileButton.cs" />
+    <Compile Include="Hud\Menu\ColorButton.cs" />
+    <Compile Include="Hud\Menu\MenuSettings.cs" />
+    <Compile Include="Hud\Menu\RootButton.cs" />
+    <Compile Include="Hud\PluginPanel.cs" />
+    <Compile Include="Hud\PluginWithMapIcons.cs" />
+    <Compile Include="Hud\Settings\ColorNode.cs" />
+    <Compile Include="Hud\Settings\Converters\FileNodeConverter.cs" />
+    <Compile Include="Hud\Settings\FileNode.cs" />
+    <Compile Include="Hud\SizedPlugin.cs" />
+    <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
+    <Compile Include="Models\BaseItemType.cs" />
+    <Compile Include="Models\ConfigLineBase.cs" />
+    <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
+    <Compile Include="Models\MonsterConfigLine.cs" />
+    <Compile Include="Hud\Trackers\MonsterTrackerSettings.cs" />
+    <Compile Include="Hud\Trackers\PoiTrackerSettings.cs" />
+    <Compile Include="Hud\Plugin.cs" />
+    <Compile Include="Hud\Preload\PreloadAlertSettings.cs" />
+    <Compile Include="Hud\Settings\Converters\ColorNodeConverter.cs" />
+    <Compile Include="Hud\Settings\Converters\ToggleNodeConverter.cs" />
+    <Compile Include="Hud\Settings\RangeNode.cs" />
+    <Compile Include="Hud\Settings\SettingsBase.cs" />
+    <Compile Include="Hud\Settings\SettingsHub.cs" />
+    <Compile Include="Hud\Settings\SortContractResolver.cs" />
+    <Compile Include="Hud\Settings\ToggleNode.cs" />
+    <Compile Include="Hud\UI\Graphics.cs" />
+    <Compile Include="Hud\UI\Renderers\FontRenderer.cs" />
+    <Compile Include="Hud\UI\Renderers\TextureRenderer.cs" />
+    <Compile Include="Hud\UI\Vertexes\ColoredVertex.cs" />
+    <Compile Include="Hud\UI\Vertexes\TexturedVertex.cs" />
+    <Compile Include="Hud\XpRate\XpRateSettings.cs" />
+    <Compile Include="Models\Enums\DamageType.cs" />
+    <Compile Include="Hud\XpRate\XpRatePlugin.cs" />
+    <Compile Include="Models\PreloadConfigLine.cs" />
+    <Compile Include="Models\StatTranslator.cs" />
+    <Compile Include="Framework\Enums\ProcessAccessFlags.cs" />
+    <Compile Include="Models\Enums\InventoryIndex.cs" />
+    <Compile Include="Hud\Health\HealthBar.cs" />
+    <Compile Include="Hud\Health\HealthBarPlugin.cs" />
+    <Compile Include="Hud\Health\CreatureType.cs" />
+    <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
+    <Compile Include="Models\AreaInstance.cs" />
+    <Compile Include="Poe\Components\Flask.cs" />
+    <Compile Include="Poe\Components\Inventories.cs" />
+    <Compile Include="Poe\Components\Stack.cs" />
+    <Compile Include="Poe\Elements\HPbarElement.cs" />
+    <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
+    <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
+    <Compile Include="Poe\FileInMemory.cs" />
+    <Compile Include="Poe\FilesInMemory\ItemClassesDisplay.cs" />
+    <Compile Include="Poe\FilesInMemory\StatsDat.cs" />
+    <Compile Include="Poe\FilesInMemory\ModsDat.cs" />
+    <Compile Include="Framework\ColorUtils.cs" />
+    <Compile Include="Framework\IntRange.cs" />
+    <Compile Include="Hud\Dps\DpsMeterPlugin.cs" />
+    <Compile Include="Hud\HudSkin.cs" />
+    <Compile Include="Hud\HudTexture.cs" />
+    <Compile Include="Hud\Icons\MinimapPlugin.cs" />
+    <Compile Include="Hud\Loot\AlertDrawStyle.cs" />
+    <Compile Include="Hud\Loot\CraftingBase.cs" />
+    <Compile Include="Hud\Loot\ItemUsefulProperties.cs" />
+    <Compile Include="Hud\AdvancedTooltip\ModValue.cs" />
+    <Compile Include="Framework\GameWindow.cs" />
+    <Compile Include="Framework\Memory.cs" />
+    <Compile Include="Framework\InputHooks\KeyboardHook.cs" />
+    <Compile Include="Hud\Trackers\PoiTracker.cs" />
+    <Compile Include="Poe\Components\Actor.cs" />
+    <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Poe\Components\AreaTransition.cs" />
+    <Compile Include="Poe\Components\Armour.cs" />
+    <Compile Include="Poe\FilesInMemory\BaseItemTypes.cs" />
+    <Compile Include="Poe\Components\Chest.cs" />
+    <Compile Include="Poe\Component.cs" />
+    <Compile Include="Models\EntityWrapper.cs" />
+    <Compile Include="Models\EntityListWrapper.cs" />
+    <Compile Include="Models\Legacy\LegacyInventory.cs" />
+    <Compile Include="Models\Enums\ItemRarity.cs" />
+    <Compile Include="Models\Enums\ItemStatEnum.cs" />
+    <Compile Include="Models\ItemStats.cs" />
+    <Compile Include="Models\Enums\ItemType.cs" />
+    <Compile Include="Poe\Components\Life.cs" />
+    <Compile Include="Models\Legacy\LegacyLink.cs" />
+    <Compile Include="Poe\Components\Map.cs" />
+    <Compile Include="Poe\Components\Mods.cs" />
+    <Compile Include="Poe\Components\Monster.cs" />
+    <Compile Include="Models\Enums\MonsterRarity.cs" />
+    <Compile Include="Poe\Components\NPC.cs" />
+    <Compile Include="Poe\Components\ObjectMagicProperties.cs" />
+    <Compile Include="Poe\FilesInMemory\TagsDat.cs" />
+    <Compile Include="Models\Interfaces\IEntity.cs" />
+    <Compile Include="Poe\Offsets.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Poe\Components\Player.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Buff.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Camera.cs" />
+    <Compile Include="Poe\Entity.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\DiagnosticElement.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\EntityList.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\TheGame.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\IngameData.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\IngameState.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\IngameUIElements.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Inventory.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\InventoryList.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ItemMod.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ServerData.cs" />
+    <Compile Include="Poe\Element.cs" />
+    <Compile Include="Poe\Elements\Inventory.cs" />
+    <Compile Include="Poe\Elements\Map.cs" />
+    <Compile Include="Poe\Elements\InventoryItemIcon.cs" />
+    <Compile Include="Poe\Elements\WindowState.cs" />
+    <Compile Include="Poe\Components\Positioned.cs" />
+    <Compile Include="Poe\Components\Quality.cs" />
+    <Compile Include="Poe\RemoteMemoryObject.cs" />
+    <Compile Include="Poe\Components\Render.cs" />
+    <Compile Include="Models\Legacy\LegacySelectionState.cs" />
+    <Compile Include="Poe\Components\SkillGem.cs" />
+    <Compile Include="Models\Enums\LegacySocket.cs" />
+    <Compile Include="Poe\Components\Sockets.cs" />
+    <Compile Include="Models\Legacy\LegacyStat.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Legacy\LegacyStats.cs" />
+    <Compile Include="Poe\Components\Targetable.cs" />
+    <Compile Include="Poe\Components\Weapon.cs" />
+    <Compile Include="Poe\Components\WorldItem.cs" />
+    <Compile Include="Hud\Menu\ToggleButton.cs" />
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Hud\Trackers\MonsterTracker.cs" />
+    <Compile Include="Hud\Menu\Picker.cs" />
+    <Compile Include="Hud\Loot\ItemAlertPlugin.cs" />
+    <Compile Include="Hud\Menu\MenuPlugin.cs" />
+    <Compile Include="Hud\Menu\MenuItem.cs" />
+    <Compile Include="Hud\MapIcon.cs" />
+    <Compile Include="Hud\Icons\LargeMapPlugin.cs" />
+    <Compile Include="Hud\MouseEventID.cs" />
+    <Compile Include="Hud\Preload\PreloadAlertPlugin.cs" />
+    <Compile Include="Poe\Elements\EntityLabel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Hud\Sounds.cs" />
+    <Compile Include="Models\Pattern.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="PoeFilterParser\PoeFilterParser.csproj">
+      <Project>{8f5d7d56-7a81-433a-b358-ab297a136183}</Project>
+      <Name>PoeFilterParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tools\Tools.fsproj">
+      <Project>{5f2ae016-51d1-42c4-95cd-4e12118e3a6e}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>set LIBZ="$(SolutionDir)"packages\LibZ.Bootstrap.1.1.0.2\tools\libz.exe
+if "$(ConfigurationName)"=="Release" (
+%25LIBZ%25 inject-dll --assembly "$(TargetFileName)"    --include *.dll --move
+copy "$(TargetPath)" "$(ProjectDir)"\..
+)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,8 @@
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\Tools.XML
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\Tools.dll
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\Tools.pdb
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\FSharp.Core.dll
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\FSharp.Core.xml
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Release\it\FSharp.Core.resources.dll
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\obj\Release\Tools.dll
+C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\obj\Release\Tools.pdb

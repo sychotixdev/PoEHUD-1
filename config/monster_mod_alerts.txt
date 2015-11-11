@@ -1,0 +1,68 @@
+#Metadata;Text;Sound;Color (ARGB);Minimap icon
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby;danger.wav
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby;danger.wav;FF00FF00
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby;;FF00FF00
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby;danger.wav;FF00FF00;dot_green.png
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby;;;dot_green.png
+
+MonsterNemesisUniqueDrop; Inner Treasure nearby;treasure.wav;FF00CC00;treasure.png
+MonsterImplicitNemesisUniqueDrop; Inner Treasure nearby;treasure.wav;FF00CC00;treasure.png
+MonsterAuraPhysicalThorns1; Physical Reflect nearby;attention.wav;;pReflect.png
+MonsterPhysicalThorns; Physical Reflect nearby;attention.wav;;pReflect.png
+MonsterAuraElementalThorns1; Elemental Reflect nearby;attention.wav;;eReflect.png
+MonsterElementalThorns; Elemental Reflect nearby;attention.wav;;eReflect.png
+MonsterNemesisCorruptedBlood; Corrupting Blood nearby;attention.wav;;corrupted.png
+MonsterItems1; Wealth monsters nearby;;FF00CC00;wealth.png
+MonsterExplodesOnDeathFire1; Volatile Flameblood nearby;attention.wav;;volatile.png
+MonsterExplodesOnDeathLightning1; Volatile Stormblood nearby;attention.wav;;volatile.png
+MonsterExplodesOnDeathCold1; Volatile Iceblood nearby;attention.wav;;volatile.png
+MonsterThornsPhysical1; Physical Reflect nearby;attention.wav;;pReflect.png
+MonsterThornsElemental1; Elemental Reflect nearby;attention.wav;;eReflect.png
+MonsterThornsPhysical1Large; Physical Reflect nearby;attention.wav;;pReflect.png
+MonsterThornsElemental1Large; Elemental Reflect nearby;attention.wav;;eReflect.png
+
+MonsterBloodlinesDamageCharges; Legacy of Zeal DMG
+MonsterBloodlinesSpeedCharges; Legacy of Vigour SPEED
+MonsterBloodlinesMarkOfCannibalism; Mark of Cannibalism
+MonsterBloodlinesFlaringPulseblood; Flaring Pulseblood
+MonsterBloodlinesRimePulseblood; Rime Pulseblood
+MonsterBloodlinesStaticPulseblood; Static Pulseblood
+MonsterBloodlinesChaosBond; Bond of Chaos
+MonsterBloodlinesCongealingBloodRed_; Living Blood red
+MonsterBloodlinesCongealingBloodYellow; Living Blood yellow
+MonsterBloodlinesCongealingBloodMud; Living Blood mud
+MonsterBloodlinesSharedEnduranceCharge; Shared Boon Endurance
+MonsterBloodlinesSharedFrenzyCharge; Shared Boon Frenzy
+MonsterBloodlinesSharedPowerCharge; Shared Boon Power
+MonsterBloodlinesBurningAura; Cult of the Elements Burn
+MonsterBloodlinesBurningAura2; Cult of the Elements Burn 2
+MonsterBloodlinesBurningAura3; Cult of the Elements Burn 3
+MonsterBloodlinesBurningAura4; Cult of the Elements Burn 4
+MonsterBloodlinesBurningAura5; Cult of the Elements Burn 5
+MonsterBloodlinesBurningAura6; Cult of the Elements Burn 6
+MonsterBloodlinesBurningAura7; Cult of the Elements Burn 7
+MonsterBloodlinesChillingAura; Cult of the Elements Chill
+MonsterBloodlinesShockingAura; Cult of the Elements SHOCK
+MonsterBloodlinesFirestorm; Order of the Frozen Sky
+MonsterBloodlinesGhostTotem; Heralds of the Obelisk 1
+MonsterBloodlinesGhostTotem2; Heralds of the Obelisk 2
+MonsterBloodlinesGhostTotem3; Heralds of the Obelisk 3
+MonsterBloodlinesGhostTotem4; Heralds of the Obelisk 4
+MonsterBloodlinesGhostTotem5; Heralds of the Obelisk 5
+MonsterBloodlinesSpiritWalkers; Spirit Walkers
+MonsterBloodlinesGuardian; Bearers of the Guardian
+MonsterBloodlinesUnholyMight; Otherworldly
+MonsterBloodlinesPhylacteralLink1; Phylacteral Link
+MonsterBloodlinesDropRareItem; Keepers of the Trove
+MonsterBloodlinesCorruptedBlood; Corrupted Bloodline 1
+MonsterBloodlinesCorruptedBlood2; Corrupted Bloodline 2
+MonsterBloodlinesCorruptedBlood3; Corrupted Bloodline 3
+MonsterBloodlinesCorruptedBlood4; Corrupted Bloodline 4
+MonsterBloodlinesCorruptedBlood5; Corrupted Bloodline 5
+MonsterBloodlinesVoidspawn; Voidspawn of Abaxoth
+MonsterBloodlinesNecrovigil1; Necrovigil
+MonsterBloodlinesBeaconOnDeathFire; Flame Bearers
+MonsterBloodlinesBeaconOnDeathCold; Frost Bearers
+MonsterBloodlinesBeaconOnDeathLightning; Storm Bearers
+MonsterBloodlinesUnionOfSouls; Union of Souls
+MonsterBloodlinesShrouded; Shrouded
