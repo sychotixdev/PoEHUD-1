@@ -78,33 +78,25 @@ namespace PoeHUD.Hud.XpRate
                     var xpReceiving = levelXpPenalty * partyXpPenalty;
                     var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
                     string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
-                    Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea,
-                        FontDrawFlags.Right);
+                    Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea, FontDrawFlags.Right);
                     Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
-                    Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor,
-                        FontDrawFlags.Right);
+                    Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
                     Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
-                    Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine,
-                        Settings.TimeLeftColor, FontDrawFlags.Right);
+                    Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.TimeLeftColor, FontDrawFlags.Right);
                     string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);
                     Size2 timerSize = Graphics.MeasureText(timer, Settings.TextSize);
 
-                    float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40,
-                        areaNameSize.Width + 20, timerSize.Width);
+                    float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40, areaNameSize.Width + 20, timerSize.Width);
                     float boxHeight = xpRateSize.Height + xpLeftSize.Height + areaNameSize.Height;
-                    var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110,
-                        boxHeight + 18);
+                    var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110, boxHeight + 18);
 
                     Size2 timeFpsSize = Graphics.MeasureText(fps, Settings.TextSize);
                     var dif = bounds.Width - (12 + timeFpsSize.Width + xpRateSize.Width);
                     if (dif < 0) { bounds.X += dif; bounds.Width -= dif; }
 
-                    Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y),
-                        Settings.TimerTextColor);
-                    Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y),
-                        Settings.FpsTextColor);
-                    Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y),
-                        Settings.LatencyTextColor);
+                    Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y), Settings.TimerTextColor);
+                    Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y), Settings.FpsTextColor);
+                    Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y), Settings.LatencyTextColor);
                     Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
                     Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
                     Size = bounds.Size;
