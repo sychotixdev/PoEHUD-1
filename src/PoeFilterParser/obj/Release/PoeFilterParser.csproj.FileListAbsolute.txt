@@ -28,3 +28,4 @@ C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runt
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runtime.xml
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.dll
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.pdb
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.csprojResolveAssemblyReference.cache
