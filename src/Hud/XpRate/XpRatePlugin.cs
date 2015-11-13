@@ -47,7 +47,6 @@ namespace PoeHUD.Hud.XpRate
                     !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout;
             Vector2 position = StartDrawPointFunc();
             string fps = $"fps:({GameController.Game.IngameState.CurFps})";
-            string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
             string areaName = $"{GameController.Area.CurrentArea.DisplayName}";
             Color hasCorruptedArea = PreloadAlertPlugin.hasCorruptedArea;
 
@@ -59,13 +58,13 @@ namespace PoeHUD.Hud.XpRate
                     float boxHeight = areaNameSize.Height;
                     float boxWidth = MathHepler.Max(areaNameSize.Width);
                     var bounds = new RectangleF(position.X - 84 - boxWidth, position.Y - 5, boxWidth + 90, boxHeight + 12);
-
+                    string latency = $"({GameController.Game.IngameState.CurLatency})";
                     Graphics.DrawText(areaName, Settings.TextSize, new Vector2(bounds.X + 84, position.Y), hasCorruptedArea);
                     Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
                     Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
                     if (Settings.ShowLatency)
                     {
-                        Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 35, position.Y), Settings.LatencyTextColor);
+                        Graphics.DrawText(latency, Settings.TextSize, new Vector2(bounds.X + 35, position.Y), Settings.LatencyTextColor);
                     }
                     Size = bounds.Size;
                     Margin = new Vector2(0, 5);
@@ -78,7 +77,7 @@ namespace PoeHUD.Hud.XpRate
                 {
                     var xpReceiving = levelXpPenalty * partyXpPenalty;
                     var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
-
+                    string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
                     Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea,
                         FontDrawFlags.Right);
                     Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
@@ -98,11 +97,7 @@ namespace PoeHUD.Hud.XpRate
 
                     Size2 timeFpsSize = Graphics.MeasureText(fps, Settings.TextSize);
                     var dif = bounds.Width - (12 + timeFpsSize.Width + xpRateSize.Width);
-                    if (dif < 0)
-                    {
-                        bounds.X += dif;
-                        bounds.Width -= dif;
-                    }
+                    if (dif < 0) { bounds.X += dif; bounds.Width -= dif; }
 
                     Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y),
                         Settings.TimerTextColor);

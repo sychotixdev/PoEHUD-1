@@ -269,7 +269,7 @@
     "Enable": true,
     "ShowInTown": true,
     "ShowLatency": true,
-    "OnlyAreaName": false,
+    "OnlyAreaName": true,
     "TextSize": {
       "Value": 16,
       "Min": 10,
