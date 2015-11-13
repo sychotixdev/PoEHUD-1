@@ -84,7 +84,7 @@ namespace PoeHUD.Hud.XpRate
                     string fps = $"fps:({GameController.Game.IngameState.CurFps})";
                     string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
                     var xpReceiving = levelXpPenalty * partyXpPenalty;
-                    var xpReceivingText = $"{xpRate}  *{xpReceiving:P0}";
+                    var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
 
                     Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea,
                         FontDrawFlags.Right);

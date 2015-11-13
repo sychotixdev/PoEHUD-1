@@ -49,7 +49,7 @@ namespace PoeHUD.Hud.Trackers
             {
                 return e.GetComponent<Chest>().IsStrongbox
                     ? new ChestMapIcon(e, new HudTexture("strongbox.png", 
-                    e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, 12)
+                    e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, 14)
                     : new ChestMapIcon(e, new HudTexture("chest.png"), () => Settings.Chests, 3);
             }
             return null;
