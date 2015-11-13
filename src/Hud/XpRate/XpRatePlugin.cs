@@ -47,7 +47,7 @@ namespace PoeHUD.Hud.XpRate
                     !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout;
             Vector2 position = StartDrawPointFunc();
             string fps = $"fps:({GameController.Game.IngameState.CurFps})";
-            string ping = $"({GameController.Game.IngameState.CurLatency})";
+            string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
             string areaName = $"{GameController.Area.CurrentArea.DisplayName}";
             Color hasCorruptedArea = PreloadAlertPlugin.hasCorruptedArea;
 
