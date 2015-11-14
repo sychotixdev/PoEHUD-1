@@ -45,9 +45,7 @@ namespace PoeHUD.Hud.Preload
         {
             base.Render();
             if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
-            if (WinApi.IsKeyDown(Keys.F5)) { areaChanged = true; }
-
-            if (areaChanged)
+            if (areaChanged || WinApi.IsKeyDown(Keys.F5))
             {
                 Parse();
                 lastCount = GetNumberOfObjects();
