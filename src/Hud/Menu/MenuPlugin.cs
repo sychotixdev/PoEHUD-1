@@ -287,6 +287,7 @@ namespace PoeHUD.Hud.Menu
             // Monster Kills
             MenuItem showMonsterKillsMenu = AddChild(root, "Monster kills", settingsHub.KillCounterSettings.Enable);
             AddChild(showMonsterKillsMenu, "Show details", settingsHub.KillCounterSettings.ShowDetail);
+            AddChild(showMonsterKillsMenu, "Show in town", settingsHub.KillCounterSettings.ShowInTown);
             AddChild(showMonsterKillsMenu, "Font color", settingsHub.KillCounterSettings.TextColor);
             AddChild(showMonsterKillsMenu, "Background color", settingsHub.KillCounterSettings.BackgroundColor);
             AddChild(showMonsterKillsMenu, "Label font size", settingsHub.KillCounterSettings.LabelTextSize);
@@ -294,6 +295,7 @@ namespace PoeHUD.Hud.Menu
 
             // Dps options
             MenuItem showDpsMenu = AddChild(root, "Show dps", settingsHub.DpsMeterSettings.Enable);
+            AddChild(showDpsMenu, "Show in town", settingsHub.DpsMeterSettings.ShowInTown);
             AddChild(showDpsMenu, "Dps font size", settingsHub.DpsMeterSettings.DpsTextSize);
             AddChild(showDpsMenu, "Top dps font size", settingsHub.DpsMeterSettings.PeakDpsTextSize);
             AddChild(showDpsMenu, "Background color", settingsHub.DpsMeterSettings.BackgroundColor);

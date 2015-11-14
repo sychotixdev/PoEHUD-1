@@ -46,8 +46,9 @@ namespace PoeHUD.Hud.KillCounter
         public override void Render()
         {
             base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10 )
-                || GameController.Area.CurrentArea.IsTown || GameController.Area.CurrentArea.IsHideout)
+            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||
+                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
+                !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
             { return; }
 
             List<EntityWrapper> deadEntities = aliveEntities.Where(entity => !entity.IsAlive).ToList();
