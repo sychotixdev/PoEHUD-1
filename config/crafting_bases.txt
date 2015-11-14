@@ -1,1 +1,2 @@
-#Gold Ring,10,0,Normal
+Gold Ring,10,0,Normal
+Gold Amulet,10,0,Normal

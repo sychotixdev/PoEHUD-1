@@ -215,7 +215,7 @@ namespace PoeHUD.Hud.Loot
             string[] array = File.ReadAllLines("config/crafting_bases.txt");
             foreach (string text in array.Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x) && !x.StartsWith("#")))
             {
-                string[] parts = text.Split();
+                string[] parts = text.Split(',');
                 string itemName = parts[0].Trim();
 
                 var item = new CraftingBase { Name = itemName };
