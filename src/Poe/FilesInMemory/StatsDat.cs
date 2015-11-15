@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.FilesInMemory
@@ -26,8 +25,9 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void loadItems()
         {
-            foreach (var r in RecordAddresses().Select(addr => new StatRecord(M, addr)))
+            foreach (int addr in RecordAddresses())
             {
+                var r = new StatRecord(M, addr);
                 records.Add(r.Key, r);
             }
         }

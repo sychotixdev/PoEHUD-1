@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.FilesInMemory
@@ -29,15 +28,13 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void loadItems(StatsDat sDat, TagsDat tagsDat)
         {
-            foreach (var r in RecordAddresses().Select(addr => new ModRecord(M, sDat, tagsDat, addr)))
+
+            foreach (int addr in RecordAddresses())
             {
+                var r = new ModRecord(M, sDat, tagsDat, addr);
                 records.Add(r.Key, r);
-
                 bool addToItemIiers = r.Domain != 3;
-
-                if (!addToItemIiers)
-                    continue;
-
+                if (!addToItemIiers) continue;
                 Tuple<string, ModType> byTierKey = Tuple.Create(r.Group, r.AffixType);
                 List<ModRecord> groupMembers;
                 if (!recordsByTier.TryGetValue(byTierKey, out groupMembers))
@@ -47,7 +44,6 @@ namespace PoeHUD.Poe.FilesInMemory
                 }
                 groupMembers.Add(r);
             }
-
             foreach (var list in recordsByTier.Values)
             {
                 list.Sort(ModRecord.ByLevelComparer);
