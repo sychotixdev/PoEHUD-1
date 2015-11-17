@@ -112,7 +112,9 @@ namespace PoeHUD.Poe
 			75 12                   jnz     short loc_542DBB
 		 */
 
-        private static readonly Pattern inGameOffsetPattern = new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11", "xxxxxxx????xx????xx????????xx");
+        private static readonly Pattern inGameOffsetPattern = 
+            new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
+                "xxxxxxx????xx????xx????????xx");
         /*
              8B 0F                              mov     ecx, [edi]
              6A 01                              push    1

@@ -184,6 +184,11 @@ namespace PoeHUD.Hud.Menu
             AddChild(itemLevelMenu, "Text size", settingsHub.AdvancedTooltipSettings.ItemLevel.TextSize);
             MenuItem itemModsMenu = AddChild(tooltipMenu, "Item mods", settingsHub.AdvancedTooltipSettings.ItemMods.Enable, "F9");
             AddChild(itemModsMenu, "Mods size", settingsHub.AdvancedTooltipSettings.ItemMods.ModTextSize);
+            AddChild(itemModsMenu, "Tier 1 color", settingsHub.AdvancedTooltipSettings.ItemMods.T1Color);
+            AddChild(itemModsMenu, "Tier 2 color", settingsHub.AdvancedTooltipSettings.ItemMods.T2Color);
+            AddChild(itemModsMenu, "Tier 3 color", settingsHub.AdvancedTooltipSettings.ItemMods.T3Color);
+            AddChild(itemModsMenu, "Suffix color", settingsHub.AdvancedTooltipSettings.ItemMods.SuffixColor);
+            AddChild(itemModsMenu, "Prefix color", settingsHub.AdvancedTooltipSettings.ItemMods.PrefixColor);
             MenuItem weaponDpsMenu = AddChild(tooltipMenu, "Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
             AddChild(weaponDpsMenu, "Text color", settingsHub.AdvancedTooltipSettings.WeaponDps.TextColor);
             AddChild(weaponDpsMenu, "Dps size", settingsHub.AdvancedTooltipSettings.WeaponDps.DpsTextSize);
@@ -221,7 +226,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(qualitySkillGemMenu, "Min. quality", qualityItemsSettings.SkillGem.MinQuality);
 
             // Preload Alert
-            var preloadMenu = AddChild(root, "Preload alert", settingsHub.PreloadAlertSettings.Enable);
+            var preloadMenu = AddChild(root, "Preload alert", settingsHub.PreloadAlertSettings.Enable, "F5");
             var masters = AddChild(preloadMenu, "Masters", settingsHub.PreloadAlertSettings.Masters);
             AddChild(masters, "Zana", settingsHub.PreloadAlertSettings.MasterZana);
             AddChild(masters, "Tora", settingsHub.PreloadAlertSettings.MasterTora);

@@ -4,15 +4,15 @@ namespace PoeHUD.Hud
 {
     public static class HudSkin
     {
+        public static readonly Color CurrencyColor = new ColorBGRA(170, 158, 130, 0xFF);
+
         public static readonly Color MagicColor = new ColorBGRA(136, 136, 255, 0xFF);
 
         public static readonly Color RareColor = new ColorBGRA(255, 255, 119, 0xFF);
 
-        public static readonly Color CurrencyColor = new ColorBGRA(170, 158, 130, 0xFF);
-
-        public static readonly Color DivinationCardColor = new ColorBGRA(170, 230, 230, 0xFF);
-
         public static readonly Color UniqueColor = new ColorBGRA(175, 96, 37, 0xFF);
+        
+        public static readonly Color DivinationCardColor = new ColorBGRA(220, 0, 0, 0xFF);
 
         public static readonly Color SkillGemColor = new ColorBGRA(26, 162, 155, 0xFF);
 

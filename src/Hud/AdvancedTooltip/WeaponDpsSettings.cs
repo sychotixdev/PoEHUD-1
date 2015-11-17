@@ -1,5 +1,5 @@
-﻿using PoeHUD.Hud.Settings;
-using SharpDX;
+﻿using SharpDX;
+using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.AdvancedTooltip
 {

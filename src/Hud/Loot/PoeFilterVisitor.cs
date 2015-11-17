@@ -47,10 +47,7 @@ namespace PoeHUD.Hud.Loot
             var isMap = entity.HasComponent<Map>();
             var itemRarity = mods.ItemRarity;
             var quality = 0;
-            if (entity.HasComponent<Quality>())
-            {
-                quality = entity.GetComponent<Quality>().ItemQuality;
-            }
+            if (entity.HasComponent<Quality>()) { quality = entity.GetComponent<Quality>().ItemQuality; }
             var text = string.Concat(quality > 0 ? "Superior " : string.Empty, basename);
             var sockets = entity.GetComponent<Sockets>();
             var numberOfSockets = sockets.NumberOfSockets;
@@ -59,31 +56,16 @@ namespace PoeHUD.Hud.Loot
             var path = entity.Path;
 
             Color defaultTextColor;
-            if (basename.Contains("Portal") || basename.Contains("Wisdom"))
-            {
-                return null;
-            }
-            if (path.Contains("Currency"))
-            {
-                defaultTextColor = HudSkin.CurrencyColor;
-            }
-            else if (path.Contains("DivinationCards"))
-            {
-                defaultTextColor = HudSkin.DivinationCardColor;
-            }
-            else if (isSkillHGem)
-            {
-                defaultTextColor = HudSkin.SkillGemColor;
-            }
-            else
-                defaultTextColor = AlertDrawStyle.GetTextColorByRarity(itemRarity);
-
+            if (basename.Contains("Portal") || basename.Contains("Wisdom")) { return null; }
+            if (path.Contains("Currency")) { defaultTextColor = HudSkin.CurrencyColor; }
+            else if (path.Contains("DivinationCards")) { defaultTextColor = HudSkin.DivinationCardColor; }
+            else if (isSkillHGem) { defaultTextColor = HudSkin.SkillGemColor; }
+            else defaultTextColor = AlertDrawStyle.GetTextColorByRarity(itemRarity);
             var defaultBorderWidth = isMap || path.Contains("VaalFragment") ? 1 : 0;
 
             foreach (var block in blocks)
             {
                 var isShow = block.visibility().SHOW() != null;
-
                 var itemLevelCondition = true;
                 var dropLevelCondition = true;
                 var poeClassCondition = true;
@@ -107,162 +89,109 @@ namespace PoeHUD.Hud.Loot
                     var poeItemLevelContext = statement.poeItemLevel();
                     if (poeItemLevelContext != null)
                     {
-                        itemLevelCondition &= CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(),
+                        itemLevelCondition &= CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(), 
                             poeItemLevelContext.digitsParams(), mods.ItemLevel);
                     }
-                    else
-                    {
-                        var poeDropLevelContext = statement.poeDropLevel();
+
+                    else { var poeDropLevelContext = statement.poeDropLevel();
                         if (poeDropLevelContext != null)
                         {
-                            dropLevelCondition &= CalculateDigitsCondition(poeDropLevelContext.compareOpNullable(),
+                            dropLevelCondition &= CalculateDigitsCondition(poeDropLevelContext.compareOpNullable(), 
                                 poeDropLevelContext.digitsParams(), dropLevel);
                         }
-                        else
+
+                    else { var poeClassContext = statement.poeClass();
+                        if (poeClassContext != null)
                         {
-                            var poeClassContext = statement.poeClass();
-                            if (poeClassContext != null)
+                            poeClassCondition = poeClassContext.@params()
+                                .strValue().Any(y => className.Contains(GetRawText(y)));
+                        }
+
+                    else { var poeBaseTypeContext = statement.poeBaseType();
+                        if (poeBaseTypeContext != null)
+                        {
+                            poeBaseTypeCondition = poeBaseTypeContext.@params()
+                                .strValue() .Any(y => basename.Contains(GetRawText(y)));
+                        }
+
+                    else { var poeRarityContext = statement.poeRarity();
+                        if (poeRarityContext != null)
+                        {
+                            var compareFunc = OpConvertor(poeRarityContext.compareOpNullable());
+                            poeRarityCondition &= poeRarityContext.rariryParams().rarityValue().Any(y => 
                             {
-                                poeClassCondition =
-                                    poeClassContext.@params().strValue().Any(y => className.Contains(GetRawText(y)));
-                            }
-                            else
-                            {
-                                var poeBaseTypeContext = statement.poeBaseType();
-                                if (poeBaseTypeContext != null)
-                                {
-                                    poeBaseTypeCondition =
-                                        poeBaseTypeContext.@params()
-                                            .strValue()
-                                            .Any(y => basename.Contains(GetRawText(y)));
-                                }
-                                else
-                                {
-                                    var poeRarityContext = statement.poeRarity();
-                                    if (poeRarityContext != null)
-                                    {
-                                        var compareFunc = OpConvertor(poeRarityContext.compareOpNullable());
-                                        poeRarityCondition &= poeRarityContext.rariryParams().rarityValue().Any(y =>
-                                        {
-                                            ItemRarity poeItemRarity;
-                                            Enum.TryParse(GetRawText(y), true, out poeItemRarity);
-                                            return compareFunc((int)itemRarity, (int)poeItemRarity);
-                                        });
-                                    }
-                                    else
-                                    {
-                                        var poeQualityContext = statement.poeQuality();
-                                        if (poeQualityContext != null)
-                                        {
-                                            poeQualityCondition &=
-                                                CalculateDigitsCondition(poeQualityContext.compareOpNullable(),
-                                                    poeQualityContext.digitsParams(), quality);
-                                        }
-                                        else
-                                        {
-                                            var poeWidthContext = statement.poeWidth();
-                                            if (poeWidthContext != null)
-                                            {
-                                                poeWidthCondition &=
-                                                    CalculateDigitsCondition(poeWidthContext.compareOpNullable(),
-                                                        poeWidthContext.digitsParams(), width);
-                                            }
-                                            else
-                                            {
-                                                var poeHeightContext = statement.poeHeight();
-                                                if (poeHeightContext != null)
-                                                {
-                                                    poeHeightCondition &=
-                                                        CalculateDigitsCondition(poeHeightContext.compareOpNullable(),
-                                                            poeHeightContext.digitsParams(), height);
-                                                }
-                                                else
-                                                {
-                                                    var poeSocketsContext = statement.poeSockets();
-                                                    if (poeSocketsContext != null)
-                                                    {
-                                                        poeSocketsCondition &=
-                                                            CalculateDigitsCondition(
-                                                                poeSocketsContext.compareOpNullable(),
-                                                                poeSocketsContext.digitsParams(), numberOfSockets);
-                                                    }
-                                                    else
-                                                    {
-                                                        var poeLinkedSocketsContext = statement.poeLinkedSockets();
-                                                        if (poeLinkedSocketsContext != null)
-                                                        {
-                                                            poeLinkedSocketsCondition &=
-                                                                CalculateDigitsCondition(
-                                                                    poeLinkedSocketsContext.compareOpNullable(),
-                                                                    poeLinkedSocketsContext.digitsParams(),
-                                                                    largestLinkSize);
-                                                        }
-                                                        else
-                                                        {
-                                                            var poeSocketGroupContext = statement.poeSocketGroup();
-                                                            if (poeSocketGroupContext != null)
-                                                            {
-                                                                poeSocketGroupCondition &=
-                                                                    poeSocketGroupContext.socketParams()
-                                                                        .socketValue()
-                                                                        .Any(y =>
-                                                                        {
-                                                                            var poeSocketGroup = GetRawText(y);
-                                                                            return IsContainSocketGroup(socketGroup,
-                                                                                poeSocketGroup);
-                                                                        });
-                                                            }
-                                                            else
-                                                            {
-                                                                var poeBackgroundColorContext =
-                                                                    statement.poeBackgroundColor();
-                                                                if (poeBackgroundColorContext != null)
-                                                                {
-                                                                    backgroundColor =
-                                                                        ToColor(poeBackgroundColorContext.color());
-                                                                }
-                                                                else
-                                                                {
-                                                                    var poeBorderColorContext =
-                                                                        statement.poeBorderColor();
-                                                                    if (poeBorderColorContext != null)
-                                                                    {
-                                                                        borderColor =
-                                                                            ToColor(poeBorderColorContext.color());
-                                                                        borderWidth = borderColor.A == 0 ? 0 : 1;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        var poeTextColorContext =
-                                                                            statement.poeTextColor();
-                                                                        if (poeTextColorContext != null)
-                                                                        {
-                                                                            textColor =
-                                                                                ToColor(poeTextColorContext.color());
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            var poeAlertSoundContext =
-                                                                                statement.poeAlertSound();
-                                                                            if (poeAlertSoundContext != null)
-                                                                            {
-                                                                                sound =
-                                                                                    Convert.ToInt32(
-                                                                                        poeAlertSoundContext.id()
-                                                                                            .GetText());
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                                ItemRarity poeItemRarity;
+                                Enum.TryParse(GetRawText(y), true, out poeItemRarity);
+                                return compareFunc((int)itemRarity, (int)poeItemRarity);
+                            });
+                        }
+
+                    else { var poeQualityContext = statement.poeQuality();
+                        if (poeQualityContext != null)
+                        {
+                            poeQualityCondition &= CalculateDigitsCondition(poeQualityContext.compareOpNullable(), 
+                                poeQualityContext.digitsParams(), quality);
+                        }
+
+                    else { var poeWidthContext = statement.poeWidth();
+                        if (poeWidthContext != null)
+                        {
+                            poeWidthCondition &= CalculateDigitsCondition(poeWidthContext.compareOpNullable(), 
+                                poeWidthContext.digitsParams(), width); 
+                            
+                        }
+
+                    else { var poeHeightContext = statement.poeHeight();
+                        if (poeHeightContext != null)
+                        {
+                            poeHeightCondition &= CalculateDigitsCondition(poeHeightContext.compareOpNullable(), 
+                                poeHeightContext.digitsParams(), height);
+                        }
+
+                    else { var poeSocketsContext = statement.poeSockets();
+                        if (poeSocketsContext != null)
+                        {
+                            poeSocketsCondition &= CalculateDigitsCondition( poeSocketsContext.compareOpNullable(), 
+                                poeSocketsContext.digitsParams(), numberOfSockets);
+                        }
+
+                    else { var poeLinkedSocketsContext = statement.poeLinkedSockets();
+                        if (poeLinkedSocketsContext != null)
+                        {
+                            poeLinkedSocketsCondition &= CalculateDigitsCondition( poeLinkedSocketsContext.compareOpNullable(), 
+                                poeLinkedSocketsContext.digitsParams(), largestLinkSize);
+                        }
+
+                    else { var poeSocketGroupContext = statement.poeSocketGroup();
+                        if (poeSocketGroupContext != null)
+                        {
+                            poeSocketGroupCondition &= poeSocketGroupContext.socketParams()
+                                .socketValue() .Any(y => { var poeSocketGroup = GetRawText(y);
+                            return IsContainSocketGroup(socketGroup, poeSocketGroup); });
+                        }
+
+                    else { var poeBackgroundColorContext = statement.poeBackgroundColor();
+                        if (poeBackgroundColorContext != null)
+                        {
+                            backgroundColor = ToColor(poeBackgroundColorContext.color());
+                        }
+
+                    else { var poeBorderColorContext = statement.poeBorderColor();
+                        if (poeBorderColorContext != null)
+                        {
+                            borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
+                        }
+
+                    else { var poeTextColorContext = statement.poeTextColor();
+                        if (poeTextColorContext != null)
+                        {
+                            textColor = ToColor(poeTextColorContext.color());
+                        }
+
+                    else { var poeAlertSoundContext = statement.poeAlertSound();
+                        if (poeAlertSoundContext != null)
+                        {
+                            sound = Convert.ToInt32( poeAlertSoundContext.id() .GetText());}}}}}}}}}}}}}
                         }
                     }
                 }
@@ -271,26 +200,14 @@ namespace PoeHUD.Hud.Loot
                     poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition &&
                     poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition)
                 {
-                    if (!isShow ||
-                        (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
+                    if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
                         return null;
 
                     int iconIndex;
-                    if (largestLinkSize == 6)
-                    {
-                        iconIndex = 3;
-                    }
-                    else if (numberOfSockets == 6)
-                    {
-                        iconIndex = 0;
-                    }
-                    else if (IsContainSocketGroup(socketGroup, "RGB"))
-                    {
-                        iconIndex = 1;
-                    }
-                    else
-                        iconIndex = -1;
-
+                    if (largestLinkSize == 6) { iconIndex = 3; }
+                    else if (numberOfSockets == 6) { iconIndex = 0; }
+                    else if (IsContainSocketGroup(socketGroup, "RGB")) { iconIndex = 1; }
+                    else iconIndex = -1;
                     return new AlertDrawStyle(text, textColor, borderWidth, borderColor, backgroundColor, iconIndex);
                 }
             }
@@ -316,8 +233,7 @@ namespace PoeHUD.Hud.Loot
 
         private bool IsContainSocketGroup(List<string> socketGroup, string str)
         {
-            str = string.Concat(str.OrderBy(y => y));
-            return
+            str = string.Concat(str.OrderBy(y => y)); return
                 socketGroup.Select(group => string.Concat(group.OrderBy(y => y)))
                     .Any(sortedGroup => sortedGroup.Contains(str));
         }
@@ -338,20 +254,11 @@ namespace PoeHUD.Hud.Loot
             var text = terminalnode.COMPAREOP()?.GetText() ?? "=";
             switch (text)
             {
-                case "=":
-                    return (x, y) => x == y;
-
-                case "<":
-                    return (x, y) => x < y;
-
-                case ">":
-                    return (x, y) => x > y;
-
-                case "<=":
-                    return (x, y) => x <= y;
-
-                case ">=":
-                    return (x, y) => x >= y;
+                case "=":  return (x, y) => x == y;
+                case "<":  return (x, y) => x <  y;
+                case ">":  return (x, y) => x >  y;
+                case "<=": return (x, y) => x <= y;
+                case ">=": return (x, y) => x >= y;
             }
             throw new ArrayTypeMismatchException();
         }

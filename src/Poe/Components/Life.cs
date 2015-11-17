@@ -1,5 +1,5 @@
-using PoeHUD.Poe.RemoteMemoryObjects;
 using System.Collections.Generic;
+using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.Components
 {

@@ -112,20 +112,72 @@ namespace PoeHUD.Hud.AdvancedTooltip
             Vector2 oldPosition = position;
             ItemModsSettings settings = Settings.ItemMods;
 
-            string prefix = item.AffixType == ModsDat.ModType.Prefix ? "[P]"
+            string affix = item.AffixType == ModsDat.ModType.Prefix ? "[P]"
                 : item.AffixType == ModsDat.ModType.Suffix ? "[S]" : "[?]";
+
             if (item.AffixType != ModsDat.ModType.Hidden)
             {
                 if (item.CouldHaveTiers())
                 {
-                    prefix += string.Format(" T{0} ", item.Tier);
+                    affix += $" T{item.Tier} ";
                 }
-
-                Graphics.DrawText(prefix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0));
-                Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, item.Color);
-                if (textSize != new Size2())
+                if (item.AffixType == ModsDat.ModType.Prefix)
                 {
-                    position.Y += textSize.Height;
+                    Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.PrefixColor);
+                    switch (item.Tier)
+                    {
+                        case 1:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T1Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        case 2:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T2Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        case 3:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T3Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        default:
+                            Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.PrefixColor);
+                            if (textSize != new Size2()) { position.Y += textSize.Height; }
+                            break;
+                    }
+                }
+                if (item.AffixType == ModsDat.ModType.Suffix)
+                {
+                    Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.SuffixColor);
+                    switch (item.Tier)
+                    {
+                        case 1:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T1Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        case 2:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T2Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        case 3:
+                        {
+                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T3Color);
+                            if (tier != new Size2()) { position.Y += tier.Height; }
+                        }
+                            break;
+                        default:
+                            Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.SuffixColor);
+                            if (textSize != new Size2()) { position.Y += textSize.Height; }
+                            break;
+                    }
                 }
             }
 
@@ -143,12 +195,12 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 if (noSpread) { hue = 300; }
 
                 string line2 = string.Format(noSpread ? "{0}" : "{0} [{1}]", stat, range);
-                Graphics.DrawText(line2, settings.ModTextSize, position, Color.White);
+                Graphics.DrawText(line2, settings.ModTextSize, position, Color.Gainsboro);
 
                 string statText = stat.ValueToString(value);
                 Vector2 statPosition = position.Translate(-5, 0);
                 Color statColor = ColorUtils.ColorFromHsv(hue, 1, 1);
-                Size2 txSize = Graphics.DrawText(statText, settings.ModTextSize, statPosition, statColor, FontDrawFlags.Right);
+                Size2 txSize = Graphics.DrawText(statText, settings.ModTextSize, statPosition, Color.Gainsboro, FontDrawFlags.Right);
                 position.Y += txSize.Height;
             }
             return Math.Abs(position.Y - oldPosition.Y) > EPSILON ? position.Translate(0, MARGIN_BOTTOM) : oldPosition;

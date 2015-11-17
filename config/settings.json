@@ -157,7 +157,12 @@
         "Min": 10,
         "Max": 50
       },
-      "BackgroundColor": "000000dc"
+      "BackgroundColor": "000000dc",
+      "PrefixColor": "8888ffff",
+      "SuffixColor": "00ced1ff",
+      "T1Color": "ff00ffff",
+      "T2Color": "ffff00ff",
+      "T3Color": "00ff00ff"
     },
     "Weapon DPS": {
       "Enable": true,
