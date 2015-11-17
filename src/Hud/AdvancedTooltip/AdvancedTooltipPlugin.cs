@@ -60,10 +60,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
             Element tooltip = GetTooltip(inventoryItemIcon);
             Entity poeEntity = inventoryItemIcon.Item;
-            if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid)
-            {
-                return;
-            }
+            if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
 
             RectangleF tooltipRect = tooltip.GetClientRect();
             var modsComponent = poeEntity.GetComponent<Mods>();
@@ -125,38 +122,21 @@ namespace PoeHUD.Hud.AdvancedTooltip
 
             if (item.AffixType != ModsDat.ModType.Hidden)
             {
-                if (item.CouldHaveTiers())
-                {
-                    affix += $" T{item.Tier} ";
-                }
+                if (item.CouldHaveTiers()) { affix += $" T{item.Tier} "; }
 
                 if (item.AffixType == ModsDat.ModType.Prefix)
                 {
                     Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.PrefixColor);
-                    if (!TColors.TryGetValue(item.Tier, out TColor))
-                    {
-                        TColor = settings.PrefixColor;
-                    }
-                    Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, TColor);
-                    if (textSize != new Size2())
-                    {
-                        position.Y += textSize.Height;
-                    }
+                    if (!TColors.TryGetValue(item.Tier, out TColor)) { TColor = settings.PrefixColor; }
                 }
 
                 if (item.AffixType == ModsDat.ModType.Suffix)
                 {
                     Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.SuffixColor);
-                    if (!TColors.TryGetValue(item.Tier, out TColor))
-                    {
-                        TColor = settings.SuffixColor;
-                    }
-                    Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, TColor);
-                    if (textSize != new Size2())
-                    {
-                        position.Y += textSize.Height;
-                    }
+                    if (!TColors.TryGetValue(item.Tier, out TColor)) { TColor = settings.SuffixColor; }
                 }
+                Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, TColor);
+                if (textSize != new Size2()) { position.Y += textSize.Height; }
             }
 
             for (int i = 0; i < 4; i++)
