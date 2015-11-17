@@ -8,18 +8,21 @@ using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Settings;
-using PoeHUD.Hud.UI;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using Color = SharpDX.Color;
+using Graphics = PoeHUD.Hud.UI.Graphics;
+using RectangleF = SharpDX.RectangleF;
 
 namespace PoeHUD.Hud.AdvancedTooltip
 {
     public class AdvancedTooltipPlugin : Plugin<AdvancedTooltipSettings>
     {
+        private Color TColor;
         private bool holdKey;
         private readonly SettingsHub settingsHub;
 
@@ -29,7 +32,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
         };
 
         private Entity itemEntity;
-
         private List<ModValue> mods = new List<ModValue>();
 
         public AdvancedTooltipPlugin(GameController gameController, Graphics graphics, AdvancedTooltipSettings settings, SettingsHub settingsHub)
@@ -99,7 +101,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
         private static Element GetTooltip(InventoryItemIcon inventoryItemIcon)
         {
             Element tooltip = inventoryItemIcon.Tooltip;
-
             Element child = tooltip?.GetChildAtIndex(0);
             return child?.GetChildAtIndex(1);
         }
@@ -115,68 +116,45 @@ namespace PoeHUD.Hud.AdvancedTooltip
             string affix = item.AffixType == ModsDat.ModType.Prefix ? "[P]"
                 : item.AffixType == ModsDat.ModType.Suffix ? "[S]" : "[?]";
 
+            Dictionary<int, Color> TColors = new Dictionary<int, Color>
+                {
+                    { 1, settings.T1Color },
+                    { 2, settings.T2Color },
+                    { 3, settings.T3Color }
+                };
+
             if (item.AffixType != ModsDat.ModType.Hidden)
             {
                 if (item.CouldHaveTiers())
                 {
                     affix += $" T{item.Tier} ";
                 }
+
                 if (item.AffixType == ModsDat.ModType.Prefix)
                 {
                     Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.PrefixColor);
-                    switch (item.Tier)
+                    if (!TColors.TryGetValue(item.Tier, out TColor))
                     {
-                        case 1:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T1Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        case 2:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T2Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        case 3:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T3Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        default:
-                            Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.PrefixColor);
-                            if (textSize != new Size2()) { position.Y += textSize.Height; }
-                            break;
+                        TColor = settings.PrefixColor;
+                    }
+                    Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, TColor);
+                    if (textSize != new Size2())
+                    {
+                        position.Y += textSize.Height;
                     }
                 }
+
                 if (item.AffixType == ModsDat.ModType.Suffix)
                 {
                     Graphics.DrawText(affix, settings.ModTextSize, position.Translate(5 - MARGIN_LEFT, 0), settings.SuffixColor);
-                    switch (item.Tier)
+                    if (!TColors.TryGetValue(item.Tier, out TColor))
                     {
-                        case 1:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T1Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        case 2:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T2Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        case 3:
-                        {
-                            Size2 tier = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.T3Color);
-                            if (tier != new Size2()) { position.Y += tier.Height; }
-                        }
-                            break;
-                        default:
-                            Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, settings.SuffixColor);
-                            if (textSize != new Size2()) { position.Y += textSize.Height; }
-                            break;
+                        TColor = settings.SuffixColor;
+                    }
+                    Size2 textSize = Graphics.DrawText(item.AffixText, settings.ModTextSize, position, TColor);
+                    if (textSize != new Size2())
+                    {
+                        position.Y += textSize.Height;
                     }
                 }
             }
