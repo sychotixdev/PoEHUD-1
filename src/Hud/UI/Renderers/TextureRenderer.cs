@@ -123,16 +123,13 @@ namespace PoeHUD.Hud.UI.Renderers
 
         private Texture GetTexture(string fileName)
         {
-            lock (textures)
+            Texture texture;
+            if (!textures.TryGetValue(fileName, out texture))
             {
-                Texture texture;
-                if (!textures.TryGetValue(fileName, out texture))
-                {
-                    texture = Texture.FromFile(device, fileName);
-                    textures.Add(fileName, Texture.FromFile(device, fileName));
-                }
-                return texture;
+                texture = Texture.FromFile(device, fileName);
+                textures.Add(fileName, Texture.FromFile(device, fileName));
             }
+            return texture;
         }
     }
 }

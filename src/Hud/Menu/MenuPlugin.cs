@@ -173,8 +173,8 @@ namespace PoeHUD.Hud.Menu
 
             // Item Alert
             MenuItem itemAlertMenu = AddChild(root, "Item alert", settingsHub.ItemAlertSettings.Enable);
-            var itemAlertStaticMenuList = new[] { "Alternative", "Item tooltips", "Play sound", "Show text", "Hide others", "Show border"};
-            MenuItem alternative = AddChild(itemAlertMenu, itemAlertStaticMenuList[0], 
+            var itemAlertStaticMenuList = new[] { "Alternative", "Item tooltips", "Play sound", "Show text", "Hide others", "Show border" };
+            MenuItem alternative = AddChild(itemAlertMenu, itemAlertStaticMenuList[0],
                 settingsHub.ItemAlertSettings.Alternative, null, y => itemAlertStaticMenuList.All(x => x != (y as ToggleButton)?.Name));
             AddChild(alternative, settingsHub.ItemAlertSettings.FilePath);
             AddChild(alternative, "With border", settingsHub.ItemAlertSettings.WithBorder);
@@ -277,7 +277,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(preloadMenu, "Background color", settingsHub.PreloadAlertSettings.BackgroundColor);
             AddChild(preloadMenu, "Font color", settingsHub.PreloadAlertSettings.DefaultTextColor);
             AddChild(preloadMenu, "Font size", settingsHub.PreloadAlertSettings.TextSize);
-            
+
             // Monster alert
             MenuItem MonsterTrackerMenu = AddChild(root, "Monster alert", settingsHub.MonsterTrackerSettings.Enable);
             MenuItem alertSound = AddChild(MonsterTrackerMenu, "Sound warning", settingsHub.MonsterTrackerSettings.PlaySound);

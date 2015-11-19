@@ -72,17 +72,14 @@ namespace PoeHUD.Models.Legacy
         private LegacySocket CharToSocket(char s)
         {
             char c = char.ToUpper(s);
-            if (c == 'B')
+            switch (c)
             {
-                return LegacySocket.Blue;
-            }
-            if (c == 'G')
-            {
-                return LegacySocket.Green;
-            }
-            if (c == 'R')
-            {
-                return LegacySocket.Red;
+                case 'B':
+                    return LegacySocket.Blue;
+                case 'G':
+                    return LegacySocket.Green;
+                case 'R':
+                    return LegacySocket.Red;
             }
             throw new Exception("Invalid socket char: " + s);
         }

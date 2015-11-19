@@ -111,8 +111,6 @@ namespace PoeHUD.Hud.UI
             }
         }
 
-        #region FontRenderer Methods
-
         public Size2 DrawText(string text, int height, Vector2 position, Color color, FontDrawFlags align = FontDrawFlags.Left)
         {
             return fontRenderer.DrawText(text, "Verdana", height, position, color, align);
@@ -127,10 +125,6 @@ namespace PoeHUD.Hud.UI
         {
             return fontRenderer.MeasureText(text, "Verdana", height, align);
         }
-
-        #endregion FontRenderer Methods
-
-        #region TextureRenderer Methods
 
         public void DrawBox(RectangleF rectangle, Color color)
         {
@@ -177,7 +171,5 @@ namespace PoeHUD.Hud.UI
                 Environment.Exit(0);
             }
         }
-
-        #endregion TextureRenderer Methods
     }
 }

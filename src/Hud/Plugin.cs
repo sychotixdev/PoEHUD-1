@@ -1,13 +1,13 @@
-﻿using PoeHUD.Controllers;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using SharpDX;
+using PoeHUD.Controllers;
 using PoeHUD.Hud.Interfaces;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
-using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace PoeHUD.Hud
 {

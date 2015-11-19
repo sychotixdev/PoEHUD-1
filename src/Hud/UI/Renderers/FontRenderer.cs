@@ -37,8 +37,7 @@ namespace PoeHUD.Hud.UI.Renderers
             }
             catch (Exception)
             {
-                //Console.WriteLine("Exception! X: " + position.X + ", Y: " + position.Y + ", Text: " + text);
-                //Console.WriteLine(exception.StackTrace);
+                //ignore
             }
             return new Size2();
         }
@@ -69,24 +68,21 @@ namespace PoeHUD.Hud.UI.Renderers
 
         private Font GetFont(string name, int height)
         {
-            lock (fonts)
+            Font font;
+            Tuple<string, int> key = Tuple.Create(name, height);
+            if (!fonts.TryGetValue(key, out font))
             {
-                Font font;
-                Tuple<string, int> key = Tuple.Create(name, height);
-                if (!fonts.TryGetValue(key, out font))
+                font = new Font(device, new FontDescription
                 {
-                    font = new Font(device, new FontDescription
-                    {
-                        MipLevels = 1,
-                        FaceName = name,
-                        OutputPrecision = FontPrecision.Default,
-                        Quality = FontQuality.ClearType,
-                        Height = height
-                    });
-                    fonts.Add(key, font);
-                }
-                return font;
+                    MipLevels = 1,
+                    FaceName = name,
+                    OutputPrecision = FontPrecision.Default,
+                    Quality = FontQuality.ClearType,
+                    Height = height
+                });
+                fonts.Add(key, font);
             }
+            return font;
         }
     }
 }

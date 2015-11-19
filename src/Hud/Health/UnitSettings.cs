@@ -4,8 +4,6 @@ namespace PoeHUD.Hud.Health
 {
     public class UnitSettings : SettingsBase
     {
-        //public UnitSettings() { }
-
         public UnitSettings(uint color, uint outline)
         {
             Enable = true;

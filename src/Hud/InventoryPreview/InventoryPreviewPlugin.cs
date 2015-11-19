@@ -7,6 +7,7 @@ using SharpDX;
 using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Framework.InputHooks;
+using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.RemoteMemoryObjects;
@@ -86,13 +87,10 @@ namespace PoeHUD.Hud.InventoryPreview
                 var x = (int)((itemElementRectangle.X - inventoryZoneRectangle.X) / oneCellSize.Width + 0.5);
                 var y = (int)((itemElementRectangle.Y - inventoryZoneRectangle.Y) / oneCellSize.Height + 0.5);
                 Size itemSize = GetItemSize(itemElementRectangle, oneCellSize) + new Size(x, y);
-
-                // BUG Old inventoryZoneRectangle when the window is moved/resized
                 if (x < 0 || itemSize.Width > CELLS_X_COUNT || y < 0 || itemSize.Height > CELLS_Y_COUNT)
                 {
                     break;
                 }
-
                 AddItem(x, y, itemSize.Width, itemSize.Height);
             }
         }
@@ -139,52 +137,41 @@ namespace PoeHUD.Hud.InventoryPreview
             return true;
         }
 
-        private bool TryToAutoAddItem(Size itemSize, Entity item)
+        private bool TryToAutoAddItem(Size itemSize, IEntity item)
         {
-            lock (this)
-            {
-                for (int j = 0; j + itemSize.Width <= cells.GetLength(1); j++)
-                    for (int i = 0; i + itemSize.Height <= cells.GetLength(0); i++)
+            for (int j = 0; j + itemSize.Width <= cells.GetLength(1); j++)
+                for (int i = 0; i + itemSize.Height <= cells.GetLength(0); i++)
+                {
+                    if (cells[i, j].Used) continue;
+                    bool found = true;
+                    for (int jj = j; jj < j + itemSize.Width && found; jj++)
                     {
-                        if (!cells[i, j].Used)
+                        for (int ii = i; ii < i + itemSize.Height; ii++)
                         {
-                            bool found = true;
-                            for (int jj = j; jj < j + itemSize.Width && found; jj++)
-                            {
-                                for (int ii = i; ii < i + itemSize.Height; ii++)
-                                {
-                                    if (cells[ii, jj].Used)
-                                    {
-                                        found = false;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (found)
-                            {
-                                Task.Factory.StartNew(async () =>
-                                {
-                                    Stopwatch sw = Stopwatch.StartNew();
-                                    while (item.IsValid)
-                                    {
-                                        await Task.Delay(30);
-                                        if (sw.ElapsedMilliseconds > 10000)
-                                        {
-                                            sw.Stop();
-                                            break;
-                                        }
-                                    }
-                                    if (!item.IsValid)
-                                    {
-                                        AddItem(j, i, j + itemSize.Width, i + itemSize.Height);
-                                    }
-                                });
-                                return true;
-                            }
+                            if (!cells[ii, jj].Used) continue;
+                            found = false;
+                            break;
                         }
                     }
-                return false;
-            }
+                    if (!found) continue;
+                    Task.Factory.StartNew(async () =>
+                    {
+                        Stopwatch sw = Stopwatch.StartNew();
+                        while (item.IsValid)
+                        {
+                            await Task.Delay(30);
+                            if (sw.ElapsedMilliseconds <= 10000) continue;
+                            sw.Stop();
+                            break;
+                        }
+                        if (!item.IsValid)
+                        {
+                            AddItem(j, i, j + itemSize.Width, i + itemSize.Height);
+                        }
+                    });
+                    return true;
+                }
+            return false;
         }
 
         public override void Dispose()

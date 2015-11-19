@@ -196,7 +196,7 @@
       "Max": 50
     },
     "DefaultTextColor": "ff0000ff",
-    "BackgroundColor": "00000080",
+    "BackgroundColor": "c0c0c0e6",
     "TextPositionX": {
       "Value": 50,
       "Min": 0,
@@ -552,7 +552,7 @@
       "Max": 10
     },
     "PositionX": {
-      "Value": 11.0,
+      "Value": 12.0,
       "Min": 0.0,
       "Max": 100.0
     },

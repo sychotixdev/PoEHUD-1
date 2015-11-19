@@ -87,20 +87,17 @@ namespace PoeHUD.Hud.Trackers
                 RectangleF uv = GetDirectionsUV(group.Monster.Phi, group.Monster.Distance);
                 string text = $"{@group.Text} {(@group.Count > 1 ? "(" + @group.Count + ")" : string.Empty)}";
                 var color = group.Color ?? Settings.DefaultTextColor;
-                Size2 textSize = Graphics.DrawText(text, Settings.TextSize, new Vector2(xPos, yPos), color,
-                    FontDrawFlags.Center);
+                Size2 textSize = Graphics.DrawText(text, Settings.TextSize, new Vector2(xPos, yPos), color, FontDrawFlags.Center);
 
-                rectBackground = new RectangleF(xPos - textSize.Width / 2f - 6, yPos, textSize.Width + 12,
-                    textSize.Height);
+                rectBackground = new RectangleF(xPos - 30 - textSize.Width / 2f - 6, yPos, 80 + textSize.Width, textSize.Height);
                 rectBackground.X -= textSize.Height + 3;
                 rectBackground.Width += textSize.Height;
 
-                var rectDirection = new RectangleF(rectBackground.X + 3, rectBackground.Y, rectBackground.Height,
-                    rectBackground.Height);
+                var rectDirection = new RectangleF(rectBackground.X + 3, rectBackground.Y, rectBackground.Height, rectBackground.Height);
 
                 if (first) // vertical padding above
                 {
-                    rectBackground.Y -= 5;
+                    rectBackground.Y -= 2;
                     rectBackground.Height += 5;
                     first = false;
                 }
@@ -112,7 +109,7 @@ namespace PoeHUD.Hud.Trackers
             {
                 rectBackground.Y = rectBackground.Y + rectBackground.Height;
                 rectBackground.Height = 5;
-                Graphics.DrawBox(rectBackground, Settings.BackgroundColor);
+                Graphics.DrawImage("preload-start.png", rectBackground, Settings.BackgroundColor);
             }
         }
 

@@ -14,7 +14,7 @@ namespace PoeHUD.Hud.Trackers
             ShowText = true;
             SoundVolume = new RangeNode<int>(50, 0, 100);
             TextSize = new RangeNode<int>(22, 10, 50);
-            BackgroundColor = new ColorBGRA(0, 0, 0, 128);
+            BackgroundColor = new ColorBGRA(192, 192, 192, 230);
             TextPositionX = new RangeNode<int>(50, 0, 100);
             TextPositionY = new RangeNode<int>(85, 0, 100);
             DefaultTextColor = Color.Red;

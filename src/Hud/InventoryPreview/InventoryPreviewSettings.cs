@@ -13,7 +13,7 @@ namespace PoeHUD.Hud.InventoryPreview
             CellFreeColor = new Color(255, 255, 255, 255);
             CellSize = new RangeNode<int>(20, 1, 100);
             CellPadding = new RangeNode<int>(0, 0, 10);
-            PositionX = new RangeNode<float>(11.0f, 0.0f, 100.0f);
+            PositionX = new RangeNode<float>(12.0f, 0.0f, 100.0f);
             PositionY = new RangeNode<float>(77.0f, 0.0f, 100.0f);
         }
 

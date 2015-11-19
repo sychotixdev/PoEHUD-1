@@ -13,7 +13,6 @@ namespace PoeHUD.Hud.UI.Vertexes
         };
 
         private Vector2 position;
-
         private ColorBGRA color;
 
         public ColoredVertex(float x, float y, ColorBGRA color)

@@ -14,9 +14,7 @@ namespace PoeHUD.Hud
         { }
 
         public Size2F Size { get; set; }
-
         public Func<Vector2> StartDrawPointFunc { get; set; }
-
         public Vector2 Margin { get; set; }
 
         public override void Render()

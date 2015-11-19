@@ -1,10 +1,3 @@
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\bin\Release\PoeFilterParser.dll.config
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\bin\Release\PoeFilterParser.dll
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\bin\Release\PoeFilterParser.pdb
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\bin\Release\Antlr4.Runtime.dll
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\bin\Release\Antlr4.Runtime.xml
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\obj\Release\PoeFilterParser.dll
-C:\Users\mVm\Documents\GitHub\vmv-poeHUD\src\PoeFilterParser\obj\Release\PoeFilterParser.pdb
 C:\Users\mVm\Documents\GitHub\vmv-poeHUD\vmv-poeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.dll.config
 C:\Users\mVm\Documents\GitHub\vmv-poeHUD\vmv-poeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.dll
 C:\Users\mVm\Documents\GitHub\vmv-poeHUD\vmv-poeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.pdb
@@ -28,3 +21,10 @@ C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runt
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runtime.xml
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.dll
 C:\Users\mVm\Documents\GitHub\PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.pdb
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.dll.config
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.dll
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Release\PoeFilterParser.pdb
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runtime.dll
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Release\Antlr4.Runtime.xml
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.dll
+C:\Users\mVm\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Release\PoeFilterParser.pdb

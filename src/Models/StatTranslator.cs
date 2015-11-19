@@ -24,9 +24,8 @@ namespace PoeHUD.Models
                 {"LightningResist", Single(ItemStatEnum.LightningResistance)},
                 {"ChaosResist", Single(ItemStatEnum.ChaosResistance)},
                 {
-                    "AllResistances",
-                    MultipleSame(ItemStatEnum.ColdResistance, ItemStatEnum.FireResistance,
-                        ItemStatEnum.LightningResistance)
+                    "AllResistances", MultipleSame
+                    (ItemStatEnum.ColdResistance, ItemStatEnum.FireResistance, ItemStatEnum.LightningResistance)
                 },
                 {"CriticalStrikeChance", Single(ItemStatEnum.CritChance)},
                 {"LocalCriticalMultiplier", Single(ItemStatEnum.CritMultiplier)},
@@ -66,16 +65,16 @@ namespace PoeHUD.Models
                 {"LocalIncreasedEnergyShieldPercent", Single(ItemStatEnum.LocalESPercent)},
                 {"LocalIncreasedPhysicalDamageReductionRatingPercent", Single(ItemStatEnum.LocalArmorPercent)},
                 {
-                    "LocalIncreasedArmourAndEvasion",
-                    MultipleSame(ItemStatEnum.LocalArmorPercent, ItemStatEnum.LocalEVPercent)
+                    "LocalIncreasedArmourAndEvasion", MultipleSame
+                    (ItemStatEnum.LocalArmorPercent, ItemStatEnum.LocalEVPercent)
                 },
                 {
-                    "LocalIncreasedArmourAndEnergyShield",
-                    MultipleSame(ItemStatEnum.LocalArmorPercent, ItemStatEnum.LocalESPercent)
+                    "LocalIncreasedArmourAndEnergyShield", MultipleSame
+                    (ItemStatEnum.LocalArmorPercent, ItemStatEnum.LocalESPercent)
                 },
                 {
-                    "LocalIncreasedEvasionAndEnergyShield",
-                    MultipleSame(ItemStatEnum.LocalEVPercent, ItemStatEnum.LocalESPercent)
+                    "LocalIncreasedEvasionAndEnergyShield", MultipleSame
+                    (ItemStatEnum.LocalEVPercent, ItemStatEnum.LocalESPercent)
                 }
             };
         }
@@ -118,7 +117,6 @@ namespace PoeHUD.Models
                 }
             };
         }
-
         private delegate void AddStat(ItemStats stats, ItemMod m);
     }
 }
