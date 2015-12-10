@@ -28,7 +28,7 @@
     }
   },
   "DPS meter": {
-    "Enable": true,
+    "Enable": false,
     "ShowInTown": false,
     "DpsTextSize": {
       "Value": 16,
@@ -563,7 +563,7 @@
     }
   },
   "Kills Counter": {
-    "Enable": true,
+    "Enable": false,
     "ShowInTown": false,
     "ShowDetail": true,
     "TextColor": "dcbe82ff",

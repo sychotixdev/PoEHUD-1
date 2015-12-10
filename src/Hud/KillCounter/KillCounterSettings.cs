@@ -9,7 +9,7 @@ namespace PoeHUD.Hud.KillCounter
         {
             Enable = false;
             ShowDetail = true;
-            ShowInTown = true;
+            ShowInTown = false;
             TextColor = new ColorBGRA(220, 190, 130, 255);
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
             LabelTextSize = new RangeNode<int>(16, 10, 20);

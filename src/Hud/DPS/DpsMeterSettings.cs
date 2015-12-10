@@ -8,7 +8,7 @@ namespace PoeHUD.Hud.Dps
         public DpsMeterSettings()
         {
             Enable = false;
-            ShowInTown = true;
+            ShowInTown = false;
             DpsTextSize = new RangeNode<int>(16, 10, 20);
             PeakDpsTextSize = new RangeNode<int>(16, 10, 20);
             DpsFontColor = new ColorBGRA(220, 190, 130, 255);
