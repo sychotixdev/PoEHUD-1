@@ -62,6 +62,12 @@ namespace PoeHUD.Hud.Loot
                 return true;
             }
 
+            if (settings.Talisman && _item.Path.Contains("Talisman"))
+            {
+                color = HudSkin.TalismanColor;
+                return true;
+            }
+
             Sockets sockets = _item.GetComponent<Sockets>();
 
             if (sockets.LargestLinkSize >= settings.MinLinks)

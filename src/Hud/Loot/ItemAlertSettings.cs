@@ -21,6 +21,7 @@ namespace PoeHUD.Hud.Loot
             Currency = true;
             DivinationCards = true;
             Jewels = true;
+            Talisman = true;
             Rgb = true;
             MinLinks = new RangeNode<int>(5, 0, 6);
             MinSockets = new RangeNode<int>(6, 0, 6);
@@ -45,6 +46,7 @@ namespace PoeHUD.Hud.Loot
         public ToggleNode Currency { get; set; }
         public ToggleNode DivinationCards { get; set; }
         public ToggleNode Jewels { get; set; }
+        public ToggleNode Talisman { get; set; }
         [JsonProperty("RGB")]
         public ToggleNode Rgb { get; set; }
         public RangeNode<int> MinLinks { get; set; }

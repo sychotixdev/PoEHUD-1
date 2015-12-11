@@ -214,6 +214,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(itemAlertMenu, "Crafting bases", settingsHub.ItemAlertSettings.Crafting);
             AddChild(itemAlertMenu, "Divination cards", settingsHub.ItemAlertSettings.DivinationCards);
             AddChild(itemAlertMenu, "Jewels", settingsHub.ItemAlertSettings.Jewels);
+            AddChild(itemAlertMenu, "Talisman", settingsHub.ItemAlertSettings.Talisman);
             QualityItemsSettings qualityItemsSettings = settingsHub.ItemAlertSettings.QualityItems;
             MenuItem qualityMenu = AddChild(itemAlertMenu, "Show quality items", qualityItemsSettings.Enable);
             MenuItem qualityWeaponMenu = AddChild(qualityMenu, "Weapons", qualityItemsSettings.Weapon.Enable);
