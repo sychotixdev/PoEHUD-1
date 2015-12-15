@@ -6,12 +6,12 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                int num = M.ReadInt(Address + 2468);
+                int num = M.ReadInt(Address + 0xB58);
                 if (num <= 0 || num > 256)
                 {
                     return "";
                 }
-                return num >= 8 ? M.ReadStringU(M.ReadInt(Address + 2452), num * 2) : M.ReadStringU(Address + 2452, num * 2);
+                return num >= 8 ? M.ReadStringU(M.ReadInt(Address + 0xB48), num * 2) : M.ReadStringU(Address + 0xB48, num * 2);
             }
         }
     }
