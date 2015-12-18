@@ -7,11 +7,11 @@ namespace PoeHUD.Hud.Loot
     {
         public ItemAlertSettings()
         {
-            Enable = true;
+            Enable = false;
             ShowItemOnMap = true;
             Crafting = true;
             ShowText = true;
-            HideOthers = false;
+            HideOthers = true;
             PlaySound = true;
             SoundVolume = new RangeNode<int>(20, 0, 100);
             TextSize = new RangeNode<int>(16, 10, 50);

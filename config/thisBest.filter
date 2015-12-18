@@ -25,11 +25,11 @@ Show
     SetBorderColor 153 0 153
 	#PlayAlertSound 7 100
 
-#Show
-    #BaseType Talisman
-    #SetTextColor 220 20 60
-    #SetBorderColor 220 20 60
-    #PlayAlertSound 7 100
+Show
+    BaseType Talisman
+    SetTextColor 208 31 144
+    SetBorderColor 220 20 60
+    PlayAlertSound 7 100
 	
 Show
     Class Divination Card

@@ -117,6 +117,11 @@ namespace PoeHUD.Hud.Preload
                     }
                 }
 
+                if (text.Contains("StoneCircleDevice"))
+                {
+                    alerts.Add(new PreloadConfigLine { Text = "Stone Altar", FastColor = () => Settings.StoneDeviceColor });
+                }
+
                 Dictionary<string, PreloadConfigLine> Strongboxes = new Dictionary<string, PreloadConfigLine>
                 {
                     {"Metadata/Chests/StrongBoxes/Arcanist", new PreloadConfigLine { Text = "Arcanist's Strongbox", FastColor = () => Settings.ArcanistStrongbox }},

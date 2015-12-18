@@ -59,6 +59,7 @@ namespace PoeHUD.Hud.Loot
             if (basename.Contains("Portal") || basename.Contains("Wisdom")) { return null; }
             if (path.Contains("Currency")) { defaultTextColor = HudSkin.CurrencyColor; }
             else if (path.Contains("DivinationCards")) { defaultTextColor = HudSkin.DivinationCardColor; }
+            else if (path.Contains("Talisman")) { defaultTextColor = HudSkin.TalismanColor; }
             else if (isSkillHGem) { defaultTextColor = HudSkin.SkillGemColor; }
             else defaultTextColor = AlertDrawStyle.GetTextColorByRarity(itemRarity);
             var defaultBorderWidth = isMap || path.Contains("VaalFragment") ? 1 : 0;

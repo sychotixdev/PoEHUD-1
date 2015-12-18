@@ -50,11 +50,11 @@
     "IconsOnLargeMap": true
   },
   "Item alert": {
-    "Enable": true,
+    "Enable": false,
     "ShowItemOnMap": true,
     "Crafting": true,
     "ShowText": true,
-    "HideOthers": false,
+    "HideOthers": true,
     "PlaySound": true,
     "SoundVolume": {
       "Value": 20,
@@ -72,6 +72,7 @@
     "Currency": true,
     "DivinationCards": true,
     "Jewels": true,
+    "Talisman": true,
     "RGB": true,
     "MinLinks": {
       "Value": 5,
@@ -217,6 +218,7 @@
   "Preload alert": {
     "Enable": true,
     "CorruptedTitle": true,
+    "StoneDeviceColor": "d01f90ff",
     "Masters": true,
     "Exiles": true,
     "Strongboxes": true,

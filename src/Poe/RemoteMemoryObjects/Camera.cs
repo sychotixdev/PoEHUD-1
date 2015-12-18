@@ -10,10 +10,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class Camera : RemoteMemoryObject
     {
-        public int Width => M.ReadInt(Address + 4);
-        public int Height => M.ReadInt(Address + 8);
-        public float ZFar => M.ReadFloat(Address + 392);
-        public Vector3 Position => new Vector3(M.ReadFloat(Address + 256), M.ReadFloat(Address + 260), M.ReadFloat(Address + 264));
+        public int Width => M.ReadInt(Address + 0x4);
+        public int Height => M.ReadInt(Address + 0x8);
+        public float ZFar => M.ReadFloat(Address + 0x1B0);
+        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0x100), M.ReadFloat(Address + 0x104), M.ReadFloat(Address + 0x108));
 
         private static Vector2 oldplayerCord;
 
@@ -23,7 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
             var playerMoving = isplayer && localPlayer.GetComponent<Actor>().isMoving;
             float x, y;
-            int addr = Address + 0xbc;
+            int addr = Address + 0xBC;
             fixed (byte* numRef = M.ReadBytes(addr, 0x40))
             {
                 Matrix4x4 matrix = *(Matrix4x4*)numRef;

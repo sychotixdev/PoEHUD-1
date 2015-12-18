@@ -14,7 +14,7 @@ namespace PoeHUD.Hud
         
         public static readonly Color DivinationCardColor = new ColorBGRA(220, 0, 0, 0xFF);
 
-        public static readonly Color TalismanColor = new ColorBGRA(220, 20, 60, 0xFF);
+        public static readonly Color TalismanColor = new ColorBGRA(208, 31, 144, 0xFF);
 
         public static readonly Color SkillGemColor = new ColorBGRA(26, 162, 155, 0xFF);
 

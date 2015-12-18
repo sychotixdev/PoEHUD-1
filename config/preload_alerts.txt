@@ -1,7 +1,6 @@
 #Metadata;Text;colour (ARGB)
 #Example Metadata/Chests/StrongBoxes/Strongbox; ; FF00FF00
 
-Metadata/Shrines/DarkShrine; Darkshrine Area; ffE60000
 #Metadata/Chests/StrongBoxes/Strongbox; ; ffD2D2D2
 #Metadata/Chests/StrongBoxes/Strongbox.ao; ; ffD2D2D2
 #Metadata/Chests/StrongBoxes/Ornate;  Ornate Strongbox; ffD2D2D2

@@ -6,21 +6,21 @@ namespace PoeHUD.Poe
 {
     public class Element : RemoteMemoryObject
     {
-        public const int OffsetBuffers = 0x794;
+        public const int OffsetBuffers = 0x778;
         // dd id
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
 
         public int vTable => M.ReadInt(Address + 0);
-        public Element Root => ReadObject<Element>(Address + 0x5c + OffsetBuffers);
-        public Element Parent => ReadObject<Element>(Address + 0x60 + OffsetBuffers);
-        public float X => M.ReadFloat(Address + 0x64 + OffsetBuffers);
-        public float Y => M.ReadFloat(Address + 0x68 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0xFC + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x100 + OffsetBuffers);
-        public int ChildCount => (M.ReadInt(Address + 20 + OffsetBuffers) - M.ReadInt(Address + 16 + OffsetBuffers)) / 4;
-        public bool IsVisibleLocal => (M.ReadInt(Address + 0x7e0) & 1) == 1;
+        public Element Root => ReadObject<Element>(Address + 0x6c + OffsetBuffers);
+        public Element Parent => ReadObject<Element>(Address + 0x70 + OffsetBuffers);
+        public float X => M.ReadFloat(Address + 0x74 + OffsetBuffers);
+        public float Y => M.ReadFloat(Address + 0x78 + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x118 + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x11C + OffsetBuffers);
+        public int ChildCount => (M.ReadInt(Address + 0x14 + OffsetBuffers) - M.ReadInt(Address + 0x10 + OffsetBuffers)) / 4;
+        public bool IsVisibleLocal => (M.ReadInt(Address + 0x68 + OffsetBuffers) & 1) == 1;
 
         public bool IsVisible
         {

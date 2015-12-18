@@ -17,6 +17,7 @@ namespace PoeHUD.Hud.Preload
             DefaultTextColor = new ColorBGRA(210, 210, 210, 255);
             AreaTextColor = new ColorBGRA(150, 200, 250, 255);
             HasCorruptedArea = new ColorBGRA(208, 31, 144, 255);
+            StoneDeviceColor = new ColorBGRA(208, 31, 144, 255);
 
             MasterZana = new ColorBGRA(255, 2550, 0, 255);
             MasterCatarina = new ColorBGRA(100, 255, 255, 255);
@@ -63,6 +64,7 @@ namespace PoeHUD.Hud.Preload
             AugustinaSolaria = new ColorBGRA(254, 192, 118, 255);
         }
         public ToggleNode CorruptedTitle { get; set; }
+        public ColorNode StoneDeviceColor { get; set; }
         public ToggleNode Masters { get; set; }
         public ToggleNode Exiles { get; set; }
         public ToggleNode Strongboxes { get; set; }
