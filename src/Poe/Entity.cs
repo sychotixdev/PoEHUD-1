@@ -5,16 +5,16 @@ namespace PoeHUD.Poe
 {
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
-        private int ComponentLookup => M.ReadInt(Address, 88, 0);
+        private int ComponentLookup => M.ReadInt(Address, 0x58, 0);
         private int ComponentList => M.ReadInt(Address + 4);
         public string Path => M.ReadStringU(M.ReadInt(Address, 8));
-        public int Id => M.ReadInt(Address + 24);
+        public int Id => M.ReadInt(Address + 0x18);
         public long LongId => (long)Id << 32 ^ Path.GetHashCode();
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
         public bool IsValid => M.ReadInt(Address, 8, 0) == 0x65004D;
-        public bool IsHostile => (M.ReadByte(Address + 29) & 1) == 0;
+        public bool IsHostile => (M.ReadByte(Address + 0x1D) & 1) == 0;
         public bool HasComponent<T>() where T : Component, new()
         {
             int addr;
@@ -40,7 +40,7 @@ namespace PoeHUD.Poe
         public T GetComponent<T>() where T : Component, new()
         {
             int addr;
-            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 12) * 4) : GetObject<T>(0);
+            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0xC) * 4) : GetObject<T>(0);
         }
 
         public Dictionary<string, int> GetComponents()
@@ -51,7 +51,7 @@ namespace PoeHUD.Poe
             do
             {
                 string name = M.ReadString(M.ReadInt(addr + 8));
-                int componentAddress = M.ReadInt(ComponentList + M.ReadInt(addr + 12) * 4);
+                int componentAddress = M.ReadInt(ComponentList + M.ReadInt(addr + 0xC) * 4);
                 if (!dictionary.ContainsKey(name) && !string.IsNullOrWhiteSpace(name))
                     dictionary.Add(name, componentAddress);
                 addr = M.ReadInt(addr);

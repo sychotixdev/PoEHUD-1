@@ -9,7 +9,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int Value1 => M.ReadInt(Address, 0);
         public int Value2 => M.ReadInt(Address, 4);
         public int Value3 => M.ReadInt(Address, 8);
-        public int Value4 => M.ReadInt(Address, 12);
+        public int Value4 => M.ReadInt(Address, 0xC);
 
         public string RawName
         {
@@ -43,7 +43,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private void ParseName()
         {
-            rawName = M.ReadStringU(M.ReadInt(Address + 20, 0));
+            rawName = M.ReadStringU(M.ReadInt(Address + 0x14, 0));
             name = rawName.Replace("_", ""); // Master Crafted mod can have underscore on the end, need to ignore
             int ixDigits = name.IndexOfAny("0123456789".ToCharArray());
             if (ixDigits < 0 || !int.TryParse(name.Substring(ixDigits), out level))

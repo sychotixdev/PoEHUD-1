@@ -17,8 +17,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return "";
                 }
-                int num = M.ReadInt(Address + 0x68);
-                return num < 8 ? M.ReadStringU(Address + 0x58, 16) : M.ReadStringU(M.ReadInt(Address + 0x58));
+                int num = M.ReadInt(Address + 0x6C);
+                return num < 8 ? M.ReadStringU(Address + 0x58, 0x10) : M.ReadStringU(M.ReadInt(Address + 0x58));
             }
         }
 

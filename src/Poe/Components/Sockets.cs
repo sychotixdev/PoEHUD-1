@@ -14,8 +14,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return 0;
                 }
-                int num = M.ReadInt(Address + 60);
-                int num2 = M.ReadInt(Address + 64);
+                int num = M.ReadInt(Address + 0x3C);
+                int num2 = M.ReadInt(Address + 0x40);
                 int num3 = num2 - num;
                 if (num3 <= 0 || num3 > 6)
                 {
@@ -43,8 +43,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 60);
-                int num2 = M.ReadInt(Address + 64);
+                int num = M.ReadInt(Address + 0x3C);
+                int num2 = M.ReadInt(Address + 0x40);
                 int num3 = num2 - num;
                 if (num3 <= 0 || num3 > 6)
                 {

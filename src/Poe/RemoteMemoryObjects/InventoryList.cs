@@ -5,8 +5,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class InventoryList : RemoteMemoryObject
     {
-        private int ListStart => M.ReadInt(Address + 112);
-        private int ListEnd => M.ReadInt(Address + 116);
+        private int ListStart => M.ReadInt(Address + 0x70);
+        private int ListEnd => M.ReadInt(Address + 0x74);
         public int InventoryCount => (ListEnd - ListStart) / 16;
 
         public List<Inventory> Inventories

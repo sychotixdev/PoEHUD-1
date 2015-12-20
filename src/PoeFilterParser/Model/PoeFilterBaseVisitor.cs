@@ -188,4 +188,4 @@ namespace PoeFilterParser.Model
             return VisitChildren(context);
         }
     }
-} // namespace PoeFilterParser
+}

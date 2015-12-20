@@ -107,7 +107,7 @@ namespace PoeHUD.Hud.InventoryPreview
 
         private Element GetInventoryZone()
         {
-            return ingameUiElements.ReadObject<Element>(ingameUiElements.InventoryPanel.Address + 0x788 + 0x250);
+            return ingameUiElements.ReadObject<Element>(ingameUiElements.InventoryPanel.Address + 0x778 + 0x26C);
         }
 
         private int GetCellSize(bool extendsSide)

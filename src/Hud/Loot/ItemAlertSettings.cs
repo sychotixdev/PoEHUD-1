@@ -7,7 +7,7 @@ namespace PoeHUD.Hud.Loot
     {
         public ItemAlertSettings()
         {
-            Enable = false;
+            Enable = true;
             ShowItemOnMap = true;
             Crafting = true;
             ShowText = true;

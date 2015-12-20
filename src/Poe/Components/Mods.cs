@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.Components
     {
         public ItemRarity ItemRarity => Address != 0 ? (ItemRarity)M.ReadInt(Address + 0x68) : ItemRarity.Normal;
         public int ItemLevel => Address != 0 ? M.ReadInt(Address + 0x11C) : 1;
-        public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0x110) : 1;
+        public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0x120) : 1;
         public string UniqueName => Address != 0 ? M.ReadStringU(M.ReadInt(Address + 0x1C, 4, 4)) : string.Empty;
         public bool Identified => Address != 0 && M.ReadInt(Address + 0x64) == 1;
         public ItemStats ItemStats => new ItemStats(Owner);

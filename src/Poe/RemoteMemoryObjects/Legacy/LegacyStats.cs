@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects.Legacy
                 {
                     return -1;
                 }
-                int result = 0;
+                int result;
                 if (GetStat(stat, out result))
                 {
                     return result;

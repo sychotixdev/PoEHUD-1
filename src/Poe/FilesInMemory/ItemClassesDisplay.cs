@@ -17,6 +17,7 @@ namespace PoeHUD.Poe.FilesInMemory
                 "Hybrid Flasks",
                 "Currency",
                 "Amulets",
+                "Talismans",
                 "Rings",
                 "Claws",
                 "Daggers",
@@ -53,8 +54,8 @@ namespace PoeHUD.Poe.FilesInMemory
                 "Map Fragments",
                 "Hideout Doodads",
                 "Microtransactions",
-                "Jewel",
-                "Divination Card"
+                "Jewels",
+                "Divination Cards"
             };
             return contents;
         }

@@ -137,9 +137,9 @@ namespace PoeHUD.Poe
         public void DoPatternScans(Memory m)
         {
             int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern, inGameOffsetPattern);
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 22) - m.AddressOfProcess;
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 40) - m.AddressOfProcess;
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 13) - m.AddressOfProcess;
+            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x16) - m.AddressOfProcess;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x28) - m.AddressOfProcess;
+            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xD) - m.AddressOfProcess;
             InGameOffset = m.ReadInt(m.AddressOfProcess + array[3] + 0x13);
         }
     }

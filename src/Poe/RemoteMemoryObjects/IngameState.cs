@@ -20,6 +20,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public float CurLatency => M.ReadFloat(Address + 0xCA0);
         public float CurFrameTime => M.ReadFloat(Address + 0x1100);
         public float CurFps => M.ReadFloat(Address + 0x1370);
-        public TimeSpan TimeInGame => TimeSpan.FromMilliseconds(M.ReadInt(Address + 0xc80));
+        public TimeSpan TimeInGame => TimeSpan.FromMilliseconds(M.ReadInt(Address + 0xC80));
     }
 }

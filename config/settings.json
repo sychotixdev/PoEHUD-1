@@ -50,7 +50,7 @@
     "IconsOnLargeMap": true
   },
   "Item alert": {
-    "Enable": false,
+    "Enable": true,
     "ShowItemOnMap": true,
     "Crafting": true,
     "ShowText": true,
@@ -271,11 +271,14 @@
     "IonDarkshroud": "fec076ff",
     "AshLessard": "fec076ff",
     "WilorinDemontamer": "fec076ff",
-    "AugustinaSolaria": "fec076ff"
+    "AugustinaSolaria": "fec076ff",
+    "DenaLorenni": "fec076ff",
+    "VanthAgiel": "fec076ff",
+    "LaelFuria": "fec076ff"
   },
   "XP per hour": {
     "Enable": true,
-    "ShowInTown": true,
+    "ShowInTown": false,
     "ShowLatency": true,
     "OnlyAreaName": false,
     "TextSize": {
@@ -292,8 +295,8 @@
     "LatencyTextColor": "dcbe82ff"
   },
   "Health bar": {
-    "Enable": false,
-    "ShowInTown": false,
+    "Enable": true,
+    "ShowInTown": true,
     "ShowES": true,
     "ShowIncrements": true,
     "ShowEnemies": true,

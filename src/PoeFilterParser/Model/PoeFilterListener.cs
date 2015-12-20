@@ -154,4 +154,4 @@ namespace PoeFilterParser.Model
 
         void ExitMain([NotNull] PoeFilterParser.MainContext context);
     }
-} // namespace PoeFilterParser
+}

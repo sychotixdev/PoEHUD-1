@@ -209,4 +209,4 @@ namespace PoeFilterParser.Model
         public static readonly ATN _ATN =
             new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
     }
-} // namespace PoeFilterParser
+}

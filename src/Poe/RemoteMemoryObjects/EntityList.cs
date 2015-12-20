@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var dictionary = new Dictionary<int, Entity>();
-                CollectEntities(M.ReadInt(Address + 12), dictionary);
+                CollectEntities(M.ReadInt(Address + 0xC), dictionary);
                 return dictionary;
             }
         }
@@ -30,12 +30,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     continue;
 
                 hashSet.Add(nextAddr);
-                if (M.ReadByte(nextAddr + 21) == 0 && nextAddr != num && nextAddr != 0)
+                if (M.ReadByte(nextAddr + 0x15) == 0 && nextAddr != num && nextAddr != 0)
                 {
-                    int key = M.ReadInt(nextAddr + 12);
+                    int key = M.ReadInt(nextAddr + 0xC);
                     if (!list.ContainsKey(key))
                     {
-                        int address = M.ReadInt(nextAddr + 16);
+                        int address = M.ReadInt(nextAddr + 0x10);
                         var entity = GetObject<Entity>(address);
                         list.Add(key, entity);
                     }

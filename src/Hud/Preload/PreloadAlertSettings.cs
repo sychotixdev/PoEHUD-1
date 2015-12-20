@@ -1,5 +1,5 @@
-﻿using SharpDX;
-using PoeHUD.Hud.Settings;
+﻿using PoeHUD.Hud.Settings;
+using SharpDX;
 
 namespace PoeHUD.Hud.Preload
 {
@@ -62,7 +62,11 @@ namespace PoeHUD.Hud.Preload
             AshLessard = new ColorBGRA(254, 192, 118, 255);
             WilorinDemontamer = new ColorBGRA(254, 192, 118, 255);
             AugustinaSolaria = new ColorBGRA(254, 192, 118, 255);
+            DenaLorenni = new ColorBGRA(254, 192, 118, 255);
+            VanthAgiel = new ColorBGRA(254, 192, 118, 255);
+            LaelFuria = new ColorBGRA(254, 192, 118, 255);
         }
+
         public ToggleNode CorruptedTitle { get; set; }
         public ColorNode StoneDeviceColor { get; set; }
         public ToggleNode Masters { get; set; }
@@ -114,5 +118,8 @@ namespace PoeHUD.Hud.Preload
         public ColorNode AshLessard { get; set; }
         public ColorNode WilorinDemontamer { get; set; }
         public ColorNode AugustinaSolaria { get; set; }
+        public ColorNode DenaLorenni { get; set; }
+        public ColorNode VanthAgiel { get; set; }
+        public ColorNode LaelFuria { get; set; }
     }
 }

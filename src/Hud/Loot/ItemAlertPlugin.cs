@@ -284,7 +284,7 @@ namespace PoeHUD.Hud.Loot
                     if ((ui.OpenLeftPanel.IsVisible && ui.OpenLeftPanel.GetClientRect().Intersects(rect)) || 
                         (ui.OpenRightPanel.IsVisible && ui.OpenRightPanel.GetClientRect().Intersects(rect)))
                     {
-                        return shouldUpdate;
+                        return false;
                     }
 
                     ColorNode borderColor = Settings.BorderSettings.BorderColor;

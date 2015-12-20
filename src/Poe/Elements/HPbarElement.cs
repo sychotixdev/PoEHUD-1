@@ -4,7 +4,7 @@ namespace PoeHUD.Poe.Elements
 {
     public class HPbarElement : Element
     {
-        public Entity MonsterEntity => ReadObject<Entity>(Address + 2412);
+        public Entity MonsterEntity => ReadObject<Entity>(Address + 0x96C);
         public new List<HPbarElement> Children => GetChildren<HPbarElement>();
     }
 }

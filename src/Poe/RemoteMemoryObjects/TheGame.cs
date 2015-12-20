@@ -7,7 +7,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public TheGame(Memory m)
         {
             M = m;
-            Address = m.ReadInt(m.AddressOfProcess + Offsets.Base, 4, 124);
+            Address = m.ReadInt(m.AddressOfProcess + Offsets.Base, 4, 0x7C);
             Game = this;
         }
 

@@ -83,4 +83,4 @@ namespace PoeFilterParser.Model
 
         Result VisitMain([NotNull] PoeFilterParser.MainContext context);
     }
-} // namespace PoeFilterParser
+}

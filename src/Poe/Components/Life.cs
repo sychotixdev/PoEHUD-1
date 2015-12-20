@@ -28,7 +28,7 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-        public bool CorpseUsable => M.ReadBytes(Address + 212, 1)[0] == 1;
+        public bool CorpseUsable => M.ReadBytes(Address + 0xD4, 1)[0] == 1;
 
         public List<Buff> Buffs
         {
