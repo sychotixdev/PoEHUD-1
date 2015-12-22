@@ -279,6 +279,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(corruptedMenu, "Use corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle);
             AddChild(corruptedMenu, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
             AddChild(preloadMenu, "Stone Altar", settingsHub.PreloadAlertSettings.StoneDeviceColor);
+            AddChild(preloadMenu, "Talisman Mods", settingsHub.PreloadAlertSettings.TalismanModsColor);
             AddChild(preloadMenu, "Background color", settingsHub.PreloadAlertSettings.BackgroundColor);
             AddChild(preloadMenu, "Font color", settingsHub.PreloadAlertSettings.DefaultTextColor);
             AddChild(preloadMenu, "Font size", settingsHub.PreloadAlertSettings.TextSize);

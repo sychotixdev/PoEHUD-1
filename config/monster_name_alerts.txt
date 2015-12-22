@@ -1,32 +1,32 @@
 #Metadata;Text;Sound;Color (ARGB);Minimap icon
 #Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;danger.wav
-#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;danger.wav;FFFF0000
-#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;;FFFF0000
-#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;danger.wav;FFFF0000;dot_orange.png
+#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;danger.wav;ffFF0000
+#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;;ffFF0000
+#Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;danger.wav;ffFF0000;dot_orange.png
 #Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate;;;dot_orange.png
 
-Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate nearby;attention.wav
-Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga nearby;attention.wav
-Metadata/Monsters/Exiles/ExileRanger3; Exile Antalie Napora nearby;attention.wav
-Metadata/Monsters/Exiles/ExileDuelist1; Exile Torr Olgosso nearby;attention.wav
-Metadata/Monsters/Exiles/ExileDuelist2; Exile Armios Bell nearby;attention.wav
-Metadata/Monsters/Exiles/ExileDuelist4; Exile Zacharie Desmarais nearby;attention.wav
-Metadata/Monsters/Exiles/ExileWitch1; Exile Minara Anenima nearby;attention.wav
-Metadata/Monsters/Exiles/ExileWitch2; Exile Igna Phoenix nearby;attention.wav
-Metadata/Monsters/Exiles/ExileMarauder1; Exile Jonah Unchained nearby;attention.wav
-Metadata/Monsters/Exiles/ExileMarauder2; Exile Damoi Tui nearby;attention.wav
-Metadata/Monsters/Exiles/ExileMarauder3; Exile Xandro Blooddrinker nearby;attention.wav
-Metadata/Monsters/Exiles/ExileMarauder5; Exile Vickas Giantbone nearby;attention.wav
-Metadata/Monsters/Exiles/ExileTemplar1; Exile Eoin Greyfur nearby;attention.wav
-Metadata/Monsters/Exiles/ExileTemplar2; Exile Tinevin Highdove nearby;attention.wav
-Metadata/Monsters/Exiles/ExileTemplar4; Exile Magnus Stonethorn nearby;attention.wav
-Metadata/Monsters/Exiles/ExileShadow1_; Exile Ion Darkshroud nearby;attention.wav
-Metadata/Monsters/Exiles/ExileShadow2; Exile Ash Lessard nearby;attention.wav
-Metadata/Monsters/Exiles/ExileShadow4; Exile Wilorin Demontamer nearby;attention.wav
-Metadata/Monsters/Exiles/ExileScion2; Exile Augustina Solaria nearby;attention.wav
-Metadata/Monsters/Exiles/ExileWitch3; Exile Dena Lorenni;attention.wav
-Metadata/Monsters/Exiles/ExileMarauder4; Exile Vanth Agiel;attention.wav
-Metadata/Monsters/Exiles/ExileTemplar3; Exile Lael Furia;attention.wav
+Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileRanger3; Exile Antalie Napora nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileDuelist1; Exile Torr Olgosso nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileDuelist2; Exile Armios Bell nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileDuelist4; Exile Zacharie Desmarais nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileWitch1; Exile Minara Anenima nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileWitch2; Exile Igna Phoenix nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileMarauder1; Exile Jonah Unchained nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileMarauder2; Exile Damoi Tui nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileMarauder3; Exile Xandro Blooddrinker nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileMarauder5; Exile Vickas Giantbone nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileTemplar1; Exile Eoin Greyfur nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileTemplar2; Exile Tinevin Highdove nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileTemplar4; Exile Magnus Stonethorn nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileShadow1_; Exile Ion Darkshroud nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileShadow2; Exile Ash Lessard nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileShadow4; Exile Wilorin Demontamer nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileScion2; Exile Augustina Solaria nearby;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileWitch3; Exile Dena Lorenni;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileMarauder4; Exile Vanth Agiel;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileTemplar3; Exile Lael Furia;attention.wav;ffFEC076
 
 Metadata/Monsters/Squid/SquidBossSideArea; The All-seeing Eye
 Metadata/Monsters/Goatman/GoatmanLeapBossSideArea; Konu, Maker of Wind
@@ -121,28 +121,29 @@ Metadata/Monsters/BeyondDemons/BeyondDemon3-4; Bameth, Shifting Darkness
 Metadata/Monsters/BeyondDemons/BeyondDemon3-5; Na'em, Bending Stone
 Metadata/Monsters/BeyondDemons/BeyondDemon3-6; Abaxoth, The End of All That Is
 
-Metadata/Monsters/Spirit/TormentedArsonist; Tormented Arsonist
-Metadata/Monsters/Spirit/TormentedFreezer; Tormented Aurora Cultist
-Metadata/Monsters/Spirit/TormentedBlasphemer; Tormented Blasphemer
-Metadata/Monsters/Spirit/TormentedCannibal; Tormented Cannibal
-Metadata/Monsters/Spirit/TormentedCharlatan; Tormented Charlatan
-Metadata/Monsters/Spirit/TormentedCutthroat; Tormented Cutthroat
-Metadata/Monsters/Spirit/TormentedEmbezzler; Tormented Embezzler
-Metadata/Monsters/Spirit/TormentedCounterfeiter; Tormented Forger
-Metadata/Monsters/Spirit/TormentedMartyr; Tormented Martyr
-Metadata/Monsters/Spirit/TormentedMutilator; Tormented Mutilator
-Metadata/Monsters/Spirit/TormentedNecromancer; Tormented Necromancer
-Metadata/Monsters/Spirit/TormentedPoisoner; Tormented Poisoner
-Metadata/Monsters/Spirit/TormentedRogue; Tormented Rogue
-Metadata/Monsters/Spirit/TormentedLibrarian; Tormented Seditionist
-Metadata/Monsters/Spirit/TormentedSmuggler; Tormented Smuggler
-Metadata/Monsters/Spirit/TormentedSpy; Tormented Spy
-Metadata/Monsters/Spirit/TormentedExperimenter; Tormented Storm Cultist
-Metadata/Monsters/Spirit/TormentedThief; Tormented Thief
-Metadata/Monsters/Spirit/TormentedThug; Tormented Thug
-Metadata/Monsters/Spirit/TormentedCorrupter; Tormented Vaal Cultist
-Metadata/Monsters/Spirit/TormentedWarlord; Tormented Warlord
-Metadata/Monsters/Spirit/TormentedFisherman; Tormented Illegal Fisherman
+Metadata/Monsters/Spirit/TormentedArsonist; Tormented Arsonist;;ff99FF99
+Metadata/Monsters/Spirit/TormentedFreezer; Tormented Aurora Cultist;;ff99FF99
+Metadata/Monsters/Spirit/TormentedBlasphemer; Tormented Blasphemer;;ff99FF99
+Metadata/Monsters/Spirit/TormentedCannibal; Tormented Cannibal;;ff99FF99
+Metadata/Monsters/Spirit/TormentedCharlatan; Tormented Charlatan;;ff99FF99
+Metadata/Monsters/Spirit/TormentedCutthroat; Tormented Cutthroat;;ff99FF99
+Metadata/Monsters/Spirit/TormentedEmbezzler; Tormented Embezzler;;ffFF00FF
+Metadata/Monsters/Spirit/TormentedCounterfeiter; Tormented Forger;;ff99FF99
+Metadata/Monsters/Spirit/TormentedMartyr; Tormented Martyr;;ff99FF99
+Metadata/Monsters/Spirit/TormentedMutilator; Tormented Mutilator;;ff99FF99
+Metadata/Monsters/Spirit/TormentedNecromancer; Tormented Necromancer;;ff99FF99
+Metadata/Monsters/Spirit/TormentedPoisoner; Tormented Poisoner;;ff99FF99
+Metadata/Monsters/Spirit/TormentedRogue; Tormented Rogue;;ff99FF99
+Metadata/Monsters/Spirit/TormentedLibrarian; Tormented Seditionist;;ff99FF99
+Metadata/Monsters/Spirit/TormentedSmuggler; Tormented Smuggler;;ff99FF99
+Metadata/Monsters/Spirit/TormentedSpy; Tormented Spy;;ff99FF99
+Metadata/Monsters/Spirit/TormentedExperimenter; Tormented Storm Cultist;;ff99FF99
+Metadata/Monsters/Spirit/TormentedThief; Tormented Thief;;ff99FF99
+Metadata/Monsters/Spirit/TormentedThug; Tormented Thug;;ff99FF99
+Metadata/Monsters/Spirit/TormentedCorrupter; Tormented Vaal Cultist;;ff99FF99
+Metadata/Monsters/Spirit/TormentedWarlord; Tormented Warlord;;ff99FF99
+Metadata/Monsters/Spirit/TormentedFisherman; Tormented Illegal Fisherman;;ffFF00FF
+
 Metadata/Monsters/Rhoas/RhoaAlbino; Albino Rhoa
 
 Metadata/Monsters/Wb/WbLightningGrunt1; Brinerot Raider
@@ -216,13 +217,13 @@ Metadata/Monsters/Wb/WbChaosLeader5; Marchak, The Betrayer
 Metadata/Monsters/Wb/WbChaosLeader6; Berrots, The Breaker
 Metadata/Monsters/Wb/WbChaosLeader7; Vessider, The Unrivaled
 Metadata/Monsters/Wb/WbChaosLeader8; Morgrants, The Defeaning
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire1; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire2; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire3; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire4; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire5; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire6; Gemling Legionnaire
-Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire7; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire1; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire2; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire3; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire4; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire5; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire6; Gemling Legionnaire
+#Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire7; Gemling Legionnaire
 Metadata/Monsters/Revenant/RevenantBoss; The Bone Queen
 Metadata/Monsters/Revenant/RevenantMapBoss; Thraxia
 Metadata/Monsters/DaressoExiles/ExileArenaMarauder; Dimachaeri Cassius

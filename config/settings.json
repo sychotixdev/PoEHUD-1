@@ -192,7 +192,7 @@
     },
     "ShowText": true,
     "TextSize": {
-      "Value": 22,
+      "Value": 24,
       "Min": 10,
       "Max": 50
     },
@@ -217,8 +217,9 @@
   },
   "Preload alert": {
     "Enable": true,
+    "TalismanModsColor": "d75aafff",
     "CorruptedTitle": true,
-    "StoneDeviceColor": "d01f90ff",
+    "StoneDeviceColor": "ffffffff",
     "Masters": true,
     "Exiles": true,
     "Strongboxes": true,
@@ -295,8 +296,8 @@
     "LatencyTextColor": "dcbe82ff"
   },
   "Health bar": {
-    "Enable": true,
-    "ShowInTown": true,
+    "Enable": false,
+    "ShowInTown": false,
     "ShowES": true,
     "ShowIncrements": true,
     "ShowEnemies": true,
@@ -379,7 +380,7 @@
       }
     },
     "NormalEnemy": {
-      "Enable": true,
+      "Enable": false,
       "Width": {
         "Value": 80.0,
         "Min": 50.0,
@@ -418,7 +419,7 @@
       }
     },
     "MagicEnemy": {
-      "Enable": true,
+      "Enable": false,
       "Width": {
         "Value": 100.0,
         "Min": 50.0,
@@ -534,7 +535,7 @@
         "Max": 10
       }
     },
-    "ShowDebuffPanel": true,
+    "ShowDebuffPanel": false,
     "DebuffPanelIconSize": {
       "Value": 20,
       "Min": 15,

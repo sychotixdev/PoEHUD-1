@@ -122,6 +122,22 @@ namespace PoeHUD.Hud.Preload
                     alerts.Add(new PreloadConfigLine { Text = "Stone Altar", FastColor = () => Settings.StoneDeviceColor });
                 }
 
+                Dictionary<string, PreloadConfigLine> Talismans = new Dictionary<string, PreloadConfigLine>
+                {
+                    {"Metadata/Monsters/Daemon/TalismanDaemonDevour", new PreloadConfigLine { Text = "Unset Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanT1SummonBonespireDaemon", new PreloadConfigLine { Text = "Increased Mana Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanDaemonIceRuneTrap", new PreloadConfigLine { Text = "Cold Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanDaemonSummonRagingSpirits", new PreloadConfigLine { Text = "Fire Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanDaemonLightningBeacons", new PreloadConfigLine { Text = "Lightning Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanDaemonShockwave", new PreloadConfigLine { Text = "Physical Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanT1TimeDistortion", new PreloadConfigLine { Text = "Atk & Cast Speed Talisman", FastColor = () => Settings.TalismanModsColor}},
+                    {"Metadata/Monsters/Daemon/TalismanDaemonZombieMinion", new PreloadConfigLine { Text = "Plus 1 Zombies Talisman", FastColor = () => Settings.TalismanModsColor}}
+                };
+
+                PreloadConfigLine talismans = Talismans.Where(kv => text
+                    .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
+                if (talismans != null) { alerts.Add(talismans); }
+
                 Dictionary<string, PreloadConfigLine> Strongboxes = new Dictionary<string, PreloadConfigLine>
                 {
                     {"Metadata/Chests/StrongBoxes/Arcanist", new PreloadConfigLine { Text = "Arcanist's Strongbox", FastColor = () => Settings.ArcanistStrongbox }},

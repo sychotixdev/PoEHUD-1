@@ -3,9 +3,9 @@
     SetBorderColor 175 96 37
 	#PlayAlertSound 7 100
 
-Show
-    BaseType "Flask"
-    SetBorderColor 255 255 204 100
+#Show
+    #BaseType "Flask"
+    #SetBorderColor 255 255 204 100
 	#PlayAlertSound 7 100
 
 Show
@@ -26,9 +26,24 @@ Show
 	#PlayAlertSound 7 100
 
 Show
+	Rarity = Normal
     BaseType Talisman
     SetTextColor 208 31 144
-    SetBorderColor 220 20 60
+    SetBorderColor 240 240 240
+    PlayAlertSound 7 100
+
+Show
+	Rarity = Magic
+    BaseType Talisman
+    SetTextColor 208 31 144
+    SetBorderColor 30 144 255
+    PlayAlertSound 7 100
+	
+Show
+	Rarity = Rare
+    BaseType Talisman
+    SetTextColor 208 31 144
+    SetBorderColor 255 255 0
     PlayAlertSound 7 100
 	
 Show
@@ -85,14 +100,14 @@ Show
 
 Show
     Rarity = Normal
-    BaseType "Ambusher" "Copper Kris" "Golden Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
+    BaseType "Ambusher" "Platinum Kris" "Golden Kris" "Copper Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
     SetTextColor 255 255 255
     SetBorderColor 0 150 255
 	#PlayAlertSound 7 100
 
 Show
     Rarity = Rare
-    BaseType "Ambusher" "Copper Kris" "Golden Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
+    BaseType "Ambusher" "Platinum Kris" "Golden Kris" "Copper Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
     SetBorderColor 0 150 255
 	#PlayAlertSound 7 100
 

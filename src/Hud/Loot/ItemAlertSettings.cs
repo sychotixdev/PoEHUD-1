@@ -9,11 +9,11 @@ namespace PoeHUD.Hud.Loot
         {
             Enable = true;
             ShowItemOnMap = true;
-            Crafting = true;
+            Crafting = false;
             ShowText = true;
             HideOthers = true;
             PlaySound = true;
-            SoundVolume = new RangeNode<int>(20, 0, 100);
+            SoundVolume = new RangeNode<int>(40, 0, 100);
             TextSize = new RangeNode<int>(16, 10, 50);
             Rares = true;
             Uniques = true;
