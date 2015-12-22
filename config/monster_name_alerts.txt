@@ -24,9 +24,9 @@ Metadata/Monsters/Exiles/ExileShadow1_; Exile Ion Darkshroud nearby;attention.wa
 Metadata/Monsters/Exiles/ExileShadow2; Exile Ash Lessard nearby;attention.wav;ffFEC076
 Metadata/Monsters/Exiles/ExileShadow4; Exile Wilorin Demontamer nearby;attention.wav;ffFEC076
 Metadata/Monsters/Exiles/ExileScion2; Exile Augustina Solaria nearby;attention.wav;ffFEC076
-Metadata/Monsters/Exiles/ExileWitch3; Exile Dena Lorenni;attention.wav;ffFEC076
-Metadata/Monsters/Exiles/ExileMarauder4; Exile Vanth Agiel;attention.wav;ffFEC076
-Metadata/Monsters/Exiles/ExileTemplar3; Exile Lael Furia;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileWitch4; Exile Dena Lorenni;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileScion4; Exile Vanth Agiel;attention.wav;ffFEC076
+Metadata/Monsters/Exiles/ExileScion3; Exile Lael Furia;attention.wav;ffFEC076
 
 Metadata/Monsters/Squid/SquidBossSideArea; The All-seeing Eye
 Metadata/Monsters/Goatman/GoatmanLeapBossSideArea; Konu, Maker of Wind
