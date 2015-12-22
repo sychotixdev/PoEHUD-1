@@ -331,7 +331,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="poehud.ico" />
-    <Content Include="vmv.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
