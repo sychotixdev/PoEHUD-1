@@ -366,10 +366,10 @@ namespace PoeHUD.Hud.Loot
         private string GetItemName(KeyValuePair<EntityWrapper, AlertDrawStyle> kv)
         {
             string text;
-            EntityLabel labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(kv.Key);
+            Entity itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
+            EntityLabel labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
             if (labelForEntity == null)
             {
-                Entity itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
                 if (!itemEntity.IsValid)
                 {
                     return null;

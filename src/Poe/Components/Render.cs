@@ -4,8 +4,8 @@ namespace PoeHUD.Poe.Components
 {
     public class Render : Component
     {
-        public float X => Address != 0 ? M.ReadFloat(Address + 0x38) : 0f;
-        public float Y => Address != 0 ? M.ReadFloat(Address + 0x3C) : 0f;
+        public float X => Address != 0 ? M.ReadFloat(Address + 0x74) : 0f;
+        public float Y => Address != 0 ? M.ReadFloat(Address + 0x78) : 0f;
         public float Z => Address != 0 ? M.ReadFloat(Address + 0x90) : 0f;
         public Vector3 Pos => new Vector3(X, Y, Z);
 

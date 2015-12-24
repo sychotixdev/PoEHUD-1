@@ -103,11 +103,23 @@ namespace PoeHUD.Hud
         private Vector2 GetUnderCornerMap()
         {
             const int EPSILON = 1;
+            Element questPanel = gameController.Game.IngameState.IngameUi.QuestTracker;
             Element gemPanel = gameController.Game.IngameState.IngameUi.GemLvlUpPanel;
+            RectangleF questPanelRect = questPanel.GetClientRect();
             RectangleF gemPanelRect = gemPanel.GetClientRect();
-            RectangleF mapRect = gameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect();
-            RectangleF clientRect = gemPanel.IsVisible && Math.Abs(gemPanelRect.Right - mapRect.Right) < EPSILON ? gemPanel.GetClientRect() : mapRect;
-            return new Vector2(mapRect.X + mapRect.Width, clientRect.Y + clientRect.Height + 10);
+            RectangleF clientRect = gameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect();
+            if (gemPanel.IsVisible && Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
+            {
+                // gem panel is visible, add its height
+                clientRect.Height += gemPanelRect.Height;
+            }
+            if (questPanel.IsVisible && Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
+            {
+                // quest panel is visible, add its height
+                clientRect.Height += questPanelRect.Height;
+            }
+
+            return new Vector2(clientRect.X + clientRect.Width, clientRect.Y + clientRect.Height + 10);
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e)

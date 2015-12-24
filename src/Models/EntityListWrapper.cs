@@ -112,7 +112,7 @@ namespace PoeHUD.Models
         }
 
 
-        public EntityLabel GetLabelForEntity(EntityWrapper entity)
+        public EntityLabel GetLabelForEntity(Entity entity)
         {
             var hashSet = new HashSet<int>();
             int entityLabelMap = gameController.Game.IngameState.EntityLabelMap;

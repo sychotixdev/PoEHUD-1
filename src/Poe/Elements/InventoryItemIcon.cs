@@ -1,4 +1,5 @@
 using System;
+using PoeHUD.Poe.Components;
 
 namespace PoeHUD.Poe.Elements
 {
@@ -12,7 +13,7 @@ namespace PoeHUD.Poe.Elements
         public InventoryItemIcon()
         {
             toolTipOnground = () => Game.IngameState.IngameUi.ItemOnGroundTooltip;
-            inventoryItemTooltip = () => ReadObject<Element>(Address + 0x80C);
+            inventoryItemTooltip = () => ReadObject<Element>(Address + 0xA7C);
             itemInChatTooltip = () => ReadObject<Element>(Address + 0x808); //bug wrong
         }
 
@@ -25,7 +26,7 @@ namespace PoeHUD.Poe.Elements
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        return toolTipOnground();
+                        return toolTipOnground().Tooltip;
                     case ToolTipType.InventoryItem:
                         return inventoryItemTooltip();
                     case ToolTipType.ItemInChat:
@@ -42,9 +43,9 @@ namespace PoeHUD.Poe.Elements
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        return toolTipOnground().Item;
+                        return Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x138).ReadObjectAt<Entity>(0x95C).GetComponent<WorldItem>().ItemEntity;
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0xA98);
+                        return ReadObject<Entity>(Address + 0xAA0);
                 }
                 return null;
             }
@@ -52,10 +53,15 @@ namespace PoeHUD.Poe.Elements
 
         private ToolTipType GetToolTipType()
         {
-            Element tlTipOnground = toolTipOnground().ToolTip;
-            if (tlTipOnground != null && tlTipOnground.IsVisible)
+            if (inventoryItemTooltip() != null && inventoryItemTooltip().IsVisible)
+            {
+                return ToolTipType.InventoryItem;
+            }
+            if (toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
+            {
                 return ToolTipType.ItemOnGround;
-            return inventoryItemTooltip() != null ? ToolTipType.InventoryItem : ToolTipType.None;
+            }
+            return ToolTipType.None;
         }
     }
 

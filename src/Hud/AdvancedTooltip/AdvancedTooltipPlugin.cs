@@ -58,10 +58,9 @@ namespace PoeHUD.Hud.AdvancedTooltip
 
             Element uiHover = GameController.Game.IngameState.UIHover;
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
-            Element tooltip = GetTooltip(inventoryItemIcon);
+            Element tooltip = inventoryItemIcon.Tooltip;
             Entity poeEntity = inventoryItemIcon.Item;
             if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
-
             RectangleF tooltipRect = tooltip.GetClientRect();
             var modsComponent = poeEntity.GetComponent<Mods>();
             if (itemEntity == null || itemEntity.Id != poeEntity.Id)
@@ -93,13 +92,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
             {
                 DrawWeaponDps(tooltipRect);
             }
-        }
-
-        private static Element GetTooltip(InventoryItemIcon inventoryItemIcon)
-        {
-            Element tooltip = inventoryItemIcon.Tooltip;
-            Element child = tooltip?.GetChildAtIndex(0);
-            return child?.GetChildAtIndex(1);
         }
 
         private Vector2 DrawMod(ModValue item, Vector2 position)
