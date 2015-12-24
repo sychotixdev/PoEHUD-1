@@ -3,7 +3,7 @@
 #Example MonsterNemesisUniqueDrop; Inner Treasure nearby; danger.wav; ff00FF00
 #Example MonsterNemesisUniqueDrop; Inner Treasure nearby; ; ff00FF00
 #Example MonsterNemesisUniqueDrop; Inner Treasure nearby; danger.wav; ff00FF00; dot_green.png
-#Example MonsterNemesisUniqueDrop; Inner Treasure nearby; ; ;d ot_green.png
+#Example MonsterNemesisUniqueDrop; Inner Treasure nearby; ; ;dot_green.png
 
 MonsterNemesisUniqueDrop; Inner Treasure nearby;treasure.wav; ff00CC00; treasure.png
 MonsterImplicitNemesisUniqueDrop; Inner Treasure nearby;treasure.wav; ff00CC00; treasure.png
