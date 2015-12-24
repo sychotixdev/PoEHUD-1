@@ -84,6 +84,11 @@
       "Min": 0,
       "Max": 6
     },
+    "LootIcon": {
+      "Value": 7,
+      "Min": 1,
+      "Max": 14
+    },
     "Show quality items": {
       "Enable": true,
       "Weapon": {
@@ -207,13 +212,53 @@
       "Value": 85,
       "Min": 0,
       "Max": 100
+    },
+    "MinionsIcon": {
+      "Value": 4,
+      "Min": 1,
+      "Max": 8
+    },
+    "WhiteMobIcon": {
+      "Value": 4,
+      "Min": 1,
+      "Max": 8
+    },
+    "MagicMobIcon": {
+      "Value": 6,
+      "Min": 1,
+      "Max": 12
+    },
+    "RareMobIcon": {
+      "Value": 8,
+      "Min": 1,
+      "Max": 16
+    },
+    "UniqueMobIcon": {
+      "Value": 10,
+      "Min": 1,
+      "Max": 20
     }
   },
   "Poi tracker": {
     "Enable": true,
     "Masters": true,
     "Strongboxes": true,
-    "Chests": true
+    "Chests": true,
+    "MastersIcon": {
+      "Value": 8,
+      "Min": 1,
+      "Max": 16
+    },
+    "StrongboxesIcon": {
+      "Value": 14,
+      "Min": 1,
+      "Max": 28
+    },
+    "ChestsIcon": {
+      "Value": 3,
+      "Min": 1,
+      "Max": 6
+    }
   },
   "Preload alert": {
     "Enable": true,

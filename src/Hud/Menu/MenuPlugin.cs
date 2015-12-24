@@ -274,6 +274,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(strongboxes, "Kaom", settingsHub.PreloadAlertSettings.KaomStrongbox);
             AddChild(strongboxes, "Malachai", settingsHub.PreloadAlertSettings.MalachaiStrongbox);
             AddChild(strongboxes, "Epic", settingsHub.PreloadAlertSettings.EpicStrongbox);
+            //AddChild(strongboxes, "BarrelOfSpiders", settingsHub.PreloadAlertSettings.BarrelOfSpiders);
             AddChild(strongboxes, "Simple", settingsHub.PreloadAlertSettings.SimpleStrongbox);
             var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.Strongboxes);
             AddChild(corruptedMenu, "Use corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle);
@@ -315,6 +316,16 @@ namespace PoeHUD.Hud.Menu
 
             // Map icons
             MenuItem mapIconsMenu = AddChild(root, "Map icons", settingsHub.MapIconsSettings.Enable);
+            MenuItem iconSizeMenu = AddChild(mapIconsMenu, "Icon sizes", settingsHub.MonsterTrackerSettings.ShowText);
+            AddChild(iconSizeMenu, "White Mob Icon", settingsHub.MonsterTrackerSettings.WhiteMobIcon);
+            AddChild(iconSizeMenu, "Magic Mob Icon", settingsHub.MonsterTrackerSettings.MagicMobIcon);
+            AddChild(iconSizeMenu, "Rare Mob Icon", settingsHub.MonsterTrackerSettings.RareMobIcon);
+            AddChild(iconSizeMenu, "Unique Mob Icon", settingsHub.MonsterTrackerSettings.UniqueMobIcon);
+            AddChild(iconSizeMenu, "Minions Icon", settingsHub.MonsterTrackerSettings.MinionsIcon);
+            AddChild(iconSizeMenu, "Masters Icon", settingsHub.PoiTrackerSettings.MastersIcon);
+            AddChild(iconSizeMenu, "Chests Icon", settingsHub.PoiTrackerSettings.ChestsIcon);
+            AddChild(iconSizeMenu, "Strongboxes Icon", settingsHub.PoiTrackerSettings.StrongboxesIcon);
+            AddChild(iconSizeMenu, "Item loot Icon", settingsHub.ItemAlertSettings.LootIcon);
             AddChild(mapIconsMenu, "Minimap icons", settingsHub.MapIconsSettings.IconsOnMinimap);
             AddChild(mapIconsMenu, "Large map icons", settingsHub.MapIconsSettings.IconsOnLargeMap);
             AddChild(mapIconsMenu, "Drop items", settingsHub.ItemAlertSettings.ShowItemOnMap);

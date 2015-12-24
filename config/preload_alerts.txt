@@ -1,4 +1,4 @@
-#Metadata;Text;colour (ARGB)
+#Metadata; Text; Color (ARGB)
 #Example Metadata/Chests/StrongBoxes/Strongbox; ; ff00FF00
 
 #Metadata/Chests/StrongBoxes/Strongbox; ; ffD2D2D2
@@ -21,11 +21,21 @@
 #Metadata/Chests/StrongBoxes/ArmoryStrongBox.ao;  Armourer's Strongbox; ffD2D2D2
 #Metadata/Chests/StrongBoxes/Arcanist;  Arcanist's Strongbox; ffFF00FF
 #Metadata/Chests/StrongBoxes/ArcanistStrongBox.ao;  Arcanist's Strongbox; ffFF00FF
-#Metadata/Chests/CopperChestEpic3;  Large Chest; ffAF6025
-#Metadata/Chests/CopperChests/CopperChestEpic3.ao;  Large Chest; ffAF6025
+#Metadata/Chests/CopperChestEpic3;  Epic Chest; ffAF6025
+#Metadata/Chests/CopperChests/CopperChestEpic3.ao;  Epic Chest; ffAF6025
 #Metadata/Chests/StrongBoxes/PerandusBox.ao;  Perandus Strongbox; ffAF6025
 #Metadata/Chests/StrongBoxes/KaomBox.ao;  Kaom Strongbox; ffAF6025
 #Metadata/Chests/StrongBoxes/MalachaisBox.ao;  Malachai Strongbox; ffAF6025
+Metadata/Chests/Barrels/Barrel1; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel1.ao; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel2; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel2.ao; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel3; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel3.ao; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel4; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel4.ao; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel5; Strange Barrel; ffAF6025
+Metadata/Chests/Barrels/Barrel5.ao; Strange Barrel; ffAF6025
 
 #Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate; ffFEC076
 #Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga; ffFEC076
@@ -252,16 +262,16 @@ Metadata/Monsters/Skeletons/WbSkeletonMinionCasterFire; Risen Battlemage
 Metadata/Monsters/Skeletons/WbSkeletonMinionCasterCold; Risen Battlemage
 Metadata/Monsters/Skeletons/WbSkeletonMinionCasterLightning; Risen Battlemage
 
-Metadata/Monsters/Wb/WbChaosLeader1; Rama, The Kinslayer; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader2; Kalria, The Fallen; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader2Skeleton; Kalria, The Risen; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader3; Invari, The Bloodshaper; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader4; Lokan, The Deceiver; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader4Minion; Lokan, The Deceiver; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader5; Marchak, The Betrayer; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader6; Berrots, The Breaker; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader7; Vessider, The Unrivaled; FFD01F90
-Metadata/Monsters/Wb/WbChaosLeader8; Morgrants, The Defeaning; FFD01F90
+Metadata/Monsters/Wb/WbChaosLeader1; Rama, The Kinslayer; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader2; Kalria, The Fallen; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader2Skeleton; Kalria, The Risen; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader3; Invari, The Bloodshaper; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader4; Lokan, The Deceiver; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader4Minion; Lokan, The Deceiver; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader5; Marchak, The Betrayer; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader6; Berrots, The Breaker; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader7; Vessider, The Unrivaled; ffD01F90
+Metadata/Monsters/Wb/WbChaosLeader8; Morgrants, The Defeaning; ffD01F90
 
 Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire1; Gemling Legionnaire
 Metadata/Monsters/GemlingLegionnaire/GemlingLegionnaire2; Gemling Legionnaire

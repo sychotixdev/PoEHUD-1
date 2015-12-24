@@ -25,6 +25,7 @@ namespace PoeHUD.Hud.Loot
             Rgb = true;
             MinLinks = new RangeNode<int>(5, 0, 6);
             MinSockets = new RangeNode<int>(6, 0, 6);
+            LootIcon = new RangeNode<int>(7, 1, 14);
             QualityItems = new QualityItemsSettings();
             BorderSettings = new BorderSettings();
             WithBorder = true;
@@ -51,6 +52,7 @@ namespace PoeHUD.Hud.Loot
         public ToggleNode Rgb { get; set; }
         public RangeNode<int> MinLinks { get; set; }
         public RangeNode<int> MinSockets { get; set; }
+        public RangeNode<int> LootIcon { get; set; }
         [JsonProperty("Show quality items")]
         public QualityItemsSettings QualityItems { get; set; }
         public BorderSettings BorderSettings { get; set; }

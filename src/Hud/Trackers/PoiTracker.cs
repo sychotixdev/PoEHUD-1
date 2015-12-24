@@ -43,14 +43,14 @@ namespace PoeHUD.Hud.Trackers
         {
             if (e.HasComponent<NPC>() && masters.Contains(e.Path))
             {
-                return new CreatureMapIcon(e, "ms-cyan.png", () => Settings.Masters, 6);
+                return new CreatureMapIcon(e, "ms-cyan.png", () => Settings.Masters, Settings.MastersIcon);
             }
             if (e.HasComponent<Chest>() && !e.GetComponent<Chest>().IsOpened)
             {
                 return e.GetComponent<Chest>().IsStrongbox
                     ? new ChestMapIcon(e, new HudTexture("strongbox.png", 
-                    e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, 14)
-                    : new ChestMapIcon(e, new HudTexture("chest.png"), () => Settings.Chests, 3);
+                    e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIcon)
+                    : new ChestMapIcon(e, new HudTexture("chest.png"), () => Settings.Chests, Settings.ChestsIcon);
             }
             return null;
         }

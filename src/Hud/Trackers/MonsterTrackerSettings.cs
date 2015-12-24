@@ -18,6 +18,11 @@ namespace PoeHUD.Hud.Trackers
             TextPositionX = new RangeNode<int>(50, 0, 100);
             TextPositionY = new RangeNode<int>(85, 0, 100);
             DefaultTextColor = Color.Red;
+            MinionsIcon = new RangeNode<int>(4, 1, 8);
+            WhiteMobIcon = new RangeNode<int>(4, 1, 8);
+            MagicMobIcon = new RangeNode<int>(6, 1, 12);
+            RareMobIcon = new RangeNode<int>(8, 1, 16);
+            UniqueMobIcon = new RangeNode<int>(10, 1, 20);
         }
 
         public ToggleNode Monsters { get; set; }
@@ -30,5 +35,10 @@ namespace PoeHUD.Hud.Trackers
         public ColorNode BackgroundColor { get; set; }
         public RangeNode<int> TextPositionX { get; set; }
         public RangeNode<int> TextPositionY { get; set; }
+        public RangeNode<int> MinionsIcon { get; set; }
+        public RangeNode<int> WhiteMobIcon { get; set; }
+        public RangeNode<int> MagicMobIcon { get; set; }
+        public RangeNode<int> RareMobIcon { get; set; }
+        public RangeNode<int> UniqueMobIcon { get; set; }
     }
 }

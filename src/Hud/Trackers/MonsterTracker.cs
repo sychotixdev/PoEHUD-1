@@ -30,10 +30,10 @@ namespace PoeHUD.Hud.Trackers
             Func<bool> monsterSettings = () => Settings.Monsters;
             iconCreators = new Dictionary<MonsterRarity, Func<EntityWrapper, Func<string, string>, CreatureMapIcon>>
             {
-                { MonsterRarity.White, (e,f) => new CreatureMapIcon(e, f("ms-red.png"), monsterSettings, 4) },
-                { MonsterRarity.Magic, (e,f) => new CreatureMapIcon(e, f("ms-blue.png"), monsterSettings, 4) },
-                { MonsterRarity.Rare, (e,f) => new CreatureMapIcon(e, f("ms-yellow.png"), monsterSettings, 8) },
-                { MonsterRarity.Unique, (e,f) => new CreatureMapIcon(e, f("ms-purple.png"), monsterSettings, 8) }
+                { MonsterRarity.White, (e,f) => new CreatureMapIcon(e, f("ms-red.png"), monsterSettings, settings.WhiteMobIcon) },
+                { MonsterRarity.Magic, (e,f) => new CreatureMapIcon(e, f("ms-blue.png"), monsterSettings, settings.MagicMobIcon) },
+                { MonsterRarity.Rare, (e,f) => new CreatureMapIcon(e, f("ms-yellow.png"), monsterSettings, settings.RareMobIcon) },
+                { MonsterRarity.Unique, (e,f) => new CreatureMapIcon(e, f("ms-purple.png"), monsterSettings, settings.UniqueMobIcon) }
             };
             GameController.Area.OnAreaChange += area =>
             {
@@ -165,7 +165,7 @@ namespace PoeHUD.Hud.Trackers
         {
             if (!entity.IsHostile)
             {
-                return new CreatureMapIcon(entity, "ms-cyan.png", () => Settings.Minions, 4);
+                return new CreatureMapIcon(entity, "ms-cyan.png", () => Settings.Minions, Settings.MinionsIcon);
             }
 
             MonsterRarity monsterRarity = entity.GetComponent<ObjectMagicProperties>().Rarity;
