@@ -57,11 +57,11 @@ namespace PoeHUD.Poe.Elements
             {
                 return ToolTipType.InventoryItem;
             }
-            if (toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
+/*            if (toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
             {
                 return ToolTipType.ItemOnGround;
             }
-            return ToolTipType.None;
+*/            return ToolTipType.None;
         }
     }
 
