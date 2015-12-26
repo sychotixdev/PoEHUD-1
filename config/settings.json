@@ -52,12 +52,12 @@
   "Item alert": {
     "Enable": true,
     "ShowItemOnMap": true,
-    "Crafting": true,
+    "Crafting": false,
     "ShowText": true,
     "HideOthers": true,
     "PlaySound": true,
     "SoundVolume": {
-      "Value": 20,
+      "Value": 40,
       "Min": 0,
       "Max": 100
     },
@@ -151,10 +151,12 @@
     "Item level": {
       "Enable": true,
       "TextSize": {
-        "Value": 16,
+        "Value": 18,
         "Min": 10,
         "Max": 50
-      }
+      },
+      "TextColor": "ffff00ff",
+      "BackgroundColor": "000000e6"
     },
     "Item mods": {
       "Enable": false,
@@ -432,7 +434,7 @@
         "Max": 180.0
       },
       "Height": {
-        "Value": 10.0,
+        "Value": 12.0,
         "Min": 10.0,
         "Max": 50.0
       },
@@ -464,15 +466,15 @@
       }
     },
     "MagicEnemy": {
-      "Enable": false,
+      "Enable": true,
       "Width": {
-        "Value": 100.0,
+        "Value": 120.0,
         "Min": 50.0,
         "Max": 180.0
       },
       "Height": {
-        "Value": 12.0,
-        "Min": 10.0,
+        "Value": 20.0,
+        "Min": 15.0,
         "Max": 50.0
       },
       "Color": "ff0000ff",

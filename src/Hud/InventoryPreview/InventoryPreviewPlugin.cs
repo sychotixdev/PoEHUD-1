@@ -125,7 +125,7 @@ namespace PoeHUD.Hud.InventoryPreview
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
             if (inventoryItemIcon.ToolTipType == ToolTipType.ItemOnGround)
             {
-                RectangleF itemElementRectangle = inventoryItemIcon.Tooltip.GetChildAtIndex(0).GetClientRect();
+                RectangleF itemElementRectangle = inventoryItemIcon.Tooltip.GetChildAtIndex(0).GetChildAtIndex(0).GetClientRect();
                 var item = inventoryItemIcon.Item;
                 var inventoryZone = GetInventoryZone();
                 RectangleF inventoryZoneRectangle = inventoryZone.GetClientRect();

@@ -3,6 +3,6 @@
     public class ItemOnGroundTooltip : Element
     {
         public Element Tooltip => GetChildAtIndex(0);
-        public Element TooltipUI => GetChildAtIndex(0).GetChildAtIndex(0);
+        public Element TooltipUI => GetChildAtIndex(0);
     }
 }

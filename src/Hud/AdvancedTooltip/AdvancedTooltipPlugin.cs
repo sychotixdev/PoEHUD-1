@@ -55,7 +55,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
             {
                 holdKey = false;
             }
-
             Element uiHover = GameController.Game.IngameState.UIHover;
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
             Element tooltip = inventoryItemIcon.Tooltip;
@@ -73,7 +72,9 @@ namespace PoeHUD.Hud.AdvancedTooltip
             if (Settings.ItemLevel.Enable)
             {
                 string itemLevel = Convert.ToString(modsComponent.ItemLevel);
-                Graphics.DrawText(itemLevel, Settings.ItemLevel.TextSize, tooltipRect.TopLeft.Translate(1, -3), Color.Yellow);
+                var imageSize = Settings.ItemLevel.TextSize + 10;
+                Graphics.DrawText(itemLevel, Settings.ItemLevel.TextSize, tooltipRect.TopLeft.Translate(2, 2), Settings.ItemLevel.TextColor);
+                Graphics.DrawImage("menu-colors.png", new RectangleF(tooltipRect.TopLeft.X - 2, tooltipRect.TopLeft.Y - 2, imageSize, imageSize), Settings.ItemLevel.BackgroundColor);
             }
 
             if (Settings.ItemMods.Enable)
