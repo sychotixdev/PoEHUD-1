@@ -4,19 +4,12 @@ PoeHud - Currently DETECTED, use it on your own risk!
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
 
-### Requirements
-
-* .NET framerwork v.4.6 or newer (you already have it on Windows 8+)
-* Windows Vista or newer (XP won't work)
-* Path of Exile should be running in Windowed or Windowed Fullscreen mode (the pure Fullscreen mode does not let PoeHUD draw anything over the game window)
-* Windows Aero transparency effects must be enabled. (If you get a black screen this is the issue)
-
 ### Keyboard Info
 
 * Press F12 to show / hide the Menu
 * Press F9 to show / hide Item Mods
 * Hold F10 to hide all huds
-* Press F5 to refresh the current area (usefull for Darkshrine event)
+* Press F5 to refresh the current area.
 
 ### Available features
 
@@ -59,3 +52,10 @@ Also the mods used for mobs and items are listed in Content.ggpk\Data\Mods.dat.
 ```
 git submodule update --init --recursive
 ```
+
+### Requirements
+
+* .NET framerwork v.4.6 or newer (you already have it on Windows 8+)
+* Windows Vista or newer (XP won't work)
+* Path of Exile should be running in Windowed or Windowed Fullscreen mode (the pure Fullscreen mode does not let PoeHUD draw anything over the game window)
+* Windows Aero transparency effects must be enabled. (If you get a black screen this is the issue)
