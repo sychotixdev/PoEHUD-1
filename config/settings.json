@@ -184,7 +184,8 @@
         "Value": 13,
         "Min": 10,
         "Max": 50
-      }
+      },
+      "BackgroundColor": "ffff00ff"
     }
   },
   "Monster tracker": {

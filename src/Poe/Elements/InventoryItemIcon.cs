@@ -43,7 +43,10 @@ namespace PoeHUD.Poe.Elements
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        return Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x138).ReadObjectAt<Entity>(0x95C).GetComponent<WorldItem>().ItemEntity;
+                        return Game.IngameState.IngameUi
+                            .ReadObjectAt<ItemsOnGroundLabelElement>(0x138)
+                            .ReadObjectAt<Entity>(0x95C)
+                            .GetComponent<WorldItem>().ItemEntity;
                     case ToolTipType.InventoryItem:
                         return ReadObject<Entity>(Address + 0xAA0);
                 }
@@ -57,7 +60,7 @@ namespace PoeHUD.Poe.Elements
             {
                 return ToolTipType.InventoryItem;
             }
-            if (toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI.IsVisible)
+            if (toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
             {
                 return ToolTipType.ItemOnGround;
             }
