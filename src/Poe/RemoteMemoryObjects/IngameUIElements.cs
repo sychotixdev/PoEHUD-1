@@ -23,7 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element InventoryPanel => ReadObjectAt<Element>(0x108);
         public Element StashPanel => ReadObjectAt<Element>(0x10C);
         public Element SocialPanel => ReadObjectAt<Element>(0x118);
-        public Element TreePanel => ReadObjectAt<Element>(0x11c);
+        public Element TreePanel => ReadObjectAt<Element>(0x11C);
         public Element CharacterPanel => ReadObjectAt<Element>(0x120);
         public Element OptionsPanel => ReadObjectAt<Element>(0x124);
         public Element AchievementsPanel => ReadObjectAt<Element>(0x128);

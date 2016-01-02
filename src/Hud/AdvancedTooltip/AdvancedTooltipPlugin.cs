@@ -25,12 +25,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
         private Color TColor;
         private bool holdKey;
         private readonly SettingsHub settingsHub;
-
-        private static readonly Color[] elementalDmgColors =
-        {
-            Color.White, HudSkin.DmgFireColor, HudSkin.DmgColdColor, HudSkin.DmgLightingColor, HudSkin.DmgChaosColor
-        };
-
         private Entity itemEntity;
         private List<ModValue> mods = new List<ModValue>();
 
@@ -42,56 +36,63 @@ namespace PoeHUD.Hud.AdvancedTooltip
 
         public override void Render()
         {
-            if (!holdKey && WinApi.IsKeyDown(Keys.F9))
+            try
             {
-                holdKey = true;
-                Settings.ItemMods.Enable.Value = !Settings.ItemMods.Enable.Value;
-                if (!Settings.ItemMods.Enable.Value)
+                if (!holdKey && WinApi.IsKeyDown(Keys.F9))
                 {
-                    SettingsHub.Save(settingsHub);
+                    holdKey = true;
+                    Settings.ItemMods.Enable.Value = !Settings.ItemMods.Enable.Value;
+                    if (!Settings.ItemMods.Enable.Value)
+                    {
+                        SettingsHub.Save(settingsHub);
+                    }
+                }
+                else if (holdKey && !WinApi.IsKeyDown(Keys.F9))
+                {
+                    holdKey = false;
+                }
+                Element uiHover = GameController.Game.IngameState.UIHover;
+                var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
+                Element tooltip = inventoryItemIcon.Tooltip;
+                Entity poeEntity = inventoryItemIcon.Item;
+                if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
+                RectangleF tooltipRect = tooltip.GetClientRect();
+                var modsComponent = poeEntity.GetComponent<Mods>();
+                if (itemEntity == null || itemEntity.Id != poeEntity.Id)
+                {
+                    List<ItemMod> itemMods = modsComponent.ItemMods;
+                    mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel)).ToList();
+                    itemEntity = poeEntity;
+                }
+
+                if (Settings.ItemLevel.Enable)
+                {
+                    string itemLevel = Convert.ToString(modsComponent.ItemLevel);
+                    var imageSize = Settings.ItemLevel.TextSize + 10;
+                    Graphics.DrawText(itemLevel, Settings.ItemLevel.TextSize, tooltipRect.TopLeft.Translate(2, 2), Settings.ItemLevel.TextColor);
+                    Graphics.DrawImage("menu-colors.png", new RectangleF(tooltipRect.TopLeft.X - 2, tooltipRect.TopLeft.Y - 2, imageSize, imageSize), Settings.ItemLevel.BackgroundColor);
+                }
+
+                if (Settings.ItemMods.Enable)
+                {
+                    float bottomTooltip = tooltipRect.Bottom + 5;
+                    var modPosition = new Vector2(tooltipRect.X + 50, bottomTooltip + 4);
+                    float height = mods.Aggregate(modPosition, (position, item) => DrawMod(item, position)).Y - bottomTooltip;
+                    if (height > 4)
+                    {
+                        var modsRect = new RectangleF(tooltipRect.X + 1, bottomTooltip, tooltipRect.Width, height);
+                        Graphics.DrawBox(modsRect, Settings.ItemMods.BackgroundColor);
+                    }
+                }
+
+                if (Settings.WeaponDps.Enable && poeEntity.HasComponent<Weapon>())
+                {
+                    DrawWeaponDps(tooltipRect);
                 }
             }
-            else if (holdKey && !WinApi.IsKeyDown(Keys.F9))
+            catch
             {
-                holdKey = false;
-            }
-            Element uiHover = GameController.Game.IngameState.UIHover;
-            var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
-            Element tooltip = inventoryItemIcon.Tooltip;
-            Entity poeEntity = inventoryItemIcon.Item;
-            if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
-            RectangleF tooltipRect = tooltip.GetClientRect();
-            var modsComponent = poeEntity.GetComponent<Mods>();
-            if (itemEntity == null || itemEntity.Id != poeEntity.Id)
-            {
-                List<ItemMod> itemMods = modsComponent.ItemMods;
-                mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel)).ToList();
-                itemEntity = poeEntity;
-            }
-
-            if (Settings.ItemLevel.Enable)
-            {
-                string itemLevel = Convert.ToString(modsComponent.ItemLevel);
-                var imageSize = Settings.ItemLevel.TextSize + 10;
-                Graphics.DrawText(itemLevel, Settings.ItemLevel.TextSize, tooltipRect.TopLeft.Translate(2, 2), Settings.ItemLevel.TextColor);
-                Graphics.DrawImage("menu-colors.png", new RectangleF(tooltipRect.TopLeft.X - 2, tooltipRect.TopLeft.Y - 2, imageSize, imageSize), Settings.ItemLevel.BackgroundColor);
-            }
-
-            if (Settings.ItemMods.Enable)
-            {
-                float bottomTooltip = tooltipRect.Bottom + 5;
-                var modPosition = new Vector2(tooltipRect.X + 50, bottomTooltip + 4);
-                float height = mods.Aggregate(modPosition, (position, item) => DrawMod(item, position)).Y - bottomTooltip;
-                if (height > 4)
-                {
-                    var modsRect = new RectangleF(tooltipRect.X + 1, bottomTooltip, tooltipRect.Width, height);
-                    Graphics.DrawBox(modsRect, Settings.ItemMods.BackgroundColor);
-                }
-            }
-
-            if (Settings.WeaponDps.Enable && poeEntity.HasComponent<Weapon>())
-            {
-                DrawWeaponDps(tooltipRect);
+                // ignored
             }
         }
 
@@ -136,21 +137,14 @@ namespace PoeHUD.Hud.AdvancedTooltip
             {
                 IntRange range = item.Record.StatRange[i];
                 if (range.Min == 0 && range.Max == 0) { continue; }
-
                 StatsDat.StatRecord stat = item.Record.StatNames[i];
                 int value = item.StatValue[i];
                 if (value <= -1000 || stat == null) { continue; }
-                float percents = range.GetPercentage(value);
                 bool noSpread = !range.HasSpread();
-                double hue = percents > 1 ? 180 : 120 * percents;
-                if (noSpread) { hue = 300; }
-
                 string line2 = string.Format(noSpread ? "{0}" : "{0} [{1}]", stat, range);
                 Graphics.DrawText(line2, settings.ModTextSize, position, Color.Gainsboro);
-
                 string statText = stat.ValueToString(value);
                 Vector2 statPosition = position.Translate(-5, 0);
-                Color statColor = ColorUtils.ColorFromHsv(hue, 1, 1);
                 Size2 txSize = Graphics.DrawText(statText, settings.ModTextSize, statPosition, Color.Gainsboro, FontDrawFlags.Right);
                 position.Y += txSize.Height;
             }
@@ -221,7 +215,13 @@ namespace PoeHUD.Hud.AdvancedTooltip
                     }
                 }
             }
-
+            WeaponDpsSettings settings = Settings.WeaponDps;
+            Color[] elementalDmgColors = { Color.White,
+                settings.DmgFireColor,
+                settings.DmgColdColor,
+                settings.DmgLightningColor,
+                settings.DmgChaosColor
+            };
             doubleDpsPerStat[(int)DamageType.Physical] *= physDmgMultiplier;
             int quality = itemEntity.GetComponent<Quality>().ItemQuality;
             if (quality > 0)
@@ -232,7 +232,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
             float pDps = doubleDpsPerStat[(int)DamageType.Physical] / 2 * aSpd;
             float eDps = 0;
             int firstEmg = 0;
-            Color eDpsColor = Color.White;
+            Color DpsColor = settings.pDamageColor;
 
             for (int i = 1; i < cntDamages; i++)
             {
@@ -242,27 +242,26 @@ namespace PoeHUD.Hud.AdvancedTooltip
                     if (firstEmg == 0)
                     {
                         firstEmg = i;
-                        eDpsColor = elementalDmgColors[i];
+                        DpsColor = elementalDmgColors[i];
                     }
                     else
                     {
-                        eDpsColor = Color.DarkViolet;
+                        DpsColor = settings.eDamageColor;
                     }
                 }
             }
 
-            WeaponDpsSettings settings = Settings.WeaponDps;
             var textPosition = new Vector2(clientRect.Right - 2, clientRect.Y + 1);
             Size2 pDpsSize = pDps > 0
                 ? Graphics.DrawText(pDps.ToString("#.#"), settings.DpsTextSize, textPosition, FontDrawFlags.Right)
                 : new Size2();
             Size2 eDpsSize = eDps > 0
                 ? Graphics.DrawText(eDps.ToString("#.#"), settings.DpsTextSize,
-                    textPosition.Translate(0, pDpsSize.Height), eDpsColor, FontDrawFlags.Right)
+                    textPosition.Translate(0, pDpsSize.Height), DpsColor, FontDrawFlags.Right)
                 : new Size2();
             Vector2 dpsTextPosition = textPosition.Translate(0, pDpsSize.Height + eDpsSize.Height);
             Graphics.DrawText("dps", settings.DpsNameTextSize, dpsTextPosition, settings.TextColor, FontDrawFlags.Right);
-			Graphics.DrawImage("preload-end.png", new RectangleF(textPosition.X - 86, textPosition.Y - 6, 90, 65), settings.BackgroundColor);
+            Graphics.DrawImage("preload-end.png", new RectangleF(textPosition.X - 86, textPosition.Y - 6, 90, 65), settings.BackgroundColor);
         }
     }
 }

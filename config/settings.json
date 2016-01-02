@@ -151,7 +151,7 @@
     "Item level": {
       "Enable": true,
       "TextSize": {
-        "Value": 18,
+        "Value": 16,
         "Min": 10,
         "Max": 50
       },
@@ -185,7 +185,13 @@
         "Min": 10,
         "Max": 50
       },
-      "BackgroundColor": "ffff00ff"
+      "BackgroundColor": "ffff00ff",
+      "DmgFireColor": "960000ff",
+      "DmgColdColor": "366492ff",
+      "DmgLightningColor": "ffd700ff",
+      "DmgChaosColor": "d01f90ff",
+      "pDamageColor": "ffffffff",
+      "eDamageColor": "00ffffff"
     }
   },
   "Monster tracker": {
@@ -327,7 +333,7 @@
   },
   "XP per hour": {
     "Enable": true,
-    "ShowInTown": false,
+    "ShowInTown": true,
     "ShowLatency": true,
     "OnlyAreaName": false,
     "TextSize": {
@@ -344,7 +350,7 @@
     "LatencyTextColor": "dcbe82ff"
   },
   "Health bar": {
-    "Enable": false,
+    "Enable": true,
     "ShowInTown": false,
     "ShowES": true,
     "ShowIncrements": true,
@@ -428,7 +434,7 @@
       }
     },
     "NormalEnemy": {
-      "Enable": false,
+      "Enable": true,
       "Width": {
         "Value": 80.0,
         "Min": 50.0,
@@ -474,8 +480,8 @@
         "Max": 180.0
       },
       "Height": {
-        "Value": 20.0,
-        "Min": 15.0,
+        "Value": 15.0,
+        "Min": 10.0,
         "Max": 50.0
       },
       "Color": "ff0000ff",

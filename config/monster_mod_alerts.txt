@@ -22,6 +22,9 @@ MonsterThornsPhysical1Large; Physical Reflect nearby; attention.wav; ffF7941D; p
 MonsterThornsElemental1Large; Elemental Reflect nearby; attention.wav; ff00FFFF; eReflect.png
 
 
+MonsterHasTalismanNormal; Inc Atk Dmg Normal; ; ffCC3399; ms-talisman.png
+MonsterHasTalismanMagic; Inc Atk Dmg Magic; ; ffCC3399; ms-talisman.png
+MonsterHasTalismanRare; Inc Atk Dmg Rare; ; ffCC3399; ms-talisman.png
 TalismanMonsterUnsetAmulet; Has 1 Socket Talisman; ; ffCC3399; ms-talisman.png
 TalismanMonsterManaAmulet; Increased Mana Talisman; ; ffCC3399; ms-talisman.png
 TalismanMonsterFireDamageAmulet; Fire Damage Talisman; ; ffCC3399; ms-talisman.png
@@ -77,9 +80,6 @@ TalismanBeastBossShockwaveDaemon; Beast Boss Shockwave Daemon; ; ffCC3399; ms-ta
 MonsterNoTalisman_; No wealth; ; ffCC3399; ms-talisman.png
 MonsterRatTalismanPoisonOnHit; Rat Talisman Poison On Hit; ; ffCC3399; ms-talisman.png
 MonsterSpawnedWithTalisman; TalismanBonus; ; ffCC3399; ms-talisman.png
-MonsterHasTalismanNormal; TalismanBonus; ; ffCC3399; ms-talisman.png
-MonsterHasTalismanMagic; TalismanBonus; ; ffCC3399; ms-talisman.png
-MonsterHasTalismanRare; TalismanBonus; ; ffCC3399; ms-talisman.png
 MonsterHasTalismanUnique; TalismanBonus; ; ffCC3399; ms-talisman.png
 TalismanRigwaldSideAreaInfo; Talisman Rigwald Side Area Info; ; ffCC3399; ms-talisman.png
 

@@ -192,6 +192,13 @@ namespace PoeHUD.Hud.Menu
             AddChild(itemModsMenu, "Suffix color", settingsHub.AdvancedTooltipSettings.ItemMods.SuffixColor);
             AddChild(itemModsMenu, "Prefix color", settingsHub.AdvancedTooltipSettings.ItemMods.PrefixColor);
             MenuItem weaponDpsMenu = AddChild(tooltipMenu, "Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
+			var damageColors = AddChild(weaponDpsMenu, "Damage colors", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
+            AddChild(damageColors, "Cold damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgColdColor);
+            AddChild(damageColors, "Fire damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgFireColor);
+            AddChild(damageColors, "Lightning damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgLightningColor);
+            AddChild(damageColors, "Chaos damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgChaosColor);
+            AddChild(damageColors, "Physical damage", settingsHub.AdvancedTooltipSettings.WeaponDps.pDamageColor);
+            AddChild(damageColors, "Elemental damage", settingsHub.AdvancedTooltipSettings.WeaponDps.eDamageColor);
             AddChild(weaponDpsMenu, "Text color", settingsHub.AdvancedTooltipSettings.WeaponDps.TextColor);
             AddChild(weaponDpsMenu, "Dps size", settingsHub.AdvancedTooltipSettings.WeaponDps.DpsTextSize);
             AddChild(weaponDpsMenu, "Dps text size", settingsHub.AdvancedTooltipSettings.WeaponDps.DpsNameTextSize);

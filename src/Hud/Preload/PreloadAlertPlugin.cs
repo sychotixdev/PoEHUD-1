@@ -131,7 +131,8 @@ namespace PoeHUD.Hud.Preload
                     {"Metadata/Monsters/Daemon/TalismanDaemonLightningBeacons", new PreloadConfigLine { Text = "Lightning Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
                     {"Metadata/Monsters/Daemon/TalismanDaemonShockwave", new PreloadConfigLine { Text = "Physical Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
                     {"Metadata/Monsters/Daemon/TalismanT1TimeDistortion", new PreloadConfigLine { Text = "Atk & Cast Speed Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonZombieMinion", new PreloadConfigLine { Text = "Plus 1 Zombies Talisman", FastColor = () => Settings.TalismanModsColor}}
+                    {"Metadata/Monsters/Daemon/TalismanDaemonZombieMinion", new PreloadConfigLine { Text = "Additional Zombie Talisman", FastColor = () => Settings.TalismanModsColor}},
+					{"Metadata/Monsters/Daemon/TalismanT1AttackAuras", new PreloadConfigLine { Text = "Inc Atk Dmg Talisman", FastColor = () => Settings.TalismanModsColor}}
                 };
 
                 PreloadConfigLine talismans = Talismans.Where(kv => text
