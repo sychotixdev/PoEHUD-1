@@ -272,6 +272,7 @@
   "Preload alert": {
     "Enable": true,
     "TalismanModsColor": "d75aafff",
+    "CorruptedArea": true,
     "CorruptedTitle": true,
     "StoneDeviceColor": "ffffffff",
     "Masters": true,
@@ -333,9 +334,9 @@
   },
   "XP per hour": {
     "Enable": true,
-    "ShowInTown": true,
+    "ShowInTown": false,
     "ShowLatency": true,
-    "OnlyAreaName": false,
+    "OnlyAreaName": true,
     "TextSize": {
       "Value": 16,
       "Min": 10,
@@ -358,7 +359,7 @@
     "Players": {
       "Enable": true,
       "Width": {
-        "Value": 160.0,
+        "Value": 170.0,
         "Min": 50.0,
         "Max": 180.0
       },
@@ -480,7 +481,7 @@
         "Max": 180.0
       },
       "Height": {
-        "Value": 15.0,
+        "Value": 12.0,
         "Min": 10.0,
         "Max": 50.0
       },
@@ -519,7 +520,7 @@
         "Max": 180.0
       },
       "Height": {
-        "Value": 20.0,
+        "Value": 15.0,
         "Min": 10.0,
         "Max": 50.0
       },

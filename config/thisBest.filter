@@ -3,9 +3,9 @@
     SetBorderColor 175 96 37
 	#PlayAlertSound 7 100
 
-#Show
-    #BaseType "Flask"
-    #SetBorderColor 255 255 204 100
+Show
+    BaseType Flask
+    SetBorderColor 255 255 204 100
 	#PlayAlertSound 7 100
 
 Show
@@ -30,21 +30,21 @@ Show
     BaseType Talisman
     SetTextColor 208 31 144
     SetBorderColor 240 240 240
-    PlayAlertSound 7 100
+    #PlayAlertSound 7 100
 
 Show
 	Rarity = Magic
     BaseType Talisman
     SetTextColor 208 31 144
     SetBorderColor 30 144 255
-    PlayAlertSound 7 100
+    #PlayAlertSound 7 100
 	
 Show
 	Rarity = Rare
     BaseType Talisman
     SetTextColor 208 31 144
     SetBorderColor 255 255 0
-    PlayAlertSound 7 100
+    #PlayAlertSound 7 100
 	
 Show
     Class Divination Card
@@ -81,6 +81,12 @@ Show
     SetTextColor 222 184 135
     SetBorderColor 222 184 135
 	#PlayAlertSound 7 100
+	
+Show
+    BaseType "Academy Map" "Arachnid Nest Map" "Arcade Map" "Arena Map" "Arsenal Map" "Bazaar Map" "Bog Map" "Canyon Map" "Catacomb Map" "Cells Map" "Cemetery Map" "Colonnade Map" "Courtyard Map" "Coves Map" "Crematorium Map" "Crypt Map" "Dark Forest Map" "Arid Lake Map" "Dry Peninsula Map" "Dry Woods Map" "Dunes Map" "Dungeon Map" "Ghetto Map" "Gorge Map" "Graveyard Map" "Grotto Map" "Jungle Valley Map" "Terrace Map" "Conservatory Map" "Mine Map" "Mountain Ledge Map" "Mud Geyser Map" "Museum Map" "Necropolis Map" "Orchard Map" "Overgrown Ruin Map" "Overgrown Shrine Map" "Palace Map" "Pier Map" "Plateau Map" "Precinct Map" "Promenade Map" "Reef Map" "Residence Map" "Sewer Map" "Shipyard Map" "Shore Map" "Shrine Map" "Spider Forest Map" "Spider Lair Map" "Springs Map" "Strand Map" "Temple Map" "Thicket Map" "Torture Chamber Map" "Tropical Island Map" "Tunnel Map" "Underground River Map" "Underground Sea Map" "Vaal Pyramid Map" "Vaal Temple Map" "Villa Map" "Waste Pool Map" "Wharf Map"
+    SetTextColor 222 184 135
+    SetBorderColor 222 184 135
+	#PlayAlertSound 7 100
 
 Show
     Width 1
@@ -100,14 +106,14 @@ Show
 
 Show
     Rarity = Normal
-    BaseType "Ambusher" "Platinum Kris" "Golden Kris" "Copper Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
+    BaseType "Golden Kris" "Two-Stone Ring"
     SetTextColor 255 255 255
     SetBorderColor 0 150 255
 	#PlayAlertSound 7 100
 
 Show
     Rarity = Rare
-    BaseType "Ambusher" "Platinum Kris" "Golden Kris" "Copper Kris" "Amethyst Ring" "Two-Stone Ring" "Gold Ring" "Gold Amulet"
+    BaseType "Golden Kris" "Two-Stone Ring"
     SetBorderColor 0 150 255
 	#PlayAlertSound 7 100
 

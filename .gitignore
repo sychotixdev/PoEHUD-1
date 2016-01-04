@@ -233,5 +233,10 @@ $RECYCLE.BIN/
 /src/bin/Debug/config
 /src/bin/Debug/sounds
 /src/bin/Debug/textures
+/src/Tools
+/src/PoeFilterParser
+/src/obj
+/src/bin/Release
+/src/.vs
 csum
 

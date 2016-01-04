@@ -11,6 +11,7 @@ namespace PoeHUD.Hud.Preload
             Masters = true;
             Exiles = true;
             Strongboxes = true;
+            CorruptedArea = true;
             CorruptedTitle = true;
             TextSize = new RangeNode<int>(16, 10, 50);
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
@@ -42,7 +43,6 @@ namespace PoeHUD.Hud.Preload
             KaomStrongbox = new ColorBGRA(175, 96, 37, 255);
             MalachaiStrongbox = new ColorBGRA(175, 96, 37, 255);
             EpicStrongbox = new ColorBGRA(175, 96, 37, 255);
-            //BarrelOfSpiders = new ColorBGRA(175, 96, 37, 255);
             SimpleStrongbox = new ColorBGRA(210, 210, 210, 255);
 
             OrraGreengate = new ColorBGRA(254, 192, 118, 255);
@@ -70,6 +70,7 @@ namespace PoeHUD.Hud.Preload
         }
 
         public ColorNode TalismanModsColor { get; set; }
+        public ToggleNode CorruptedArea { get; set; }
         public ToggleNode CorruptedTitle { get; set; }
         public ColorNode StoneDeviceColor { get; set; }
         public ToggleNode Masters { get; set; }

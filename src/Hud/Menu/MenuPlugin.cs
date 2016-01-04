@@ -159,6 +159,8 @@ namespace PoeHUD.Hud.Menu
             // Xph Display
             MenuItem xpRateMenu = AddChild(root, "Xph & area", settingsHub.XpRateSettings.Enable, "F10");
             MenuItem areaName = AddChild(xpRateMenu, "Only area name", settingsHub.XpRateSettings.OnlyAreaName);
+            AddChild(areaName, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
+            AddChild(areaName, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
             AddChild(areaName, "Show latency", settingsHub.XpRateSettings.ShowLatency);
             AddChild(areaName, "Latency color", settingsHub.XpRateSettings.LatencyTextColor);
             AddChild(xpRateMenu, "Show in town", settingsHub.XpRateSettings.ShowInTown);
@@ -212,8 +214,8 @@ namespace PoeHUD.Hud.Menu
             MenuItem showBorderMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[5], borderSettings.Enable);
             AddChild(showBorderMenu, "Border width", borderSettings.BorderWidth);
             AddChild(showBorderMenu, "Border color:", borderSettings.BorderColor);
-            AddChild(showBorderMenu, "Cn't pck up brd color:", borderSettings.CantPickUpBorderColor);
-            AddChild(showBorderMenu, "Not my item brd color:", borderSettings.NotMyItemBorderColor);
+            AddChild(showBorderMenu, "Cn't pck up border:", borderSettings.CantPickUpBorderColor);
+            AddChild(showBorderMenu, "Not my item border:", borderSettings.NotMyItemBorderColor);
             AddChild(showBorderMenu, "Show timer", borderSettings.ShowTimer);
             AddChild(showBorderMenu, "Timer text size", borderSettings.TimerTextSize);
             AddChild(itemAlertMenu, "Uniques", settingsHub.ItemAlertSettings.Uniques);
@@ -284,10 +286,9 @@ namespace PoeHUD.Hud.Menu
             AddChild(strongboxes, "Kaom", settingsHub.PreloadAlertSettings.KaomStrongbox);
             AddChild(strongboxes, "Malachai", settingsHub.PreloadAlertSettings.MalachaiStrongbox);
             AddChild(strongboxes, "Epic", settingsHub.PreloadAlertSettings.EpicStrongbox);
-            //AddChild(strongboxes, "BarrelOfSpiders", settingsHub.PreloadAlertSettings.BarrelOfSpiders);
             AddChild(strongboxes, "Simple", settingsHub.PreloadAlertSettings.SimpleStrongbox);
-            var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.Strongboxes);
-            AddChild(corruptedMenu, "Use corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle);
+            var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.CorruptedArea);
+            AddChild(corruptedMenu, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
             AddChild(corruptedMenu, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
             AddChild(preloadMenu, "Stone Altar", settingsHub.PreloadAlertSettings.StoneDeviceColor);
             AddChild(preloadMenu, "Talisman Mods", settingsHub.PreloadAlertSettings.TalismanModsColor);
