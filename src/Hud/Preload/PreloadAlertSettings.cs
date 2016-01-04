@@ -102,10 +102,7 @@ namespace PoeHUD.Hud.Preload
         public ColorNode KaomStrongbox { get; set; }
         public ColorNode MalachaiStrongbox { get; set; }
         public ColorNode EpicStrongbox { get; set; }
-
-        //public ColorNode BarrelOfSpiders { get; set; }
         public ColorNode SimpleStrongbox { get; set; }
-
         public ColorNode OrraGreengate { get; set; }
         public ColorNode ThenaMoga { get; set; }
         public ColorNode AntalieNapora { get; set; }

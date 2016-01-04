@@ -109,7 +109,7 @@ namespace PoeHUD.Hud.Preload
                 string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
                 if (alertStrings.ContainsKey(text)) { alerts.Add(alertStrings[text]); }
-                if (text.Contains("human_heart") || text.Contains("Demonic_NoRain.ogg"))
+                if (text.Contains("human_heart") || text.Contains("Beat_01.ogg"))
                 {
                     if (Settings.CorruptedTitle) { hasCorruptedArea = Settings.HasCorruptedArea; }
                     else
@@ -155,8 +155,7 @@ namespace PoeHUD.Hud.Preload
                     {"Metadata/Chests/CopperChests/CopperChestEpic3", new PreloadConfigLine { Text = "Epic Chest", FastColor = () => Settings.EpicStrongbox }},
                     {"Metadata/Chests/StrongBoxes/PerandusBox", new PreloadConfigLine { Text = "Perandus Strongbox", FastColor = () => Settings.PerandusStrongbox }},
                     {"Metadata/Chests/StrongBoxes/KaomBox", new PreloadConfigLine { Text = "Kaom Strongbox", FastColor = () => Settings.KaomStrongbox }},
-                    {"Metadata/Chests/StrongBoxes/MalachaisBox", new PreloadConfigLine { Text = "Malachai Strongbox", FastColor = () => Settings.MalachaiStrongbox }},
-                    //{"Metadata/Chests/Barrels/Barrel5", new PreloadConfigLine { Text = "Strange Barrel", FastColor = () => Settings.BarrelOfSpiders }}
+                    {"Metadata/Chests/StrongBoxes/MalachaisBox", new PreloadConfigLine { Text = "Malachai Strongbox", FastColor = () => Settings.MalachaiStrongbox }}
                 };
 
                 PreloadConfigLine _alert = Strongboxes.Where(kv => text
