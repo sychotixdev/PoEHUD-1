@@ -214,8 +214,8 @@ namespace PoeHUD.Hud.Menu
             MenuItem showBorderMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[5], borderSettings.Enable);
             AddChild(showBorderMenu, "Border width", borderSettings.BorderWidth);
             AddChild(showBorderMenu, "Border color:", borderSettings.BorderColor);
-            AddChild(showBorderMenu, "Cn't pck up border:", borderSettings.CantPickUpBorderColor);
-            AddChild(showBorderMenu, "Not my item border:", borderSettings.NotMyItemBorderColor);
+            AddChild(showBorderMenu, "Can't pick up :", borderSettings.CantPickUpBorderColor);
+            AddChild(showBorderMenu, "Not my item :", borderSettings.NotMyItemBorderColor);
             AddChild(showBorderMenu, "Show timer", borderSettings.ShowTimer);
             AddChild(showBorderMenu, "Timer text size", borderSettings.TimerTextSize);
             AddChild(itemAlertMenu, "Uniques", settingsHub.ItemAlertSettings.Uniques);
