@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Newtonsoft.Json;
-using SharpDX;
-using SharpDX.Direct3D9;
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Color = SharpDX.Color;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using RectangleF = SharpDX.RectangleF;
@@ -109,7 +109,7 @@ namespace PoeHUD.Hud.Health
 
                 string dpsText = $"{sign}{dps}";
                 Graphics.DrawText(dpsText, fontSize, point, Color.Black, FontDrawFlags.Center);
-                point = point.Translate(0, -Graphics.DrawText(dpsText, fontSize, 
+                point = point.Translate(0, -Graphics.DrawText(dpsText, fontSize,
                     point.Translate(1, 0), damageColor, FontDrawFlags.Center).Height - MARGIN_TOP);
                 if (i == 1)
                 {
@@ -186,7 +186,7 @@ namespace PoeHUD.Hud.Health
                 float oneIconWidth = 1.0f / ICON_COUNT;
                 if (marginFix > 0)
                     marginFix = oneIconWidth / marginFix;
-                Graphics.DrawImage("debuff_panel.png", new RectangleF(startX, startY, size, size), 
+                Graphics.DrawImage("debuff_panel.png", new RectangleF(startX, startY, size, size),
                     new RectangleF(index / ICON_COUNT + marginFix, 0, oneIconWidth - marginFix, 1f), Color.White);
                 return size - 1.2f * size * marginFix * ICON_COUNT;
             }

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using PoeHUD.Models;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.Components;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace PoeHUD.Hud.Health
 {
@@ -36,14 +36,17 @@ namespace PoeHUD.Hud.Health
                             Type = CreatureType.Normal;
                             Settings = settings.NormalEnemy;
                             break;
+
                         case MonsterRarity.Magic:
                             Type = CreatureType.Magic;
                             Settings = settings.MagicEnemy;
                             break;
+
                         case MonsterRarity.Rare:
                             Settings = settings.RareEnemy;
                             Type = CreatureType.Rare;
                             break;
+
                         case MonsterRarity.Unique:
                             Settings = settings.UniqueEnemy;
                             Type = CreatureType.Unique;
@@ -65,6 +68,7 @@ namespace PoeHUD.Hud.Health
         public bool IsValid { get; private set; }
         public UnitSettings Settings { get; }
         public CreatureType Type { get; private set; }
+
         public bool IsShow(bool showEnemy)
         {
             return !isHostile ? Settings.Enable.Value : Settings.Enable && showEnemy && isHostile;

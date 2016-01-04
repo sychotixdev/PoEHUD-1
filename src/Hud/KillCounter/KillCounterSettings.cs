@@ -1,5 +1,5 @@
-﻿using SharpDX;
-using PoeHUD.Hud.Settings;
+﻿using PoeHUD.Hud.Settings;
+using SharpDX;
 
 namespace PoeHUD.Hud.KillCounter
 {
@@ -14,7 +14,6 @@ namespace PoeHUD.Hud.KillCounter
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
             LabelTextSize = new RangeNode<int>(16, 10, 20);
             KillsTextSize = new RangeNode<int>(16, 10, 20);
-
         }
 
         public ToggleNode ShowInTown { get; set; }

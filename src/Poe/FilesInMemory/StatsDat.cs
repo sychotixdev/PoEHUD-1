@@ -1,6 +1,6 @@
+using PoeHUD.Framework;
 using System;
 using System.Collections.Generic;
-using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
@@ -65,6 +65,7 @@ namespace PoeHUD.Poe.FilesInMemory
                 {
                     case StatType.Boolean:
                         return val != 0 ? "True" : "False";
+
                     case StatType.IntValue:
                     case StatType.Value2:
                         return val.ToString("+#;-#");

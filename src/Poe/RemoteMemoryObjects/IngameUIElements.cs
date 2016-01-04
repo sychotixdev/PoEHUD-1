@@ -29,6 +29,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element AchievementsPanel => ReadObjectAt<Element>(0x128);
         public Element WorldPanel => ReadObjectAt<Element>(0x130);
         public Map Map => ReadObjectAt<Map>(0x134);
+
         public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
         {
             get

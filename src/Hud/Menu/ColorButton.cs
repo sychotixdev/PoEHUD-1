@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using PoeHUD.Hud.Settings;
+using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Hud.UI;
+using System.Threading.Tasks;
 using ColorGdi = System.Drawing.Color;
 
 namespace PoeHUD.Hud.Menu
@@ -11,6 +11,7 @@ namespace PoeHUD.Hud.Menu
     {
         private readonly string name;
         private readonly ColorNode node;
+
         public ColorButton(string name, ColorNode node)
         {
             this.name = name;

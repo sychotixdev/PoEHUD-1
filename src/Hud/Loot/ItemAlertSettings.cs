@@ -48,13 +48,17 @@ namespace PoeHUD.Hud.Loot
         public ToggleNode DivinationCards { get; set; }
         public ToggleNode Jewels { get; set; }
         public ToggleNode Talisman { get; set; }
+
         [JsonProperty("RGB")]
         public ToggleNode Rgb { get; set; }
+
         public RangeNode<int> MinLinks { get; set; }
         public RangeNode<int> MinSockets { get; set; }
         public RangeNode<int> LootIcon { get; set; }
+
         [JsonProperty("Show quality items")]
         public QualityItemsSettings QualityItems { get; set; }
+
         public BorderSettings BorderSettings { get; set; }
         public ToggleNode WithBorder { get; set; }
         public ToggleNode WithSound { get; set; }

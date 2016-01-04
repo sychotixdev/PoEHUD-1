@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using PoeHUD.Framework.Helpers;
+using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
-using PoeHUD.Framework.Helpers;
-using PoeHUD.Hud.UI;
+using System.Linq;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -65,6 +65,8 @@ namespace PoeHUD.Hud.Menu
             Children.ForEach(x => x.Render(graphics, settings));
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos) {}
+        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        {
+        }
     }
 }

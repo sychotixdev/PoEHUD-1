@@ -1,12 +1,12 @@
+using PoeHUD.Framework.Enums;
+using PoeHUD.Models;
+using PoeHUD.Poe;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using PoeHUD.Framework.Enums;
-using PoeHUD.Models;
-using PoeHUD.Poe;
 
 namespace PoeHUD.Framework
 {

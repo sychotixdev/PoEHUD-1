@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PoeHUD.Framework.Helpers;
+using PoeHUD.Hud.UI.Vertexes;
 using SharpDX;
 using SharpDX.Direct3D9;
-using PoeHUD.Framework.Helpers;
-using PoeHUD.Hud.UI.Vertexes;
+using System;
+using System.Collections.Generic;
 
 namespace PoeHUD.Hud.UI.Renderers
 {

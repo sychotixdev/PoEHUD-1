@@ -1,8 +1,8 @@
-﻿using System;
+﻿using PoeHUD.Framework;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PoeHUD.Framework;
 
 namespace PoeHUD.Hud
 {

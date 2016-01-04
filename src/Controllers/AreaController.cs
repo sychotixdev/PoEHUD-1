@@ -1,6 +1,6 @@
-using System;
 using PoeHUD.Models;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using System;
 
 namespace PoeHUD.Controllers
 {

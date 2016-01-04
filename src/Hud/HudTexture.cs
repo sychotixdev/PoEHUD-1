@@ -1,7 +1,6 @@
-﻿using SharpDX;
-using PoeHUD.Hud.UI;
-
+﻿using PoeHUD.Hud.UI;
 using PoeHUD.Models.Enums;
+using SharpDX;
 
 namespace PoeHUD.Hud
 {
@@ -10,7 +9,9 @@ namespace PoeHUD.Hud
         private string fileName;
         private readonly Color color;
 
-        public HudTexture(string fileName) : this(fileName, Color.White) { }
+        public HudTexture(string fileName) : this(fileName, Color.White)
+        {
+        }
 
         public HudTexture(string fileName, MonsterRarity rarity)
             : this(fileName, Color.White)
@@ -20,9 +21,11 @@ namespace PoeHUD.Hud
                 case MonsterRarity.Magic:
                     color = HudSkin.MagicColor;
                     break;
+
                 case MonsterRarity.Rare:
                     color = HudSkin.RareColor;
                     break;
+
                 case MonsterRarity.Unique:
                     color = HudSkin.UniqueColor;
                     break;

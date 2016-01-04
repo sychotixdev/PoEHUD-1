@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using SharpDX;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Hud.AdvancedTooltip
 {
@@ -62,6 +62,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
         public ModsDat.ModRecord Record { get; }
         public int[] StatValue { get; private set; }
         public int Tier { get; private set; }
+
         public bool CouldHaveTiers()
         {
             return totalTiers > 1;

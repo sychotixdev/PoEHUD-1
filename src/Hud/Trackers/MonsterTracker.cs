@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
-using SharpDX.Direct3D9;
 using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
@@ -10,6 +5,11 @@ using PoeHUD.Models;
 using PoeHUD.Models.Enums;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Hud.Trackers
 {
@@ -171,7 +171,7 @@ namespace PoeHUD.Hud.Trackers
             MonsterRarity monsterRarity = entity.GetComponent<ObjectMagicProperties>().Rarity;
             Func<EntityWrapper, Func<string, string>, CreatureMapIcon> iconCreator;
 
-            return iconCreators.TryGetValue(monsterRarity, out iconCreator) 
+            return iconCreators.TryGetValue(monsterRarity, out iconCreator)
                 ? iconCreator(entity, text => monsterConfigLine?.MinimapIcon ?? text) : null;
         }
 

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using System.Collections.Generic;
 
 namespace PoeHUD.Models
 {
@@ -117,6 +117,7 @@ namespace PoeHUD.Models
                 }
             };
         }
+
         private delegate void AddStat(ItemStats stats, ItemMod m);
     }
 }

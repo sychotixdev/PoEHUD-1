@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Direct3D9;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Preload;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.XpRate
 {
@@ -29,7 +29,7 @@ namespace PoeHUD.Hud.XpRate
         public override void Render()
         {
             base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||(GameController.Player != null 
+            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || (GameController.Player != null
                 && GameController.Player.GetComponent<Player>().Level >= 100))
             { return; }
 

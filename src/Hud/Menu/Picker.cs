@@ -1,8 +1,8 @@
-using System;
-using SharpDX;
-using SharpDX.Direct3D9;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -40,10 +40,12 @@ namespace PoeHUD.Hud.Menu
                 case MouseEventID.LeftButtonDown:
                     isHolding = true;
                     break;
+
                 case MouseEventID.LeftButtonUp:
                     CalcValue(pos.X);
                     isHolding = false;
                     break;
+
                 default:
                     if (isHolding && id == MouseEventID.MouseMove)
                     {

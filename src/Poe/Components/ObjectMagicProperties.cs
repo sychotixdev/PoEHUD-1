@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using PoeHUD.Models.Enums;
+using System.Collections.Generic;
 
 namespace PoeHUD.Poe.Components
 {

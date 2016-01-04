@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Windows;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.AdvancedTooltip;
@@ -23,6 +16,13 @@ using PoeHUD.Hud.Trackers;
 using PoeHUD.Hud.XpRate;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe;
+using SharpDX;
+using SharpDX.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
@@ -91,6 +91,7 @@ namespace PoeHUD.Hud
                 case DiagnosticInfoType.Short:
                     clientRect.X = diagnosticElement.X + 30;
                     break;
+
                 case DiagnosticInfoType.Full:
                     clientRect.Y = diagnosticElement.Y + diagnosticElement.Height + 5;
                     var fpsRectangle = ingameState.FPSRectangle;

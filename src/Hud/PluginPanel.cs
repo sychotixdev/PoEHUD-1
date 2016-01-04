@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using SharpDX;
-using PoeHUD.Framework.Helpers;
+﻿using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Interfaces;
+using SharpDX;
+using System;
+using System.Collections.Generic;
 
 namespace PoeHUD.Hud
 {

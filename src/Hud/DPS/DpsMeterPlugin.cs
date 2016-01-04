@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Direct3D9;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Dps
 {
@@ -38,8 +38,8 @@ namespace PoeHUD.Hud.Dps
         public override void Render()
         {
             base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || 
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown || 
+            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||
+                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
                 !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
             { return; }
 

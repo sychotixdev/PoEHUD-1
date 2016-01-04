@@ -1,5 +1,5 @@
-using System;
 using PoeHUD.Models.Enums;
+using System;
 
 namespace PoeHUD.Models.Legacy
 {
@@ -63,6 +63,7 @@ namespace PoeHUD.Models.Legacy
                     case LegacySocket.Blue:
                         NumberOfBlue++;
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -76,8 +77,10 @@ namespace PoeHUD.Models.Legacy
             {
                 case 'B':
                     return LegacySocket.Blue;
+
                 case 'G':
                     return LegacySocket.Green;
+
                 case 'R':
                     return LegacySocket.Red;
             }

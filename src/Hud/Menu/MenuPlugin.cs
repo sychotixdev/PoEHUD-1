@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Windows.Forms;
-using SharpDX;
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.InputHooks;
@@ -9,6 +5,10 @@ using PoeHUD.Hud.Health;
 using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
+using SharpDX;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -194,7 +194,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(itemModsMenu, "Suffix color", settingsHub.AdvancedTooltipSettings.ItemMods.SuffixColor);
             AddChild(itemModsMenu, "Prefix color", settingsHub.AdvancedTooltipSettings.ItemMods.PrefixColor);
             MenuItem weaponDpsMenu = AddChild(tooltipMenu, "Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
-			var damageColors = AddChild(weaponDpsMenu, "Damage colors", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
+            var damageColors = AddChild(weaponDpsMenu, "Damage colors", settingsHub.AdvancedTooltipSettings.WeaponDps.Enable);
             AddChild(damageColors, "Cold damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgColdColor);
             AddChild(damageColors, "Fire damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgFireColor);
             AddChild(damageColors, "Lightning damage", settingsHub.AdvancedTooltipSettings.WeaponDps.DmgLightningColor);
@@ -204,7 +204,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(weaponDpsMenu, "Text color", settingsHub.AdvancedTooltipSettings.WeaponDps.TextColor);
             AddChild(weaponDpsMenu, "Dps size", settingsHub.AdvancedTooltipSettings.WeaponDps.DpsTextSize);
             AddChild(weaponDpsMenu, "Dps text size", settingsHub.AdvancedTooltipSettings.WeaponDps.DpsNameTextSize);
-			AddChild(weaponDpsMenu, "Background color", settingsHub.AdvancedTooltipSettings.WeaponDps.BackgroundColor);
+            AddChild(weaponDpsMenu, "Background color", settingsHub.AdvancedTooltipSettings.WeaponDps.BackgroundColor);
             MenuItem itemSound = AddChild(itemAlertMenu, itemAlertStaticMenuList[2], settingsHub.ItemAlertSettings.PlaySound);
             AddChild(itemSound, "Sound volume", settingsHub.ItemAlertSettings.SoundVolume);
             MenuItem alertTextMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[3], settingsHub.ItemAlertSettings.ShowText);

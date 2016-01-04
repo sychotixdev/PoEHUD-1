@@ -1,7 +1,7 @@
+using PoeHUD.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PoeHUD.Controllers;
 
 namespace PoeHUD.Models.Legacy
 {

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using PoeHUD.Controllers;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
+using System;
+using System.Collections.Generic;
 
 namespace PoeHUD.Models
 {
@@ -33,10 +33,10 @@ namespace PoeHUD.Models
                 return player;
             }
         }
+
         public event Action<EntityWrapper> EntityAdded;
 
         public event Action<EntityWrapper> EntityRemoved;
-
 
         private void OnAreaChanged(AreaController area)
         {
@@ -110,7 +110,6 @@ namespace PoeHUD.Models
             EntityWrapper result;
             return entityCache.TryGetValue(id, out result) ? result : null;
         }
-
 
         public EntityLabel GetLabelForEntity(Entity entity)
         {

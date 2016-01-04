@@ -1,9 +1,9 @@
-﻿using System;
-using SharpDX;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Hud.Interfaces;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
+using SharpDX;
+using System;
 
 namespace PoeHUD.Hud
 {

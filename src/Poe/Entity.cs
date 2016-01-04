@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using PoeHUD.Models.Interfaces;
+using System.Collections.Generic;
 
 namespace PoeHUD.Poe
 {
@@ -10,11 +10,14 @@ namespace PoeHUD.Poe
         public string Path => M.ReadStringU(M.ReadInt(Address, 8));
         public int Id => M.ReadInt(Address + 0x18);
         public long LongId => (long)Id << 32 ^ Path.GetHashCode();
+
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
         public bool IsValid => M.ReadInt(Address, 8, 0) == 0x65004D;
+
         public bool IsHostile => (M.ReadByte(Address + 0x1D) & 1) == 0;
+
         public bool HasComponent<T>() where T : Component, new()
         {
             int addr;

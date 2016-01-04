@@ -4,7 +4,9 @@ namespace PoeHUD.Hud.Settings
 {
     public sealed class ColorNode
     {
-        public ColorNode() {}
+        public ColorNode()
+        {
+        }
 
         public ColorNode(uint color)
         {

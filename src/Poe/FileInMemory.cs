@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using PoeHUD.Framework;
+using System.Collections.Generic;
 
 namespace PoeHUD.Poe
 {

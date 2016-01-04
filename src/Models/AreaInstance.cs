@@ -1,5 +1,5 @@
-using System;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using System;
 
 namespace PoeHUD.Models
 {
@@ -32,7 +32,9 @@ namespace PoeHUD.Models
         {
             return $"{Name} ({RealLevel}) #{Hash}";
         }
+
         public string DisplayName => String.Concat(Name, " (", RealLevel, ")");
+
         public static string GetTimeString(TimeSpan timeSpent)
         {
             int allsec = (int)timeSpent.TotalSeconds;

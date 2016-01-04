@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SharpDX;
+using System;
 using System.Globalization;
-using SharpDX;
 
 namespace PoeHUD.Framework.Helpers
 {

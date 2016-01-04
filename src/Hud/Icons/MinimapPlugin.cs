@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
 using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Hud.Icons
 {

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using PoeHUD.Models;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Poe.Components
 {

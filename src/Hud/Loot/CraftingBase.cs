@@ -1,5 +1,5 @@
-using System;
 using PoeHUD.Models.Enums;
+using System;
 
 namespace PoeHUD.Hud.Loot
 {
@@ -9,6 +9,7 @@ namespace PoeHUD.Hud.Loot
         public int MinItemLevel { get; set; }
         public int MinQuality { get; set; }
         public ItemRarity[] Rarities { get; set; }
+
         public override int GetHashCode()
         {
             return Name.ToLowerInvariant().GetHashCode();

@@ -1,6 +1,6 @@
+using PoeHUD.Framework;
 using System;
 using System.Collections.Generic;
-using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
@@ -28,7 +28,6 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void loadItems(StatsDat sDat, TagsDat tagsDat)
         {
-
             foreach (int addr in RecordAddresses())
             {
                 var r = new ModRecord(M, sDat, tagsDat, addr);

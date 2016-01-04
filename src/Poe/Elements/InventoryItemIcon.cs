@@ -1,5 +1,5 @@
-using System;
 using PoeHUD.Poe.Components;
+using System;
 
 namespace PoeHUD.Poe.Elements
 {
@@ -27,8 +27,10 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
                         return toolTipOnground().Tooltip;
+
                     case ToolTipType.InventoryItem:
                         return inventoryItemTooltip();
+
                     case ToolTipType.ItemInChat:
                         return itemInChatTooltip();
                 }
@@ -47,6 +49,7 @@ namespace PoeHUD.Poe.Elements
                             .ReadObjectAt<ItemsOnGroundLabelElement>(0x138)
                             .ReadObjectAt<Entity>(0x95C)
                             .GetComponent<WorldItem>().ItemEntity;
+
                     case ToolTipType.InventoryItem:
                         return ReadObject<Entity>(Address + 0xAA0);
                 }

@@ -4,7 +4,9 @@ namespace PoeHUD.Hud.Loot
 {
     public sealed class QualityItemSettings : SettingsBase
     {
-        public QualityItemSettings() {}
+        public QualityItemSettings()
+        {
+        }
 
         public QualityItemSettings(bool enable, int minQuality)
         {

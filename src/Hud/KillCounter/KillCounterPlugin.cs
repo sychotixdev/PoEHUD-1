@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Direct3D9;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.KillCounter
 {
@@ -145,7 +145,7 @@ namespace PoeHUD.Hud.KillCounter
             Size2 size = DrawCounter(position, "", counters[MonsterRarity.White].ToString(), Color.White);
             size = new Size2(DrawCounter(position.Translate(-size.Width - INNER_MARGIN, 0), "",
                         counters[MonsterRarity.Magic].ToString(), HudSkin.MagicColor).Width + size.Width + INNER_MARGIN, size.Height);
-            size = new Size2(DrawCounter(position.Translate(-size.Width - INNER_MARGIN, 0), "", 
+            size = new Size2(DrawCounter(position.Translate(-size.Width - INNER_MARGIN, 0), "",
                         counters[MonsterRarity.Rare].ToString(), HudSkin.RareColor).Width + size.Width + INNER_MARGIN, size.Height);
             size = new Size2(DrawCounter(position.Translate(-size.Width - INNER_MARGIN, 0), "",
                         counters[MonsterRarity.Unique].ToString(), HudSkin.UniqueColor).Width + size.Width + INNER_MARGIN, size.Height);

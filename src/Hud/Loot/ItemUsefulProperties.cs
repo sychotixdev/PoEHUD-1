@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
 using PoeHUD.Models.Enums;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Hud.Loot
 {
@@ -106,6 +106,7 @@ namespace PoeHUD.Hud.Loot
             {
                 case ItemRarity.Rare:
                     return settings.Rares;
+
                 case ItemRarity.Unique:
                     return settings.Uniques;
             }

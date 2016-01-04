@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Direct3D9;
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Preload
 {
@@ -20,6 +20,7 @@ namespace PoeHUD.Hud.Preload
         private DateTime maxParseTime = DateTime.Now;
         private int lastCount;
         public static Color hasCorruptedArea { get; set; }
+
         public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings)
             : base(gameController, graphics, settings)
         {
@@ -108,7 +109,7 @@ namespace PoeHUD.Hud.Preload
                 string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
                 if (alertStrings.ContainsKey(text)) { alerts.Add(alertStrings[text]); }
-                if (text.Contains("human_heart") || text.Contains("Demonic_NoRain.ogg" ))
+                if (text.Contains("human_heart") || text.Contains("Demonic_NoRain.ogg"))
                 {
                     if (Settings.CorruptedTitle) { hasCorruptedArea = Settings.HasCorruptedArea; }
                     else
@@ -132,7 +133,7 @@ namespace PoeHUD.Hud.Preload
                     {"Metadata/Monsters/Daemon/TalismanDaemonShockwave", new PreloadConfigLine { Text = "Physical Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
                     {"Metadata/Monsters/Daemon/TalismanT1TimeDistortion", new PreloadConfigLine { Text = "Atk & Cast Speed Talisman", FastColor = () => Settings.TalismanModsColor}},
                     {"Metadata/Monsters/Daemon/TalismanDaemonZombieMinion", new PreloadConfigLine { Text = "Additional Zombie Talisman", FastColor = () => Settings.TalismanModsColor}},
-					{"Metadata/Monsters/Daemon/TalismanT1AttackAuras", new PreloadConfigLine { Text = "Inc Atk Dmg Talisman", FastColor = () => Settings.TalismanModsColor}}
+                    {"Metadata/Monsters/Daemon/TalismanT1AttackAuras", new PreloadConfigLine { Text = "Inc Atk Dmg Talisman", FastColor = () => Settings.TalismanModsColor}}
                 };
 
                 PreloadConfigLine talismans = Talismans.Where(kv => text

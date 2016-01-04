@@ -1,10 +1,10 @@
-﻿using System;
+﻿using PoeHUD.Framework.Helpers;
+using PoeHUD.Framework.InputHooks.Structures;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PoeHUD.Framework.Helpers;
-using PoeHUD.Framework.InputHooks.Structures;
 
 namespace PoeHUD.Framework.InputHooks
 {

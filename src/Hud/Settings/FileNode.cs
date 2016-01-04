@@ -27,7 +27,7 @@ namespace PoeHUD.Hud.Settings
             }
         }
 
-        public static implicit operator string (FileNode node)
+        public static implicit operator string(FileNode node)
         {
             return node.Value;
         }

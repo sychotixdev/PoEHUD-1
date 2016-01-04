@@ -72,6 +72,7 @@ ipch/
 
 # Visual Studio profiler
 *.psess
+*.vs
 *.vsp
 *.vspx
 
@@ -233,10 +234,14 @@ $RECYCLE.BIN/
 /src/bin/Debug/config
 /src/bin/Debug/sounds
 /src/bin/Debug/textures
-/src/Tools
-/src/PoeFilterParser
-/src/obj
+/src/Tools/bin/Release
+/src/PoeFilterParser/bin/Release
+/src/obj/Release
 /src/bin/Release
-/src/.vs
 csum
 
+*.pdb
+*.suo
+*.dll
+src/PoeFilterParser/bin/Release/PoeFilterParser.dll
+src/PoeFilterParser/obj/Release/PoeFilterParser.csproj.FileListAbsolute.txt

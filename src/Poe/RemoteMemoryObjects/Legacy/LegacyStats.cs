@@ -86,7 +86,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects.Legacy
             }
             res = M.ReadInt(num2 + 4);
             return true;
-            Block_4:
+        Block_4:
             res = 0;
             return false;
         }

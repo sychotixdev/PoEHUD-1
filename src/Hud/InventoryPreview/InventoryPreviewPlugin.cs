@@ -1,16 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using SharpDX;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Framework.InputHooks;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using SharpDX;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using RectangleF = SharpDX.RectangleF;
 

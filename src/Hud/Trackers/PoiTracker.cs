@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using PoeHUD.Controllers;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
+using System.Collections.Generic;
 
 namespace PoeHUD.Hud.Trackers
 {
@@ -48,7 +48,7 @@ namespace PoeHUD.Hud.Trackers
             if (e.HasComponent<Chest>() && !e.GetComponent<Chest>().IsOpened)
             {
                 return e.GetComponent<Chest>().IsStrongbox
-                    ? new ChestMapIcon(e, new HudTexture("strongbox.png", 
+                    ? new ChestMapIcon(e, new HudTexture("strongbox.png",
                     e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIcon)
                     : new ChestMapIcon(e, new HudTexture("chest.png"), () => Settings.Chests, Settings.ChestsIcon);
             }

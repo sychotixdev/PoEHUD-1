@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using PoeFilterParser.Model;
-using SharpDX;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
+using SharpDX;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoeHUD.Hud.Loot
 {
@@ -90,109 +90,124 @@ namespace PoeHUD.Hud.Loot
                     var poeItemLevelContext = statement.poeItemLevel();
                     if (poeItemLevelContext != null)
                     {
-                        itemLevelCondition &= CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(), 
+                        itemLevelCondition &= CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(),
                             poeItemLevelContext.digitsParams(), mods.ItemLevel);
                     }
-
-                    else { var poeDropLevelContext = statement.poeDropLevel();
+                    else {
+                        var poeDropLevelContext = statement.poeDropLevel();
                         if (poeDropLevelContext != null)
                         {
-                            dropLevelCondition &= CalculateDigitsCondition(poeDropLevelContext.compareOpNullable(), 
+                            dropLevelCondition &= CalculateDigitsCondition(poeDropLevelContext.compareOpNullable(),
                                 poeDropLevelContext.digitsParams(), dropLevel);
                         }
-
-                    else { var poeClassContext = statement.poeClass();
-                        if (poeClassContext != null)
-                        {
-                            poeClassCondition = poeClassContext.@params()
-                                .strValue().Any(y => className.Contains(GetRawText(y)));
-                        }
-
-                    else { var poeBaseTypeContext = statement.poeBaseType();
-                        if (poeBaseTypeContext != null)
-                        {
-                            poeBaseTypeCondition = poeBaseTypeContext.@params()
-                                .strValue() .Any(y => basename.Contains(GetRawText(y)));
-                        }
-
-                    else { var poeRarityContext = statement.poeRarity();
-                        if (poeRarityContext != null)
-                        {
-                            var compareFunc = OpConvertor(poeRarityContext.compareOpNullable());
-                            poeRarityCondition &= poeRarityContext.rariryParams().rarityValue().Any(y => 
+                        else {
+                            var poeClassContext = statement.poeClass();
+                            if (poeClassContext != null)
                             {
-                                ItemRarity poeItemRarity;
-                                Enum.TryParse(GetRawText(y), true, out poeItemRarity);
-                                return compareFunc((int)itemRarity, (int)poeItemRarity);
-                            });
-                        }
-
-                    else { var poeQualityContext = statement.poeQuality();
-                        if (poeQualityContext != null)
-                        {
-                            poeQualityCondition &= CalculateDigitsCondition(poeQualityContext.compareOpNullable(), 
-                                poeQualityContext.digitsParams(), quality);
-                        }
-
-                    else { var poeWidthContext = statement.poeWidth();
-                        if (poeWidthContext != null)
-                        {
-                            poeWidthCondition &= CalculateDigitsCondition(poeWidthContext.compareOpNullable(), 
-                                poeWidthContext.digitsParams(), width); 
-                            
-                        }
-
-                    else { var poeHeightContext = statement.poeHeight();
-                        if (poeHeightContext != null)
-                        {
-                            poeHeightCondition &= CalculateDigitsCondition(poeHeightContext.compareOpNullable(), 
-                                poeHeightContext.digitsParams(), height);
-                        }
-
-                    else { var poeSocketsContext = statement.poeSockets();
-                        if (poeSocketsContext != null)
-                        {
-                            poeSocketsCondition &= CalculateDigitsCondition( poeSocketsContext.compareOpNullable(), 
-                                poeSocketsContext.digitsParams(), numberOfSockets);
-                        }
-
-                    else { var poeLinkedSocketsContext = statement.poeLinkedSockets();
-                        if (poeLinkedSocketsContext != null)
-                        {
-                            poeLinkedSocketsCondition &= CalculateDigitsCondition( poeLinkedSocketsContext.compareOpNullable(), 
-                                poeLinkedSocketsContext.digitsParams(), largestLinkSize);
-                        }
-
-                    else { var poeSocketGroupContext = statement.poeSocketGroup();
-                        if (poeSocketGroupContext != null)
-                        {
-                            poeSocketGroupCondition &= poeSocketGroupContext.socketParams()
-                                .socketValue() .Any(y => { var poeSocketGroup = GetRawText(y);
-                            return IsContainSocketGroup(socketGroup, poeSocketGroup); });
-                        }
-
-                    else { var poeBackgroundColorContext = statement.poeBackgroundColor();
-                        if (poeBackgroundColorContext != null)
-                        {
-                            backgroundColor = ToColor(poeBackgroundColorContext.color());
-                        }
-
-                    else { var poeBorderColorContext = statement.poeBorderColor();
-                        if (poeBorderColorContext != null)
-                        {
-                            borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
-                        }
-
-                    else { var poeTextColorContext = statement.poeTextColor();
-                        if (poeTextColorContext != null)
-                        {
-                            textColor = ToColor(poeTextColorContext.color());
-                        }
-
-                    else { var poeAlertSoundContext = statement.poeAlertSound();
-                        if (poeAlertSoundContext != null)
-                        {
-                            sound = Convert.ToInt32( poeAlertSoundContext.id() .GetText());}}}}}}}}}}}}}
+                                poeClassCondition = poeClassContext.@params()
+                                    .strValue().Any(y => className.Contains(GetRawText(y)));
+                            }
+                            else {
+                                var poeBaseTypeContext = statement.poeBaseType();
+                                if (poeBaseTypeContext != null)
+                                {
+                                    poeBaseTypeCondition = poeBaseTypeContext.@params()
+                                        .strValue().Any(y => basename.Contains(GetRawText(y)));
+                                }
+                                else {
+                                    var poeRarityContext = statement.poeRarity();
+                                    if (poeRarityContext != null)
+                                    {
+                                        var compareFunc = OpConvertor(poeRarityContext.compareOpNullable());
+                                        poeRarityCondition &= poeRarityContext.rariryParams().rarityValue().Any(y =>
+                                        {
+                                            ItemRarity poeItemRarity;
+                                            Enum.TryParse(GetRawText(y), true, out poeItemRarity);
+                                            return compareFunc((int)itemRarity, (int)poeItemRarity);
+                                        });
+                                    }
+                                    else {
+                                        var poeQualityContext = statement.poeQuality();
+                                        if (poeQualityContext != null)
+                                        {
+                                            poeQualityCondition &= CalculateDigitsCondition(poeQualityContext.compareOpNullable(),
+                                                poeQualityContext.digitsParams(), quality);
+                                        }
+                                        else {
+                                            var poeWidthContext = statement.poeWidth();
+                                            if (poeWidthContext != null)
+                                            {
+                                                poeWidthCondition &= CalculateDigitsCondition(poeWidthContext.compareOpNullable(),
+                                                    poeWidthContext.digitsParams(), width);
+                                            }
+                                            else {
+                                                var poeHeightContext = statement.poeHeight();
+                                                if (poeHeightContext != null)
+                                                {
+                                                    poeHeightCondition &= CalculateDigitsCondition(poeHeightContext.compareOpNullable(),
+                                                        poeHeightContext.digitsParams(), height);
+                                                }
+                                                else {
+                                                    var poeSocketsContext = statement.poeSockets();
+                                                    if (poeSocketsContext != null)
+                                                    {
+                                                        poeSocketsCondition &= CalculateDigitsCondition(poeSocketsContext.compareOpNullable(),
+                                                            poeSocketsContext.digitsParams(), numberOfSockets);
+                                                    }
+                                                    else {
+                                                        var poeLinkedSocketsContext = statement.poeLinkedSockets();
+                                                        if (poeLinkedSocketsContext != null)
+                                                        {
+                                                            poeLinkedSocketsCondition &= CalculateDigitsCondition(poeLinkedSocketsContext.compareOpNullable(),
+                                                                poeLinkedSocketsContext.digitsParams(), largestLinkSize);
+                                                        }
+                                                        else {
+                                                            var poeSocketGroupContext = statement.poeSocketGroup();
+                                                            if (poeSocketGroupContext != null)
+                                                            {
+                                                                poeSocketGroupCondition &= poeSocketGroupContext.socketParams()
+                                                                    .socketValue().Any(y =>
+                                                                    {
+                                                                        var poeSocketGroup = GetRawText(y);
+                                                                        return IsContainSocketGroup(socketGroup, poeSocketGroup);
+                                                                    });
+                                                            }
+                                                            else {
+                                                                var poeBackgroundColorContext = statement.poeBackgroundColor();
+                                                                if (poeBackgroundColorContext != null)
+                                                                {
+                                                                    backgroundColor = ToColor(poeBackgroundColorContext.color());
+                                                                }
+                                                                else {
+                                                                    var poeBorderColorContext = statement.poeBorderColor();
+                                                                    if (poeBorderColorContext != null)
+                                                                    {
+                                                                        borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
+                                                                    }
+                                                                    else {
+                                                                        var poeTextColorContext = statement.poeTextColor();
+                                                                        if (poeTextColorContext != null)
+                                                                        {
+                                                                            textColor = ToColor(poeTextColorContext.color());
+                                                                        }
+                                                                        else {
+                                                                            var poeAlertSoundContext = statement.poeAlertSound();
+                                                                            if (poeAlertSoundContext != null)
+                                                                            {
+                                                                                sound = Convert.ToInt32(poeAlertSoundContext.id().GetText());
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -255,9 +270,9 @@ namespace PoeHUD.Hud.Loot
             var text = terminalnode.COMPAREOP()?.GetText() ?? "=";
             switch (text)
             {
-                case "=":  return (x, y) => x == y;
-                case "<":  return (x, y) => x <  y;
-                case ">":  return (x, y) => x >  y;
+                case "=": return (x, y) => x == y;
+                case "<": return (x, y) => x < y;
+                case ">": return (x, y) => x > y;
                 case "<=": return (x, y) => x <= y;
                 case ">=": return (x, y) => x >= y;
             }

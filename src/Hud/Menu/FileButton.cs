@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System.Threading;
-using System.Windows.Forms;
+﻿using PoeHUD.Hud.Settings;
+using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Hud.UI;
+using System.IO;
+using System.Threading;
+using System.Windows.Forms;
 using ColorGdi = System.Drawing.Color;
 
 namespace PoeHUD.Hud.Menu

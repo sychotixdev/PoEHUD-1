@@ -1,8 +1,8 @@
+using PoeHUD.Framework;
+using PoeHUD.Poe.FilesInMemory;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PoeHUD.Framework;
-using PoeHUD.Poe.FilesInMemory;
 
 namespace PoeHUD.Controllers
 {

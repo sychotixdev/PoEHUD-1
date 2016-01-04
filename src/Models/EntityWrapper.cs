@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Vector3 = SharpDX.Vector3;
 
 namespace PoeHUD.Models
@@ -38,6 +38,7 @@ namespace PoeHUD.Models
         public bool IsHostile => internalEntity.IsHostile;
         public long LongId { get; }
         public bool IsAlive => GetComponent<Life>().CurHP > 0;
+
         public Vector3 Pos
         {
             get

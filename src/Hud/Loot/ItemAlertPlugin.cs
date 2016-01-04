@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Antlr4.Runtime;
 using PoeFilterParser;
 using PoeFilterParser.Model;
-using SharpDX;
-using SharpDX.Direct3D9;
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
@@ -21,6 +13,14 @@ using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Loot
 {
@@ -144,7 +144,7 @@ namespace PoeHUD.Hud.Loot
             }
         }
 
-        private Vector2 DrawText(Vector2 playerPos, Vector2 position, int BOTTOM_MARGIN, 
+        private Vector2 DrawText(Vector2 playerPos, Vector2 position, int BOTTOM_MARGIN,
             KeyValuePair<EntityWrapper, AlertDrawStyle> kv, string text)
         {
             var padding = new Vector2(5, 2);
@@ -159,7 +159,7 @@ namespace PoeHUD.Hud.Loot
 
         protected override void OnEntityAdded(EntityWrapper entity)
         {
-            if (Settings.Enable && entity != null && !GameController.Area.CurrentArea.IsTown 
+            if (Settings.Enable && entity != null && !GameController.Area.CurrentArea.IsTown
                 && !currentAlerts.ContainsKey(entity) && entity.HasComponent<WorldItem>())
             {
                 IEntity item = entity.GetComponent<WorldItem>().ItemEntity;
@@ -281,7 +281,7 @@ namespace PoeHUD.Hud.Loot
                 if (entityLabel.IsVisible)
                 {
                     RectangleF rect = entityLabel.Label.GetClientRect();
-                    if ((ui.OpenLeftPanel.IsVisible && ui.OpenLeftPanel.GetClientRect().Intersects(rect)) || 
+                    if ((ui.OpenLeftPanel.IsVisible && ui.OpenLeftPanel.GetClientRect().Intersects(rect)) ||
                         (ui.OpenRightPanel.IsVisible && ui.OpenRightPanel.GetClientRect().Intersects(rect)))
                     {
                         return false;

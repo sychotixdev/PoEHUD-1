@@ -1,6 +1,6 @@
+using PoeHUD.Framework;
 using System;
 using System.Collections.Generic;
-using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.FilesInMemory
 {

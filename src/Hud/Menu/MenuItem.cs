@@ -1,7 +1,7 @@
+using PoeHUD.Hud.UI;
+using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
-using SharpDX;
-using PoeHUD.Hud.UI;
 
 namespace PoeHUD.Hud.Menu
 {

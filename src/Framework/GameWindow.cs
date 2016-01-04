@@ -1,6 +1,6 @@
+using SharpDX;
 using System;
 using System.Diagnostics;
-using SharpDX;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 

@@ -1,3 +1,7 @@
+using PoeHUD.Controllers;
+using PoeHUD.Framework;
+using PoeHUD.Hud;
+using PoeHUD.Poe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,10 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Tools;
-using PoeHUD.Controllers;
-using PoeHUD.Framework;
-using PoeHUD.Hud;
-using PoeHUD.Poe;
 
 namespace PoeHUD
 {

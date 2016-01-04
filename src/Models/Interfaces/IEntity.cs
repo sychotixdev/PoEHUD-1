@@ -10,7 +10,9 @@ namespace PoeHUD.Models.Interfaces
         bool IsValid { get; }
         bool IsHostile { get; }
         int Address { get; }
+
         bool HasComponent<T>() where T : Component, new();
+
         T GetComponent<T>() where T : Component, new();
     }
 }

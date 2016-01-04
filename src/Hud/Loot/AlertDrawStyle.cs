@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using SharpDX;
 using PoeHUD.Models.Enums;
+using SharpDX;
+using System.Collections.Generic;
 
 namespace PoeHUD.Hud.Loot
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PoeHUD.Hud.AdvancedTooltip;
 using PoeHUD.Hud.Dps;
 using PoeHUD.Hud.Health;
@@ -13,6 +11,8 @@ using PoeHUD.Hud.Preload;
 using PoeHUD.Hud.Settings.Converters;
 using PoeHUD.Hud.Trackers;
 using PoeHUD.Hud.XpRate;
+using System;
+using System.IO;
 
 namespace PoeHUD.Hud.Settings
 {

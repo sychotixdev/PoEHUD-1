@@ -2,7 +2,9 @@
 {
     public sealed class RangeNode<T> where T : struct
     {
-        public RangeNode() {}
+        public RangeNode()
+        {
+        }
 
         public RangeNode(T value, T min, T max)
         {
