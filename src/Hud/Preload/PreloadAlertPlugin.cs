@@ -109,12 +109,21 @@ namespace PoeHUD.Hud.Preload
                 string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
                 if (alertStrings.ContainsKey(text)) { alerts.Add(alertStrings[text]); }
-                if (text.Contains("human_heart") || text.Contains("Beat_01.ogg"))
+
+                //if (text.Contains("human_heart") || text.Contains("Demonic_NoRain.ogg") || text.Contains("Beat_01.ogg"))
+                if (text.Contains("human_heart") || text.Contains("Heart_Corrupt/Beat_01.ogg"))
                 {
-                    if (Settings.CorruptedTitle) { hasCorruptedArea = Settings.HasCorruptedArea; }
+                    if (Settings.CorruptedTitle)
+                    {
+                        hasCorruptedArea = Settings.HasCorruptedArea;
+                    }
                     else
                     {
-                        alerts.Add(new PreloadConfigLine { Text = "Corrupted Area", FastColor = () => Settings.HasCorruptedArea });
+                        alerts.Add(new PreloadConfigLine
+                        {
+                            Text = "Corrupted Area",
+                            FastColor = () => Settings.HasCorruptedArea
+                        });
                     }
                 }
 
@@ -122,6 +131,14 @@ namespace PoeHUD.Hud.Preload
                 {
                     alerts.Add(new PreloadConfigLine { Text = "Stone Altar", FastColor = () => Settings.StoneDeviceColor });
                 }
+
+                //Dictionary<string, PreloadConfigLine> Corrupted = new Dictionary<string, PreloadConfigLine>
+                //{
+                //    { "Metadata/Particles/enviro_effects/vaal_sidearea_effects", new PreloadConfigLine { Text = "Corrupted Area", FastColor = () => Settings.HasCorruptedArea }}
+                //};
+                //PreloadConfigLine corrupted = Corrupted.Where(kv => text
+                //    .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
+                //if (corrupted != null) { if (Settings.CorruptedTitle) { hasCorruptedArea = Settings.HasCorruptedArea; } else { alerts.Add(corrupted); } }
 
                 Dictionary<string, PreloadConfigLine> Talismans = new Dictionary<string, PreloadConfigLine>
                 {

@@ -1,4 +1,4 @@
-﻿using PoeHUD.Hud.Settings;
+using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.Trackers
 {

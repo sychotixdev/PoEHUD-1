@@ -26,16 +26,17 @@
 #Metadata/Chests/StrongBoxes/PerandusBox.ao;  Perandus Strongbox; ffAF6025
 #Metadata/Chests/StrongBoxes/KaomBox.ao;  Kaom Strongbox; ffAF6025
 #Metadata/Chests/StrongBoxes/MalachaisBox.ao;  Malachai Strongbox; ffAF6025
-Metadata/Chests/Barrels/Barrel1; Strange Barrel 1; ffAF6025
-Metadata/Chests/Barrels/Barrel1.ao; Strange Barrel 1; ffAF6025
-Metadata/Chests/Barrels/Barrel2; Strange Barrel 2; ffAF6025
-Metadata/Chests/Barrels/Barrel2.ao; Strange Barrel 2; ffAF6025
-Metadata/Chests/Barrels/Barrel3; Strange Barrel 3; ffAF6025
-Metadata/Chests/Barrels/Barrel3.ao; Strange Barrel 3; ffAF6025
-Metadata/Chests/Barrels/Barrel4; Strange Barrel 4; ffAF6025
-Metadata/Chests/Barrels/Barrel4.ao; Strange Barrel 4; ffAF6025
-Metadata/Chests/Barrels/Barrel5; Strange Barrel 5; ffAF6025
-Metadata/Chests/Barrels/Barrel5.ao; Strange Barrel 5; ffAF6025
+
+Metadata/Chests/Barrels/Barrel1; Unique Strange Barrel 1; ffAF6025
+Metadata/Chests/Barrels/Barrel1.ao; Unique Strange Barrel 1; ffAF6025
+Metadata/Chests/Barrels/Barrel2; Unique Strange Barrel 2; ffAF6025
+Metadata/Chests/Barrels/Barrel2.ao; Unique Strange Barrel 2; ffAF6025
+Metadata/Chests/Barrels/Barrel3; Unique Strange Barrel 3; ffAF6025
+Metadata/Chests/Barrels/Barrel3.ao; Unique Strange Barrel 3; ffAF6025
+Metadata/Chests/Barrels/Barrel4; Unique Strange Barrel 4; ffAF6025
+Metadata/Chests/Barrels/Barrel4.ao; Unique Strange Barrel 4; ffAF6025
+Metadata/Chests/Barrels/Barrel5; Unique Strange Barrel 5; ffAF6025
+Metadata/Chests/Barrels/Barrel5.ao; Unique Strange Barrel 5; ffAF6025
 
 #Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate; ffFEC076
 #Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga; ffFEC076

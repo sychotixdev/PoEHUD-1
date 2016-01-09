@@ -1,4 +1,4 @@
-﻿using PoeHUD.Framework.Helpers;
+using PoeHUD.Framework.Helpers;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System;
