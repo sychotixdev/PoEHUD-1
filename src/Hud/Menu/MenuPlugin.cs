@@ -159,8 +159,8 @@ namespace PoeHUD.Hud.Menu
             // Xph Display
             MenuItem xpRateMenu = AddChild(root, "Xph & area", settingsHub.XpRateSettings.Enable, "F10");
             MenuItem areaName = AddChild(xpRateMenu, "Only area name", settingsHub.XpRateSettings.OnlyAreaName);
-            AddChild(areaName, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
-            AddChild(areaName, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
+            //AddChild(areaName, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
+            //AddChild(areaName, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
             AddChild(areaName, "Show latency", settingsHub.XpRateSettings.ShowLatency);
             AddChild(areaName, "Latency color", settingsHub.XpRateSettings.LatencyTextColor);
             AddChild(xpRateMenu, "Show in town", settingsHub.XpRateSettings.ShowInTown);

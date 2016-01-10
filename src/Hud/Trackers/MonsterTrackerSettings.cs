@@ -18,7 +18,7 @@ namespace PoeHUD.Hud.Trackers
             TextPositionX = new RangeNode<int>(50, 0, 100);
             TextPositionY = new RangeNode<int>(85, 0, 100);
             DefaultTextColor = Color.Red;
-            MinionsIcon = new RangeNode<int>(4, 1, 8);
+            MinionsIcon = new RangeNode<int>(3, 1, 6);
             WhiteMobIcon = new RangeNode<int>(4, 1, 8);
             MagicMobIcon = new RangeNode<int>(6, 1, 12);
             RareMobIcon = new RangeNode<int>(8, 1, 16);

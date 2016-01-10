@@ -11,7 +11,7 @@ namespace PoeHUD.Hud.Trackers
             Strongboxes = true;
             Chests = true;
             MastersIcon = new RangeNode<int>(8, 1, 16);
-            StrongboxesIcon = new RangeNode<int>(14, 1, 28);
+            StrongboxesIcon = new RangeNode<int>(12, 1, 24);
             ChestsIcon = new RangeNode<int>(3, 1, 6);
         }
 
