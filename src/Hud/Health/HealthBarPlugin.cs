@@ -40,44 +40,51 @@ namespace PoeHUD.Hud.Health
 
         public override void Render()
         {
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame ||
+            try
+            {
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame ||
                 !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
                 !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
-            { return; }
+                { return; }
 
-            RectangleF windowRectangle = GameController.Window.GetWindowRectangle();
-            var windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
+                RectangleF windowRectangle = GameController.Window.GetWindowRectangle();
+                var windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
 
-            Camera camera = GameController.Game.IngameState.Camera;
-            Func<HealthBar, bool> showHealthBar = x => x.IsShow(Settings.ShowEnemies);
-            Parallel.ForEach(healthBars, x => x.Value.RemoveAll(hp => !hp.Entity.IsValid));
-            foreach (HealthBar healthBar in healthBars.SelectMany(x => x.Value).AsParallel().AsOrdered()
-                .Where(hp => showHealthBar(hp) && hp.Entity.IsAlive))
-            {
-                Vector3 worldCoords = healthBar.Entity.Pos;
-                Vector2 mobScreenCoords = camera.WorldToScreen(worldCoords.Translate(0, 0, -170), healthBar.Entity);
-                if (mobScreenCoords != new Vector2())
+                Camera camera = GameController.Game.IngameState.Camera;
+                Func<HealthBar, bool> showHealthBar = x => x.IsShow(Settings.ShowEnemies);
+                Parallel.ForEach(healthBars, x => x.Value.RemoveAll(hp => !hp.Entity.IsValid));
+                foreach (HealthBar healthBar in healthBars.SelectMany(x => x.Value).AsParallel().AsOrdered()
+                    .Where(hp => showHealthBar(hp) && hp.Entity.IsAlive))
                 {
-                    float scaledWidth = healthBar.Settings.Width * windowSize.Width;
-                    float scaledHeight = healthBar.Settings.Height * windowSize.Height;
-                    Color color = healthBar.Settings.Color;
-                    float hpPercent = healthBar.Life.HPPercentage;
-                    float esPercent = healthBar.Life.ESPercentage;
-                    float hpWidth = hpPercent * scaledWidth;
-                    float esWidth = esPercent * scaledWidth;
-                    var bg = new RectangleF(mobScreenCoords.X - scaledWidth / 2, mobScreenCoords.Y - scaledHeight / 2, scaledWidth, scaledHeight);
-
-                    if (hpPercent <= 0.1f)
+                    Vector3 worldCoords = healthBar.Entity.Pos;
+                    Vector2 mobScreenCoords = camera.WorldToScreen(worldCoords.Translate(0, 0, -170), healthBar.Entity);
+                    if (mobScreenCoords != new Vector2())
                     {
-                        color = healthBar.Settings.Under10Percent;
+                        float scaledWidth = healthBar.Settings.Width * windowSize.Width;
+                        float scaledHeight = healthBar.Settings.Height * windowSize.Height;
+                        Color color = healthBar.Settings.Color;
+                        float hpPercent = healthBar.Life.HPPercentage;
+                        float esPercent = healthBar.Life.ESPercentage;
+                        float hpWidth = hpPercent * scaledWidth;
+                        float esWidth = esPercent * scaledWidth;
+                        var bg = new RectangleF(mobScreenCoords.X - scaledWidth / 2, mobScreenCoords.Y - scaledHeight / 2, scaledWidth, scaledHeight);
+
+                        if (hpPercent <= 0.1f)
+                        {
+                            color = healthBar.Settings.Under10Percent;
+                        }
+                        bg.Y = DrawFlatLifeAmount(healthBar.Life, hpPercent, healthBar.Settings, bg);
+                        var yPosition = DrawFlatESAmount(healthBar, bg);
+                        yPosition = DrawDebuffPanel(new Vector2(bg.Left, yPosition), healthBar, healthBar.Life);
+                        ShowDps(healthBar, new Vector2(bg.Center.X, yPosition));
+                        DrawPercents(healthBar.Settings, hpPercent, bg);
+                        DrawBackground(color, healthBar.Settings.Outline, bg, hpWidth, esWidth);
                     }
-                    bg.Y = DrawFlatLifeAmount(healthBar.Life, hpPercent, healthBar.Settings, bg);
-                    var yPosition = DrawFlatESAmount(healthBar, bg);
-                    yPosition = DrawDebuffPanel(new Vector2(bg.Left, yPosition), healthBar, healthBar.Life);
-                    ShowDps(healthBar, new Vector2(bg.Center.X, yPosition));
-                    DrawPercents(healthBar.Settings, hpPercent, bg);
-                    DrawBackground(color, healthBar.Settings.Outline, bg, hpWidth, esWidth);
                 }
+            }
+            catch
+            {
+                // do nothing
             }
         }
 

@@ -38,23 +38,30 @@ namespace PoeHUD.Hud.Menu
 
         public override void Render()
         {
-            if (!holdKey && WinApi.IsKeyDown(Keys.F12))
+            try
             {
-                holdKey = true;
-                Settings.Enable.Value = !Settings.Enable.Value;
-                if (!Settings.Enable.Value)
+                if (!holdKey && WinApi.IsKeyDown(Keys.F12))
                 {
-                    SettingsHub.Save(settingsHub);
+                    holdKey = true;
+                    Settings.Enable.Value = !Settings.Enable.Value;
+                    if (!Settings.Enable.Value)
+                    {
+                        SettingsHub.Save(settingsHub);
+                    }
+                }
+                else if (holdKey && !WinApi.IsKeyDown(Keys.F12))
+                {
+                    holdKey = false;
+                }
+
+                if (Settings.Enable)
+                {
+                    root.Render(Graphics, Settings);
                 }
             }
-            else if (holdKey && !WinApi.IsKeyDown(Keys.F12))
+            catch
             {
-                holdKey = false;
-            }
-
-            if (Settings.Enable)
-            {
-                root.Render(Graphics, Settings);
+                // do nothing
             }
         }
 

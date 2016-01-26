@@ -45,31 +45,38 @@ namespace PoeHUD.Hud.KillCounter
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
-            { return; }
-
-            List<EntityWrapper> deadEntities = aliveEntities.Where(entity => !entity.IsAlive).ToList();
-            foreach (EntityWrapper entity in deadEntities)
+            try
             {
-                Calc(entity);
-                aliveEntities.Remove(entity);
-            }
+                base.Render();
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||
+                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
+                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
+                { return; }
 
-            Vector2 position = StartDrawPointFunc();
-            var size = new Size2();
-            if (Settings.ShowDetail) { size = DrawCounters(position); }
-            var session = $"({sessionCounter + summaryCounter})";
-            Size2 size2 = Graphics.DrawText($"kills: {summaryCounter} {session}",
-                Settings.KillsTextSize, position.Translate(0, size.Height), Settings.TextColor, FontDrawFlags.Right);
-            int width = Math.Max(size.Width, size2.Width);
-            var bounds = new RectangleF(position.X - width - 46, position.Y - 5, width + 50, size.Height + size2.Height + 10);
-            Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
-            Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
-            Size = bounds.Size;
-            Margin = new Vector2(0, 5);
+                List<EntityWrapper> deadEntities = aliveEntities.Where(entity => !entity.IsAlive).ToList();
+                foreach (EntityWrapper entity in deadEntities)
+                {
+                    Calc(entity);
+                    aliveEntities.Remove(entity);
+                }
+
+                Vector2 position = StartDrawPointFunc();
+                var size = new Size2();
+                if (Settings.ShowDetail) { size = DrawCounters(position); }
+                var session = $"({sessionCounter + summaryCounter})";
+                Size2 size2 = Graphics.DrawText($"kills: {summaryCounter} {session}",
+                    Settings.KillsTextSize, position.Translate(0, size.Height), Settings.TextColor, FontDrawFlags.Right);
+                int width = Math.Max(size.Width, size2.Width);
+                var bounds = new RectangleF(position.X - width - 46, position.Y - 5, width + 50, size.Height + size2.Height + 10);
+                Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
+                Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
+                Size = bounds.Size;
+                Margin = new Vector2(0, 5);
+            }
+            catch
+            {
+                // do nothing
+            }
         }
 
         protected override void OnEntityAdded(EntityWrapper entityWrapper)

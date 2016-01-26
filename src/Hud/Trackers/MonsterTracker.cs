@@ -61,55 +61,62 @@ namespace PoeHUD.Hud.Trackers
 
         public override void Render()
         {
-            if (!Settings.Enable || !Settings.ShowText) { return; }
-
-            RectangleF rect = GameController.Window.GetWindowRectangle();
-            float xPos = rect.Width * Settings.TextPositionX * 0.01f + rect.X;
-            float yPos = rect.Height * Settings.TextPositionY * 0.01f + rect.Y;
-
-            Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
-            bool first = true;
-            var rectBackground = new RectangleF();
-
-            var groupedAlerts = alertTexts.Where(y => y.Key.IsAlive && y.Key.IsHostile).Select(y =>
+            try
             {
-                Vector2 delta = y.Key.GetComponent<Positioned>().GridPos - playerPos;
-                double phi;
-                double distance = delta.GetPolarCoordinates(out phi);
-                return new { Dic = y, Phi = phi, Distance = distance };
-            })
-                .OrderBy(y => y.Distance)
-                .GroupBy(y => y.Dic.Value)
-                .Select(y => new { y.Key.Text, y.Key.Color, Monster = y.First(), Count = y.Count() }).ToList();
+                if (!Settings.Enable || !Settings.ShowText) { return; }
 
-            foreach (var group in groupedAlerts)
-            {
-                RectangleF uv = GetDirectionsUV(group.Monster.Phi, group.Monster.Distance);
-                string text = $"{@group.Text} {(@group.Count > 1 ? "(" + @group.Count + ")" : string.Empty)}";
-                var color = group.Color ?? Settings.DefaultTextColor;
-                Size2 textSize = Graphics.DrawText(text, Settings.TextSize, new Vector2(xPos, yPos), color, FontDrawFlags.Center);
+                RectangleF rect = GameController.Window.GetWindowRectangle();
+                float xPos = rect.Width * Settings.TextPositionX * 0.01f + rect.X;
+                float yPos = rect.Height * Settings.TextPositionY * 0.01f + rect.Y;
 
-                rectBackground = new RectangleF(xPos - 30 - textSize.Width / 2f - 6, yPos, 80 + textSize.Width, textSize.Height);
-                rectBackground.X -= textSize.Height + 3;
-                rectBackground.Width += textSize.Height;
+                Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
+                bool first = true;
+                var rectBackground = new RectangleF();
 
-                var rectDirection = new RectangleF(rectBackground.X + 3, rectBackground.Y, rectBackground.Height, rectBackground.Height);
-
-                if (first) // vertical padding above
+                var groupedAlerts = alertTexts.Where(y => y.Key.IsAlive && y.Key.IsHostile).Select(y =>
                 {
-                    rectBackground.Y -= 2;
-                    rectBackground.Height += 5;
-                    first = false;
+                    Vector2 delta = y.Key.GetComponent<Positioned>().GridPos - playerPos;
+                    double phi;
+                    double distance = delta.GetPolarCoordinates(out phi);
+                    return new { Dic = y, Phi = phi, Distance = distance };
+                })
+                    .OrderBy(y => y.Distance)
+                    .GroupBy(y => y.Dic.Value)
+                    .Select(y => new { y.Key.Text, y.Key.Color, Monster = y.First(), Count = y.Count() }).ToList();
+
+                foreach (var group in groupedAlerts)
+                {
+                    RectangleF uv = GetDirectionsUV(group.Monster.Phi, group.Monster.Distance);
+                    string text = $"{@group.Text} {(@group.Count > 1 ? "(" + @group.Count + ")" : string.Empty)}";
+                    var color = group.Color ?? Settings.DefaultTextColor;
+                    Size2 textSize = Graphics.DrawText(text, Settings.TextSize, new Vector2(xPos, yPos), color, FontDrawFlags.Center);
+
+                    rectBackground = new RectangleF(xPos - 30 - textSize.Width / 2f - 6, yPos, 80 + textSize.Width, textSize.Height);
+                    rectBackground.X -= textSize.Height + 3;
+                    rectBackground.Width += textSize.Height;
+
+                    var rectDirection = new RectangleF(rectBackground.X + 3, rectBackground.Y, rectBackground.Height, rectBackground.Height);
+
+                    if (first) // vertical padding above
+                    {
+                        rectBackground.Y -= 2;
+                        rectBackground.Height += 5;
+                        first = false;
+                    }
+                    Graphics.DrawImage("preload-start.png", rectBackground, Settings.BackgroundColor);
+                    Graphics.DrawImage("directions.png", rectDirection, uv, color);
+                    yPos += textSize.Height;
                 }
-                Graphics.DrawImage("preload-start.png", rectBackground, Settings.BackgroundColor);
-                Graphics.DrawImage("directions.png", rectDirection, uv, color);
-                yPos += textSize.Height;
+                if (!first) // vertical padding below
+                {
+                    rectBackground.Y = rectBackground.Y + rectBackground.Height;
+                    rectBackground.Height = 5;
+                    Graphics.DrawImage("preload-start.png", rectBackground, Settings.BackgroundColor);
+                }
             }
-            if (!first) // vertical padding below
+            catch
             {
-                rectBackground.Y = rectBackground.Y + rectBackground.Height;
-                rectBackground.Height = 5;
-                Graphics.DrawImage("preload-start.png", rectBackground, Settings.BackgroundColor);
+                // do nothing
             }
         }
 

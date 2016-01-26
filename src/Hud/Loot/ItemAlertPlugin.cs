@@ -92,55 +92,62 @@ namespace PoeHUD.Hud.Loot
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
-
-            if (Settings.Enable)
+            try
             {
-                Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
-                Vector2 position = StartDrawPointFunc();
-                const int BOTTOM_MARGIN = 2;
-                bool shouldUpdate = false;
+                base.Render();
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
 
-                if (Settings.BorderSettings.Enable)
+                if (Settings.Enable)
                 {
-                    Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
-                    var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key.IsValid).ToList();
-                    foreach (var kv in keyValuePairs)
+                    Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
+                    Vector2 position = StartDrawPointFunc();
+                    const int BOTTOM_MARGIN = 2;
+                    bool shouldUpdate = false;
+
+                    if (Settings.BorderSettings.Enable)
                     {
-                        if (DrawBorder(kv.Key.Address) && !shouldUpdate)
+                        Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
+                        var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key.IsValid).ToList();
+                        foreach (var kv in keyValuePairs)
+                        {
+                            if (DrawBorder(kv.Key.Address) && !shouldUpdate)
+                            {
+                                shouldUpdate = true;
+                            }
+                        }
+                    }
+
+                    foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key.IsValid))
+                    {
+                        string text = GetItemName(kv);
+                        if (text == null)
+                        {
+                            continue;
+                        }
+
+                        ItemsOnGroundLabelElement entityLabel;
+                        if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
                         {
                             shouldUpdate = true;
                         }
+                        else
+                        {
+                            if (Settings.ShowText & (!Settings.HideOthers | entityLabel.CanPickUp))
+                                position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                        }
+                    }
+                    Size = new Size2F(0, position.Y); //bug absent width
+
+                    if (shouldUpdate)
+                    {
+                        currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
+                            .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
                     }
                 }
-
-                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key.IsValid))
-                {
-                    string text = GetItemName(kv);
-                    if (text == null)
-                    {
-                        continue;
-                    }
-
-                    ItemsOnGroundLabelElement entityLabel;
-                    if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
-                    {
-                        shouldUpdate = true;
-                    }
-                    else
-                    {
-                        if (Settings.ShowText & (!Settings.HideOthers | entityLabel.CanPickUp))
-                            position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
-                    }
-                }
-                Size = new Size2F(0, position.Y); //bug absent width
-
-                if (shouldUpdate)
-                {
-                    currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
-                        .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
-                }
+            }
+            catch
+            {
+                // do nothing
             }
         }
 

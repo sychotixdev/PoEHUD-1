@@ -34,32 +34,39 @@ namespace PoeHUD.Hud.InventoryPreview
 
         public override void Render()
         {
-            if (!Settings.Enable) { return; }
+            try
+            {
+                if (!Settings.Enable) { return; }
 
-            ingameUiElements = GameController.Game.IngameState.IngameUi;
-            if (ingameUiElements.OpenLeftPanel.IsVisible || ingameUiElements.OpenRightPanel.IsVisible)
-            {
-                if (ingameUiElements.InventoryPanel.IsVisible)
+                ingameUiElements = GameController.Game.IngameState.IngameUi;
+                if (ingameUiElements.OpenLeftPanel.IsVisible || ingameUiElements.OpenRightPanel.IsVisible)
                 {
-                    cells = new CellData[CELLS_Y_COUNT, CELLS_X_COUNT];
-                    AddItems();
+                    if (ingameUiElements.InventoryPanel.IsVisible)
+                    {
+                        cells = new CellData[CELLS_Y_COUNT, CELLS_X_COUNT];
+                        AddItems();
+                    }
+                    return;
                 }
-                return;
+                RectangleF rect = GameController.Window.GetWindowRectangle();
+                float xPos = rect.Width * Settings.PositionX * .01f;
+                float yPos = rect.Height * Settings.PositionY * .01f;
+                var startDrawPoint = new Vector2(xPos, yPos);
+                for (int i = 0; i < cells.GetLength(0); i++)
+                {
+                    for (int j = 0; j < cells.GetLength(1); j++)
+                    {
+                        Vector2 d = startDrawPoint.Translate(j * Settings.CellSize, i * Settings.CellSize);
+                        float cellWidth = GetCellSize(cells[i, j].ExtendsX);
+                        float cellHeight = GetCellSize(cells[i, j].ExtendsY);
+                        var rectangleF = new RectangleF(d.X, d.Y, cellWidth, cellHeight);
+                        Graphics.DrawImage("cell.png", rectangleF, cells[i, j].Used ? Settings.CellUsedColor : Settings.CellFreeColor);
+                    }
+                }
             }
-            RectangleF rect = GameController.Window.GetWindowRectangle();
-            float xPos = rect.Width * Settings.PositionX * .01f;
-            float yPos = rect.Height * Settings.PositionY * .01f;
-            var startDrawPoint = new Vector2(xPos, yPos);
-            for (int i = 0; i < cells.GetLength(0); i++)
+            catch
             {
-                for (int j = 0; j < cells.GetLength(1); j++)
-                {
-                    Vector2 d = startDrawPoint.Translate(j * Settings.CellSize, i * Settings.CellSize);
-                    float cellWidth = GetCellSize(cells[i, j].ExtendsX);
-                    float cellHeight = GetCellSize(cells[i, j].ExtendsY);
-                    var rectangleF = new RectangleF(d.X, d.Y, cellWidth, cellHeight);
-                    Graphics.DrawImage("cell.png", rectangleF, cells[i, j].Used ? Settings.CellUsedColor : Settings.CellFreeColor);
-                }
+                // do nothing
             }
         }
 

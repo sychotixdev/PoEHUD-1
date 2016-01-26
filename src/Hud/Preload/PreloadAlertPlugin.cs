@@ -44,41 +44,48 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
-            if (areaChanged || WinApi.IsKeyDown(Keys.F5))
+            try
             {
-                Parse();
-                lastCount = GetNumberOfObjects();
-            }
-            else if (DateTime.Now <= maxParseTime)
-            {
-                int count = GetNumberOfObjects();
-                if (lastCount != count)
+                base.Render();
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
+                if (areaChanged || WinApi.IsKeyDown(Keys.F5))
                 {
-                    areaChanged = true;
+                    Parse();
+                    lastCount = GetNumberOfObjects();
                 }
-            }
+                else if (DateTime.Now <= maxParseTime)
+                {
+                    int count = GetNumberOfObjects();
+                    if (lastCount != count)
+                    {
+                        areaChanged = true;
+                    }
+                }
 
-            if (alerts.Count <= 0) return;
-            Vector2 startPosition = StartDrawPointFunc();
-            Vector2 position = startPosition;
-            int maxWidth = 0;
-            foreach (Size2 size in alerts
-                .Select(preloadConfigLine => Graphics
-                    .DrawText(preloadConfigLine.Text, Settings.TextSize, position, preloadConfigLine.FastColor?
-                        .Invoke() ?? preloadConfigLine.Color ?? Settings.DefaultTextColor, FontDrawFlags.Right)))
-            {
-                maxWidth = Math.Max(size.Width, maxWidth);
-                position.Y += size.Height;
+                if (alerts.Count <= 0) return;
+                Vector2 startPosition = StartDrawPointFunc();
+                Vector2 position = startPosition;
+                int maxWidth = 0;
+                foreach (Size2 size in alerts
+                    .Select(preloadConfigLine => Graphics
+                        .DrawText(preloadConfigLine.Text, Settings.TextSize, position, preloadConfigLine.FastColor?
+                            .Invoke() ?? preloadConfigLine.Color ?? Settings.DefaultTextColor, FontDrawFlags.Right)))
+                {
+                    maxWidth = Math.Max(size.Width, maxWidth);
+                    position.Y += size.Height;
+                }
+                if (maxWidth <= 0) return;
+                var bounds = new RectangleF(startPosition.X - maxWidth - 45, startPosition.Y - 5,
+                    maxWidth + 50, position.Y - startPosition.Y + 10);
+                Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
+                Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
+                Size = bounds.Size;
+                Margin = new Vector2(0, 5);
             }
-            if (maxWidth <= 0) return;
-            var bounds = new RectangleF(startPosition.X - maxWidth - 45, startPosition.Y - 5,
-                maxWidth + 50, position.Y - startPosition.Y + 10);
-            Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
-            Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
-            Size = bounds.Size;
-            Margin = new Vector2(0, 5);
+            catch
+            {
+                // do nothing
+            }
         }
 
         private int GetNumberOfObjects()

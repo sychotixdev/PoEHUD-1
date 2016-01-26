@@ -28,80 +28,87 @@ namespace PoeHUD.Hud.XpRate
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || (GameController.Player != null
-                && GameController.Player.GetComponent<Player>().Level >= 100))
-            { return; }
-
-            DateTime nowTime = DateTime.Now;
-            TimeSpan elapsedTime = nowTime - lastTime;
-            if (elapsedTime.TotalSeconds > 1)
+            try
             {
-                CalculateXp(nowTime);
-                partyXpPenalty = PartyXpPenalty();
-                lastTime = nowTime;
-            }
+                base.Render();
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || (GameController.Player != null
+                    && GameController.Player.GetComponent<Player>().Level >= 100))
+                { return; }
 
-            bool showInTown =
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
-                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout;
-            Vector2 position = StartDrawPointFunc();
-            string fps = $"fps:({GameController.Game.IngameState.CurFps})";
-            string areaName = $"{GameController.Area.CurrentArea.DisplayName}";
-            Color hasCorruptedArea = PreloadAlertPlugin.hasCorruptedArea;
-
-            if (Settings.OnlyAreaName)
-            {
-                if (!showInTown)
+                DateTime nowTime = DateTime.Now;
+                TimeSpan elapsedTime = nowTime - lastTime;
+                if (elapsedTime.TotalSeconds > 1)
                 {
-                    var areaNameSize = Graphics.MeasureText(areaName, Settings.TextSize);
-                    float boxHeight = areaNameSize.Height;
-                    float boxWidth = MathHepler.Max(areaNameSize.Width);
-                    var bounds = new RectangleF(position.X - 84 - boxWidth, position.Y - 5, boxWidth + 90, boxHeight + 12);
-                    string latency = $"({GameController.Game.IngameState.CurLatency})";
-                    Graphics.DrawText(areaName, Settings.TextSize, new Vector2(bounds.X + 84, position.Y), hasCorruptedArea);
-                    Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
-                    Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
-                    if (Settings.ShowLatency)
+                    CalculateXp(nowTime);
+                    partyXpPenalty = PartyXpPenalty();
+                    lastTime = nowTime;
+                }
+
+                bool showInTown =
+                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
+                        !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout;
+                Vector2 position = StartDrawPointFunc();
+                string fps = $"fps:({GameController.Game.IngameState.CurFps})";
+                string areaName = $"{GameController.Area.CurrentArea.DisplayName}";
+                Color hasCorruptedArea = PreloadAlertPlugin.hasCorruptedArea;
+
+                if (Settings.OnlyAreaName)
+                {
+                    if (!showInTown)
                     {
-                        Graphics.DrawText(latency, Settings.TextSize, new Vector2(bounds.X + 35, position.Y), Settings.LatencyTextColor);
+                        var areaNameSize = Graphics.MeasureText(areaName, Settings.TextSize);
+                        float boxHeight = areaNameSize.Height;
+                        float boxWidth = MathHepler.Max(areaNameSize.Width);
+                        var bounds = new RectangleF(position.X - 84 - boxWidth, position.Y - 5, boxWidth + 90, boxHeight + 12);
+                        string latency = $"({GameController.Game.IngameState.CurLatency})";
+                        Graphics.DrawText(areaName, Settings.TextSize, new Vector2(bounds.X + 84, position.Y), hasCorruptedArea);
+                        Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
+                        Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
+                        if (Settings.ShowLatency)
+                        {
+                            Graphics.DrawText(latency, Settings.TextSize, new Vector2(bounds.X + 35, position.Y), Settings.LatencyTextColor);
+                        }
+                        Size = bounds.Size;
+                        Margin = new Vector2(0, 5);
                     }
-                    Size = bounds.Size;
-                    Margin = new Vector2(0, 5);
+                }
+
+                if (!Settings.OnlyAreaName)
+                {
+                    if (!showInTown)
+                    {
+                        var xpReceiving = levelXpPenalty * partyXpPenalty;
+                        var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
+                        string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
+                        Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea, FontDrawFlags.Right);
+                        Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
+                        Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
+                        Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
+                        Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.TimeLeftColor, FontDrawFlags.Right);
+                        string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);
+                        Size2 timerSize = Graphics.MeasureText(timer, Settings.TextSize);
+
+                        float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40, areaNameSize.Width + 20, timerSize.Width);
+                        float boxHeight = xpRateSize.Height + xpLeftSize.Height + areaNameSize.Height;
+                        var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110, boxHeight + 18);
+
+                        Size2 timeFpsSize = Graphics.MeasureText(fps, Settings.TextSize);
+                        var dif = bounds.Width - (12 + timeFpsSize.Width + xpRateSize.Width);
+                        if (dif < 0) { bounds.X += dif; bounds.Width -= dif; }
+
+                        Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y), Settings.TimerTextColor);
+                        Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y), Settings.FpsTextColor);
+                        Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y), Settings.LatencyTextColor);
+                        Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
+                        Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
+                        Size = bounds.Size;
+                        Margin = new Vector2(0, 5);
+                    }
                 }
             }
-
-            if (!Settings.OnlyAreaName)
+            catch
             {
-                if (!showInTown)
-                {
-                    var xpReceiving = levelXpPenalty * partyXpPenalty;
-                    var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
-                    string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
-                    Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea, FontDrawFlags.Right);
-                    Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
-                    Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
-                    Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
-                    Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.TimeLeftColor, FontDrawFlags.Right);
-                    string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);
-                    Size2 timerSize = Graphics.MeasureText(timer, Settings.TextSize);
-
-                    float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40, areaNameSize.Width + 20, timerSize.Width);
-                    float boxHeight = xpRateSize.Height + xpLeftSize.Height + areaNameSize.Height;
-                    var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110, boxHeight + 18);
-
-                    Size2 timeFpsSize = Graphics.MeasureText(fps, Settings.TextSize);
-                    var dif = bounds.Width - (12 + timeFpsSize.Width + xpRateSize.Width);
-                    if (dif < 0) { bounds.X += dif; bounds.Width -= dif; }
-
-                    Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y), Settings.TimerTextColor);
-                    Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y), Settings.FpsTextColor);
-                    Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y), Settings.LatencyTextColor);
-                    Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
-                    Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
-                    Size = bounds.Size;
-                    Margin = new Vector2(0, 5);
-                }
+                // do nothing
             }
         }
 
