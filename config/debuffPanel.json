@@ -19,6 +19,7 @@ Filter:
     "monster_aura_chaos_degen":2,
     "monster_aura_physical_degen":2,
     "ground_desecration":0,
+    "caustic_cloud":0,
     "chaos_bond_in_beam":0
   },
   "ChilledFrozen": {
