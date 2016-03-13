@@ -35,8 +35,8 @@ namespace PoeHUD.Poe.Components
             get
             {
                 var list = new List<Buff>();
-                int start = M.ReadInt(Address + 0x90);
-                int end = M.ReadInt(Address + 0x94);
+                int start = M.ReadInt(Address + 0x94);
+                int end = M.ReadInt(Address + 0x98);
                 int count = (end - start) / 4;
                 if (count <= 0 || count > 32)
                 {
