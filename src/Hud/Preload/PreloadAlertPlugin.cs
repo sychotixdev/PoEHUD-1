@@ -109,7 +109,7 @@ namespace PoeHUD.Hud.Preload
             int pFileRoot = memory.ReadInt(memory.AddressOfProcess + memory.offsets.FileRoot);
             int count = memory.ReadInt(pFileRoot + 12);
             int listIterator = memory.ReadInt(pFileRoot + 20);
-            int areaChangeCount = GameController.Game.AreaChangeCount;
+            int areaChangeCount = GameController.Game.IngameState.AreaChangeCount;
             for (int i = 0; i < count; i++)
             {
                 listIterator = memory.ReadInt(listIterator);

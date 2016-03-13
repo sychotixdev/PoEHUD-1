@@ -22,5 +22,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public float CurFrameTime => M.ReadFloat(Address + 0x10E0);
         public float CurFps => M.ReadFloat(Address + 0x1308);
         public TimeSpan TimeInGame => TimeSpan.FromMilliseconds(M.ReadInt(Address + 0xC70));
+        public int AreaChangeCount => M.ReadInt(Address + 0x19D0);
     }
 }

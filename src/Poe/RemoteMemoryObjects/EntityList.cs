@@ -10,7 +10,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                System.Console.WriteLine("EntityList: " + Address.ToString("x8"));
                 var dictionary = new Dictionary<int, Entity>();
                 CollectEntities(M.ReadInt(Address), dictionary);
                 return dictionary;

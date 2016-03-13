@@ -43,7 +43,7 @@ namespace PoeHUD.Poe
         public T GetComponent<T>() where T : Component, new()
         {
             int addr;
-            return HasComponent<T>(out addr) ? GetObject<T>(ComponentList + M.ReadInt(addr + 0xC) * 4) : GetObject<T>(0);
+            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0xC) * 4) : GetObject<T>(0);
         }
 
         public Dictionary<string, int> GetComponents()
