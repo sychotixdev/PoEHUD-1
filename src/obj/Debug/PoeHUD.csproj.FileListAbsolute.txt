@@ -24,3 +24,23 @@ C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\bin\Debug\FSharp.Core.xml
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\bin\Debug\it\FSharp.Core.resources.dll
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\obj\Debug\PoeHUD.exe
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\obj\Debug\PoeHUD.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\PoeHUD.exe.config
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\PoeHUD.exe
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\PoeHUD.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\PoeFilterParser.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\Tools.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\FSharp.Core.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\PoeFilterParser.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\Tools.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\Tools.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\Antlr4.Runtime.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\SharpDX.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\SharpDX.Desktop.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\FSharp.Core.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\it\FSharp.Core.resources.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\obj\Debug\PoeHUD.csprojResolveAssemblyReference.cache
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\obj\Debug\PoeHUD.exe
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\obj\Debug\PoeHUD.pdb

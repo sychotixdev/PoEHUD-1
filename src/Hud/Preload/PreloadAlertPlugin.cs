@@ -102,7 +102,8 @@ namespace PoeHUD.Hud.Preload
 
         private void Parse()
         {
-            areaChanged = false; alerts.Clear();
+            areaChanged = false;
+            alerts.Clear();
             Memory memory = GameController.Memory;
             hasCorruptedArea = Settings.AreaTextColor;
             int pFileRoot = memory.ReadInt(memory.AddressOfProcess + memory.offsets.FileRoot);

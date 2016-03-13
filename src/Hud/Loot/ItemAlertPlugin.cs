@@ -353,6 +353,7 @@ namespace PoeHUD.Hud.Loot
 
         private ItemUsefulProperties initItem(IEntity item)
         {
+            /*
             string name = GameController.Files.BaseItemTypes.Translate(item.Path).BaseName;
             CraftingBase craftingBase = new CraftingBase();
             if (Settings.Crafting)
@@ -366,8 +367,9 @@ namespace PoeHUD.Hud.Loot
                     break;
                 }
             }
+            */
 
-            return new ItemUsefulProperties(name, item, craftingBase);
+            return null;// ItemUsefulProperties(name, item, craftingBase);
         }
 
         private string GetItemName(KeyValuePair<EntityWrapper, AlertDrawStyle> kv)

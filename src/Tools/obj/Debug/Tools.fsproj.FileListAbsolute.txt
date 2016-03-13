@@ -6,3 +6,10 @@ C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Debug\FSharp.Core.xml
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\bin\Debug\it\FSharp.Core.resources.dll
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\obj\Debug\Tools.dll
 C:\Users\mVm\Documents\GitHub\vmv-poeHud\src\Tools\obj\Debug\Tools.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\bin\Debug\Tools.XML
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\bin\Debug\Tools.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\bin\Debug\Tools.pdb
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\bin\Debug\FSharp.Core.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\bin\Debug\FSharp.Core.xml
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\obj\Debug\Tools.dll
+C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\Tools\obj\Debug\Tools.pdb

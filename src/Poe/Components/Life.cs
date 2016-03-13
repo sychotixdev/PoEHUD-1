@@ -5,14 +5,14 @@ namespace PoeHUD.Poe.Components
 {
     public class Life : Component
     {
-        public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x30) : 1;
-        public int CurHP => Address != 0 ? M.ReadInt(Address + 0x34) : 1;
-        public int ReservedHP => Address != 0 ? M.ReadInt(Address + 0x3C) : 0;
-        public int MaxMana => Address != 0 ? M.ReadInt(Address + 0x54) : 1;
-        public int CurMana => Address != 0 ? M.ReadInt(Address + 0x58) : 1;
-        public int ReservedMana => Address != 0 ? M.ReadInt(Address + 0x60) : 0;
-        public int MaxES => Address != 0 ? M.ReadInt(Address + 0x78) : 0;
-        public int CurES => Address != 0 ? M.ReadInt(Address + 0x7c) : 0;
+        public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x2C) : 1;
+        public int CurHP => Address != 0 ? M.ReadInt(Address + 0x30) : 1;
+        public int ReservedHP => Address != 0 ? M.ReadInt(Address + 0x38) : 0;
+        public int MaxMana => Address != 0 ? M.ReadInt(Address + 0x50) : 1;
+        public int CurMana => Address != 0 ? M.ReadInt(Address + 0x54) : 1;
+        public int ReservedMana => Address != 0 ? M.ReadInt(Address + 0x5C) : 0;
+        public int MaxES => Address != 0 ? M.ReadInt(Address + 0x74) : 0;
+        public int CurES => Address != 0 ? M.ReadInt(Address + 0x78) : 0;
         public float HPPercentage => CurHP / (float)(MaxHP - ReservedHP);
         public float MPPercentage => CurMana / (float)(MaxMana - ReservedMana);
 
@@ -28,15 +28,15 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-        public bool CorpseUsable => M.ReadBytes(Address + 0xD4, 1)[0] == 1;
+        public bool CorpseUsable => M.ReadBytes(Address + 0xD0, 1)[0] == 1; // not sure this is right, didn't bother to check
 
         public List<Buff> Buffs
         {
             get
             {
                 var list = new List<Buff>();
-                int start = M.ReadInt(Address + 0x98);
-                int end = M.ReadInt(Address + 0x9C);
+                int start = M.ReadInt(Address + 0x90);
+                int end = M.ReadInt(Address + 0x94);
                 int count = (end - start) / 4;
                 if (count <= 0 || count > 32)
                 {

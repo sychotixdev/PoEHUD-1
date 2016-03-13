@@ -2,7 +2,7 @@ using PoeHUD.Framework;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public sealed class TheGame : RemoteMemoryObject
+    public class TheGame : RemoteMemoryObject
     {
         public TheGame(Memory m)
         {
@@ -10,8 +10,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Address = m.ReadInt(m.AddressOfProcess + Offsets.Base, 4, 0x7C);
             Game = this;
         }
-
-        public IngameState IngameState => ReadObject<IngameState>(Address + 0x9C);
+        public IngameState IngameState => ReadObject<IngameState>(Address + 0x11C);
         public int AreaChangeCount => M.ReadInt(M.AddressOfProcess + Offsets.AreaChangeCount);
     }
 }

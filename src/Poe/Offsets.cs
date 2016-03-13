@@ -86,10 +86,11 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
-            100, 161, 0, 0, 0, 0, 106, 255, 104, 0, 0, 0, 0, 80, 100, 137,
-            37, 0, 0, 0, 0, 161, 0, 0, 0, 0, 129, 236, 0xC8, 0, 0, 0,
-            0x53, 0x55, 0x33, 0xDB, 0x56, 0x57, 0x3B, 0xC3
-        }, "xxxxxxxxx????xxxxxxxxx????xxxxxxxxxxxxxx");
+            0x50, 0x64, 0x89, 0x25, 0x00, 0x00, 0x00, 0x00,
+            0x81, 0xEC, 0xB0, 0x00, 0x00, 0x00, 0xA1, 0x00,
+            0x00, 0x00, 0x00, 0x85, 0xC0, 0x0F, 0x95, 0xC1,
+            0x84, 0xC9, 0x56, 0x0F, 0x94, 0xC1, 0x84, 0xC9
+        }, "xxxxxxxxxxxxxxx????xxxxxxxxxxxxx");
 
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
@@ -131,17 +132,18 @@ namespace PoeHUD.Poe
         public int FileRoot { get; private set; }
         public int IgsDelta { get; private set; }
         public int IgsOffset { get; private set; }
-        public int InGameOffset { get; private set; }
+        //public int InGameOffset { get; private set; }
 
         public int IgsOffsetDelta => IgsOffset - IgsDelta;
 
         public void DoPatternScans(Memory m)
         {
-            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern, inGameOffsetPattern);
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x16) - m.AddressOfProcess;
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x28) - m.AddressOfProcess;
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xD) - m.AddressOfProcess;
-            InGameOffset = m.ReadInt(m.AddressOfProcess + array[3] + 0x13);
+            int[] array = m.FindPatterns(basePtrPattern);//, fileRootPattern, areaChangePattern, inGameOffsetPattern);
+            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
+            System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
+            //FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x28) - m.AddressOfProcess;
+            //System.Console.WriteLine("FileRoot: " + FileRoot.ToString("x8"));
+            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xD) - m.AddressOfProcess;
         }
     }
 }
