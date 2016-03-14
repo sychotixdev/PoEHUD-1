@@ -18,8 +18,27 @@ namespace PoeHUD.Hud.Preload
             DefaultTextColor = new ColorBGRA(210, 210, 210, 255);
             AreaTextColor = new ColorBGRA(150, 200, 250, 255);
             HasCorruptedArea = new ColorBGRA(208, 31, 144, 255);
-            StoneDeviceColor = new ColorBGRA(255, 255, 255, 255);
-            TalismanModsColor = new ColorBGRA(215, 90, 175, 255);
+
+            CadiroTrader = new ColorBGRA(255, 128, 0, 255);
+            PerandusChestStandard = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestRarity = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestQuantity = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestCoins = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestJewellery = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestGems = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestCurrency = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestInventory = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestDivinationCards = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestKeepersOfTheTrove = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestUniqueItem = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestMaps = new ColorBGRA(153, 255, 51, 255);
+            PerandusChestFishing = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorUniqueChest = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorCurrencyChest = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorMapsChest = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorJewelryChest = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorDivinationCardsChest = new ColorBGRA(153, 255, 51, 255);
+            PerandusManorLostTreasureChest = new ColorBGRA(153, 255, 51, 255);
 
             MasterZana = new ColorBGRA(255, 2550, 0, 255);
             MasterCatarina = new ColorBGRA(100, 255, 255, 255);
@@ -69,10 +88,28 @@ namespace PoeHUD.Hud.Preload
             LaelFuria = new ColorBGRA(254, 192, 118, 255);
         }
 
-        public ColorNode TalismanModsColor { get; set; }
+        public ColorNode CadiroTrader { get; set; }
+        public ColorNode PerandusChestStandard { get; set; }
+        public ColorNode PerandusChestRarity { get; set; }
+        public ColorNode PerandusChestQuantity { get; set; }
+        public ColorNode PerandusChestCoins { get; set; }
+        public ColorNode PerandusChestJewellery { get; set; }
+        public ColorNode PerandusChestGems { get; set; }
+        public ColorNode PerandusChestCurrency { get; set; }
+        public ColorNode PerandusChestInventory { get; set; }
+        public ColorNode PerandusChestDivinationCards { get; set; }
+        public ColorNode PerandusChestKeepersOfTheTrove { get; set; }
+        public ColorNode PerandusChestUniqueItem { get; set; }
+        public ColorNode PerandusChestMaps { get; set; }
+        public ColorNode PerandusChestFishing { get; set; }
+        public ColorNode PerandusManorUniqueChest { get; set; }
+        public ColorNode PerandusManorCurrencyChest { get; set; }
+        public ColorNode PerandusManorMapsChest { get; set; }
+        public ColorNode PerandusManorJewelryChest { get; set; }
+        public ColorNode PerandusManorDivinationCardsChest { get; set; }
+        public ColorNode PerandusManorLostTreasureChest { get; set; }
         public ToggleNode CorruptedArea { get; set; }
         public ToggleNode CorruptedTitle { get; set; }
-        public ColorNode StoneDeviceColor { get; set; }
         public ToggleNode Masters { get; set; }
         public ToggleNode Exiles { get; set; }
         public ToggleNode Strongboxes { get; set; }

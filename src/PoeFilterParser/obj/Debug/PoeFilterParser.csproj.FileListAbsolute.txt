@@ -14,3 +14,11 @@ C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\PoeFilter
 C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.csprojResolveAssemblyReference.cache
 C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.dll
 C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.pdb
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Debug\PoeFilterParser.dll.config
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Debug\PoeFilterParser.dll
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Debug\PoeFilterParser.pdb
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Debug\Antlr4.Runtime.dll
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\bin\Debug\Antlr4.Runtime.xml
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.csprojResolveAssemblyReference.cache
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.dll
+C:\Users\vmv\Documents\GitHub\vmv-PoeHud\src\PoeFilterParser\obj\Debug\PoeFilterParser.pdb

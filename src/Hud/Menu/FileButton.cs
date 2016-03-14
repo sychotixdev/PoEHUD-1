@@ -18,7 +18,7 @@ namespace PoeHUD.Hud.Menu
             this.path = path;
         }
 
-        public override int DesiredWidth => 170;
+        public override int DesiredWidth => 180;
         public override int DesiredHeight => 25;
 
         public override void Render(Graphics graphics, MenuSettings settings)

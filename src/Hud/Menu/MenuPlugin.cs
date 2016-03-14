@@ -166,8 +166,6 @@ namespace PoeHUD.Hud.Menu
             // Xph Display
             MenuItem xpRateMenu = AddChild(root, "Xph & area", settingsHub.XpRateSettings.Enable, "F10");
             MenuItem areaName = AddChild(xpRateMenu, "Only area name", settingsHub.XpRateSettings.OnlyAreaName);
-            //AddChild(areaName, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
-            //AddChild(areaName, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
             AddChild(areaName, "Show latency", settingsHub.XpRateSettings.ShowLatency);
             AddChild(areaName, "Latency color", settingsHub.XpRateSettings.LatencyTextColor);
             AddChild(xpRateMenu, "Show in town", settingsHub.XpRateSettings.ShowInTown);
@@ -256,6 +254,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(masters, "Vagan", settingsHub.PreloadAlertSettings.MasterVagan);
             AddChild(masters, "Catarina", settingsHub.PreloadAlertSettings.MasterCatarina);
             AddChild(masters, "Krillson", settingsHub.PreloadAlertSettings.MasterKrillson);
+
             var exiles = AddChild(preloadMenu, "Exiles", settingsHub.PreloadAlertSettings.Exiles);
             AddChild(exiles, "Orra Greengate", settingsHub.PreloadAlertSettings.OrraGreengate);
             AddChild(exiles, "Thena Moga", settingsHub.PreloadAlertSettings.ThenaMoga);
@@ -279,6 +278,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(exiles, "Dena Lorenni", settingsHub.PreloadAlertSettings.DenaLorenni);
             AddChild(exiles, "Vanth Agiel", settingsHub.PreloadAlertSettings.VanthAgiel);
             AddChild(exiles, "Lael Furia", settingsHub.PreloadAlertSettings.LaelFuria);
+
             var strongboxes = AddChild(preloadMenu, "Strongboxes", settingsHub.PreloadAlertSettings.Strongboxes);
             AddChild(strongboxes, "Arcanist", settingsHub.PreloadAlertSettings.ArcanistStrongbox);
             AddChild(strongboxes, "Artisan", settingsHub.PreloadAlertSettings.ArtisanStrongbox);
@@ -294,11 +294,31 @@ namespace PoeHUD.Hud.Menu
             AddChild(strongboxes, "Malachai", settingsHub.PreloadAlertSettings.MalachaiStrongbox);
             AddChild(strongboxes, "Epic", settingsHub.PreloadAlertSettings.EpicStrongbox);
             AddChild(strongboxes, "Simple", settingsHub.PreloadAlertSettings.SimpleStrongbox);
+
+            var perandus = AddChild(preloadMenu, "Perandus Chests", settingsHub.PreloadAlertSettings.Strongboxes);
+            AddChild(perandus, "Cadiro Trader", settingsHub.PreloadAlertSettings.CadiroTrader);
+            AddChild(perandus, "Perandus Chest", settingsHub.PreloadAlertSettings.PerandusChestRarity);
+            AddChild(perandus, "Perandus Chache", settingsHub.PreloadAlertSettings.PerandusChestQuantity);
+            AddChild(perandus, "Perandus Hoard", settingsHub.PreloadAlertSettings.PerandusChestCoins);
+            AddChild(perandus, "Perandus Coffer", settingsHub.PreloadAlertSettings.PerandusChestJewellery);
+            AddChild(perandus, "Perandus Jewellery", settingsHub.PreloadAlertSettings.PerandusChestGems);
+            AddChild(perandus, "Perandus Safe", settingsHub.PreloadAlertSettings.PerandusChestCurrency);
+            AddChild(perandus, "Perandus Treasury", settingsHub.PreloadAlertSettings.PerandusChestInventory);
+            AddChild(perandus, "Perandus Wardrobe", settingsHub.PreloadAlertSettings.PerandusChestDivinationCards);
+            AddChild(perandus, "Perandus Catalogue", settingsHub.PreloadAlertSettings.PerandusChestKeepersOfTheTrove);
+            AddChild(perandus, "Perandus Locker", settingsHub.PreloadAlertSettings.PerandusChestUniqueItem);
+            AddChild(perandus, "Perandus Archive", settingsHub.PreloadAlertSettings.PerandusChestMaps);
+            AddChild(perandus, "Perandus Tackle Box", settingsHub.PreloadAlertSettings.PerandusChestFishing);
+            AddChild(perandus, "Cadiro's Locker", settingsHub.PreloadAlertSettings.PerandusManorUniqueChest);
+            AddChild(perandus, "Cadiro's Treasury", settingsHub.PreloadAlertSettings.PerandusManorCurrencyChest);
+            AddChild(perandus, "Cadiro's Archive", settingsHub.PreloadAlertSettings.PerandusManorMapsChest);
+            AddChild(perandus, "Cadiro's Jewellery", settingsHub.PreloadAlertSettings.PerandusManorJewelryChest);
+            AddChild(perandus, "Cadiro's Catalogue", settingsHub.PreloadAlertSettings.PerandusManorDivinationCardsChest);
+            AddChild(perandus, "Grand Perandus Vault", settingsHub.PreloadAlertSettings.PerandusManorLostTreasureChest);
+
             var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.CorruptedArea);
             AddChild(corruptedMenu, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
             AddChild(corruptedMenu, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
-            AddChild(preloadMenu, "Stone Altar", settingsHub.PreloadAlertSettings.StoneDeviceColor);
-            AddChild(preloadMenu, "Talisman Mods", settingsHub.PreloadAlertSettings.TalismanModsColor);
             AddChild(preloadMenu, "Background color", settingsHub.PreloadAlertSettings.BackgroundColor);
             AddChild(preloadMenu, "Font color", settingsHub.PreloadAlertSettings.DefaultTextColor);
             AddChild(preloadMenu, "Font size", settingsHub.PreloadAlertSettings.TextSize);

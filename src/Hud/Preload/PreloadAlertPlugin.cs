@@ -126,29 +126,33 @@ namespace PoeHUD.Hud.Preload
                     }
                 }
 
-                if (text.Contains("StoneCircleDevice"))
+                Dictionary<string, PreloadConfigLine> PerandusLeague = new Dictionary<string, PreloadConfigLine>
                 {
-                    alerts.Add(new PreloadConfigLine { Text = "Stone Altar", FastColor = () => Settings.StoneDeviceColor });
-                }
-
-                Dictionary<string, PreloadConfigLine> Talismans = new Dictionary<string, PreloadConfigLine>
-                {
-                    {"Metadata/Monsters/Daemon/TalismanDaemonDevour", new PreloadConfigLine { Text = "Has 1 Socket Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanT1SummonBonespireDaemon", new PreloadConfigLine { Text = "Increased Mana Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonIceRuneTrap", new PreloadConfigLine { Text = "Cold Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonSummonRagingSpirits", new PreloadConfigLine { Text = "Fire Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonLightningBeacons", new PreloadConfigLine { Text = "Lightning Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonShockwave", new PreloadConfigLine { Text = "Physical Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanT1TimeDistortion", new PreloadConfigLine { Text = "Atk & Cast Speed Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanDaemonZombieMinion", new PreloadConfigLine { Text = "Plus 1 Zombie Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanT1AttackAuras", new PreloadConfigLine { Text = "Attack Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanT1Prismatic", new PreloadConfigLine { Text = "Spell Damage Talisman", FastColor = () => Settings.TalismanModsColor}},
-                    {"Metadata/Monsters/Daemon/TalismanT1SummonBallistaTotemsDaemon", new PreloadConfigLine { Text = "Piercing Chance Talisman", FastColor = () => Settings.TalismanModsColor}}
+                    {"Metadata/NPC/League/Cadiro", new PreloadConfigLine { Text = "Cadiro Trader", FastColor = () => Settings.CadiroTrader }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestStandard", new PreloadConfigLine { Text = "Perandus Chest", FastColor = () => Settings.PerandusChestStandard }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestRarity", new PreloadConfigLine { Text = "Perandus Cache", FastColor = () => Settings.PerandusChestRarity }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestQuantity", new PreloadConfigLine { Text = "Perandus Hoard", FastColor = () => Settings.PerandusChestQuantity }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestCoins", new PreloadConfigLine { Text = "Perandus Coffer", FastColor = () => Settings.PerandusChestCoins }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestJewellery", new PreloadConfigLine { Text = "Perandus Jewellery Box", FastColor = () => Settings.PerandusChestJewellery }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestGems", new PreloadConfigLine { Text = "Perandus Safe", FastColor = () => Settings.PerandusChestGems }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestCurrency", new PreloadConfigLine { Text = "Perandus Treasury", FastColor = () => Settings.PerandusChestCurrency }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestInventory", new PreloadConfigLine { Text = "Perandus Wardrobe", FastColor = () => Settings.PerandusChestInventory }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestDivinationCards", new PreloadConfigLine { Text = "Perandus Catalogue", FastColor = () => Settings.PerandusChestDivinationCards }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestKeepersOfTheTrove", new PreloadConfigLine { Text = "Perandus Trove", FastColor = () => Settings.PerandusChestKeepersOfTheTrove }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestUniqueItem", new PreloadConfigLine { Text = "Perandus Locker", FastColor = () => Settings.PerandusChestUniqueItem }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestMaps", new PreloadConfigLine { Text = "Perandus Archive", FastColor = () => Settings.PerandusChestMaps }},
+                    {"Metadata/Chests/PerandusChests/PerandusChestFishing", new PreloadConfigLine { Text = "Perandus Tackle Box", FastColor = () => Settings.PerandusChestFishing }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorUniqueChest", new PreloadConfigLine { Text = "Cadiro's Locker", FastColor = () => Settings.PerandusManorUniqueChest }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorCurrencyChest", new PreloadConfigLine { Text = "Cadiro's Treasury", FastColor = () => Settings.PerandusManorCurrencyChest }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorMapsChest", new PreloadConfigLine { Text = "Cadiro's Archive", FastColor = () => Settings.PerandusManorMapsChest }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorJewelryChest", new PreloadConfigLine { Text = "Cadiro's Jewellery Box", FastColor = () => Settings.PerandusManorJewelryChest }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorDivinationCardsChest", new PreloadConfigLine { Text = "Cadiro's Catalogue", FastColor = () => Settings.PerandusManorDivinationCardsChest }},
+                    {"Metadata/Chests/PerandusChests/PerandusManorLostTreasureChest", new PreloadConfigLine { Text = "Grand Perandus Vault", FastColor = () => Settings.PerandusManorLostTreasureChest }}
                 };
 
-                PreloadConfigLine talismans = Talismans.Where(kv => text
+                PreloadConfigLine perandus_alert = PerandusLeague.Where(kv => text
                     .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
-                if (talismans != null) { alerts.Add(talismans); }
+                if (perandus_alert != null) { alerts.Add(perandus_alert); }
 
                 Dictionary<string, PreloadConfigLine> Strongboxes = new Dictionary<string, PreloadConfigLine>
                 {

@@ -18,7 +18,7 @@ namespace PoeHUD.Hud.Menu
             this.node = node;
         }
 
-        public override int DesiredWidth => 170;
+        public override int DesiredWidth => 180;
         public override int DesiredHeight => 25;
 
         public override void Render(Graphics graphics, MenuSettings settings)
@@ -26,7 +26,7 @@ namespace PoeHUD.Hud.Menu
             if (!IsVisible) { return; }
             float colorSize = DesiredHeight - 6;
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
-            var textPosition = new Vector2(Bounds.X - 55 + Bounds.Width / 2 - colorSize, Bounds.Y + Bounds.Height / 2);
+            var textPosition = new Vector2(Bounds.X - 60 + Bounds.Width / 2 - colorSize, Bounds.Y + Bounds.Height / 2);
             graphics.DrawText(name, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
             var colorBox = new RectangleF(Bounds.Right - colorSize - 1, Bounds.Top + 3, colorSize, colorSize);
             graphics.DrawImage("menu-colors.png", colorBox, node.Value);

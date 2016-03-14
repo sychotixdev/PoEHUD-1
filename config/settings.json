@@ -271,7 +271,26 @@
   },
   "Preload alert": {
     "Enable": true,
-    "TalismanModsColor": "d75aafff",
+    "CadiroTrader": "ff8000ff",
+    "PerandusChestStandard": "99ff33ff",
+    "PerandusChestRarity": "99ff33ff",
+    "PerandusChestQuantity": "99ff33ff",
+    "PerandusChestCoins": "99ff33ff",
+    "PerandusChestJewellery": "99ff33ff",
+    "PerandusChestGems": "99ff33ff",
+    "PerandusChestCurrency": "99ff33ff",
+    "PerandusChestInventory": "99ff33ff",
+    "PerandusChestDivinationCards": "99ff33ff",
+    "PerandusChestKeepersOfTheTrove": "99ff33ff",
+    "PerandusChestUniqueItem": "99ff33ff",
+    "PerandusChestMaps": "99ff33ff",
+    "PerandusChestFishing": "99ff33ff",
+    "PerandusManorUniqueChest": "99ff33ff",
+    "PerandusManorCurrencyChest": "99ff33ff",
+    "PerandusManorMapsChest": "99ff33ff",
+    "PerandusManorJewelryChest": "99ff33ff",
+    "PerandusManorDivinationCardsChest": "99ff33ff",
+    "PerandusManorLostTreasureChest": "99ff33ff",
     "CorruptedArea": true,
     "CorruptedTitle": true,
     "StoneDeviceColor": "ffffffff",
@@ -351,7 +370,7 @@
     "LatencyTextColor": "dcbe82ff"
   },
   "Health bar": {
-    "Enable": false,
+    "Enable": true,
     "ShowInTown": false,
     "ShowES": true,
     "ShowIncrements": true,
@@ -435,7 +454,7 @@
       }
     },
     "NormalEnemy": {
-      "Enable": true,
+      "Enable": false,
       "Width": {
         "Value": 80.0,
         "Min": 50.0,
