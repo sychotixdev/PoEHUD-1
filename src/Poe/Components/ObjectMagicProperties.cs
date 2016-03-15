@@ -25,16 +25,16 @@ namespace PoeHUD.Poe.Components
                 {
                     return new List<string>();
                 }
-                int begin = M.ReadInt(Address + 0x70);
-                int end = M.ReadInt(Address + 0x74);
+                int begin = M.ReadInt(Address + 0x60);
+                int end = M.ReadInt(Address + 0x64);
                 var list = new List<string>();
                 if (begin == 0 || end == 0)
                 {
                     return list;
                 }
-                for (int i = begin; i < end; i += 24)
+                for (int i = begin; i < end; i += 0x14)
                 {
-                    string mod = M.ReadStringU(M.ReadInt(i + 20, 0));
+                    string mod = M.ReadStringU(M.ReadInt(i + 0x10, 0));
                     list.Add(mod);
                 }
                 return list;

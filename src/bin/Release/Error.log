@@ -43,3 +43,12 @@
    at PoeHUD.Hud.Sounds.LoadSounds()
    at PoeHUD.Program.Main(String[] args)
 ------------------------------
+3/15/2016 4:40 PM Program exited with message:
+ System.Exception: Error when loading alert.wav| Please be sure a sound file exists at the specified location.: ---> System.IO.FileNotFoundException: Please be sure a sound file exists at the specified location.
+   at System.Media.SoundPlayer.Load()
+   at PoeHUD.Hud.Sounds.AddSound(String name)
+   --- End of inner exception stack trace ---
+   at PoeHUD.Hud.Sounds.AddSound(String name)
+   at PoeHUD.Hud.Sounds.LoadSounds()
+   at PoeHUD.Program.Main(String[] args)
+------------------------------
