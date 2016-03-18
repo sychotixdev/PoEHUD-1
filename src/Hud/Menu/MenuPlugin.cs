@@ -297,15 +297,16 @@ namespace PoeHUD.Hud.Menu
 
             var perandus = AddChild(preloadMenu, "Perandus Chests", settingsHub.PreloadAlertSettings.Strongboxes);
             AddChild(perandus, "Cadiro Trader", settingsHub.PreloadAlertSettings.CadiroTrader);
-            AddChild(perandus, "Perandus Chest", settingsHub.PreloadAlertSettings.PerandusChestRarity);
-            AddChild(perandus, "Perandus Chache", settingsHub.PreloadAlertSettings.PerandusChestQuantity);
-            AddChild(perandus, "Perandus Hoard", settingsHub.PreloadAlertSettings.PerandusChestCoins);
-            AddChild(perandus, "Perandus Coffer", settingsHub.PreloadAlertSettings.PerandusChestJewellery);
-            AddChild(perandus, "Perandus Jewellery", settingsHub.PreloadAlertSettings.PerandusChestGems);
-            AddChild(perandus, "Perandus Safe", settingsHub.PreloadAlertSettings.PerandusChestCurrency);
-            AddChild(perandus, "Perandus Treasury", settingsHub.PreloadAlertSettings.PerandusChestInventory);
-            AddChild(perandus, "Perandus Wardrobe", settingsHub.PreloadAlertSettings.PerandusChestDivinationCards);
-            AddChild(perandus, "Perandus Catalogue", settingsHub.PreloadAlertSettings.PerandusChestKeepersOfTheTrove);
+            AddChild(perandus, "Perandus Chest", settingsHub.PreloadAlertSettings.PerandusChestStandard);
+            AddChild(perandus, "Perandus Cache", settingsHub.PreloadAlertSettings.PerandusChestRarity);
+            AddChild(perandus, "Perandus Hoard", settingsHub.PreloadAlertSettings.PerandusChestQuantity);
+            AddChild(perandus, "Perandus Coffer", settingsHub.PreloadAlertSettings.PerandusChestCoins);
+            AddChild(perandus, "Perandus Jewellery", settingsHub.PreloadAlertSettings.PerandusChestJewellery);
+            AddChild(perandus, "Perandus Safe", settingsHub.PreloadAlertSettings.PerandusChestGems);
+            AddChild(perandus, "Perandus Treasury", settingsHub.PreloadAlertSettings.PerandusChestCurrency);
+            AddChild(perandus, "Perandus Wardrobe", settingsHub.PreloadAlertSettings.PerandusChestInventory);
+            AddChild(perandus, "Perandus Catalogue", settingsHub.PreloadAlertSettings.PerandusChestDivinationCards);
+            AddChild(perandus, "Perandus Trove", settingsHub.PreloadAlertSettings.PerandusChestKeepersOfTheTrove);
             AddChild(perandus, "Perandus Locker", settingsHub.PreloadAlertSettings.PerandusChestUniqueItem);
             AddChild(perandus, "Perandus Archive", settingsHub.PreloadAlertSettings.PerandusChestMaps);
             AddChild(perandus, "Perandus Tackle Box", settingsHub.PreloadAlertSettings.PerandusChestFishing);
