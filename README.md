@@ -1,7 +1,7 @@
 PoeHud - Currently DETECTED, use it on your own risk!
 ======
 
-Several things are broken.  Please be patient as new offsets and structures are found and fixes are deployed.
+There is still some freezing and some other bugs.  Please report issues that are not already reported.
 ======
 
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
