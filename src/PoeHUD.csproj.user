@@ -16,6 +16,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>C:\Users\Ryan\Documents\Visual Studio 2015\Projects\VMV\vmv-PoeHud\src\bin\Debug\</ReferencePath>
+    <ReferencePath>
+    </ReferencePath>
   </PropertyGroup>
 </Project>

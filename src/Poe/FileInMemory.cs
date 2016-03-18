@@ -17,8 +17,8 @@ namespace PoeHUD.Poe
 
         protected IEnumerable<int> RecordAddresses()
         {
-            int firstRec = M.ReadInt(Address + 0x30);
-            int lastRec = M.ReadInt(Address + 0x34);
+            int firstRec = M.ReadInt(Address + 0x34);
+            int lastRec = M.ReadInt(Address + 0x38);
             int cnt = NumberOfRecords;
 
             int recLen = (lastRec - firstRec) / cnt;

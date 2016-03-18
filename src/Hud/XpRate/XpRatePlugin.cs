@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.XpRate
             try
             {
                 base.Render();
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || (GameController.Player != null))
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10))
                 { return; }
 
                 DateTime nowTime = DateTime.Now;

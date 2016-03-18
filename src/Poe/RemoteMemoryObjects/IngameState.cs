@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public IngameUIElements IngameUi => ReadObjectAt<IngameUIElements>(0x5E8 + Offsets.IgsOffset);
         public Element UIRoot => ReadObjectAt<Element>(0xC10 + Offsets.IgsOffset);
         public Element UIHover => ReadObjectAt<Element>(0xC14 + Offsets.IgsOffset);
-        public int EntityLabelMap => M.ReadInt(Address + 0x50, 0x96C); // or 0x964, not sure
+        public int EntityLabelMap => M.ReadInt(Address + 0x50, 0x964);
         public DiagnosticInfoType DiagnosticInfoType => (DiagnosticInfoType)M.ReadInt(Address + 0xC80 + Offsets.IgsOffset);
         public DiagnosticElement LatencyRectangle => GetObjectAt<DiagnosticElement>(0xE98 + Offsets.IgsOffset);
         public DiagnosticElement FrameTimeRectangle => GetObjectAt<DiagnosticElement>(0x12E8 + Offsets.IgsOffset);

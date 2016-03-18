@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                int address = M.ReadInt(Address + 0x95C);
+                int address = M.ReadInt(Address + 0x944);
                 for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
                 {
                     yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
@@ -46,7 +46,7 @@ namespace PoeHUD.Poe.Elements
 
         private int GetLabelInfo()
         {
-            return Label.Address != 0 ? M.ReadInt(Label.Address + 0x0C04) : 0;
+            return Label.Address != 0 ? M.ReadInt(Label.Address + 0x0C0C) : 0;
         }
     }
 }

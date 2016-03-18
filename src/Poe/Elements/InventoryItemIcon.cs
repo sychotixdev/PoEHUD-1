@@ -30,7 +30,6 @@ namespace PoeHUD.Poe.Elements
 
                     case ToolTipType.InventoryItem:
                         return inventoryItemTooltip();
-
                     case ToolTipType.ItemInChat:
                         return itemInChatTooltip();
                 }
@@ -46,8 +45,8 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
                         return Game.IngameState.IngameUi
-                            .ReadObjectAt<ItemsOnGroundLabelElement>(0x138)
-                            .ReadObjectAt<Entity>(0x95C)
+                            .ReadObjectAt<ItemsOnGroundLabelElement>(0x130)
+                            .ReadObjectAt<Entity>(0x93C)
                             .GetComponent<WorldItem>().ItemEntity;
 
                     case ToolTipType.InventoryItem:

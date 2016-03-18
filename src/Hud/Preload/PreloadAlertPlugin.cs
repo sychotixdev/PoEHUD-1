@@ -108,8 +108,8 @@ namespace PoeHUD.Hud.Preload
             hasCorruptedArea = Settings.AreaTextColor;
             int pFileRoot = memory.ReadInt(memory.AddressOfProcess + memory.offsets.FileRoot);
             int count = memory.ReadInt(pFileRoot + 12);
-            int listIterator = memory.ReadInt(pFileRoot + 20);
-            int areaChangeCount = GameController.Game.IngameState.AreaChangeCount;
+            int listIterator = memory.ReadInt(pFileRoot + 0x10);
+            int areaChangeCount = GameController.Game.AreaChangeCount;
             for (int i = 0; i < count; i++)
             {
                 listIterator = memory.ReadInt(listIterator);

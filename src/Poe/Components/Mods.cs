@@ -12,7 +12,7 @@ namespace PoeHUD.Poe.Components
         public int ItemLevel => Address != 0 ? M.ReadInt(Address + 0xE4) : 1;
         public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0xE8) : 1;
         public string UniqueName => Address != 0 ? M.ReadStringU(M.ReadInt(Address + 0x18, 4, 4)) + M.ReadStringU(M.ReadInt(Address + 0x18, 0xC, 4)): string.Empty;
-        public bool Identified => Address != 0 && M.ReadInt(Address + 0x54) == 1;
+        public bool Identified => Address != 0 && M.ReadByte(Address + 0x54) == 1;
         public ItemStats ItemStats => new ItemStats(Owner);
 
         public List<ItemMod> ItemMods

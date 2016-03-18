@@ -94,10 +94,10 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
-            106, 255, 104, 0, 0, 0, 0, 100, 161, 0, 0, 0, 0, 80, 100, 137,
-            37, 0, 0, 0, 0, 131, 236, 48, 255, 5, 0, 0, 0, 0, 83, 85,
-            139, 45, 0, 0, 0, 0, 86, 184
-        }, "xxx????xxxxxxxxxxxxxxxxxxx????xxxx????xx");
+            0x45, 0xFC, 0x05, 0xE8, 0x00, 0x00, 0x00, 0x00,
+            0x83, 0xC4, 0x08, 0x68, 0x00, 0x00, 0x00, 0x00,
+            0x51, 0x8d, 0x4d, 0xE0, 0xE8
+        }, "xxxx????xxxx????xxxxx");
 
         private static readonly Pattern areaChangePattern = new Pattern(new byte[]
         {
@@ -138,12 +138,11 @@ namespace PoeHUD.Poe
 
         public void DoPatternScans(Memory m)
         {
-            int[] array = m.FindPatterns(basePtrPattern);//, fileRootPattern, areaChangePattern, inGameOffsetPattern);
+            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern/*, areaChangePattern, inGameOffsetPattern*/);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-            //FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x28) - m.AddressOfProcess;
-            //System.Console.WriteLine("FileRoot: " + FileRoot.ToString("x8"));
-            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xD) - m.AddressOfProcess;
+            FileRoot = array[1] + 0x0C;
+            AreaChangeCount = 0x9BB4C8;
         }
     }
 }
