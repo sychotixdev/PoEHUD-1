@@ -75,7 +75,7 @@ namespace PoeHUD.Hud.Trackers
             }
             if (e.HasComponent<NPC>() && cadiro.Contains(e.Path))
             {
-                return new CreatureMapIcon(e, "ms-orange.png", () => Settings.Cadiro, Settings.CadiroIcon);
+                return new CreatureMapIcon(e, "ms-green.png", () => Settings.Cadiro, Settings.CadiroIcon);
             }
             if (e.HasComponent<Chest>() && perandus.Contains(e.Path))
             {
