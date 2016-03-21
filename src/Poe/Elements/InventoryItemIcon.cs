@@ -46,7 +46,7 @@ namespace PoeHUD.Poe.Elements
                     case ToolTipType.ItemOnGround:
                         return Game.IngameState.IngameUi
                             .ReadObjectAt<ItemsOnGroundLabelElement>(0x130)
-                            .ReadObjectAt<Entity>(0x93C)
+                            .ReadObjectAt<Entity>(OffsetBuffers + 0x1D0)
                             .GetComponent<WorldItem>().ItemEntity;
 
                     case ToolTipType.InventoryItem:

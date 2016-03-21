@@ -31,7 +31,7 @@ namespace PoeHUD.Poe
 
         protected List<T> GetChildren<T>() where T : Element, new()
         {
-            const int listOffset = 0x20 + OffsetBuffers;
+            const int listOffset = 0x1C + OffsetBuffers;
             var list = new List<T>();
             if (M.ReadInt(Address + listOffset + 4) == 0 || M.ReadInt(Address + listOffset) == 0 ||
                 ChildCount > 1000)
@@ -102,7 +102,7 @@ namespace PoeHUD.Poe
 
         public Element GetChildAtIndex(int index)
         {
-            return index >= ChildCount ? null : GetObject<Element>(M.ReadInt(Address + 0x20 + OffsetBuffers, index * 4));
+            return index >= ChildCount ? null : GetObject<Element>(M.ReadInt(Address + 0x1C + OffsetBuffers, index * 4));
         }
     }
 }
