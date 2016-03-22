@@ -26,6 +26,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             int loopcount = 0;
             while (queue.Count > 0 && loopcount < 10000)
             {
+                loopcount++;
                 int nextAddr = queue.Dequeue();
                 if (hashSet.Contains(nextAddr))
                     continue;
@@ -43,7 +44,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     queue.Enqueue(M.ReadInt(nextAddr));
                     queue.Enqueue(M.ReadInt(nextAddr + 8));
                 }
-                loopcount++;
             }
         }
     }
