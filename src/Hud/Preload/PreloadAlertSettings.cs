@@ -11,6 +11,7 @@ namespace PoeHUD.Hud.Preload
             Masters = true;
             Exiles = true;
             Strongboxes = true;
+            PerandusBoxes = true;
             CorruptedArea = true;
             CorruptedTitle = true;
             TextSize = new RangeNode<int>(16, 10, 50);
@@ -108,6 +109,7 @@ namespace PoeHUD.Hud.Preload
         public ColorNode PerandusManorJewelryChest { get; set; }
         public ColorNode PerandusManorDivinationCardsChest { get; set; }
         public ColorNode PerandusManorLostTreasureChest { get; set; }
+        public ToggleNode PerandusBoxes { get; set; }
         public ToggleNode CorruptedArea { get; set; }
         public ToggleNode CorruptedTitle { get; set; }
         public ToggleNode Masters { get; set; }

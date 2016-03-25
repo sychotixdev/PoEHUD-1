@@ -152,7 +152,7 @@ namespace PoeHUD.Hud.Preload
 
                 PreloadConfigLine perandus_alert = PerandusLeague.Where(kv => text
                     .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
-                if (perandus_alert != null) { alerts.Add(perandus_alert); }
+                if (perandus_alert != null && Settings.PerandusBoxes) { alerts.Add(perandus_alert); }
 
                 Dictionary<string, PreloadConfigLine> Strongboxes = new Dictionary<string, PreloadConfigLine>
                 {
@@ -174,7 +174,7 @@ namespace PoeHUD.Hud.Preload
 
                 PreloadConfigLine _alert = Strongboxes.Where(kv => text
                     .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
-                if (_alert != null) { alerts.Add(_alert); }
+                if (_alert != null && Settings.Strongboxes) { alerts.Add(_alert); }
 
                 Dictionary<string, PreloadConfigLine> Preload = new Dictionary<string, PreloadConfigLine>
                 {
@@ -226,7 +226,7 @@ namespace PoeHUD.Hud.Preload
                 };
                 PreloadConfigLine alert = Preload.Where(kv => text
                     .EndsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
-                if (alert != null) { alerts.Add(alert); }
+                if (alert != null && Settings.Exiles) { alerts.Add(alert); }
             }
         }
     }
