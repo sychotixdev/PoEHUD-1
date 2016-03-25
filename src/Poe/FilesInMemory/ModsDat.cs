@@ -31,6 +31,8 @@ namespace PoeHUD.Poe.FilesInMemory
             foreach (int addr in RecordAddresses())
             {
                 var r = new ModRecord(M, sDat, tagsDat, addr);
+                if (records.ContainsKey(r.Key))
+                    continue;
                 records.Add(r.Key, r);
                 bool addToItemIiers = r.Domain != 3;
                 if (!addToItemIiers) continue;

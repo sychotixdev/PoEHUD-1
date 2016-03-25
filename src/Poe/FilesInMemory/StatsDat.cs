@@ -28,7 +28,8 @@ namespace PoeHUD.Poe.FilesInMemory
             foreach (int addr in RecordAddresses())
             {
                 var r = new StatRecord(M, addr);
-                records.Add(r.Key, r);
+                if (!records.ContainsKey(r.Key))
+                    records.Add(r.Key, r);
             }
         }
 
