@@ -26,6 +26,9 @@ namespace PoeHUD.Hud.UI.Renderers
 
         public Size2 DrawText(string text, string fontName, int height, Vector2 position, Color color, FontDrawFlags align)
         {
+            if (text.Length == 0) {
+                return new Size2();
+            }
             try
             {
                 var font = GetFont(fontName, height);
