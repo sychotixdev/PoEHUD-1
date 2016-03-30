@@ -40,7 +40,6 @@ namespace PoeHUD.Hud.Preload
             PerandusManorJewelryChest = new ColorBGRA(153, 255, 51, 255);
             PerandusManorDivinationCardsChest = new ColorBGRA(153, 255, 51, 255);
             PerandusManorLostTreasureChest = new ColorBGRA(153, 255, 51, 255);
-            PerandusGuardians = new ColorBGRA(100, 255, 255, 255);
 
             MasterZana = new ColorBGRA(255, 2550, 0, 255);
             MasterCatarina = new ColorBGRA(100, 255, 255, 255);
@@ -110,7 +109,6 @@ namespace PoeHUD.Hud.Preload
         public ColorNode PerandusManorJewelryChest { get; set; }
         public ColorNode PerandusManorDivinationCardsChest { get; set; }
         public ColorNode PerandusManorLostTreasureChest { get; set; }
-        public ColorNode PerandusGuardians { get; set; }
         public ToggleNode PerandusBoxes { get; set; }
         public ToggleNode CorruptedArea { get; set; }
         public ToggleNode CorruptedTitle { get; set; }

@@ -313,7 +313,6 @@ namespace PoeHUD.Hud.Menu
             AddChild(perandus, "Cadiro's Jewellery", settingsHub.PreloadAlertSettings.PerandusManorJewelryChest);
             AddChild(perandus, "Cadiro's Catalogue", settingsHub.PreloadAlertSettings.PerandusManorDivinationCardsChest);
             AddChild(perandus, "Grand Perandus Vault", settingsHub.PreloadAlertSettings.PerandusManorLostTreasureChest);
-            AddChild(perandus, "Perandus Guardians", settingsHub.PreloadAlertSettings.PerandusGuardians);
 
             var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.CorruptedArea);
             AddChild(corruptedMenu, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");

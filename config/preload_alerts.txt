@@ -1,86 +1,39 @@
 #Metadata; Text; Color (ARGB)
-#Example Metadata/Chests/StrongBoxes/Strongbox; ; ff00FF00
+#Example: Metadata/Chests/StrongBoxes/Strongbox; ; ff00FF00
 
-#Metadata/Chests/StrongBoxes/Strongbox; ; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Strongbox.ao; ; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Ornate;  Ornate Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/OrnateStrongbox.ao;  Ornate Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Large;  Large Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/LargeStrongbox.ao;  Large Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Jeweller;  Jeweler's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/JewellerStrongBox.ao;  Jeweler's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Gemcutter;  Gemcutter's Strongbox; ff1BA29B
-#Metadata/Chests/StrongBoxes/GemcutterStrongBox.ao;  Gemcutter's Strongbox; ff1BA29B
-#Metadata/Chests/StrongBoxes/Cartographer;  Cartographer's Strongbox; ffFF00FF
-#Metadata/Chests/StrongBoxes/CartographerStrongBox.ao;  Cartographer's Strongbox; ffFF00FF
-#Metadata/Chests/StrongBoxes/Artisan;  Artisan's Strongbox; ff00E600
-#Metadata/Chests/StrongBoxes/ArtisanStrongBox.ao;  Artisan's Strongbox; ff00E600
-#Metadata/Chests/StrongBoxes/Arsenal;  Blacksmith's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/ArsenalStrongBox.ao;  Blacksmith's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Armory;  Armourer's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/ArmoryStrongBox.ao;  Armourer's Strongbox; ffD2D2D2
-#Metadata/Chests/StrongBoxes/Arcanist;  Arcanist's Strongbox; ffFF00FF
-#Metadata/Chests/StrongBoxes/ArcanistStrongBox.ao;  Arcanist's Strongbox; ffFF00FF
-#Metadata/Chests/CopperChestEpic3;  Epic Chest; ffAF6025
-#Metadata/Chests/CopperChests/CopperChestEpic3.ao;  Epic Chest; ffAF6025
-#Metadata/Chests/StrongBoxes/PerandusBox.ao;  Perandus Strongbox; ffAF6025
-#Metadata/Chests/StrongBoxes/KaomBox.ao;  Kaom Strongbox; ffAF6025
-#Metadata/Chests/StrongBoxes/MalachaisBox.ao;  Malachai Strongbox; ffAF6025
-
-Metadata/Chests/Barrels/Barrel1; Unique Strange Barrel 1; ffAF6025
-Metadata/Chests/Barrels/Barrel1.ao; Unique Strange Barrel 1; ffAF6025
-Metadata/Chests/Barrels/Barrel2; Unique Strange Barrel 2; ffAF6025
-Metadata/Chests/Barrels/Barrel2.ao; Unique Strange Barrel 2; ffAF6025
-Metadata/Chests/Barrels/Barrel3; Unique Strange Barrel 3; ffAF6025
-Metadata/Chests/Barrels/Barrel3.ao; Unique Strange Barrel 3; ffAF6025
-Metadata/Chests/Barrels/Barrel4; Unique Strange Barrel 4; ffAF6025
-Metadata/Chests/Barrels/Barrel4.ao; Unique Strange Barrel 4; ffAF6025
-Metadata/Chests/Barrels/Barrel5; Unique Strange Barrel 5; ffAF6025
-Metadata/Chests/Barrels/Barrel5.ao; Unique Strange Barrel 5; ffAF6025
-
-#Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate; ffFEC076
-#Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga; ffFEC076
-#Metadata/Monsters/Exiles/ExileRanger3; Exile Antalie Napora; ffFEC076
-#Metadata/Monsters/Exiles/ExileDuelist1; Exile Torr Olgosso; ffFEC076
-#Metadata/Monsters/Exiles/ExileDuelist2; Exile Armios Bell; ffFEC076
-#Metadata/Monsters/Exiles/ExileDuelist4; Exile Zacharie Desmarais; ffFEC076
-#Metadata/Monsters/Exiles/ExileWitch1; Exile Minara Anenima; ffFEC076
-#Metadata/Monsters/Exiles/ExileWitch2; Exile Igna Phoenix; ffFEC076
-#Metadata/Monsters/Exiles/ExileMarauder1; Exile Jonah Unchained; ffFEC076
-#Metadata/Monsters/Exiles/ExileMarauder2; Exile Damoi Tui; ffFEC076
-#Metadata/Monsters/Exiles/ExileMarauder3; Exile Xandro Blooddrinker; ffFEC076
-#Metadata/Monsters/Exiles/ExileMarauder5; Exile Vickas Giantbone; ffFEC076
-#Metadata/Monsters/Exiles/ExileTemplar1; Exile Eoin Greyfur; ffFEC076
-#Metadata/Monsters/Exiles/ExileTemplar2; Exile Tinevin Highdove; ffFEC076
-#Metadata/Monsters/Exiles/ExileTemplar4; Exile Magnus Stonethorn; ffFEC076
-#Metadata/Monsters/Exiles/ExileShadow1_; Exile Ion Darkshroud; ffFEC076
-#Metadata/Monsters/Exiles/ExileShadow2; Exile Ash Lessard; ffFEC076
-#Metadata/Monsters/Exiles/ExileShadow4; Exile Wilorin Demontamer; ffFEC076
-#Metadata/Monsters/Exiles/ExileScion2; Exile Augustina Solaria; ffFEC076
-
-#Metadata/NPC/Missions/Wild/StrDexInt; Zana, Master Cartographer; ffFFFF00
-#Metadata/NPC/Missions/Wild/StrInt; Elreon, Loremaster; ff64FFFF
-#Metadata/NPC/Missions/Wild/Fish; Krillson, Master Fisherman; ffFFFF00
-#Metadata/NPC/Missions/Wild/Dex; Tora, Master of the Hunt; ff64FFFF
-#Metadata/NPC/Missions/Wild/DexInt; Vorici, Master Assassin; ff64FFFF
-#Metadata/NPC/Missions/Wild/Int; Catarina, Master of the Dead; ff64FFFF
-#Metadata/NPC/Missions/Wild/Str; Haku, Armourmaster; ff64FFFF
-#Metadata/NPC/Missions/Wild/StrDex; Vagan, Weaponmaster; ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex1; Vagan, Weaponmaster (2HSword); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex2; Vagan, Weaponmaster (Staff); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex3; Vagan, Weaponmaster (Bow); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex4; Vagan, Weaponmaster (DaggerRapier); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex5; Vagan, Weaponmaster (Blunt); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex6; Vagan, Weaponmaster (Blades); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex7; Vagan, Weaponmaster (SwordAxe); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex8; Vagan, Weaponmaster (Punching); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex9; Vagan, Weaponmaster (Flickerstrike); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex10; Vagan, Weaponmaster (Elementalist); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex11; Vagan, Weaponmaster (Cyclone); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex12; Vagan, Weaponmaster (PhysSpells); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex13; Vagan, Weaponmaster (Traps); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex14; Vagan, Weaponmaster (RighteousFire); ff64FFFF
-#Metadata/Monsters/Missions/MasterStrDex15; Vagan, Weaponmaster (CastOnHit); ff64FFFF
+Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss3; Rhodion, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss4; Osmea, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss4Clone; Osmea, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss5; Pallias, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss6; Argient, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardMapBoss7; Rheniot, Servant of Prospero; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant1; Junith Perandus, Keeper of Vaults; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant2; Tantalo Perandus, Seller of Secrets; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant3; Actaeo Perandus, Master of Beasts; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant4; Vitorica Perandus, Maker of Marvels; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant4Clone; Vitorica Perandus, Maker of Marvels; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant5; Stasius Perandus, Merchant of Corpses; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant6; Darsia Perandus, Collector of Debts; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardLieutenant7; Milo Perandus, Handler of Swords; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardBasic1; Celona, Vault Sentry; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardBasic2; Hortus, Knee Breaker; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardBasic3; Kuto, Hired Muscle; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardBasic4; Luthis, Bounty Hunter; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardBasic5; Belatra, Hired Assassin; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSupport1; Liana, Indebted Peasant; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSupport2; Marius, Indebted Smuggler; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSupport3; Vera, Indebted Aristocrat; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSupport4; Percia, Indebted Poacher; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss1; Sutrus, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss2; Otairo, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss3; Eiphirio, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss4; Artensia, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss5_; Anaveli, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss6; Rothus, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss7; Arinea, Vault Binder; ffFFD700
+Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss8; Meritania, Vault Binder; ffFFD700
 
 Metadata/Monsters/Squid/SquidBossSideArea; The All-seeing Eye; ffDC143C
 Metadata/Monsters/Goatman/GoatmanLeapBossSideArea; Konu, Maker of Wind; ffDC143C
@@ -212,7 +165,6 @@ Metadata/Monsters/Wb/WbLightningElite3; Brinerot Stormhand
 Metadata/Monsters/Wb/WbLightningLeader1; Musky "Two-Eyes" Grenn; ffFFFF00
 Metadata/Monsters/Wb/WbLightningLeader2; Susara, Siren of Pondium; ffFFFF00
 Metadata/Monsters/Wb/WbLightningLeader3; Lussi "Rotmother" Roth; ffFFFF00
-
 Metadata/Monsters/Wb/WbColdGrunt1; Mutewind Wildrunner
 Metadata/Monsters/Wb/WbColdGrunt2; Mutewind Wildrunner
 Metadata/Monsters/Wb/WbColdGrunt3; Mutewind Wildrunner
@@ -234,7 +186,6 @@ Metadata/Monsters/Wb/WbColdLeader1; Yorishi, Aurora-sage; ffFFFF00
 Metadata/Monsters/Wb/WbColdLeader2; Jeinei Yuushu; ffFFFF00
 Metadata/Monsters/Wb/WbColdLeader2Clone; Jeinei Yuushu; ffFFFF00
 Metadata/Monsters/Wb/WbColdLeader3; Otesha, the Giantslayer; ffFFFF00
-
 Metadata/Monsters/Wb/WbFireGrunt1; Redblade Skullbreaker
 Metadata/Monsters/Wb/WbFireGrunt2_; Redblade Skullbreaker
 Metadata/Monsters/Wb/WbFireGrunt3; Redblade Skullbreaker
@@ -253,7 +204,6 @@ Metadata/Monsters/Wb/WbFireLeader1; Uruk Baleh; ffFFFF00
 Metadata/Monsters/Wb/WbFireLeader2; El'Abin, Bloodeater; ffFFFF00
 Metadata/Monsters/Wb/WbFireLeader3; Leli Goya, Daughter of Ash; ffFFFF00
 Metadata/Monsters/Wb/WbFireLeader4; Bin'aia, Crimson Rain; ffFFFF00
-
 Metadata/Monsters/Skeletons/WbLightningEliteSummon1; Thunder Guardian
 Metadata/Monsters/Skeletons/WbLightningEliteSummon2; Flayed Archer
 Metadata/Monsters/Skeletons/WbLightningEliteSummon3; Thunder Champion
@@ -262,7 +212,6 @@ Metadata/Monsters/Skeletons/WbSkeletonMinionRanged; Risen Archer
 Metadata/Monsters/Skeletons/WbSkeletonMinionCasterFire; Risen Battlemage
 Metadata/Monsters/Skeletons/WbSkeletonMinionCasterCold; Risen Battlemage
 Metadata/Monsters/Skeletons/WbSkeletonMinionCasterLightning; Risen Battlemage
-
 Metadata/Monsters/Wb/WbChaosLeader1; Rama, The Kinslayer; ffD01F90
 Metadata/Monsters/Wb/WbChaosLeader2; Kalria, The Fallen; ffD01F90
 Metadata/Monsters/Wb/WbChaosLeader2Skeleton; Kalria, The Risen; ffD01F90
