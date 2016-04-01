@@ -56,6 +56,7 @@ namespace PoeHUD.Hud.Preload
                 if (lastCount != count)
                 {
                     Parse();
+                    lastCount = GetNumberOfObjects();
                 }
 
                 if (alerts.Count <= 0) return;
