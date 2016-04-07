@@ -19,7 +19,7 @@ namespace PoeHUD.Hud.Preload
         private int lastCount = 0;
         private int lastAddress = 0;
         private bool foundSpecificPerandusChest = false;
-        public static Color hasCorruptedArea { get; set; }
+        public static Color AreaNameColor = new Color();
 
         public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings)
             : base(gameController, graphics, settings)
@@ -27,6 +27,7 @@ namespace PoeHUD.Hud.Preload
             alerts = new HashSet<PreloadConfigLine>();
             alertStrings = LoadConfig("config/preload_alerts.txt");
             GameController.Area.OnAreaChange += OnAreaChange;
+            AreaNameColor = Settings.AreaTextColor;
         }
 
         public Dictionary<string, PreloadConfigLine> LoadConfig(string path)
@@ -79,7 +80,7 @@ namespace PoeHUD.Hud.Preload
         private void ResetArea()
         {
             alerts.Clear();
-            hasCorruptedArea = Settings.AreaTextColor;
+            AreaNameColor = Settings.AreaTextColor;
             lastCount = 0;
             lastAddress = 0;
             foundSpecificPerandusChest = false;
@@ -139,15 +140,17 @@ namespace PoeHUD.Hud.Preload
                 alerts.Add(alertStrings[text]);
                 return;
             }
-            if (text.Contains("human_heart") || text.Contains("Demonic_NoRain.ogg"))
+            if (text.Contains("human_heart"))
             {
                 if (Settings.CorruptedTitle)
                 {
-                    hasCorruptedArea = Settings.HasCorruptedArea;
+                    // using corrupted titles so set the color here, XpRatePlugin will grab the color to use when drawing the title.
+                    AreaNameColor = Settings.CorruptedAreaColor;
                 }
                 else
                 {
-                    alerts.Add(new PreloadConfigLine { Text = "Corrupted Area", FastColor = () => Settings.HasCorruptedArea });
+                    // not using corrupted titles, so throw it in a preload alert
+                    alerts.Add(new PreloadConfigLine { Text = "Corrupted Area", FastColor = () => Settings.CorruptedAreaColor });
                 }
                 return;
             }

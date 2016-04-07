@@ -18,7 +18,7 @@ namespace PoeHUD.Hud.Preload
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
             DefaultTextColor = new ColorBGRA(210, 210, 210, 255);
             AreaTextColor = new ColorBGRA(150, 200, 250, 255);
-            HasCorruptedArea = new ColorBGRA(208, 31, 144, 255);
+            CorruptedAreaColor = new ColorBGRA(208, 31, 144, 255);
 
             CadiroTrader = new ColorBGRA(255, 128, 0, 255);
             PerandusChestStandard = new ColorBGRA(153, 255, 51, 255);
@@ -119,7 +119,7 @@ namespace PoeHUD.Hud.Preload
         public ColorNode BackgroundColor { get; set; }
         public ColorNode DefaultTextColor { get; set; }
         public ColorNode AreaTextColor { get; set; }
-        public ColorNode HasCorruptedArea { get; set; }
+        public ColorNode CorruptedAreaColor { get; set; }
         public ColorNode MasterZana { get; set; }
         public ColorNode MasterCatarina { get; set; }
         public ColorNode MasterTora { get; set; }

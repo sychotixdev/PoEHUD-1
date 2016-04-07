@@ -316,7 +316,7 @@ namespace PoeHUD.Hud.Menu
 
             var corruptedMenu = AddChild(preloadMenu, "Corrupted Area", settingsHub.PreloadAlertSettings.CorruptedArea);
             AddChild(corruptedMenu, "Corrupted title", settingsHub.PreloadAlertSettings.CorruptedTitle, "F5");
-            AddChild(corruptedMenu, "Corrupted color", settingsHub.PreloadAlertSettings.HasCorruptedArea);
+            AddChild(corruptedMenu, "Corrupted color", settingsHub.PreloadAlertSettings.CorruptedAreaColor);
             AddChild(preloadMenu, "Background color", settingsHub.PreloadAlertSettings.BackgroundColor);
             AddChild(preloadMenu, "Font color", settingsHub.PreloadAlertSettings.DefaultTextColor);
             AddChild(preloadMenu, "Font size", settingsHub.PreloadAlertSettings.TextSize);

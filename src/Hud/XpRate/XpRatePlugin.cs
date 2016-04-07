@@ -49,7 +49,7 @@ namespace PoeHUD.Hud.XpRate
                 Vector2 position = StartDrawPointFunc();
                 string fps = $"fps:({GameController.Game.IngameState.CurFps})";
                 string areaName = $"{GameController.Area.CurrentArea.DisplayName}";
-                Color hasCorruptedArea = PreloadAlertPlugin.hasCorruptedArea;
+                Color AreaNameColor = PreloadAlertPlugin.AreaNameColor;
 
                 if (Settings.OnlyAreaName)
                 {
@@ -60,7 +60,7 @@ namespace PoeHUD.Hud.XpRate
                         float boxWidth = MathHepler.Max(areaNameSize.Width);
                         var bounds = new RectangleF(position.X - 84 - boxWidth, position.Y - 5, boxWidth + 90, boxHeight + 12);
                         string latency = $"({GameController.Game.IngameState.CurLatency})";
-                        Graphics.DrawText(areaName, Settings.TextSize, new Vector2(bounds.X + 84, position.Y), hasCorruptedArea);
+                        Graphics.DrawText(areaName, Settings.TextSize, new Vector2(bounds.X + 84, position.Y), AreaNameColor);
                         Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
                         Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
                         if (Settings.ShowLatency)
@@ -79,7 +79,7 @@ namespace PoeHUD.Hud.XpRate
                         var xpReceiving = levelXpPenalty * partyXpPenalty;
                         var xpReceivingText = $"{xpRate}  *{xpReceiving:p0}";
                         string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
-                        Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, hasCorruptedArea, FontDrawFlags.Right);
+                        Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, AreaNameColor, FontDrawFlags.Right);
                         Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
                         Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
                         Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
