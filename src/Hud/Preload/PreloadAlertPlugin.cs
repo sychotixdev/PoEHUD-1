@@ -76,25 +76,27 @@ namespace PoeHUD.Hud.Preload
             }
         }
 
-        private void OnAreaChange(AreaController area)
+        private void ResetArea()
         {
             alerts.Clear();
+            hasCorruptedArea = Settings.AreaTextColor;
             lastCount = 0;
             lastAddress = 0;
             foundSpecificPerandusChest = false;
+        }
+
+        private void OnAreaChange(AreaController area)
+        {
+            ResetArea();
         }
 
         private void Parse()
         {
             if (WinApi.IsKeyDown(Keys.F5)) // do a full refresh if F5 is hit
             {
-                alerts.Clear();
-                lastAddress = 0;
-                lastCount = 0;
-                foundSpecificPerandusChest = false;
+                ResetArea();
             }
             Memory memory = GameController.Memory;
-            hasCorruptedArea = Settings.AreaTextColor;
             int pFileRoot = memory.ReadInt(memory.AddressOfProcess + memory.offsets.FileRoot);
             int count = memory.ReadInt(pFileRoot + 0xC); // check how many files are loaded
             if (count > lastCount) // if the file count has changed, check the newly loaded files
@@ -117,9 +119,7 @@ namespace PoeHUD.Hud.Preload
                     if (listIterator == 0)
                     {
                         // address is null, something has gone wrong, start over
-                        alerts.Clear();
-                        lastCount = 0;
-                        lastAddress = 0;
+                        ResetArea();
                         return;
                     }
                     lastAddress = listIterator;
