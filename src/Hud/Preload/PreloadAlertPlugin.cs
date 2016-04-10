@@ -140,7 +140,7 @@ namespace PoeHUD.Hud.Preload
                 alerts.Add(alertStrings[text]);
                 return;
             }
-            if (text.Contains("human_heart"))
+            if (text.Contains("Metadata/Terrain/Doodads/vaal_sidearea_effects/soulcoaster.ao"))
             {
                 if (Settings.CorruptedTitle)
                 {
@@ -190,7 +190,7 @@ namespace PoeHUD.Hud.Preload
                 alerts.Add(perandus_alert);
                 return;
             }
-            if (Settings.PerandusBoxes && !foundSpecificPerandusChest && text.StartsWith("Metadata/Chests/PerandusChests/PerandusChest.ao"))
+            if (Settings.PerandusBoxes && !foundSpecificPerandusChest && text.StartsWith("Metadata/Chests/PerandusChests"))
             {
                 alerts.Add(new PreloadConfigLine { Text = "Unknown Perandus Chest", FastColor = () => Settings.PerandusChestStandard });
             }
