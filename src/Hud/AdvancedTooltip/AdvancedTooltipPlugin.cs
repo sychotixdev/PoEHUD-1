@@ -60,9 +60,11 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 var modsComponent = poeEntity.GetComponent<Mods>();
                 if (itemEntity == null || itemEntity.Id != poeEntity.Id)
                 {
+                    /*
                     List<ItemMod> itemMods = modsComponent.ItemMods;
                     mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel)).ToList(); // fix when FileRoot is known
                     itemEntity = poeEntity;
+                    */
                 }
 
                 if (Settings.ItemLevel.Enable)

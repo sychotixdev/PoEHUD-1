@@ -5,7 +5,7 @@ namespace PoeHUD.Poe
 {
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile", AreaChangeCount = 0x9C04C8 };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile", AreaChangeCount = 0x9CC4C8 };
         public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = 0x4, ExeName = "PathOfExileSteam", AreaChangeCount = 0x9CB4C8 };
         /* offsets from some older steam version:
 		 	Base = 8841968;
@@ -94,10 +94,10 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
-            0x45, 0xFC, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00,
-            0x83, 0xC4, 0x08, 0x68, 0x00, 0x00, 0x00, 0x00,
-            0x51, 0x8d, 0x4d, 0xE0, 0xE8
-        }, "xx?x????xxxx????xxxxx");
+            0xC6, 0x45, 0xFC, 0x00, 0xE8, 0x00, 0x00, 0x00,
+            0x00, 0x83, 0xC4, 0x08, 0x68, 0x00, 0x00, 0x00,
+            0x00, 0x51, 0x8d, 0x4d, 0xE0, 0xE8
+        }, "xxx?x????xxxx????xxxxx");
 
         private static readonly Pattern areaChangePattern = new Pattern(new byte[]
         {

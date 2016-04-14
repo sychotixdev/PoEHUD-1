@@ -20,12 +20,14 @@ namespace PoeHUD.Controllers
         public FsController(Memory mem)
         {
             files = new Dictionary<string, int>();
+            /*
             this.mem = mem;
             ItemClassesDisplay = new ItemClassesDisplay();
             BaseItemTypes = new BaseItemTypes(mem, FindFile("Data/BaseItemTypes.dat"), ItemClassesDisplay);
             Tags = new TagsDat(mem, FindFile("Data/Tags.dat"));
             Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
             Mods = new ModsDat(mem, FindFile("Data/Mods.dat"), Stats, Tags);
+            */
         }
 
         public int FindFile(string name)
@@ -37,7 +39,7 @@ namespace PoeHUD.Controllers
                     int num = mem.ReadInt(mem.AddressOfProcess + mem.offsets.FileRoot, 8);
                     for (int num2 = mem.ReadInt(num); num2 != num; num2 = mem.ReadInt(num2))
                     {
-                        string text = mem.ReadStringU(mem.ReadInt(num2 + 8), 512);
+                        string text = mem.ReadStringU(mem.ReadInt(num2 + 0x8), 512);
                         if (text.Contains("."))
                         {
                             files.Add(text, mem.ReadInt(num2 + 12));
