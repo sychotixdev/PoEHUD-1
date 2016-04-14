@@ -1,5 +1,6 @@
 using PoeHUD.Framework;
 using PoeHUD.Models;
+using System.IO;
 
 namespace PoeHUD.Poe
 {
@@ -130,12 +131,23 @@ namespace PoeHUD.Poe
         public int FileRoot { get; private set; }
         public int IgsDelta { get; private set; }
         public int IgsOffset { get; private set; }
+        public int GarenaTWDelta = 0;
         //public int InGameOffset { get; private set; }
 
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
 
         public void DoPatternScans(Memory m)
         {
+            if (System.IO.File.Exists("config/GarenaTWDelta.txt"))
+            {
+                using (StreamReader reader = new StreamReader("config/GarenaTWDelta.txt"))
+                {
+                    string strDelta = reader.ReadLine();
+                    // try to convert the contents of the first line to an int
+                    if (!int.TryParse(strDelta, out GarenaTWDelta))
+                        System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
+                }
+            }
             int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
