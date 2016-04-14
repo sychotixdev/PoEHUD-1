@@ -96,10 +96,9 @@ namespace PoeHUD.Poe
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
             0xC6, 0x45, 0xFC, 0x00, 0xE8, 0x00, 0x00, 0x00,
-            0x00, 0x83, 0xC4, 0x08, 0x68, 0x00, 0x00, 0x00,
-            0x00, 0x51, 0x8d, 0x4d, 0xE0, 0xE8
-        }, "xxx?x????xxxx????xxxxx");
-
+            0x00, 0x83, 0xC4, 0x00, 0x68, 0x00, 0x00, 0x00,
+            0x00, 0x51, 0x8d, 0x4d, 0x00, 0xE8
+        }, "xxx?x????xx?x????xxx?x");
         private static readonly Pattern areaChangePattern = new Pattern
             (@"\x8b\x88\x00\x00\x00\x00\xe8\x00\x00\x00\x00\xff\x05\x00\x00\x00\x00\xbe\x00\x00\x00\x00\x8b\x0e\x85\xc9",
                 "xx????x????xx????x????xxxx");
