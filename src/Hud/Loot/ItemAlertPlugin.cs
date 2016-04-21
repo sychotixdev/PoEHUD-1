@@ -92,62 +92,58 @@ namespace PoeHUD.Hud.Loot
 
         public override void Render()
         {
-            try
+            base.Render();
+            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
+
+            if (Settings.Enable)
             {
-                base.Render();
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
+                Poe.Components.Positioned pos = GameController.Player.GetComponent<Positioned>();
+                if (pos == null)
+                    return;
+                Vector2 playerPos = pos.GridPos;
+                Vector2 position = StartDrawPointFunc();
+                const int BOTTOM_MARGIN = 2;
+                bool shouldUpdate = false;
 
-                if (Settings.Enable)
+                if (Settings.BorderSettings.Enable)
                 {
-                    Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
-                    Vector2 position = StartDrawPointFunc();
-                    const int BOTTOM_MARGIN = 2;
-                    bool shouldUpdate = false;
-
-                    if (Settings.BorderSettings.Enable)
+                    Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
+                    var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key.Address != null && x.Key.IsValid).ToList();
+                    foreach (var kv in keyValuePairs)
                     {
-                        Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
-                        var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key.IsValid).ToList();
-                        foreach (var kv in keyValuePairs)
-                        {
-                            if (DrawBorder(kv.Key.Address) && !shouldUpdate)
-                            {
-                                shouldUpdate = true;
-                            }
-                        }
-                    }
-
-                    foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key.IsValid))
-                    {
-                        string text = GetItemName(kv);
-                        if (text == null)
-                        {
-                            continue;
-                        }
-
-                        ItemsOnGroundLabelElement entityLabel;
-                        if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
+                        if (DrawBorder(kv.Key.Address) && !shouldUpdate)
                         {
                             shouldUpdate = true;
                         }
-                        else
-                        {
-                            if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
-                                position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
-                        }
-                    }
-                    Size = new Size2F(0, position.Y); //bug absent width
-
-                    if (shouldUpdate)
-                    {
-                        currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
-                            .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
                     }
                 }
-            }
-            catch
-            {
-                // do nothing
+
+                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key.Address != null &&  x.Key.IsValid))
+                {
+                    string text = GetItemName(kv);
+                    if (text == null)
+                    {
+                        continue;
+                    }
+
+                    ItemsOnGroundLabelElement entityLabel;
+                    if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
+                    {
+                        shouldUpdate = true;
+                    }
+                    else
+                    {
+                        if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
+                            position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                    }
+                }
+                Size = new Size2F(0, position.Y); //bug absent width
+
+                if (shouldUpdate)
+                {
+                    currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
+                        .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
+                }
             }
         }
 
