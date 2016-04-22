@@ -51,6 +51,8 @@ namespace PoeHUD.Hud.AdvancedTooltip
             }
             Element uiHover = GameController.Game.IngameState.UIHover;
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
+            if (inventoryItemIcon == null)
+                return;
             Element tooltip = inventoryItemIcon.Tooltip;
             Entity poeEntity = inventoryItemIcon.Item;
             if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
