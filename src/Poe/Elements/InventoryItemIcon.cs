@@ -37,6 +37,20 @@ namespace PoeHUD.Poe.Elements
             }
         }
 
+        public Element ItemFrame
+        {
+            get
+            {
+                switch (ToolTipType)
+                {
+                    case ToolTipType.ItemOnGround:
+                        return toolTipOnground().ItemFrame;
+                    default:
+                        return null;
+                }
+            }
+        }
+
         public Entity Item
         {
             get

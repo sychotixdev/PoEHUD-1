@@ -114,7 +114,7 @@ namespace PoeHUD.Hud.InventoryPreview
 
         private Element GetInventoryZone()
         {
-            return ingameUiElements.ReadObject<Element>(ingameUiElements.InventoryPanel.Address + 0x778 + 0x26C);
+            return ingameUiElements.ReadObject<Element>(ingameUiElements.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x268);
         }
 
         private int GetCellSize(bool extendsSide)
@@ -132,7 +132,7 @@ namespace PoeHUD.Hud.InventoryPreview
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
             if (inventoryItemIcon.ToolTipType == ToolTipType.ItemOnGround)
             {
-                RectangleF itemElementRectangle = inventoryItemIcon.Tooltip.GetChildAtIndex(0).GetClientRect();
+                RectangleF itemElementRectangle = inventoryItemIcon.ItemFrame.GetClientRect();
                 var item = inventoryItemIcon.Item;
                 var inventoryZone = GetInventoryZone();
                 RectangleF inventoryZoneRectangle = inventoryZone.GetClientRect();
