@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.Preload
 {
@@ -17,16 +16,14 @@ namespace PoeHUD.Hud.Preload
     {
         private readonly HashSet<PreloadConfigLine> alerts;
         private readonly Dictionary<string, PreloadConfigLine> alertStrings;
-        private int lastCount;
-        private int lastAddress;
-        private bool foundSpecificPerandusChest, holdKey;
-        public static Color AreaNameColor;
-        private readonly SettingsHub settingsHub;
+        private int lastCount = 0;
+        private int lastAddress = 0;
+        private bool foundSpecificPerandusChest = false;
+        public static Color AreaNameColor = new Color();
 
-        public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings, SettingsHub settingsHub)
+        public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings)
             : base(gameController, graphics, settings)
         {
-            this.settingsHub = settingsHub;
             alerts = new HashSet<PreloadConfigLine>();
             alertStrings = LoadConfig("config/preload_alerts.txt");
             GameController.Area.OnAreaChange += OnAreaChange;
@@ -48,17 +45,8 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
-            if (!holdKey && WinApi.IsKeyDown(Keys.F10))
-            {
-                holdKey = true;
-                Settings.Enable.Value = !Settings.Enable.Value;
-                SettingsHub.Save(settingsHub);
-            }
-            else if (holdKey && !WinApi.IsKeyDown(Keys.F10))
-            {
-                holdKey = false;
-            }
-            if (!Settings.Enable) { return; }
+            base.Render();
+            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
             Parse();
 
             if (alerts.Count <= 0) return;
@@ -107,7 +95,7 @@ namespace PoeHUD.Hud.Preload
             int count = memory.ReadInt(pFileRoot + 0xC); // check how many files are loaded
             if (count > lastCount) // if the file count has changed, check the newly loaded files
             {
-                int listIterator;
+                int listIterator = 0;
                 int areaChangeCount = GameController.Game.AreaChangeCount;
                 if (lastAddress == 0)
                 {
@@ -277,6 +265,7 @@ namespace PoeHUD.Hud.Preload
             if (alert != null && Settings.Exiles)
             {
                 alerts.Add(alert);
+                return;
             }
         }
     }
