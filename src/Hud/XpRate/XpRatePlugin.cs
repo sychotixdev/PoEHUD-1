@@ -10,6 +10,7 @@ using SharpDX.Direct3D9;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.XpRate
 {
@@ -19,10 +20,13 @@ namespace PoeHUD.Hud.XpRate
         private DateTime startTime, lastTime;
         private long startXp;
         private double levelXpPenalty, partyXpPenalty;
+        private bool holdKey;
+        private readonly SettingsHub settingsHub;
 
-        public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings)
+        public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
+            this.settingsHub = settingsHub;
             GameController.Area.OnAreaChange += area => AreaChange();
         }
 
@@ -30,9 +34,17 @@ namespace PoeHUD.Hud.XpRate
         {
             try
             {
-                base.Render();
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10))
-                { return; }
+                if (!holdKey && WinApi.IsKeyDown(Keys.F10))
+                {
+                    holdKey = true;
+                    Settings.Enable.Value = !Settings.Enable.Value;
+                    SettingsHub.Save(settingsHub);
+                }
+                else if (holdKey && !WinApi.IsKeyDown(Keys.F10))
+                {
+                    holdKey = false;
+                }
+                if (!Settings.Enable) { return; }
 
                 DateTime nowTime = DateTime.Now;
                 TimeSpan elapsedTime = nowTime - lastTime;

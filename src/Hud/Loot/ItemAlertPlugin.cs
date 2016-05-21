@@ -32,10 +32,13 @@ namespace PoeHUD.Hud.Loot
         private readonly HashSet<string> currencyNames;
         private Dictionary<int, ItemsOnGroundLabelElement> currentLabels;
         private PoeFilterVisitor visitor;
+        public static bool holdKey;
+        private readonly SettingsHub settingsHub;
 
-        public ItemAlertPlugin(GameController gameController, Graphics graphics, ItemAlertSettings settings)
+        public ItemAlertPlugin(GameController gameController, Graphics graphics, ItemAlertSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
+            this.settingsHub = settingsHub;
             playedSoundsCache = new HashSet<long>();
             currentAlerts = new Dictionary<EntityWrapper, AlertDrawStyle>();
             currentLabels = new Dictionary<int, ItemsOnGroundLabelElement>();
@@ -92,12 +95,21 @@ namespace PoeHUD.Hud.Loot
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
+            if (!holdKey && WinApi.IsKeyDown(Keys.F10))
+            {
+                holdKey = true;
+                Settings.Enable.Value = !Settings.Enable.Value;
+                SettingsHub.Save(settingsHub);
+            }
+            else if (holdKey && !WinApi.IsKeyDown(Keys.F10))
+            {
+                holdKey = false;
+            }
+            if (!Settings.Enable) { return; }
 
             if (Settings.Enable)
             {
-                Poe.Components.Positioned pos = GameController.Player.GetComponent<Positioned>();
+                Positioned pos = GameController.Player.GetComponent<Positioned>();
                 if (pos == null)
                     return;
                 Vector2 playerPos = pos.GridPos;

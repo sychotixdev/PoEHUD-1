@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.Preload
 {
@@ -19,11 +20,14 @@ namespace PoeHUD.Hud.Preload
         private int lastCount = 0;
         private int lastAddress = 0;
         private bool foundSpecificPerandusChest = false;
+        private bool holdKey = false;
         public static Color AreaNameColor = new Color();
+        private readonly SettingsHub settingsHub;
 
-        public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings)
+        public PreloadAlertPlugin(GameController gameController, Graphics graphics, PreloadAlertSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
+            this.settingsHub = settingsHub;
             alerts = new HashSet<PreloadConfigLine>();
             alertStrings = LoadConfig("config/preload_alerts.txt");
             GameController.Area.OnAreaChange += OnAreaChange;
@@ -45,8 +49,17 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
-            base.Render();
-            if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10)) { return; }
+            if (!holdKey && WinApi.IsKeyDown(Keys.F10))
+            {
+                holdKey = true;
+                Settings.Enable.Value = !Settings.Enable.Value;
+                SettingsHub.Save(settingsHub);
+            }
+            else if (holdKey && !WinApi.IsKeyDown(Keys.F10))
+            {
+                holdKey = false;
+            }
+            if (!Settings.Enable) { return; }
             Parse();
 
             if (alerts.Count <= 0) return;

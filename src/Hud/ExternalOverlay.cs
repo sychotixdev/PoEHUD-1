@@ -148,8 +148,8 @@ namespace PoeHUD.Hud
             plugins.Add(new PoiTracker(gameController, graphics, settings.PoiTrackerSettings));
 
             var leftPanel = new PluginPanel(GetLeftCornerMap);
-            leftPanel.AddChildren(new XpRatePlugin(gameController, graphics, settings.XpRateSettings));
-            leftPanel.AddChildren(new PreloadAlertPlugin(gameController, graphics, settings.PreloadAlertSettings));
+            leftPanel.AddChildren(new XpRatePlugin(gameController, graphics, settings.XpRateSettings, settings));
+            leftPanel.AddChildren(new PreloadAlertPlugin(gameController, graphics, settings.PreloadAlertSettings, settings));
             leftPanel.AddChildren(new KillCounterPlugin(gameController, graphics, settings.KillCounterSettings));
             leftPanel.AddChildren(new DpsMeterPlugin(gameController, graphics, settings.DpsMeterSettings));
 
@@ -158,7 +158,7 @@ namespace PoeHUD.Hud
             plugins.AddRange(leftPanel.GetPlugins());
 
             var underPanel = new PluginPanel(GetUnderCornerMap);
-            underPanel.AddChildren(new ItemAlertPlugin(gameController, graphics, settings.ItemAlertSettings));
+            underPanel.AddChildren(new ItemAlertPlugin(gameController, graphics, settings.ItemAlertSettings, settings));
             plugins.AddRange(underPanel.GetPlugins());
 
             plugins.Add(new AdvancedTooltipPlugin(gameController, graphics, settings.AdvancedTooltipSettings, settings));
