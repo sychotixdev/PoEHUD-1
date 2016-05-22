@@ -60,7 +60,16 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
                 RectangleF tooltipRect = tooltip.GetClientRect();
                 var modsComponent = poeEntity.GetComponent<Mods>();
-                if (itemEntity == null || itemEntity.Id != poeEntity.Id)
+                int id = 0;
+                if (inventoryItemIcon.ToolTipType == ToolTipType.InventoryItem)
+                {
+                    id = poeEntity.InventoryId;
+                }
+                else
+                {
+                    id = poeEntity.Id;
+                }
+                if (itemEntity == null || itemEntity.Id != id)
                 {
                     List<ItemMod> itemMods = modsComponent.ItemMods;
                     mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel)).ToList();

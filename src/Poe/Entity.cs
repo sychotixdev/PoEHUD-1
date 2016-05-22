@@ -8,7 +8,8 @@ namespace PoeHUD.Poe
         private int ComponentLookup => M.ReadInt(Address, 0x48, 0);
         private int ComponentList => M.ReadInt(Address + 4);
         public string Path => M.ReadStringU(M.ReadInt(Address, 0xC));
-        public int Id => M.ReadInt(Address + 0x18);
+        public int Id => M.ReadInt(Address + 0x14);
+        public int InventoryId => M.ReadInt(Address + 0x18);
         public long LongId => (long)Id << 32 ^ Path.GetHashCode();
 
         /// <summary>
