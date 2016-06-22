@@ -41,7 +41,7 @@ namespace PoeHUD.Hud.Icons
 
                 const float SCALE = 240f;
                 RectangleF mapRect = smallMinimap.GetClientRect();
-                var mapCenter = new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2).Translate(0, -20);
+                var mapCenter = new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2).Translate(0, 0);
                 double diag = Math.Sqrt(mapRect.Width * mapRect.Width + mapRect.Height * mapRect.Height) / 2.0;
                 foreach (MapIcon icon in getIcons().Where(x => x.IsVisible()))
                 {

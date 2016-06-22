@@ -21,19 +21,19 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element ActionButtons => ReadObjectAt<Element>(0xAC);
         public Element Chat => ReadObjectAt<Element>(0xEC);
         */
-        public Element QuestTracker => ReadObjectAt<Element>(0xF4 + Offsets.GarenaTWDelta);
+        public Element QuestTracker => ReadObjectAt<Element>(0x9E0 + Offsets.GarenaTWDelta);
         /*
         Unused
         public Element MtxInventory => ReadObjectAt<Element>(0x100);
         public Element MtxShop => ReadObjectAt<Element>(0x104);
         */
-        public Element InventoryPanel => ReadObjectAt<Element>(0x100 + Offsets.GarenaTWDelta);
+        public Element InventoryPanel => ReadObjectAt<Element>(0xA24 + Offsets.GarenaTWDelta);
         /*
         Unused
         public Element StashPanel => ReadObjectAt<Element>(0x104);
         public Element SocialPanel => ReadObjectAt<Element>(0x118);
         */
-        public Element TreePanel => ReadObjectAt<Element>(0x114 + Offsets.GarenaTWDelta);
+        public Element TreePanel => ReadObjectAt<Element>(0xA38 + Offsets.GarenaTWDelta);
         /*
         Unused
         public Element CharacterPanel => ReadObjectAt<Element>(0x120);
@@ -42,12 +42,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element EventsAndPvP => ReadObjectAt<Element>(0x124);
         public Element WorldPanel => ReadObjectAt<Element>(0x128);
         */
-        public Map Map => ReadObjectAt<Map>(0x12C + Offsets.GarenaTWDelta);
+        public Map Map => ReadObjectAt<Map>(0xA50 + Offsets.GarenaTWDelta);
         public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
         {
             get
             {
-                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0x130 + Offsets.GarenaTWDelta);
+                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xA54 + Offsets.GarenaTWDelta);
                 return itemsOnGroundLabelRoot.Children;
             }
         }
@@ -64,8 +64,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element Buffs => ReadObjectAt<Element>(0x138);
         public Element Buffs2 => ReadObjectAt<Element>(0x194);
         */
-        public Element OpenLeftPanel => ReadObjectAt<Element>(0x160 + Offsets.GarenaTWDelta);
-        public Element OpenRightPanel => ReadObjectAt<Element>(0x164 + Offsets.GarenaTWDelta);
+        public Element OpenLeftPanel => ReadObjectAt<Element>(0xA08 + Offsets.GarenaTWDelta);
+        public Element OpenRightPanel => ReadObjectAt<Element>(0xA0C + Offsets.GarenaTWDelta);
         /*
         Unused
         public Element OpenNpcDialogPanel => ReadObjectAt<Element>(0x168);
@@ -74,7 +74,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element InstanceManagerPanel2 => ReadObjectAt<Element>(0x1D8);
         public Element SwitchingZoneInfo => ReadObjectAt<Element>(0x1CC);
         */
-        public Element GemLvlUpPanel => ReadObjectAt<Element>(0x224 + Offsets.GarenaTWDelta);
-        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x234 + Offsets.GarenaTWDelta);
+        public Element GemLvlUpPanel => ReadObjectAt<Element>(0xB20 + Offsets.GarenaTWDelta);
+        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB30 + Offsets.GarenaTWDelta);
     }
 }

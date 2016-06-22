@@ -13,6 +13,7 @@ namespace PoeHUD.Poe.FilesInMemory
         public BaseItemTypes(Memory m, int address, ItemClassesDisplay itemClassesDisplay) : base(m, address)
         {
             this.itemClassesDisplay = itemClassesDisplay;
+            LoadItemTypes();
         }
 
         public BaseItemType Translate(string metadata)

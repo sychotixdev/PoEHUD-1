@@ -5,7 +5,7 @@ namespace PoeHUD.Poe
 {
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
-        private int ComponentLookup => M.ReadInt(Address, 0x48, 0);
+        private int ComponentLookup => M.ReadInt(Address, 0x28, 0x18, 0);
         private int ComponentList => M.ReadInt(Address + 4);
         public string Path => M.ReadStringU(M.ReadInt(Address, 0xC));
         public int Id => M.ReadInt(Address + 0x14);

@@ -5,8 +5,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public string RawName => M.ReadStringU(M.ReadInt(Address));
         public string Name => M.ReadStringU(M.ReadInt(Address + 4));
         public int Act => M.ReadInt(Address + 8);
-        public bool IsTown => (M.ReadInt(Address + 0xC) & 1) == 1;
-        public bool HasWaypoint => (M.ReadInt(Address + 0xD) & 1) == 1;
+        public bool IsTown => M.ReadByte(Address + 0xC) == 1;
+        public bool HasWaypoint => M.ReadByte(Address + 0xD) == 1;
         public int NominalLevel => M.ReadInt(Address + 0x16);
     }
 

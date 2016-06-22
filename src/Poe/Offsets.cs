@@ -6,7 +6,7 @@ namespace PoeHUD.Poe
 {
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile" };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile", AreaChangeCount = 0xA16CE8 };
         public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = 0x4, ExeName = "PathOfExileSteam" };
         /* offsets from some older steam version:
 		 	Base = 8841968;
@@ -147,12 +147,12 @@ namespace PoeHUD.Poe
                         System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
                 }
             }
-            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
+            int[] array = m.FindPatterns(basePtrPattern);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-            FileRoot = array[1] + 0x0D;
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x0D) - m.AddressOfProcess;
-
+            FileRoot = 0xB8B308;
+            //FileRoot = array[1] + 0x0D;
+            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + AreaChangeOffset) - m.AddressOfProcess;
         }
     }
 }

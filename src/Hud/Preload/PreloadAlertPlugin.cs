@@ -59,7 +59,7 @@ namespace PoeHUD.Hud.Preload
             {
                 holdKey = false;
             }
-            if (!Settings.Enable) { return; }
+            if (!Settings.Enable || GameController.Area.CurrentArea.IsTown) { return; }
             Parse();
 
             if (alerts.Count <= 0) return;
@@ -104,16 +104,18 @@ namespace PoeHUD.Hud.Preload
                 ResetArea();
             }
             Memory memory = GameController.Memory;
-            int pFileRoot = memory.ReadInt(memory.AddressOfProcess + memory.offsets.FileRoot);
-            int count = memory.ReadInt(pFileRoot + 0xC); // check how many files are loaded
+            int pFileRoot = memory.AddressOfProcess + memory.offsets.FileRoot;
+            int count = memory.ReadInt(pFileRoot + 0x8); // check how many files are loaded
+            if (count < lastCount)
+                ResetArea();
             if (count > lastCount) // if the file count has changed, check the newly loaded files
             {
                 int listIterator = 0;
-                int areaChangeCount = GameController.Game.AreaChangeCount;
+                int areaChangeCount = memory.ReadInt(memory.AddressOfProcess + memory.offsets.AreaChangeCount); ;
                 if (lastAddress == 0)
                 {
                     // start at the beginning
-                    listIterator = memory.ReadInt(pFileRoot + 0x10);
+                    listIterator = memory.ReadInt(pFileRoot + 0xC, 0x18);
                 }
                 else
                 {
@@ -130,7 +132,7 @@ namespace PoeHUD.Hud.Preload
                         return;
                     }
                     lastAddress = listIterator;
-                    if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x24) != areaChangeCount) continue;
+                    if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x2C) != areaChangeCount) continue;
                     string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
                     if (text.Contains('@')) { text = text.Split('@')[0]; }
                     CheckForPreload(text);
