@@ -111,7 +111,7 @@ namespace PoeHUD.Hud.Preload
             if (count > lastCount) // if the file count has changed, check the newly loaded files
             {
                 int listIterator = 0;
-                int areaChangeCount = memory.ReadInt(memory.AddressOfProcess + memory.offsets.AreaChangeCount); ;
+                int areaChangeCount = GameController.Game.AreaChangeCount;
                 if (lastAddress == 0)
                 {
                     // start at the beginning
