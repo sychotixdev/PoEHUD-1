@@ -3,6 +3,8 @@
 
 Metadata/Monsters/GargoyleBoss/GargoyleBoss; Argus; ffDC143C
 
+Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
+
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss3; Rhodion, Servant of Prospero; ffFFD700
