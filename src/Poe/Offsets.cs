@@ -6,7 +6,7 @@ namespace PoeHUD.Poe
 {
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile", AreaChangeCount = 0xA42118 };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile" };
         public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = 0x4, ExeName = "PathOfExileSteam" };
         /* offsets from some older steam version:
 		 	Base = 8841968;
@@ -93,23 +93,49 @@ namespace PoeHUD.Poe
             0x84, 0xC9, 0x56, 0x0F, 0x94, 0xC1, 0x84, 0xC9
         }, "xxxxxxxxxxxxxxx????xxxxxxxxxxxxx");
 
+        /*
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
-            0xC6, 0x45, 0xFC, 0x00, 0xE8, 0x00, 0x00, 0x00,
-            0x00, 0x83, 0xC4, 0x00, 0x68, 0x00, 0x00, 0x00,
-            0x00, 0x51, 0x8d, 0x4d, 0x00, 0xE8
-        }, "xxx?x????xx?x????xxx?x");
-        private static readonly Pattern areaChangePattern = new Pattern
-            (@"\x8b\x88\x00\x00\x00\x00\xe8\x00\x00\x00\x00\xff\x05\x00\x00\x00\x00\xbe\x00\x00\x00\x00\x8b\x0e\x85\xc9",
-                "xx????x????xx????x????xxxx");
+            0xc7, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6a, 0x00, 0xc7, 0x05
+        }, "xx?xxxxxxxx");
+        */
+        private static readonly Pattern fileRootPattern = new Pattern(new byte[]
+                {
+                    0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0xE8, 0x00, 0x00,
+                    0x00, 0x00, 0x83, 0xC4, 0x08, 0xFF, 0xB7, 0x00,
+                    0x00, 0x00, 0x00, 0xB9, 0x00, 0x00, 0x00, 0x00,
+                    0xE8, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x15
+                }, "xxxxxx????xxxxx????x????x????xx");
+        /*
+        003F1BF4   E8 4A944E00      CALL PathOfEx.008DB043
+        003F1BF9   68 0867D400      PUSH PathOfEx.00D46708
+        003F1BFE   C745 FC FFFFFFFF MOV DWORD PTR SS:[EBP-4],-1
+        003F1C05   E8 C4954E00      CALL PathOfEx.008DB1CE
+        003F1C0A   83C4 08          ADD ESP,8
+        003F1C0D   FFB7 2C180000    PUSH DWORD PTR DS:[EDI+182C]
+        003F1C13   B9 1067D400      MOV ECX,PathOfEx.00D46710      <---PointerToFileRoot
+        003F1C18   E8 D33B0400      CALL PathOfEx.004357F0
+        003F1C1D   FF15 C8839D00    CALL DWORD PTR DS:[<&USER32.ReleaseCaptu>; USER32.ReleaseCapture
+        */
+
+        private static readonly Pattern areaChangePattern = new Pattern(new byte[]
+            {
+                0x18, 0x33, 0xac, 0x01, 0xb0, 0x00, 0x00, 0x00,
+                0x00, 0x33, 0xac, 0x01
+            }, "xxxxx????xxx");
 
         /*
-			80 7E 48 00             cmp     byte ptr [esi+48h], 0
-			0F 85 A4 01 00 00       jnz     loc_542F41					; we catch the last 00 byte into pattern to match 4-bytes step
-			8B 46 08                mov     eax, [esi+8]
-			80 B8 1C 01 00 00 00    cmp     byte ptr [eax+11Ch], 0
-			75 12                   jnz     short loc_542DBB
-		 */
+            PathOfExile.exe+A420EB - 01 B0 9FAE0110        - add [eax+1001AE9F],esi
+            PathOfExile.exe+A420F1 - A2 AE01C89B           - mov byte ptr [9BC801AE],al
+            PathOfExile.exe+A420F6 - AE                    - scasb 
+            PathOfExile.exe+A420F7 - 01 10                 - add [eax],edx
+            PathOfExile.exe+A420F9 - 00 AC 01 4832AC01     - add [ecx+eax+PathOfExile.exe+8C3248],ch
+            PathOfExile.exe+A42100 - 18 33                 - sbb [ebx],dh
+            PathOfExile.exe+A42102 - AC                    - lodsb 
+            PathOfExile.exe+A42103 - 01 B0 32AC0180        - add [eax-7FFE53CE],esi
+            PathOfExile.exe+A42109 - 33 AC 01 E833AC01     - xor ebp,[ecx+eax+PathOfExile.exe+8C33E8]
+            PathOfExile.exe+A42118 <-------------AreaChangeCount
+        */
 
         private static readonly Pattern inGameOffsetPattern =
             new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
@@ -147,12 +173,11 @@ namespace PoeHUD.Poe
                         System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
                 }
             }
-            int[] array = m.FindPatterns(basePtrPattern);
+            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-            FileRoot = 0xBB6710;
-            //FileRoot = array[1] + 0x0D;
-            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + AreaChangeOffset) - m.AddressOfProcess;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x14) - m.AddressOfProcess;
+            AreaChangeCount = array[2] + 0x18;
         }
     }
 }
