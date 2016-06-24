@@ -59,10 +59,10 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
 
-                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x130);
+                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xA54);
                         if (le == null)
                             return null;
-                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x1D0);
+                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x1CC);
                         if (e == null)
                             return null;
                         return e.GetComponent<WorldItem>().ItemEntity;
