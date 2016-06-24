@@ -59,7 +59,11 @@ namespace PoeHUD.Hud.Preload
             {
                 holdKey = false;
             }
-            if (!Settings.Enable || GameController.Area.CurrentArea.IsTown) { return; }
+            if (!Settings.Enable || GameController.Area.CurrentArea.IsTown)
+            {
+                Size = new Size2F();
+                return;
+            }
             Parse();
 
             if (alerts.Count <= 0) return;
