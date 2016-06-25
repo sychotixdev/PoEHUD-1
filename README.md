@@ -1,8 +1,7 @@
-PoeHud - Currently DETECTED, use it on your own risk!
+PoeHud
 ======
 
-There is still some freezing and some other bugs.  Please report issues that are not already reported.
-======
+Though it has been a while, people still have gotten banned from using this program, as It is against the TOS of Path of Exile.  Use at your own risk!
 
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
