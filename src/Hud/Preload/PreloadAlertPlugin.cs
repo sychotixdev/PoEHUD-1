@@ -17,8 +17,6 @@ namespace PoeHUD.Hud.Preload
     {
         private readonly HashSet<PreloadConfigLine> alerts;
         private readonly Dictionary<string, PreloadConfigLine> alertStrings;
-        private int lastCount = 0;
-        private int lastAddress = 0;
         private bool foundSpecificPerandusChest = false;
         private bool holdKey = false;
         public static Color AreaNameColor = new Color();
@@ -49,6 +47,11 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
+            if (WinApi.IsKeyDown(Keys.F5)) // do a full refresh if F5 is hit
+            {
+                ResetArea();
+                Parse();
+            }
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
                 holdKey = true;
@@ -64,9 +67,12 @@ namespace PoeHUD.Hud.Preload
                 Size = new Size2F();
                 return;
             }
-            Parse();
 
-            if (alerts.Count <= 0) return;
+            if (alerts.Count <= 0)
+            {
+                Size = new Size2F();
+                return;
+            }
             Vector2 startPosition = StartDrawPointFunc();
             Vector2 position = startPosition;
             int maxWidth = 0;
@@ -91,58 +97,35 @@ namespace PoeHUD.Hud.Preload
         {
             alerts.Clear();
             AreaNameColor = Settings.AreaTextColor;
-            lastCount = 0;
-            lastAddress = 0;
             foundSpecificPerandusChest = false;
         }
 
         private void OnAreaChange(AreaController area)
         {
             ResetArea();
+            Parse();
         }
 
         private void Parse()
         {
-            if (WinApi.IsKeyDown(Keys.F5)) // do a full refresh if F5 is hit
-            {
-                ResetArea();
-            }
             Memory memory = GameController.Memory;
             int pFileRoot = memory.AddressOfProcess + memory.offsets.FileRoot;
             int count = memory.ReadInt(pFileRoot + 0x8); // check how many files are loaded
-            if (count < lastCount)
-                ResetArea();
-            if (count > lastCount) // if the file count has changed, check the newly loaded files
+            int areaChangeCount = GameController.Game.AreaChangeCount;
+            int listIterator = memory.ReadInt(pFileRoot + 0x4, 0x0);
+            for (int i = 0; i < count; i++)
             {
-                int listIterator = 0;
-                int areaChangeCount = GameController.Game.AreaChangeCount;
-                if (lastAddress == 0)
+                listIterator = memory.ReadInt(listIterator);
+                if (listIterator == 0)
                 {
-                    // start at the beginning
-                    listIterator = memory.ReadInt(pFileRoot + 0x4, 0x0);
+                    // address is null, something has gone wrong, start over
+                    return;
                 }
-                else
-                {
-                    // start at the last read file
-                    listIterator = lastAddress;
-                }
-                for (int i = 0; i < count; i++)
-                {
-                    listIterator = memory.ReadInt(listIterator);
-                    if (listIterator == 0)
-                    {
-                        // address is null, something has gone wrong, start over
-                        ResetArea();
-                        return;
-                    }
-                    lastAddress = listIterator;
-                    if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x2C) != areaChangeCount) continue;
-                    string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
-                    if (text.Contains('@')) { text = text.Split('@')[0]; }
-                    CheckForPreload(text);
-                }
+                if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x2C) != areaChangeCount) continue;
+                string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
+                if (text.Contains('@')) { text = text.Split('@')[0]; }
+                CheckForPreload(text);
             }
-            lastCount = count;
         }
 
         private void CheckForPreload(string text)
