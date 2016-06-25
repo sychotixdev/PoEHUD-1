@@ -119,7 +119,7 @@ namespace PoeHUD.Hud.Preload
                 if (lastAddress == 0)
                 {
                     // start at the beginning
-                    listIterator = memory.ReadInt(pFileRoot + 0xC, 0x18);
+                    listIterator = memory.ReadInt(pFileRoot + 0x4, 0x0);
                 }
                 else
                 {
