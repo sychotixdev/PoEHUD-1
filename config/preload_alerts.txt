@@ -1,9 +1,20 @@
 #Metadata; Text; Color (ARGB)
 #Example: Metadata/Chests/StrongBoxes/Strongbox; ; ff00FF00
 
-Metadata/Monsters/GargoyleBoss/GargoyleBoss; Argus; ffDC143C
-
 Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
+
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Unique Strongbox 1; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest3; Unique Strongbox 2; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest4; Unique Strongbox 3; ffD2742D
+Metadata/Monsters/Daemon/BarrelOfSpidersDaemonNormal; Unique Strongbox 4; ffD2742D
+Metadata/Monsters/Daemon/BarrelOfSpidersDaemonMagic; Unique Strongbox 5; ffD2742D
+Metadata/Monsters/Daemon/BarrelOfSpidersDaemonRare; Unique Strongbox 6; ffD2742D
+Metadata/Monsters/Daemon/BarrelOfSpidersDaemonUnique; Unique Strongbox 7; ffD2742D
+Metadata/Monsters/Daemon/EternalUrnDaemonCommon; Unique Strongbox 8; ffD2742D
+Metadata/Monsters/Daemon/EternalUrnDaemonUncommon1; Unique Strongbox 9; ffD2742D
+Metadata/Monsters/Daemon/EternalUrnDaemonUncommon2; Unique Strongbox 10; ffD2742D
+Metadata/Monsters/Daemon/EternalUrnDaemonRare1; Unique Strongbox 11; ffD2742D
+Metadata/Monsters/Daemon/EternalUrnDaemonRare2; Unique Strongbox 12; ffD2742D
 
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
@@ -39,6 +50,7 @@ Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss6; Rothus, Vault Binder; ff
 Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss7; Arinea, Vault Binder; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardSecondaryBoss8; Meritania, Vault Binder; ffFFD700
 
+Metadata/Monsters/GargoyleBoss/GargoyleBoss; Argus; ffDC143C
 Metadata/Monsters/Squid/SquidBossSideArea; The All-seeing Eye; ffDC143C
 Metadata/Monsters/Goatman/GoatmanLeapBossSideArea; Konu, Maker of Wind; ffDC143C
 Metadata/Monsters/GhostPirates/GhostPirateBossSideArea; Coniraya, Shadow of Malice; ffDC143C

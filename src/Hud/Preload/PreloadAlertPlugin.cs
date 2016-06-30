@@ -121,7 +121,7 @@ namespace PoeHUD.Hud.Preload
                     // address is null, something has gone wrong, start over
                     return;
                 }
-                if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x2C) != areaChangeCount) continue;
+                if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x34) != areaChangeCount) continue;
                 string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
                 CheckForPreload(text);
