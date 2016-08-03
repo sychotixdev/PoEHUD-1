@@ -5,7 +5,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameState : RemoteMemoryObject
     {
-        public Camera Camera => GetObject<Camera>(Address + 0x1584 + Offsets.IgsOffsetDelta);
+        public Camera Camera => GetObject<Camera>(Address + 0x1588 + Offsets.IgsOffsetDelta);
         
         public IngameData Data => ReadObject<IngameData>(Address + 0x138 + Offsets.IgsOffset);
         public bool InGame => ServerData.IsInGame;
