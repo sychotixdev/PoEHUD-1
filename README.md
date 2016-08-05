@@ -6,6 +6,9 @@ Though it has been a while, people still have gotten banned from using this prog
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
 
+### Donation Info
+Donations can be made [here](paypal.me/TehCheat)
+
 ### Keyboard Info
 
 * Press F12 to show / hide the Menu
