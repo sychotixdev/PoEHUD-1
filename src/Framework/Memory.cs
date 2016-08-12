@@ -178,7 +178,7 @@ namespace PoeHUD.Framework
                 byte[] patternData = pattern.Bytes;
                 int patternLength = patternData.Length;
 
-                for (int offset = 0; offset < exeImage.Length - patternLength; offset += 4)
+                for (int offset = 0; offset < exeImage.Length - patternLength; offset++)
                 {
                     if (CompareData(pattern, exeImage, offset))
                     {

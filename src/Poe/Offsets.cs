@@ -6,8 +6,8 @@ namespace PoeHUD.Poe
 {
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile", AreaChangeCount = 0xA79168 };
-        public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = 0x4, ExeName = "PathOfExileSteam", AreaChangeCount = 0xA8E168 };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile" };
+        public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = 0x4, ExeName = "PathOfExileSteam" };
         /* offsets from some older steam version:
 		 	Base = 8841968;
 			FileRoot = 8820476;
@@ -119,21 +119,24 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern areaChangePattern = new Pattern(new byte[]
             {
-                0x18, 0x33, 0xac, 0x01, 0xb0, 0x00, 0x00, 0x00,
-                0x00, 0x33, 0xac, 0x01
-            }, "xxxxx????xxx");
+                0x8B, 0x88, 0x00, 0x00, 0x00, 0x00, 0xE8, 0x00,
+                0x00, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00,
+                0xFF, 0x05
+            }, "xx????x????x????xx");
 
         /*
-            PathOfExile.exe+A420EB - 01 B0 9FAE0110        - add [eax+1001AE9F],esi
-            PathOfExile.exe+A420F1 - A2 AE01C89B           - mov byte ptr [9BC801AE],al
-            PathOfExile.exe+A420F6 - AE                    - scasb 
-            PathOfExile.exe+A420F7 - 01 10                 - add [eax],edx
-            PathOfExile.exe+A420F9 - 00 AC 01 4832AC01     - add [ecx+eax+PathOfExile.exe+8C3248],ch
-            PathOfExile.exe+A42100 - 18 33                 - sbb [ebx],dh
-            PathOfExile.exe+A42102 - AC                    - lodsb 
-            PathOfExile.exe+A42103 - 01 B0 32AC0180        - add [eax-7FFE53CE],esi
-            PathOfExile.exe+A42109 - 33 AC 01 E833AC01     - xor ebp,[ecx+eax+PathOfExile.exe+8C33E8]
-            PathOfExile.exe+A42118 <-------------AreaChangeCount
+            005ADF8E  |. C745 FC FFFFFF>MOV DWORD PTR SS:[EBP-4],-1
+            005ADF95  |. 83C4 04        ADD ESP,4
+            005ADF98  |. 8B83 60180000  MOV EAX,DWORD PTR DS:[EBX+1860]
+            005ADF9E  |. 6A 00          PUSH 0
+            --- Pattern start
+            005ADFA0  |. 8B88 F80A0000  MOV ECX,DWORD PTR DS:[EAX+AF8]
+            005ADFA6  |. E8 C5263F00    CALL PathOfEx.009A0670
+            005ADFAB  |. E8 007E0400    CALL PathOfEx.005F5DB0
+            005ADFB0  |. FF05 6891DC00  <---AreaChangeCountPtr
+            --- Pattern end
+            005ADFB6  |. 8BC8           MOV ECX,EAX
+            005ADFB8  |. E8 037D0400    CALL PathOfEx.005F5CC0
         */
 
         private static readonly Pattern inGameOffsetPattern =
@@ -172,10 +175,11 @@ namespace PoeHUD.Poe
                         System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
                 }
             }
-            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern);
+            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x0F) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x6) - m.AddressOfProcess;
+            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x12) - m.AddressOfProcess;
         }
     }
 }
