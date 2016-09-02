@@ -120,7 +120,7 @@ namespace PoeHUD.Hud.Loot
                 if (Settings.BorderSettings.Enable)
                 {
                     Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
-                    var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key != null && x.Key.Address != null && x.Key.IsValid).ToList();
+                    var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid).ToList();
                     foreach (var kv in keyValuePairs)
                     {
                         if (DrawBorder(kv.Key.Address) && !shouldUpdate)
@@ -130,7 +130,7 @@ namespace PoeHUD.Hud.Loot
                     }
                 }
 
-                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key != null && x.Key.Address != null && x.Key.IsValid))
+                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid))
                 {
                     string text = GetItemName(kv);
                     if (text == null)

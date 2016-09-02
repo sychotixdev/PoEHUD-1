@@ -13,14 +13,14 @@ namespace PoeHUD.Poe
         // then the rest is
 
         public int vTable => M.ReadInt(Address + 0);
+        public int ChildCount => (M.ReadInt(Address + 0x20 + OffsetBuffers) - M.ReadInt(Address + 0x1C + OffsetBuffers)) / 4;
+        public bool IsVisibleLocal => (M.ReadInt(Address + 0x68 + OffsetBuffers) & 1) == 1;
         public Element Root => ReadObject<Element>(Address + 0x6c + OffsetBuffers);
         public Element Parent => ReadObject<Element>(Address + 0x70 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x74 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0x78 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x110 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x114 + OffsetBuffers);
-        public int ChildCount => (M.ReadInt(Address + 0x20 + OffsetBuffers) - M.ReadInt(Address + 0x1C + OffsetBuffers)) / 4;
-        public bool IsVisibleLocal => (M.ReadInt(Address + 0x68 + OffsetBuffers) & 1) == 1;
+        public float Width => M.ReadFloat(Address + 0x118 + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x11C + OffsetBuffers);
 
         public bool IsVisible
         {

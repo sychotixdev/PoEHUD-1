@@ -176,7 +176,7 @@ namespace PoeHUD.Hud
 
         private void OnRender()
         {
-            if (gameController.InGame && WinApi.IsForegroundWindow(gameHandle) && !gameController.Game.IngameState.IngameUi.TreePanel.IsVisible)
+            if (gameController.InGame && WinApi.IsForegroundWindow(gameHandle) && !gameController.Game.IngameState.IngameUi.TreePanel.IsVisible && !gameController.Game.IngameState.IngameUi.AtlasPanel.IsVisible)
             {
                 gameController.RefreshState();
                 plugins.ForEach(x => x.Render());
