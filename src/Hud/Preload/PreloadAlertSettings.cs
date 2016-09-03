@@ -53,6 +53,7 @@ namespace PoeHUD.Hud.Preload
             ArcanistStrongbox = new ColorBGRA(255, 0, 255, 255);
             ArtisanStrongbox = new ColorBGRA(210, 210, 210, 255);
             CartographerStrongbox = new ColorBGRA(255, 255, 0, 255);
+            DivinerStrongbox = new ColorBGRA(255, 0, 255, 255);
             GemcutterStrongbox = new ColorBGRA(27, 162, 155, 255);
             JewellerStrongbox = new ColorBGRA(210, 210, 210, 255);
             BlacksmithStrongbox = new ColorBGRA(210, 210, 210, 255);
@@ -131,6 +132,7 @@ namespace PoeHUD.Hud.Preload
         public ColorNode ArcanistStrongbox { get; set; }
         public ColorNode ArtisanStrongbox { get; set; }
         public ColorNode CartographerStrongbox { get; set; }
+        public ColorNode DivinerStrongbox { get; set; }
         public ColorNode GemcutterStrongbox { get; set; }
         public ColorNode JewellerStrongbox { get; set; }
         public ColorNode BlacksmithStrongbox { get; set; }
