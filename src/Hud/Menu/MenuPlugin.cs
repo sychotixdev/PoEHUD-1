@@ -293,6 +293,33 @@ namespace PoeHUD.Hud.Menu
             AddChild(strongboxes, "Epic", settingsHub.PreloadAlertSettings.EpicStrongbox);
             AddChild(strongboxes, "Simple", settingsHub.PreloadAlertSettings.SimpleStrongbox);
 
+            var essences = AddChild(preloadMenu, "Essences", settingsHub.PreloadAlertSettings.Essence);
+            AddChild(essences, "Remnant of Corruption", settingsHub.PreloadAlertSettings.RemnantOfCorruption);
+            AddChild(essences, "Essence of Anger", settingsHub.PreloadAlertSettings.EssenceOfAnger);
+            AddChild(essences, "Essence of Anguish", settingsHub.PreloadAlertSettings.EssenceOfAnguish);
+            AddChild(essences, "Essence of Contempt", settingsHub.PreloadAlertSettings.EssenceOfContempt);
+            AddChild(essences, "Essence of Delirium", settingsHub.PreloadAlertSettings.EssenceOfDelirium);
+            AddChild(essences, "Essence of Doubt", settingsHub.PreloadAlertSettings.EssenceOfDoubt);
+            AddChild(essences, "Essence of Dread", settingsHub.PreloadAlertSettings.EssenceOfDread);
+            AddChild(essences, "Essence of Envy", settingsHub.PreloadAlertSettings.EssenceOfEnvy);
+            AddChild(essences, "Essence of Fear", settingsHub.PreloadAlertSettings.EssenceOfFear);
+            AddChild(essences, "Essence of Greed", settingsHub.PreloadAlertSettings.EssenceOfGreed);
+            AddChild(essences, "Essence of Hatred", settingsHub.PreloadAlertSettings.EssenceOfHatred);
+            AddChild(essences, "Essence of Horror", settingsHub.PreloadAlertSettings.EssenceOfHorror);
+            AddChild(essences, "Essence of Hysteria", settingsHub.PreloadAlertSettings.EssenceOfHysteria);
+            AddChild(essences, "Essence of Insanity", settingsHub.PreloadAlertSettings.EssenceOfInsanity);
+            AddChild(essences, "Essence of Loathing", settingsHub.PreloadAlertSettings.EssenceOfLoathing);
+            AddChild(essences, "Essence of Misery", settingsHub.PreloadAlertSettings.EssenceOfMisery);
+            AddChild(essences, "Essence of Rage", settingsHub.PreloadAlertSettings.EssenceOfRage);
+            AddChild(essences, "Essence of Scorn", settingsHub.PreloadAlertSettings.EssenceOfScorn);
+            AddChild(essences, "Essence of Sorrow", settingsHub.PreloadAlertSettings.EssenceOfSorrow);
+            AddChild(essences, "Essence of Spite", settingsHub.PreloadAlertSettings.EssenceOfSpite);
+            AddChild(essences, "Essence of Suffering", settingsHub.PreloadAlertSettings.EssenceOfSuffering);
+            AddChild(essences, "Essence of Torment", settingsHub.PreloadAlertSettings.EssenceOfTorment);
+            AddChild(essences, "Essence of Woe", settingsHub.PreloadAlertSettings.EssenceOfWoe);
+            AddChild(essences, "Essence of Wrath", settingsHub.PreloadAlertSettings.EssenceOfWrath);
+            AddChild(essences, "Essence of Zeal", settingsHub.PreloadAlertSettings.EssenceOfZeal);
+
             var perandus = AddChild(preloadMenu, "Perandus Chests", settingsHub.PreloadAlertSettings.PerandusBoxes);
             AddChild(perandus, "Cadiro Trader", settingsHub.PreloadAlertSettings.CadiroTrader);
             AddChild(perandus, "Perandus Chest", settingsHub.PreloadAlertSettings.PerandusChestStandard);

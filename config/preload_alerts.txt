@@ -3,47 +3,6 @@
 
 Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
 
-Metadata/Monsters/Daemon/EssenceSummonDaemonFrostboltNova;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonShockwaveTotem;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonGroundFire;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonGroundLightning;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonGroundCold;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonIceNovaRepeat;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonFireNovaRepeat;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonShockNovaRepeat;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonFirePulse; Essence of Anger; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonColdPulse; Essence of Hatred; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonLightningPulse; Essence of Wrath; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonChaosDegenPulse; Essence of Misery; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonOrbOfStormsDaemon; Essence of Torment; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonGhost; Essence of Fear; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonFrostBomb; Essence of Suffering; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonGrab; Essence of Envy; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDodge; Essence of Zeal; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDamageTaken; Essence of Loathing; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterCrit; Essence of Scorn; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonTotemGroundEffectVortex; Essence of Sorrow; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonKaruiSpirit; Essence of Contempt; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonMovingKaruiSpirit;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonBloodStormCallDaemon;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonFireRuneTrap; Essence of Rage; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonChaosGolem; Essence of Dread; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonBloodProjectileDaemon; Essence of Greed; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonLivingCrystals; Essence of Woe; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonSpiders; Essence of Doubt; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonTotemGroundEffectShocked; Essence of Spite; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonMadness1; Essence of Hysteria; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonInsanity1; Essence of Insanity; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonHorror1;Essence of Horror; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonTerror1_; Essence of Delirium; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonIceElemental;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonSummonSpectralSkull;; ffFFFF00
-Metadata/Monsters/Daemon/EssenceDaemonMeteorFirestorm;; ffFFFF00
-Metadata/Monsters/MossMonster/EssenceElementalSummonedOnDeath1stStage; Essence of Anguish; ffFFFF00
-Metadata/Monsters/MossMonster/EssenceElementalSummonedOnDeath2ndStage; Essence of Anguish; ffFFFF00
-Metadata/Monsters/MossMonster/EssenceElementalSummonedOnDeath3rdStage; Essence of Anguish; ffFFFF00
-Metadata/Monsters/MossMonster/EssenceElementalSummonedOnDeath4thStage; Essence of Anguish; ffFFFF00 
-
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Unique Strongbox 1; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest3; Unique Strongbox 2; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest4; Unique Strongbox 3; ffD2742D

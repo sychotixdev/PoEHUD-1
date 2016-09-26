@@ -18,6 +18,7 @@ namespace PoeHUD.Hud.Preload
         private readonly HashSet<PreloadConfigLine> alerts;
         private readonly Dictionary<string, PreloadConfigLine> alertStrings;
         private bool foundSpecificPerandusChest = false;
+        private bool essencefound = false;
         private bool holdKey = false;
         public static Color AreaNameColor = new Color();
         private readonly SettingsHub settingsHub;
@@ -148,6 +149,53 @@ namespace PoeHUD.Hud.Preload
                     alerts.Add(new PreloadConfigLine { Text = "Corrupted Area", FastColor = () => Settings.CorruptedAreaColor });
                 }
                 return;
+            }
+
+            Dictionary<string, PreloadConfigLine> Essences = new Dictionary<string, PreloadConfigLine>
+            {
+                { "Metadata/Monsters/Daemon/EssenceDaemonMeteorFirestorm", new PreloadConfigLine { Text = "Essence of Anguish", FastColor = () => Settings.EssenceOfAnguish}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonFirePulse", new PreloadConfigLine { Text = "Essence of Anger", FastColor = () => Settings.EssenceOfAnger}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonColdPulse", new PreloadConfigLine { Text = "Essence of Hatred", FastColor = () => Settings.EssenceOfHatred}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonLightningPulse", new PreloadConfigLine { Text = "Essence of Wrath", FastColor = () => Settings.EssenceOfWrath}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonChaosDegenPulse", new PreloadConfigLine { Text = "Essence of Misery", FastColor = () => Settings.EssenceOfMisery}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonOrbOfStormsDaemon", new PreloadConfigLine { Text = "Essence of Torment", FastColor = () => Settings.EssenceOfTorment}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonGhost", new PreloadConfigLine { Text = "Essence of Fear", FastColor = () => Settings.EssenceOfFear}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonFrostBomb", new PreloadConfigLine { Text = "Essence of Suffering", FastColor = () => Settings.EssenceOfSuffering}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonGrab", new PreloadConfigLine { Text = "Essence of Envy", FastColor = () => Settings.EssenceOfEnvy}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDodge", new PreloadConfigLine { Text = "Essence of Zeal", FastColor = () => Settings.EssenceOfZeal}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDamageTaken", new PreloadConfigLine { Text = "Essence of Loathing", FastColor = () => Settings.EssenceOfLoathing}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterCrit", new PreloadConfigLine { Text = "Essence of Scorn", FastColor = () => Settings.EssenceOfScorn}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonTotemGroundEffectVortex", new PreloadConfigLine { Text = "Essence of Sorrow", FastColor = () => Settings.EssenceOfSorrow}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonKaruiSpirit", new PreloadConfigLine { Text = "Essence of Contempt", FastColor = () => Settings.EssenceOfContempt}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonFireRuneTrap", new PreloadConfigLine { Text = "Essence of Rage", FastColor = () => Settings.EssenceOfRage}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonChaosGolem", new PreloadConfigLine { Text = "Essence of Dread", FastColor = () => Settings.EssenceOfDread}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonBloodProjectileDaemon", new PreloadConfigLine { Text = "Essence of Greed", FastColor = () => Settings.EssenceOfGreed}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonLivingCrystals", new PreloadConfigLine { Text = "Essence of Woe", FastColor = () => Settings.EssenceOfWoe}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonSpiders", new PreloadConfigLine { Text = "Essence of Doubt", FastColor = () => Settings.EssenceOfDoubt}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonTotemGroundEffectShocked", new PreloadConfigLine { Text = "Essence of Spite", FastColor = () => Settings.EssenceOfSpite}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonMadness1", new PreloadConfigLine { Text = "Essence of Hysteria", FastColor = () => Settings.EssenceOfHysteria}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonInsanity1", new PreloadConfigLine { Text = "Essence of Insanity", FastColor = () => Settings.EssenceOfInsanity}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonHorror1", new PreloadConfigLine { Text = "Essence of Horror", FastColor = () => Settings.EssenceOfHorror}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonTerror1_", new PreloadConfigLine { Text = "Essence of Delirium", FastColor = () => Settings.EssenceOfDelirium}}
+            };
+            if (Settings.Essence)
+            {
+                PreloadConfigLine essence_alert = Essences.Where(kv => text
+                    .StartsWith(kv.Key, StringComparison.OrdinalIgnoreCase)).Select(kv => kv.Value).FirstOrDefault();
+                if (essence_alert != null)
+                {
+                    essencefound = true;
+                    if (alerts.Contains(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption }))
+                    {
+                        alerts.Remove(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
+                    }
+                    alerts.Add(essence_alert);
+                    return;
+                }
+                if (!essencefound && text.Contains("MiniMonolith"))
+                {
+                    alerts.Add(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
+                }
             }
 
             Dictionary<string, PreloadConfigLine> PerandusLeague = new Dictionary<string, PreloadConfigLine>
