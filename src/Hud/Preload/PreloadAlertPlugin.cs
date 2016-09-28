@@ -104,6 +104,7 @@ namespace PoeHUD.Hud.Preload
         private void OnAreaChange(AreaController area)
         {
             ResetArea();
+            essencefound = false;
             Parse();
         }
 
@@ -185,16 +186,16 @@ namespace PoeHUD.Hud.Preload
                 if (essence_alert != null)
                 {
                     essencefound = true;
-                    if (alerts.Contains(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption }))
+                    if (alerts.Contains(new PreloadConfigLine { Text = "Remnant of Corruption", FastColor = () => Settings.RemnantOfCorruption }))
                     {
-                        alerts.Remove(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
+                        alerts.Remove(new PreloadConfigLine { Text = "Remnant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
                     }
                     alerts.Add(essence_alert);
                     return;
                 }
                 if (!essencefound && text.Contains("MiniMonolith"))
                 {
-                    alerts.Add(new PreloadConfigLine { Text = "Remant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
+                    alerts.Add(new PreloadConfigLine { Text = "Remnant of Corruption", FastColor = () => Settings.RemnantOfCorruption });
                 }
             }
 
