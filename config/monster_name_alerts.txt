@@ -125,7 +125,7 @@ Metadata/Monsters/Snake/SnakeMeleeBossInvasion; Tailsinger
 Metadata/Monsters/Snake/SnakeRangedBossInvasion; Razorleaf
 Metadata/Monsters/Spawn/SpawnBossInvasion; Stranglecreep
 Metadata/Monsters/Spiders/SpiderBossInvasion; Pewterfang
-Metadata/Monsters/Spikers/SpikerBossInvasion; Bladeback Guardian
+Metadata/Monsters/Spiker/SpikerBossInvasion; Bladeback Guardian
 Metadata/Monsters/Squid/SquidBossInvasion; Strangledrift
 Metadata/Monsters/Totems/TotemBossInvasion; Jikeji
 Metadata/Monsters/Rhoas/RhoaUndeadBossInvasion; Ghostram
