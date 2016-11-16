@@ -10,6 +10,7 @@ Metadata/Monsters/Daemon/EternalUrnDaemonUncommon1; Unique Strongbox 2; ffD2742D
 Metadata/Monsters/Daemon/EternalUrnDaemonUncommon2; Unique Strongbox 3; ffD2742D
 Metadata/Monsters/Daemon/EternalUrnDaemonRare1; Unique Strongbox 4; ffD2742D
 Metadata/Monsters/Daemon/EternalUrnDaemonRare2; Unique Strongbox 5; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonFireWarband; Redblade Cache; ffD2742D
 
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
