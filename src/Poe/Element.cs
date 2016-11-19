@@ -6,7 +6,7 @@ namespace PoeHUD.Poe
 {
     public class Element : RemoteMemoryObject
     {
-        public const int OffsetBuffers = 0x76C;
+        public const int OffsetBuffers = 0x6EC;
         // dd id
         // dd (something zero)
         // 16 dup <128-bytes structure>
@@ -19,8 +19,8 @@ namespace PoeHUD.Poe
         public Element Parent => ReadObject<Element>(Address + 0x70 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x74 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0x78 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x118 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x11C + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x158 + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x15C + OffsetBuffers);
 
         public bool IsVisible
         {

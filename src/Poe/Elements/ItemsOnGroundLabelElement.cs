@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                int address = M.ReadInt(Address + OffsetBuffers + 0x1DC);
+                int address = M.ReadInt(Address + OffsetBuffers + 0x220);
                 for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
                 {
                     yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
