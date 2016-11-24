@@ -9,7 +9,7 @@ namespace PoeHUD.Poe.FilesInMemory
         public Dictionary<string, TagRecord> records =
             new Dictionary<string, TagRecord>(StringComparer.OrdinalIgnoreCase);
 
-        public TagsDat(Memory m, int address)
+        public TagsDat(Memory m, long address)
             : base(m, address)
         {
             loadItems();
@@ -17,7 +17,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void loadItems()
         {
-            foreach (int addr in RecordAddresses())
+            foreach (long addr in RecordAddresses())
             {
                 var r = new TagRecord(M, addr);
                 if (!records.ContainsKey(r.Key))
@@ -31,9 +31,9 @@ namespace PoeHUD.Poe.FilesInMemory
             public int Hash;
             // more fields can be added (see in visualGGPK)
 
-            public TagRecord(Memory m, int addr)
+            public TagRecord(Memory m, long addr)
             {
-                Key = m.ReadStringU(m.ReadInt(addr + 0), 255);
+                Key = m.ReadStringU(m.ReadLong(addr + 0), 255);
                 Hash = m.ReadInt(addr + 4);
             }
         }

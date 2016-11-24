@@ -76,7 +76,7 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = Address + 12;
+                long num = Address + 12;
                 for (int i = 0; i < 6; i++)
                 {
                     int num2 = M.ReadInt(num);

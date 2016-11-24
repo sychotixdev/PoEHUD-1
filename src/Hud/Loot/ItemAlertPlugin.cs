@@ -30,7 +30,7 @@ namespace PoeHUD.Hud.Loot
         private readonly Dictionary<EntityWrapper, AlertDrawStyle> currentAlerts;
         private readonly HashSet<CraftingBase> craftingBases;
         private readonly HashSet<string> currencyNames;
-        private Dictionary<int, ItemsOnGroundLabelElement> currentLabels;
+        private Dictionary<long, ItemsOnGroundLabelElement> currentLabels;
         private PoeFilterVisitor visitor;
         public static bool holdKey;
         private readonly SettingsHub settingsHub;
@@ -41,7 +41,7 @@ namespace PoeHUD.Hud.Loot
             this.settingsHub = settingsHub;
             playedSoundsCache = new HashSet<long>();
             currentAlerts = new Dictionary<EntityWrapper, AlertDrawStyle>();
-            currentLabels = new Dictionary<int, ItemsOnGroundLabelElement>();
+            currentLabels = new Dictionary<long, ItemsOnGroundLabelElement>();
             currencyNames = LoadCurrency();
             craftingBases = LoadCraftingBases();
             GameController.Area.OnAreaChange += OnAreaChange;
@@ -288,7 +288,7 @@ namespace PoeHUD.Hud.Loot
             return hashSet;
         }
 
-        private bool DrawBorder(int entityAddress)
+        private bool DrawBorder(long entityAddress)
         {
             IngameUIElements ui = GameController.Game.IngameState.IngameUi;
             ItemsOnGroundLabelElement entityLabel;

@@ -5,7 +5,7 @@ namespace PoeHUD.Poe
 {
     public abstract class RemoteMemoryObject
     {
-        public int Address { get; protected set; }
+        public long Address { get; protected set; }
         protected TheGame Game { get; set; }
         protected Memory M { get; set; }
 
@@ -16,9 +16,10 @@ namespace PoeHUD.Poe
             return ReadObject<T>(Address + offset);
         }
 
-        public T ReadObject<T>(int addressPointer) where T : RemoteMemoryObject, new()
+
+        public T ReadObject<T>(long addressPointer) where T : RemoteMemoryObject, new()
         {
-            var t = new T { M = M, Address = M.ReadInt(addressPointer), Game = Game };
+            var t = new T { M = M, Address = M.ReadLong(addressPointer), Game = Game };
             return t;
         }
 
@@ -27,7 +28,13 @@ namespace PoeHUD.Poe
             return GetObject<T>(Address + offset);
         }
 
-        public T GetObject<T>(int address) where T : RemoteMemoryObject, new()
+        public T GetObjectAt<T>(long offset) where T : RemoteMemoryObject, new()
+        {
+            return GetObject<T>(Address + offset);
+        }
+
+
+        public T GetObject<T>(long address) where T : RemoteMemoryObject, new()
         {
             var t = new T { M = M, Address = address, Game = Game };
             return t;
@@ -47,7 +54,7 @@ namespace PoeHUD.Poe
 
         public override int GetHashCode()
         {
-            return Address + GetType().Name.GetHashCode();
+            return (int)Address + GetType().Name.GetHashCode();
         }
     }
 }

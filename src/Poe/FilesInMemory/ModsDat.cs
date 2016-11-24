@@ -21,7 +21,7 @@ namespace PoeHUD.Poe.FilesInMemory
         public Dictionary<Tuple<string, ModType>, List<ModRecord>> recordsByTier =
             new Dictionary<Tuple<string, ModType>, List<ModRecord>>();
 
-        public ModsDat(Memory m, int address, StatsDat sDat, TagsDat tagsDat) : base(m, address)
+        public ModsDat(Memory m, long address, StatsDat sDat, TagsDat tagsDat) : base(m, address)
         {
             loadItems(sDat, tagsDat);
         }
@@ -33,6 +33,7 @@ namespace PoeHUD.Poe.FilesInMemory
                 var r = new ModRecord(M, sDat, tagsDat, addr);
                 if (records.ContainsKey(r.Key))
                     continue;
+
                 records.Add(r.Key, r);
                 bool addToItemIiers = r.Domain != 3;
                 if (!addToItemIiers) continue;
@@ -57,7 +58,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public static IComparer<ModRecord> ByLevelComparer = new LevelComparer();
             public readonly string Key;
             public ModType AffixType;
-            public int Domain;
+            public long Domain;
             public string Group;
             public int MinLevel;
             public StatsDat.StatRecord[] StatNames; // Game refers to Stats.dat line
@@ -68,7 +69,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public string UserFriendlyName;
             // more fields can be added (see in visualGGPK)
 
-            public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, int addr)
+            public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
             {
                 Key = m.ReadStringU(m.ReadInt(addr + 0));
                 Unknown4 = m.ReadInt(addr + 4);
@@ -76,24 +77,24 @@ namespace PoeHUD.Poe.FilesInMemory
 
                 StatNames = new[]
                 {
-                    m.ReadInt(addr + 0x18) == 0
+                    m.ReadLong(addr + 0x18) == 0
                         ? null
-                        : sDat.records[m.ReadStringU(m.ReadInt(m.ReadInt(addr + 0x18)))],
-                    m.ReadInt(addr + 0x20) == 0
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x18)))],
+                    m.ReadLong(addr + 0x20) == 0
                         ? null
-                        : sDat.records[m.ReadStringU(m.ReadInt(m.ReadInt(addr + 0x20)))],
-                    m.ReadInt(addr + 0x28) == 0
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x20)))],
+                    m.ReadLong(addr + 0x28) == 0
                         ? null
-                        : sDat.records[m.ReadStringU(m.ReadInt(m.ReadInt(addr + 0x28)))],
-                    m.ReadInt(addr + 0x30) == 0
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x28)))],
+                    m.ReadLong(addr + 0x30) == 0
                         ? null
-                        : sDat.records[m.ReadStringU(m.ReadInt(m.ReadInt(addr + 0x30)))]
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x30)))]
                 };
 
                 Domain = m.ReadInt(addr + 0x34);
-                UserFriendlyName = m.ReadStringU(m.ReadInt(addr + 0x38));
+                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x38));
                 AffixType = (ModType)m.ReadInt(addr + 0x3C);
-                Group = m.ReadStringU(m.ReadInt(addr + 0x40));
+                Group = m.ReadStringU(m.ReadLong(addr + 0x40));
 
                 StatRange = new[]
                 {
@@ -103,16 +104,16 @@ namespace PoeHUD.Poe.FilesInMemory
                     new IntRange(m.ReadInt(addr + 0x5C), m.ReadInt(addr + 0x60))
                 };
 
-                Tags = new TagsDat.TagRecord[m.ReadInt(addr + 0x64)];
-                int ta = m.ReadInt(addr + 0x68);
+                Tags = new TagsDat.TagRecord[m.ReadLong(addr + 0x64)];
+                long ta = m.ReadLong(addr + 0x68);
                 for (int i = 0; i < Tags.Length; i++)
                 {
-                    int ii = ta + 4 + 8 * i;
-                    Tags[i] = tagsDat.records[m.ReadStringU(m.ReadInt(ii, 0), 255)];
+                    long ii = ta + 4 + 8 * i;
+                    Tags[i] = tagsDat.records[m.ReadStringU(m.ReadLong(ii, 0), 255)];
                 }
 
-                TagChances = new int[m.ReadInt(addr + 0x6C)];
-                int tc = m.ReadInt(addr + 0x70);
+                TagChances = new int[m.ReadLong(addr + 0x6C)];
+                long tc = m.ReadLong(addr + 0x70);
                 for (int i = 0; i < Tags.Length; i++)
                     TagChances[i] = m.ReadInt(tc + 4 * i);
             }

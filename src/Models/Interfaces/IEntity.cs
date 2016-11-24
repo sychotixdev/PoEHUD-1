@@ -9,7 +9,7 @@ namespace PoeHUD.Models.Interfaces
         long LongId { get; }
         bool IsValid { get; }
         bool IsHostile { get; }
-        int Address { get; }
+        long Address { get; }
 
         bool HasComponent<T>() where T : Component, new();
 

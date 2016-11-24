@@ -53,6 +53,8 @@ namespace PoeHUD.Hud.Preload
                 ResetArea();
                 Parse();
             }
+            
+            /*
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
                 holdKey = true;
@@ -74,6 +76,9 @@ namespace PoeHUD.Hud.Preload
                 Size = new Size2F();
                 return;
             }
+            */
+            
+
             Vector2 startPosition = StartDrawPointFunc();
             Vector2 position = startPosition;
             int maxWidth = 0;
@@ -111,22 +116,35 @@ namespace PoeHUD.Hud.Preload
         private void Parse()
         {
             Memory memory = GameController.Memory;
-            int pFileRoot = memory.AddressOfProcess + memory.offsets.FileRoot;
-            int count = memory.ReadInt(pFileRoot + 0x8); // check how many files are loaded
+            long pFileRoot = memory.AddressOfProcess + memory.offsets.FileRoot;
+            int count = memory.ReadInt(pFileRoot + 0x10); // check how many files are loaded
+
             int areaChangeCount = GameController.Game.AreaChangeCount;
-            int listIterator = memory.ReadInt(pFileRoot + 0x4, 0x0);
+            long listIterator = memory.ReadLong(pFileRoot + 0x8, 0x0);
+
             for (int i = 0; i < count; i++)
             {
-                listIterator = memory.ReadInt(listIterator);
+                listIterator = memory.ReadLong(listIterator);
                 if (listIterator == 0)
                 {
+                    //MessageBox.Show("address is null, something has gone wrong, start over");
                     // address is null, something has gone wrong, start over
                     return;
                 }
-                if (memory.ReadInt(listIterator + 0x8) == 0 || memory.ReadInt(listIterator + 0xC, 0x34) != areaChangeCount) continue;
-                string text = memory.ReadStringU(memory.ReadInt(listIterator + 8));
+                if (memory.ReadLong(listIterator + 0x10) == 0 || memory.ReadInt(listIterator + 0x18, 0x50) != areaChangeCount)
+                {
+                    continue;
+                }
+
+                
+                string text = memory.ReadStringU(memory.ReadLong(listIterator + 0x10), 512);
+
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
                 CheckForPreload(text);
+
+
+               // if (text.Contains("Metadata/Monsters/Daemon/Essence"))
+               //     MessageBox.Show(text);
             }
         }
 

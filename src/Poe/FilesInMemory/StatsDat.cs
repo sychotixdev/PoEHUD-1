@@ -18,14 +18,14 @@ namespace PoeHUD.Poe.FilesInMemory
         public Dictionary<string, StatRecord> records =
             new Dictionary<string, StatRecord>(StringComparer.OrdinalIgnoreCase);
 
-        public StatsDat(Memory m, int address) : base(m, address)
+        public StatsDat(Memory m, long address) : base(m, address)
         {
             loadItems();
         }
 
         private void loadItems()
         {
-            foreach (int addr in RecordAddresses())
+            foreach (long addr in RecordAddresses())
             {
                 var r = new StatRecord(M, addr);
                 if (!records.ContainsKey(r.Key))
@@ -44,15 +44,15 @@ namespace PoeHUD.Poe.FilesInMemory
             public string UserFriendlyName;
             // more fields can be added (see in visualGGPK)
 
-            public StatRecord(Memory m, int addr)
+            public StatRecord(Memory m, long addr)
             {
-                Key = m.ReadStringU(m.ReadInt(addr + 0), 255);
+                Key = m.ReadStringU(m.ReadLong(addr + 0), 255);
                 Unknown4 = m.ReadByte(addr + 4) != 0;
                 Unknown5 = m.ReadByte(addr + 5) != 0;
                 Unknown6 = m.ReadByte(addr + 6) != 0;
-                Type = Key.Contains("%") ? StatType.Percents : (StatType)m.ReadInt(addr + 7);
+                Type = Key.Contains("%") ? StatType.Percents : (StatType)m.ReadLong(addr + 7);
                 UnknownB = m.ReadByte(addr + 0xB) != 0;
-                UserFriendlyName = m.ReadStringU(m.ReadInt(addr + 0xC), 255);
+                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0xC), 255);
             }
 
             public override string ToString()

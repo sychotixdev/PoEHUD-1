@@ -8,7 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Tools;
+using System.Text;
+using System.IO;
 
 namespace PoeHUD
 {
@@ -72,6 +73,63 @@ namespace PoeHUD
             {
                 offs.DoPatternScans(memory);
                 var gameController = new GameController(memory);
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("AddressOfProcess: " + memory.AddressOfProcess.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("GameControllerOffsRead: " + offs.Base.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("GameController: " + (offs.Base + memory.AddressOfProcess).ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("TheGame: " + gameController.Game.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("IngameState: " + gameController.Game.IngameState.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("DiagnosticInfoType: " + gameController.Game.IngameState.DiagnosticInfoType);
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("Camera addr: " + gameController.Game.IngameState.Camera.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                /*
+                sb.Append("CurLatency: " + gameController.Game.IngameState.CurLatency);
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("TimeInGame Float: " + gameController.Game.IngameState.TimeInGameF);
+                sb.Append(System.Environment.NewLine);
+
+
+                sb.Append("Area change pointer: " + offs.areaCC_pointer.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("Area change pointer (global): " + (offs.areaCC_pointer + memory.AddressOfProcess).ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("Area change addr: " + offs.AreaChangeCount.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("Area change addr (global): " + (offs.AreaChangeCount + memory.AddressOfProcess).ToString("X"));
+                sb.Append(System.Environment.NewLine);
+                */
+
+
+                sb.Append("Area change: " + memory.ReadInt(offs.AreaChangeCount + memory.AddressOfProcess));
+                sb.Append(System.Environment.NewLine);
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append(memory.DebugStr);
+
+                File.WriteAllText("__BaseOffsets.txt", sb.ToString());
+
+
+
+
                 var overlay = new ExternalOverlay(gameController, memory.IsInvalid);
                 Application.Run(overlay);
             }

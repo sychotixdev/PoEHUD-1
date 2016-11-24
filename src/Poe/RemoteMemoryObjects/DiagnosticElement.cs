@@ -7,6 +7,6 @@
         public int Y => M.ReadInt(Address + 0x8);
         public int Width => M.ReadInt(Address + 0xC);
         public int Height => M.ReadInt(Address + 0x10);
-        public float this[int index] => index >= 0 && index <= LAST_INDEX ? M.ReadFloat(M.ReadInt(Address)) : -1;
+        public float this[int index] => index >= 0 && index <= LAST_INDEX ? M.ReadFloat(M.ReadLong(Address)) : -1;
     }
 }

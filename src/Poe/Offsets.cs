@@ -2,95 +2,38 @@ using PoeHUD.Framework;
 using PoeHUD.Models;
 using System.IO;
 
+
 namespace PoeHUD.Poe
 {
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile" };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
         public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = -0x4, ExeName = "PathOfExileSteam" };
-        /* offsets from some older steam version:
-		 	Base = 8841968;
-			FileRoot = 8820476;
-			MaphackFunc = 4939552;
-			ZoomHackFunc = 2225383;
-			AreaChangeCount = 8730996;
-			Fullbright1 = 7639804;
-			Fullbright2 = 8217084;
-		*/
-
-        /* maphack function
-        FF D0                 - call eax
-        8B 46 48              - mov eax,[esi+48]
-        3B 46 4C              - cmp eax,[esi+4C]
-        74 3A                 - je PathOfExile.exe+4D2FFC
-        BA 04000000           - mov edx,00000004
-        D9 00                 - fld dword ptr [eax]          //1 replace to  fld1  ( D9E8 )
-        8B 0C 24              - mov ecx,[esp]
-        D9 19                 - fstp dword ptr [ecx]
-        8B 0C 24              - mov ecx,[esp]
-        03 CA                 - add ecx,edx
-        89 0C 24              - mov [esp],ecx
-        D9 00                 - fld dword ptr [eax]          //2 (prev+0xC) replace to  fld1  ( D9E8 )
-        D9 19                 - fstp dword ptr [ecx]
-        8B 0C 24              - mov ecx,[esp]
-        03 CA                 - add ecx,edx
-        89 0C 24              - mov [esp],ecx
-        D9 00                 - fld dword ptr [eax]          //3 (prev+0xC) replace to  fld1  ( D9E8 )
-        D9 19                 - fstp dword ptr [ecx]
-        8B 0C 24              - mov ecx,[esp]
-        03 CA                 - add ecx,edx
-        89 0C 24              - mov [esp],ecx
-        D9 00                 - fld dword ptr [eax]         //4 (prev+0xC) replace to  fld1  ( D9E8 )
-        */
-        /* fullbright base (function begin here)
-        55                    - push ebp
-        8B EC                 - mov ebp,esp
-        83 E4 F8              - and esp,-08
-        6A FF                 - push -01
-        68 8661EC00           - push PathOfExile.std::_Mutex::_Mutex+72D2C
-        64 A1 00000000        - mov eax,fs:[00000000]
-        50                    - push eax
-        64 89 25 00000000     - mov fs:[00000000],esp
-        81 EC A0000000        - sub esp,000000A0
-        53                    - push ebx
-        8B 5D 10              - mov ebx,[ebp+10]
-        C7 44 24 44 00000000  - mov [esp+44],00000000
-         *
-         * ......
-       F3 0F59 44 24 20      - mulss xmm0,[esp+20]
-       F3 0F59 25 E027FB00   - mulss xmm4,[PathOfExile.std::_Mutex::_Mutex+15F386]  -//fullbright1 <- const 1300
-       83 EC 0C              - sub esp,0C
-        ....
-         *
-       F3 0F10 4C 24 54      - movss xmm1,[esp+54]
-       F3 0F5C 0D D8680401   - subss xmm1,[PathOfExile.std::_Mutex::_Mutex+1F347E]  -//fullbright2 <- const 300
-       F3 0F58 8C 24 AC000000  - addss xmm1,[esp+000000AC]
-       F3 0F11 54 24 64      - movss [esp+64],xmm2
-
-        */
-
+        
         /*
-			64 A1 00 00 00 00          mov     eax, large fs:0
-			6A FF                      push    0FFFFFFFFh
-			68 90 51 4D 01             push    offset SEH_10D6970
-			50                         push    eax
-			64 89 25 00 00 00 00       mov     large fs:0, esp
-			A1 EC 6A 70 01             mov     eax, off_1706AEC ; <--- BP IS HERE
-			81 EC C8 00 00 00          sub     esp, 0C8h
-			53                         push    ebx
-			55                         push    ebp
-			33 DB                      xor     ebx, ebx
-			56                         push    esi
-			57                         push    edi
-			3B C3                      cmp     eax, ebx
+	    PathOfExile_x64.exe+FA5F38 - 40 5F                 - pop rdi
+        PathOfExile_x64.exe+FA5F3A - 71 7D                 - jno PathOfExile_x64.exe+FA5FB9
+        PathOfExile_x64.exe+FA5F3C - F6 7F 00              - idiv byte ptr [rdi+00]
+        PathOfExile_x64.exe+FA5F3F - 00 D0                 - add al,dl
+        PathOfExile_x64.exe+FA5F41 - 84 35 7D F6 7F 00        - test [7FF67DF155C4],dh { 2112968132 }
+        PathOfExile_x64.exe+FA5F47 - 00 E0                 - add al,ah            ;<< Starts from E0
+        PathOfExile_x64.exe+FA5F49 - D9 47 3C              - fld dword ptr [rdi+3C]
+        PathOfExile_x64.exe+FA5F4C - 60                    - pushad (invalid) 
+        PathOfExile_x64.exe+FA5F4D - 00 00                 - add [rax],al
+        PathOfExile_x64.exe+FA5F4F - 00 20                 - add [rax],ah
+
 		 */
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
-            0x50, 0x64, 0x89, 0x25, 0x00, 0x00, 0x00, 0x00,
-            0x83, 0xEC, 0x20, 0xC7, 0x45, 0xF0, 0x00, 0x00,
-            0x00, 0x00, 0xA1
-        }, "xxxxxxxxxxxxxxxxxxx");
+            0x40, 0x5F,
+            0x71, 0x7d,
+            0xF6, 0x7F, 0x00,
+            0x00, 0xD0,
+            0x84, 0x35, 0x7D, 0xF6, 0x7F, 0x00,
+            0x00, 0x00,
+            0x00, 0x00, 0x00
+        }, "xxxxxxxxxxxxxxxx????");
 
         /*
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
@@ -116,27 +59,44 @@ namespace PoeHUD.Poe
         003F1C1D   FF15 C8839D00    CALL DWORD PTR DS:[<&USER32.ReleaseCaptu>; USER32.ReleaseCapture
         */
 
-        private static readonly Pattern areaChangePattern = new Pattern(new byte[]
-            {
-                0x8B, 0x88, 0x00, 0x00, 0x00, 0x00, 0xE8, 0x00,
-                0x00, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00,
-                0xFF, 0x05
-            }, "xx????x????x????xx");
 
-        /*
-            005ADF8E  |. C745 FC FFFFFF>MOV DWORD PTR SS:[EBP-4],-1
-            005ADF95  |. 83C4 04        ADD ESP,4
-            005ADF98  |. 8B83 60180000  MOV EAX,DWORD PTR DS:[EBX+1860]
-            005ADF9E  |. 6A 00          PUSH 0
-            --- Pattern start
-            005ADFA0  |. 8B88 F80A0000  MOV ECX,DWORD PTR DS:[EAX+AF8]
-            005ADFA6  |. E8 C5263F00    CALL PathOfEx.009A0670
-            005ADFAB  |. E8 007E0400    CALL PathOfEx.005F5DB0
-            005ADFB0  |. FF05 6891DC00  <---AreaChangeCountPtr
-            --- Pattern end
-            005ADFB6  |. 8BC8           MOV ECX,EAX
-            005ADFB8  |. E8 037D0400    CALL PathOfEx.005F5CC0
+
+        /*  areaChangePattern
+
+        PathOfExile_x64.exe+348719 - 90                    - nop 
+        PathOfExile_x64.exe+34871A - 48 8B 86 C8.1A.00.00     - mov rax,[rsi+00001AC8]
+        PathOfExile_x64.exe+348721 - 33 D2                 - xor edx,edx
+        PathOfExile_x64.exe+348723 - 48 8B 88 98.0D.00.00     - mov rcx,[rax+00000D98]
+        PathOfExile_x64.exe+34872A - E8 11.F9.54.00           - call PathOfExile_x64.exe+898040
+        PathOfExile_x64.exe+34872F - E8 FC.01.05.00           - call PathOfExile_x64.exe+398930
+        PathOfExile_x64.exe+348734 - FF 05 E2.68.C5.00        - inc [PathOfExile_x64.exe+F9F01C] { [0000000A] } <--Here
+        PathOfExile_x64.exe+34873A - 48 8B C8              - mov rcx,rax
         */
+        private static readonly Pattern areaChangePattern = new Pattern(new byte[]
+        {
+            0x90,
+            0x48, 0x8B, 0x86, 0x00,  0x00, 0x00, 0x00,
+            0x33, 0xd2,
+            0x48, 0x8B, 0x88, 0x00, 0x00, 0x00, 0x00,
+            0xE8, 0x00, 0x00, 0x00, 0x00,
+            0xE8, 0x00, 0x00, 0x00, 0x00,
+            0xFF, 0x05, 0x00, 0x00, 0x00, 0x00,
+            0x48, 0x8B, 0xC8,
+        }, "xxxx????xxxxx????x????x????xx????xxx");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private static readonly Pattern inGameOffsetPattern =
             new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
@@ -151,10 +111,10 @@ namespace PoeHUD.Poe
              C7 86 BC 30 00 00 01 00 00 00      mov     dword ptr [esi+30BCh], 1
              EB 11                              jmp     short loc_5F3972
         */
-        public int AreaChangeCount { get; private set; }
-        public int Base { get; private set; }
+        public long AreaChangeCount { get; private set; }
+        public long Base { get; private set; }
         public string ExeName { get; private set; }
-        public int FileRoot { get; private set; }
+        public long FileRoot { get; private set; }
         public int IgsDelta { get; private set; }
         public int IgsOffset { get; private set; }
         public int GarenaTWDelta = 0;
@@ -162,9 +122,13 @@ namespace PoeHUD.Poe
 
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
 
-		
+     
+
+        //public long basePointer;
+        public long areaCC_pointer;
         public void DoPatternScans(Memory m)
         {
+            /*
             if (System.IO.File.Exists("config/GarenaTWDelta.txt"))
             {
                 using (StreamReader reader = new StreamReader("config/GarenaTWDelta.txt"))
@@ -175,12 +139,37 @@ namespace PoeHUD.Poe
                         System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
                 }
             }
-            int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x13) - m.AddressOfProcess;
+            */
+            //long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
+            //long[] array = m.FindPatterns(areaChangePattern);
+
+
+            //Base = m.ReadLong(m.AddressOfProcess + array[0] + 0x10) - m.AddressOfProcess;
+
+            //PathOfExile_x64.exe + fa5f48 //old
+            //PathOfExile_x64.exe + fa5f38 //22.11.16
+            //Base = m.ReadLong(m.AddressOfProcess + 0xfa5f38) - m.AddressOfProcess;
+            Base = 0xfa6f38;
+
+            //areaCC_pointer = array[0] + 29;
+
+
+            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + areaCC_pointer) - m.AddressOfProcess;// 0x7FF6C8F8F01C;
+
+            //PathOfExile_x64.exe+F9F01C
+            AreaChangeCount = 0xFA001C;// 0xF9F01C;
+
+            FileRoot = 0x01153490;
+
+            //PathOfExile_x64.exe+fa6f38
+            //basePointer = m.AddressOfProcess + 0xfa6f38;
+
+            /*
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x6) - m.AddressOfProcess;
+            FileRoot = m.ReadLong(m.AddressOfProcess + array[1] + 0x6) - m.AddressOfProcess;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x12) - m.AddressOfProcess;
+            AreaChangeCount = m.ReadLong(m.AddressOfProcess + array[2] + 0x30) - m.AddressOfProcess;
+            */
         }
     }
 }

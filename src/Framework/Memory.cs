@@ -12,7 +12,7 @@ namespace PoeHUD.Framework
 {
     public class Memory : IDisposable
     {
-        public readonly int AddressOfProcess;
+        public readonly long AddressOfProcess;
         private readonly Dictionary<string, int> modules;
         private bool closed;
         public Offsets offsets;
@@ -24,8 +24,8 @@ namespace PoeHUD.Framework
             {
                 offsets = offs;
                 Process = Process.GetProcessById(pId);
-                AddressOfProcess = Process.MainModule.BaseAddress.ToInt32();
-                Open();
+                AddressOfProcess = Process.MainModule.BaseAddress.ToInt64();
+                procHandle = WinApi.OpenProcess(Process, ProcessAccessFlags.All);
                 modules = new Dictionary<string, int>();
             }
             catch (Win32Exception ex)
@@ -67,31 +67,47 @@ namespace PoeHUD.Framework
             return BitConverter.ToInt32(ReadMem(addr, 4), 0);
         }
 
+        public int ReadInt(long addr)
+        {
+            return BitConverter.ToInt32(ReadMem(addr, 4), 0);
+        }
+
         public int ReadInt(int addr, params int[] offsets)
         {
             int num = ReadInt(addr);
             return offsets.Aggregate(num, (current, num2) => ReadInt(current + num2));
         }
 
-        public float ReadFloat(int addr)
+        public int ReadInt(long addr, params long[] offsets)
+        {
+            long num = ReadLong(addr);
+            return (int)offsets.Aggregate(num, (current, num2) => ReadLong(current + num2));
+        }
+
+      
+
+
+        public float ReadFloat(long addr)
         {
             return BitConverter.ToSingle(ReadMem(addr, 4), 0);
         }
 
-        public long ReadLong(int addr)
+        public long ReadLong(long addr)
         {
             return BitConverter.ToInt64(ReadMem(addr, 8), 0);
         }
 
-        public uint ReadUInt(int addr)
+        public long ReadLong(long addr, params long[] offsets)
+        {
+            long num = ReadLong(addr);
+            return offsets.Aggregate(num, (current, num2) => ReadLong(current + num2));
+        }
+
+        public uint ReadUInt(long addr)
         {
             return BitConverter.ToUInt32(ReadMem(addr, 4), 0);
         }
 
-        public short ReadShort(int addr)
-        {
-            return BitConverter.ToInt16(ReadMem(addr, 2), 0);
-        }
 
         /// <summary>
         /// Read string as ASCII
@@ -100,7 +116,7 @@ namespace PoeHUD.Framework
         /// <param name="length"></param>
         /// <param name="replaceNull"></param>
         /// <returns></returns>
-        public string ReadString(int addr, int length = 256, bool replaceNull = true)
+        public string ReadString(long addr, int length = 256, bool replaceNull = true)
         {
             if (addr <= 65536 && addr >= -1)
             {
@@ -123,7 +139,7 @@ namespace PoeHUD.Framework
         /// <param name="length"></param>
         /// <param name="replaceNull"></param>
         /// <returns></returns>
-        public string ReadStringU(int addr, int length = 256, bool replaceNull = true)
+        public string ReadStringU(long addr, int length = 256, bool replaceNull = true)
         {
             if (addr <= 65536 && addr >= -1)
             {
@@ -141,14 +157,19 @@ namespace PoeHUD.Framework
             return ReadBytes(addr, 1).FirstOrDefault();
         }
 
+        public byte ReadByte(long addr)
+        {
+            return ReadBytes(addr, 1).FirstOrDefault();
+        }
+
         public byte[] ReadBytes(int addr, int length)
         {
             return ReadMem(addr, length);
         }
 
-        private void Open()
+        public byte[] ReadBytes(long addr, int length)
         {
-            procHandle = WinApi.OpenProcess(Process, ProcessAccessFlags.All);
+            return ReadMem(addr, length);
         }
 
         private void Close()
@@ -166,11 +187,18 @@ namespace PoeHUD.Framework
             WinApi.ReadProcessMemory(procHandle, (IntPtr)addr, array);
             return array;
         }
+        private byte[] ReadMem(long addr, int size)
+        {
+            var array = new byte[size];
+            WinApi.ReadProcessMemory(procHandle, (IntPtr)addr, array);
+            return array;
+        }
 
-        public int[] FindPatterns(params Pattern[] patterns)
+        public string DebugStr = "";
+        public long[] FindPatterns(params Pattern[] patterns)
         {
             byte[] exeImage = ReadBytes(AddressOfProcess, 0x2000000); //33mb
-            var address = new int[patterns.Length];
+            var address = new long[patterns.Length];
 
             for (int iPattern = 0; iPattern < patterns.Length; iPattern++)
             {
@@ -178,15 +206,23 @@ namespace PoeHUD.Framework
                 byte[] patternData = pattern.Bytes;
                 int patternLength = patternData.Length;
 
+                bool found = false;
+
                 for (int offset = 0; offset < exeImage.Length - patternLength; offset++)
                 {
                     if (CompareData(pattern, exeImage, offset))
                     {
+                        found = true;
                         address[iPattern] = offset;
-                        Console.WriteLine("Pattern " + iPattern + " is found at " +
-                                          (AddressOfProcess + offset).ToString("X"));
-                        break;
+                        DebugStr += "Pattern " + iPattern + " is found at " + (AddressOfProcess + offset).ToString("X") + " offset: " + offset.ToString("X") + Environment.NewLine;
+                        //break;
                     }
+                }
+
+                if(!found)
+                {
+                    //System.Windows.Forms.MessageBox.Show("Pattern " + iPattern + " is not found!");
+                    DebugStr += "Pattern " + iPattern + " is not found!" + Environment.NewLine;
                 }
             }
             return address;

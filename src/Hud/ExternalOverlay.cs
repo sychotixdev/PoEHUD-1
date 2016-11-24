@@ -83,6 +83,8 @@ namespace PoeHUD.Hud
 
         private Vector2 GetLeftCornerMap()
         {
+            return new Vector2(300, 300);
+
             var ingameState = gameController.Game.IngameState;
             RectangleF clientRect = ingameState.IngameUi.Map.SmallMinimap.GetClientRect();
             var diagnosticElement = ingameState.LatencyRectangle;
@@ -173,7 +175,7 @@ namespace PoeHUD.Hud
             graphics.Render += OnRender;
             await Task.Run(() => graphics.RenderLoop());
         }
-
+        
         private void OnRender()
         {
             if (gameController.InGame && WinApi.IsForegroundWindow(gameHandle) && !gameController.Game.IngameState.IngameUi.TreePanel.IsVisible && !gameController.Game.IngameState.IngameUi.AtlasPanel.IsVisible)

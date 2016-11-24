@@ -1,0 +1,8 @@
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate stub for SharpDX.MessageFilterHook: type has no family visible contructors.
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate stub for SharpDX.Win32Native: type is not visible to exported or assembly(SharpDX.Desktop.Fakes).
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate stub for SharpDX.Desktop.Properties.Resources: type is not visible to exported or assembly(SharpDX.Desktop.Fakes).
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate stub for SharpDX.Direct3D.PixHelper: type is sealed.
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate stub for SharpDX.Diagnostics.VSGraphicsDebugger: type is sealed.
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate shim for SharpDX.Win32Native: type is not visible to exported or assembly(SharpDX.Desktop.Fakes).
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate shim for SharpDX.Windows.RenderLoop+RenderCallback: type is a delegate.
+C:\Users\Stridemann\Desktop\PoEHUD_x64\src\Fakes\SharpDX.Desktop.fakes : warning : Cannot generate shim for SharpDX.Desktop.Properties.Resources: type is not visible to exported or assembly(SharpDX.Desktop.Fakes).
