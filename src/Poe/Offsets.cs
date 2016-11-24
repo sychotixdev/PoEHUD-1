@@ -85,19 +85,6 @@ namespace PoeHUD.Poe
         }, "xxxx????xxxxx????x????x????xx????xxx");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         private static readonly Pattern inGameOffsetPattern =
             new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
                 "xxxxxxx????xx????xx????????xx");
@@ -139,36 +126,19 @@ namespace PoeHUD.Poe
                         System.Console.WriteLine("Failed to convert the contents of config/GarenaTWDelta.txt to an int");
                 }
             }
-            */
-            //long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
-            //long[] array = m.FindPatterns(areaChangePattern);
+            
+            long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
+            Base = m.ReadLong(m.AddressOfProcess + array[0] + 0x10) - m.AddressOfProcess;
 
-
-            //Base = m.ReadLong(m.AddressOfProcess + array[0] + 0x10) - m.AddressOfProcess;
-
-            //PathOfExile_x64.exe + fa5f48 //old
-            //PathOfExile_x64.exe + fa5f38 //22.11.16
-            //Base = m.ReadLong(m.AddressOfProcess + 0xfa5f38) - m.AddressOfProcess;
-            Base = 0xfa6f38;
-
-            //areaCC_pointer = array[0] + 29;
-
-            //AreaChangeCount = m.ReadInt(m.AddressOfProcess + areaCC_pointer) - m.AddressOfProcess;// 0x7FF6C8F8F01C;
-
-            //PathOfExile_x64.exe+F9F01C
-            AreaChangeCount = 0xFA001C;// 0xF9F01C;
-
-            FileRoot = 0x01153490;
-
-            //PathOfExile_x64.exe+fa6f38
-            //basePointer = m.AddressOfProcess + 0xfa6f38;
-
-            /*
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
             FileRoot = m.ReadLong(m.AddressOfProcess + array[1] + 0x6) - m.AddressOfProcess;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
             AreaChangeCount = m.ReadLong(m.AddressOfProcess + array[2] + 0x30) - m.AddressOfProcess;
             */
+
+            Base = 0xfa6f38;
+            AreaChangeCount = 0xFA001C;
+            FileRoot = 0x01153490;
         }
     }
 }
