@@ -153,7 +153,6 @@ namespace PoeHUD.Poe
 
             //areaCC_pointer = array[0] + 29;
 
-
             //AreaChangeCount = m.ReadInt(m.AddressOfProcess + areaCC_pointer) - m.AddressOfProcess;// 0x7FF6C8F8F01C;
 
             //PathOfExile_x64.exe+F9F01C
