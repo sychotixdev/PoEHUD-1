@@ -162,6 +162,7 @@ namespace PoeHUD.Poe
 
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
 
+		
         public void DoPatternScans(Memory m)
         {
             if (System.IO.File.Exists("config/GarenaTWDelta.txt"))
