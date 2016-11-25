@@ -6,12 +6,12 @@ namespace PoeHUD.Poe
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
         private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30, 0);
-        private int ComponentList => M.ReadInt(Address + 4);
+        private long ComponentList => M.ReadLong(Address + 0x8);
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
-        public int Id => M.ReadInt(Address + 0x14);
-        public int InventoryId => M.ReadInt(Address + 0x18);
+        public int Id => M.ReadInt(Address + 0x28);
+        public int InventoryId => M.ReadInt(Address + 0x2C);
         public long LongId => (long)Id << 32 ^ Path.GetHashCode();
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace PoeHUD.Poe
         /// </summary>
        
 
-        public bool IsHostile => (M.ReadByte(M.ReadInt(Address + 0x20) + 0xF8) & 1) == 0;
+        public bool IsHostile => (M.ReadByte(M.ReadLong(Address + 0x20) + 0xF8) & 1) == 0;
 
         public bool HasComponent<T>() where T : Component, new()
         {
@@ -33,7 +33,7 @@ namespace PoeHUD.Poe
             long componentLookup = ComponentLookup;
             addr = componentLookup;
             int i = 0;
-            while (!M.ReadString(M.ReadLong(addr + 8)).Equals(name))
+            while (!M.ReadString(M.ReadLong(addr + 0x10)).Equals(name))
             {
                 addr = M.ReadLong(addr);
                 ++i;
@@ -46,7 +46,7 @@ namespace PoeHUD.Poe
         public T GetComponent<T>() where T : Component, new()
         {
             long addr;
-            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadLong(addr + 0xC) * 4) : GetObject<T>(0);
+            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadLong(addr + 0x18) * 8) : GetObject<T>(0);
         }
 
         public Dictionary<string, long> GetComponents()
@@ -57,7 +57,7 @@ namespace PoeHUD.Poe
             do
             {
                 string name = M.ReadString(M.ReadLong(addr + 0x10));
-                long componentAddress = M.ReadLong(ComponentList + M.ReadLong(addr + 0x8) * 4);
+                long componentAddress = M.ReadLong(ComponentList + M.ReadLong(addr + 0x18) * 8);
                 if (!dictionary.ContainsKey(name) && !string.IsNullOrWhiteSpace(name))
                     dictionary.Add(name, componentAddress);
                 addr = M.ReadLong(addr);

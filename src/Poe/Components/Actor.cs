@@ -9,7 +9,7 @@ namespace PoeHUD.Poe.Components
         ///     running = 2178 = bit 11 & 7
         ///     Maybe Bit-field : Bit 7 set = running
         /// </summary>
-        public int ActionId => Address != 0 ? M.ReadInt(Address + 0x7C) : 1;
+        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xD8) : 1;
 
         public bool isMoving => (ActionId & 128) > 0;
 
@@ -22,8 +22,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 0x278);
-                int num2 = M.ReadInt(Address + 0x27C);
+                int num = M.ReadInt(Address + 0x300);
+                int num2 = M.ReadInt(Address + 0x308);
                 for (int i = num; i < num2; i += 8)
                 {
                     int item = M.ReadInt(i);
@@ -39,8 +39,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            int num = M.ReadInt(Address + 0x278);
-            int num2 = M.ReadInt(Address + 0x27C);
+            int num = M.ReadInt(Address + 0x300);
+            int num2 = M.ReadInt(Address + 0x308);
             for (int i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);

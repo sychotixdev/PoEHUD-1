@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var dictionary = new Dictionary<long, Entity>();
-                CollectEntities(M.ReadInt(Address), dictionary);
+                CollectEntities(M.ReadLong(Address), dictionary);
                 return dictionary;
             }
         }
@@ -19,7 +19,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private void CollectEntities(long addr, Dictionary<long, Entity> list)
         {
             long num = addr;
-            addr = M.ReadLong(addr + 8);
+            addr = M.ReadLong(addr + 0x8);
             var hashSet = new HashSet<long>();
             var queue = new Queue<long>();
             queue.Enqueue(addr);
@@ -34,15 +34,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 hashSet.Add(nextAddr);
                 if (nextAddr != num && nextAddr != 0)
                 {
-                    long key = M.ReadLong(nextAddr + 0x14, 0x14);
-                    if (!list.ContainsKey(key))
+                    int EntityID = M.ReadInt(nextAddr + 0x28, 0x28);
+                    if (!list.ContainsKey(EntityID))
                     {
-                        long address = M.ReadLong(nextAddr + 0x14);
+                        long address = M.ReadLong(nextAddr + 0x28);
                         var entity = GetObject<Entity>(address);
                         list.Add(key, entity);
                     }
                     queue.Enqueue(M.ReadLong(nextAddr));
-                    queue.Enqueue(M.ReadLong(nextAddr + 8));
+                    queue.Enqueue(M.ReadLong(nextAddr + 0x10));
                 }
             }
         }
