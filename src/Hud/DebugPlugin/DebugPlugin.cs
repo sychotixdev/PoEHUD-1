@@ -19,59 +19,16 @@ namespace PoeHUD.Hud.DebugPlug
     public class DebugPlugin : SizedPlugin<DebugPluginSettings>
     {
         private readonly SettingsHub settingsHub;
-
+        private readonly GameController GameController;
         public DebugPlugin(GameController gameController, Graphics graphics, DebugPluginSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
             this.settingsHub = settingsHub;
+            GameController = gameController;
         }
 
         public override void Render()
         {
-            /*
-            bool found = false;
-            Element uiHover = GameController.Game.IngameState.UIHover;
-            var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
-
-            Entity item = uiHover.ReadObject<Entity>(uiHover.Address + 0xB18);
-
-            LogMsg((uiHover.Address + 0xB18).ToString("x"), -2, Color.Red);
-            var comps = item.GetComponents();
-            foreach (var comp in comps)
-            {
-                LogMsg(comp.Key, -2, Color.GreenYellow);
-            }
-
-            if (inventoryItemIcon != null)
-            {
-                var frame = inventoryItemIcon.ItemFrame;
-
-                if (frame != null)
-                {
-                    RectangleF itemElementRectangle = inventoryItemIcon.ItemFrame.GetClientRect();
-                   
-
-
-                    if (item != null)
-                    {
-                        found = true;
-                        LogMsg(item.Address.ToString("x"), -2, Color.Green);
-
-
-                   
-
-                     
-
-                    }
-                }
-            }
-
-            if(!found)
-            {
-                //LogMsg("Can't find item!", -2, Color.GreenYellow);
-            }
-
-            */
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();
@@ -94,8 +51,6 @@ namespace PoeHUD.Hud.DebugPlug
 
                 position.Y += size.Height;
                 maxWidth = Math.Max(size.Width, maxWidth);
-
-                position.Y += 17;
                 if (msg.Exhaust)
                 {
                     DebugLog.Remove(msg);

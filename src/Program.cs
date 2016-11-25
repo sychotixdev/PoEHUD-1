@@ -39,6 +39,7 @@ namespace PoeHUD
             return answer == DialogResult.Cancel ? -1 : answer == DialogResult.Yes ? 0 : 1;
         }
 
+
         [STAThread]
         public static void Main(string[] args)
         {
