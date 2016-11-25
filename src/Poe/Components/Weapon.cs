@@ -2,9 +2,9 @@ namespace PoeHUD.Poe.Components
 {
     public class Weapon : Component
     {
-        public int DamageMin => Address != 0 ? M.ReadInt(Address + 0x10, 4) : 0;
-        public int DamageMax => Address != 0 ? M.ReadInt(Address + 0x10, 8) : 0;
-        public int AttackTime => Address != 0 ? M.ReadInt(Address + 0x10, 0xC) : 1;
-        public int CritChance => Address != 0 ? M.ReadInt(Address + 0x10, 0x10) : 0;
+        public int DamageMin => Address != 0 ? M.ReadInt(Address + 0x28, 0x14) : 0;
+        public int DamageMax => Address != 0 ? M.ReadInt(Address + 0x28, 0x18) : 0;
+        public int AttackTime => Address != 0 ? M.ReadInt(Address + 0x28, 0x1C) : 1;
+        public int CritChance => Address != 0 ? M.ReadInt(Address + 0x28, 0x20) : 0;
     }
 }
