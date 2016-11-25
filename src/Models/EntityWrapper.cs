@@ -67,13 +67,16 @@ namespace PoeHUD.Models
             return components.ContainsKey(typeof(T).Name);
         }
 
-        public void PrintComponents()
+        public List<string> PrintComponents()
         {
-            Console.WriteLine(internalEntity.Path + " " + internalEntity.Address.ToString("X"));
+            List<string> result = new List<string>();
+            result.Add(internalEntity.Path + " " + internalEntity.Address.ToString("X"));
+
             foreach (var current in components)
             {
-                Console.WriteLine(current.Key + " " + current.Value.ToString("X"));
+                result.Add(current.Key + " " + current.Value.ToString("X"));
             }
+            return result;
         }
 
         public override bool Equals(object obj)

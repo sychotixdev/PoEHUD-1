@@ -28,9 +28,19 @@ namespace PoeHUD.Hud.DebugPlug
 
         public override void Render()
         {
+            /*
             bool found = false;
             Element uiHover = GameController.Game.IngameState.UIHover;
             var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
+
+            Entity item = uiHover.ReadObject<Entity>(uiHover.Address + 0xB18);
+
+            LogMsg((uiHover.Address + 0xB18).ToString("x"), -2, Color.Red);
+            var comps = item.GetComponents();
+            foreach (var comp in comps)
+            {
+                LogMsg(comp.Key, -2, Color.GreenYellow);
+            }
 
             if (inventoryItemIcon != null)
             {
@@ -39,21 +49,29 @@ namespace PoeHUD.Hud.DebugPlug
                 if (frame != null)
                 {
                     RectangleF itemElementRectangle = inventoryItemIcon.ItemFrame.GetClientRect();
-                    var item = inventoryItemIcon.Item;
+                   
 
-                    if(item != null)
+
+                    if (item != null)
                     {
                         found = true;
-                        LogMsg(item.Address, -2, Color.GreenYellow);
+                        LogMsg(item.Address.ToString("x"), -2, Color.Green);
+
+
+                   
+
+                     
+
                     }
                 }
             }
 
             if(!found)
             {
-                LogMsg("Can't find item!", -2, Color.GreenYellow);
+                //LogMsg("Can't find item!", -2, Color.GreenYellow);
             }
 
+            */
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();
@@ -70,7 +88,7 @@ namespace PoeHUD.Hud.DebugPlug
                 maxWidth = Math.Max(size.Width, maxWidth);
             }
             DebugDrawInfo.Clear();
-            foreach (var msg in DebugLog)
+            foreach (var msg in DebugLog.ToList())
             {
                 var size = Graphics.DrawText(msg.Message, 15, position, msg.Color, FontDrawFlags.Right);
 
@@ -81,7 +99,6 @@ namespace PoeHUD.Hud.DebugPlug
                 if (msg.Exhaust)
                 {
                     DebugLog.Remove(msg);
-                    break;
                 }
             }
 

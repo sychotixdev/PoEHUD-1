@@ -5,7 +5,7 @@ namespace PoeHUD.Poe
 {
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
-        private long ComponentLookup => M.ReadInt(Address, 0x30, 0x18, 0);
+        private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30, 0);
         private int ComponentList => M.ReadInt(Address + 4);
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
@@ -56,8 +56,8 @@ namespace PoeHUD.Poe
             long addr = componentLookup;
             do
             {
-                string name = M.ReadString(M.ReadLong(addr + 8));
-                long componentAddress = M.ReadLong(ComponentList + M.ReadLong(addr + 0xC) * 4);
+                string name = M.ReadString(M.ReadLong(addr + 0x10));
+                long componentAddress = M.ReadLong(ComponentList + M.ReadLong(addr + 0x8) * 4);
                 if (!dictionary.ContainsKey(name) && !string.IsNullOrWhiteSpace(name))
                     dictionary.Add(name, componentAddress);
                 addr = M.ReadLong(addr);
