@@ -8,8 +8,8 @@ namespace PoeHUD.Poe.Components
     {
         public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x50) : 1;
         public int CurHP => Address != 0 ? M.ReadInt(Address + 0x54) : 1;
-        public int ReservedFlatHP => Address != 0 ? M.ReadInt(Address + 0x60) : 0;
-        public int ReservedPercentHP => Address != 0 ? M.ReadInt(Address + 0x64) : 0;
+        public int ReservedFlatHP => Address != 0 ? M.ReadInt(Address + 0x5C) : 0;
+        public int ReservedPercentHP => Address != 0 ? M.ReadInt(Address + 0x60) : 0;
         public int MaxMana => Address != 0 ? M.ReadInt(Address + 0x80) : 1;
         public int CurMana => Address != 0 ? M.ReadInt(Address + 0x84) : 1;
         public int ReservedFlatMana => Address != 0 ? M.ReadInt(Address + 0x8C) : 0;
