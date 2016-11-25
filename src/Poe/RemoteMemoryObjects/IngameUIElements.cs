@@ -11,18 +11,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element OpenRightPanel => ReadObjectAt<Element>(0xBA0 + Offsets.GarenaTWDelta);
         public Element InventoryPanel => ReadObjectAt<Element>(0xBD0 + Offsets.GarenaTWDelta);
         public Element TreePanel => ReadObjectAt<Element>(0xC00 + Offsets.GarenaTWDelta);
-        public Element AtlasPanel => ReadObjectAt<Element>(0xC30 + Offsets.GarenaTWDelta);
+        public Element AtlasPanel => ReadObjectAt<Element>(0xC08 + Offsets.GarenaTWDelta);
         public Map Map => ReadObjectAt<Map>(0xC38 + Offsets.GarenaTWDelta);
         public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
         {
             get
             {
-                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xA38 + Offsets.GarenaTWDelta);
+                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xC40 + Offsets.GarenaTWDelta);
                 return itemsOnGroundLabelRoot.Children;
             }
         }
-        public Element GemLvlUpPanel => ReadObjectAt<Element>(0xB0C + Offsets.GarenaTWDelta);
-        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB1C + Offsets.GarenaTWDelta);
+        public Element GemLvlUpPanel => ReadObjectAt<Element>(0xDE8 + Offsets.GarenaTWDelta);
+        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xE08 + Offsets.GarenaTWDelta);
     }
 }
 

@@ -19,13 +19,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public int EntityLabelMap => M.ReadInt(Address + 0x50, 0x968);
         public DiagnosticInfoType DiagnosticInfoType => (DiagnosticInfoType)M.ReadInt(Address + 0xD18 + Offsets.IgsOffset);
-        public DiagnosticElement LatencyRectangle => GetObjectAt<DiagnosticElement>(0xE98 + Offsets.IgsOffset);
-        public DiagnosticElement FrameTimeRectangle => GetObjectAt<DiagnosticElement>(0x12E8 + Offsets.IgsOffset);
-        public DiagnosticElement FPSRectangle => GetObjectAt<DiagnosticElement>(0x1510 + Offsets.IgsOffset);
-        public float CurLatency => M.ReadFloat(Address + 0xE60 + Offsets.IgsOffset);
-        public float CurFrameTime => M.ReadFloat(Address + 0x12F0 + Offsets.IgsOffset);
-        public float CurFps => M.ReadFloat(Address + 0x1538 + Offsets.IgsOffset);
-        public TimeSpan TimeInGame => TimeSpan.FromMilliseconds(M.ReadInt(Address + 0xD04 + Offsets.IgsOffset));
+        public DiagnosticElement LatencyRectangle => GetObjectAt<DiagnosticElement>(0xF48 + Offsets.IgsOffset);
+        public DiagnosticElement FrameTimeRectangle => GetObjectAt<DiagnosticElement>(0x13D8 + Offsets.IgsOffset);
+        public DiagnosticElement FPSRectangle => GetObjectAt<DiagnosticElement>(0x1620 + Offsets.IgsOffset);
+        public float CurLatency => LatencyRectangle.CurrValue;
+        public float CurFrameTime => FrameTimeRectangle.CurrValue;
+        public float CurFps => FPSRectangle.CurrValue;
+        public TimeSpan TimeInGame => TimeSpan.FromMilliseconds(M.ReadInt(Address + 0xD00 + Offsets.IgsOffset));
         public float TimeInGameF => M.ReadFloat(Address + 0xD04 + Offsets.IgsOffset);
     }
 }
