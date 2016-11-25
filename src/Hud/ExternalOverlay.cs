@@ -127,7 +127,7 @@ namespace PoeHUD.Hud
         {
             SettingsHub.Save(settings);
             plugins.ForEach(plugin => plugin.Dispose());
-            graphics.Dispose();
+            graphics.Dispose();  
         }
 
         private void OnDeactivate(object sender, EventArgs e)

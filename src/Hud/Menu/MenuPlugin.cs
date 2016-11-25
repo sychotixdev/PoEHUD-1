@@ -90,7 +90,7 @@ namespace PoeHUD.Hud.Menu
         private void CreateMenu()
         {
             root = new RootButton(new Vector2(Settings.X, Settings.Y));
-
+            root.eOnClose += delegate { SettingsHub.Save(settingsHub); };
             // Health bars
             HealthBarSettings healthBarPlugin = settingsHub.HealthBarSettings;
             MenuItem healthMenu = AddChild(root, "Health bars", healthBarPlugin.Enable);

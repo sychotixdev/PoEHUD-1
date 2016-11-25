@@ -3,6 +3,7 @@ using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System.Linq;
+using System;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -10,6 +11,7 @@ namespace PoeHUD.Hud.Menu
     {
         private MenuItem currentHover;
         private bool visible;
+        public event Action eOnClose = delegate { };
 
         public RootButton(Vector2 position)
         {
@@ -50,6 +52,8 @@ namespace PoeHUD.Hud.Menu
             if (Bounds.Contains(pos) && id == MouseEventID.LeftButtonDown)
             {
                 visible = !visible;
+                if (!visible) eOnClose();
+
                 currentHover = null;
                 Children.ForEach(button => button.SetVisible(visible));
                 return true;
