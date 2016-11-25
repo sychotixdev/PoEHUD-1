@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
+using PoeHUD.Hud.DebugPlug;
 
 namespace PoeHUD.Hud
 {
@@ -152,6 +153,7 @@ namespace PoeHUD.Hud
             leftPanel.AddChildren(new PreloadAlertPlugin(gameController, graphics, settings.PreloadAlertSettings, settings));
             leftPanel.AddChildren(new KillCounterPlugin(gameController, graphics, settings.KillCounterSettings));
             leftPanel.AddChildren(new DpsMeterPlugin(gameController, graphics, settings.DpsMeterSettings));
+            leftPanel.AddChildren(new DebugPlugin(gameController, graphics, new DebugPluginSettings(), settings));
 
             var horizontalPanel = new PluginPanel(Direction.Left);
             leftPanel.AddChildren(horizontalPanel);

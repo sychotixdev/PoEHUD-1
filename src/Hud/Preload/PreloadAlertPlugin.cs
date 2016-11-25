@@ -54,7 +54,7 @@ namespace PoeHUD.Hud.Preload
                 Parse();
             }
             
-            /*
+            
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
                 holdKey = true;
@@ -76,7 +76,7 @@ namespace PoeHUD.Hud.Preload
                 Size = new Size2F();
                 return;
             }
-            */
+            
             
 
             Vector2 startPosition = StartDrawPointFunc();

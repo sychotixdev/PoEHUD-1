@@ -87,7 +87,7 @@ namespace PoeHUD.Hud.InventoryPreview
         {
             var inventoryZone = GetInventoryZone();
 
-            MessageBox.Show(inventoryZone.Address.ToString("x"));
+            //MessageBox.Show(inventoryZone.Address.ToString("x"));
 
             RectangleF inventoryZoneRectangle = inventoryZone.GetClientRect();
 
