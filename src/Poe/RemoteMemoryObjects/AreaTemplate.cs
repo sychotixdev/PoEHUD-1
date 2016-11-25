@@ -2,8 +2,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class AreaTemplate : RemoteMemoryObject
     {
-        public string RawName => M.ReadStringU(M.ReadInt(Address));
-        public string Name => M.ReadStringU(M.ReadInt(Address + 8));
+        public string RawName => M.ReadStringU(M.ReadLong(Address));
+        public string Name => M.ReadStringU(M.ReadLong(Address + 8));
         public int Act => M.ReadInt(Address + 10);
         public bool IsTown => M.ReadByte(Address + 0x14) == 1;
         public bool HasWaypoint => M.ReadByte(Address + 0x15) == 1;

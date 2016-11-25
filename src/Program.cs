@@ -104,6 +104,12 @@ namespace PoeHUD
                 sb.Append("GetInventoryZone: " + (gameController.Game.IngameState.IngameUi.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x330).ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
+                sb.Append("Area Addr: " + gameController.Game.IngameState.Data.CurrentArea.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("Area Name: " + gameController.Game.IngameState.Data.CurrentArea.Name);
+                sb.Append(System.Environment.NewLine);
+
                 /*
                 sb.Append("CurLatency: " + gameController.Game.IngameState.CurLatency);
                 sb.Append(System.Environment.NewLine);
