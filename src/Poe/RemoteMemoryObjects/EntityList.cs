@@ -6,17 +6,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public IEnumerable<Entity> Entities => EntitiesAsDictionary.Values;
 
-        public Dictionary<long, Entity> EntitiesAsDictionary
+        public Dictionary<int, Entity> EntitiesAsDictionary
         {
             get
             {
-                var dictionary = new Dictionary<long, Entity>();
+                var dictionary = new Dictionary<int, Entity>();
                 CollectEntities(M.ReadLong(Address), dictionary);
                 return dictionary;
             }
         }
 
-        private void CollectEntities(long addr, Dictionary<long, Entity> list)
+        private void CollectEntities(long addr, Dictionary<int, Entity> list)
         {
             long num = addr;
             addr = M.ReadLong(addr + 0x8);
@@ -39,7 +39,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     {
                         long address = M.ReadLong(nextAddr + 0x28);
                         var entity = GetObject<Entity>(address);
-                        list.Add(key, entity);
+                        list.Add(EntityID, entity);
                     }
                     queue.Enqueue(M.ReadLong(nextAddr));
                     queue.Enqueue(M.ReadLong(nextAddr + 0x10));

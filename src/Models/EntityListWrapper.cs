@@ -60,29 +60,29 @@ namespace PoeHUD.Models
             if (gameController.Area.CurrentArea == null)
                 return;
 
-            Dictionary<long, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
+            Dictionary<int, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
             var newCache = new Dictionary<long, EntityWrapper>();
             foreach (var keyEntity in newEntities)
             {
                 if (!keyEntity.Value.IsValid)
                     continue;
 
-                long entityAddress = keyEntity.Key;
-                string uniqueEntityName = keyEntity.Value.Path + entityAddress;
+                long entityID = keyEntity.Key;
+                string uniqueEntityName = keyEntity.Value.Path + entityID;
 
                 if (ignoredEntities.Contains(uniqueEntityName))
                     continue;
 
-                if (entityCache.ContainsKey(entityAddress) && entityCache[entityAddress].IsValid)
+                if (entityCache.ContainsKey(entityID) && entityCache[entityID].IsValid)
                 {
-                    newCache.Add(entityAddress, entityCache[entityAddress]);
-                    entityCache[entityAddress].IsInList = true;
-                    entityCache.Remove(entityAddress);
+                    newCache.Add(entityID, entityCache[entityID]);
+                    entityCache[entityID].IsInList = true;
+                    entityCache.Remove(entityID);
                     continue;
                 }
 
                 var entity = new EntityWrapper(gameController, keyEntity.Value);
-                if (entity.Path.StartsWith("Metadata/Effects") || ((entityAddress & 0x80000000L) != 0L) ||
+                if (entity.Path.StartsWith("Metadata/Effects") || ((entityID & 0x80000000L) != 0L) ||
                     entity.Path.StartsWith("Metadata/Monsters/Daemon"))
                 {
                     ignoredEntities.Add(uniqueEntityName);
@@ -90,7 +90,7 @@ namespace PoeHUD.Models
                 }
 
                 EntityAdded?.Invoke(entity);
-                newCache.Add(entityAddress, entity);
+                newCache.Add(entityID, entity);
             }
             RemoveOldEntitiesFromCache();
             entityCache = newCache;
