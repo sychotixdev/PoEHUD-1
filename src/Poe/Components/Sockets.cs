@@ -14,23 +14,23 @@ namespace PoeHUD.Poe.Components
                 {
                     return 0;
                 }
-                int num = M.ReadInt(Address + 0x3C);
-                int num2 = M.ReadInt(Address + 0x40);
-                int num3 = num2 - num;
-                if (num3 <= 0 || num3 > 6)
+                int pLinkStart = M.ReadInt(Address + 0x60);
+                int pLinkEnd = M.ReadInt(Address + 0x68);
+                int LinkGroupingCount = pLinkEnd - pLinkStart;
+                if (LinkGroupingCount <= 0 || LinkGroupingCount > 6)
                 {
                     return 0;
                 }
-                int num4 = 0;
-                for (int i = 0; i < num3; i++)
+                int BiggestLinkGroupSize = 0;
+                for (int i = 0; i < LinkGroupingCount; i++)
                 {
-                    int num5 = M.ReadByte(num + i);
-                    if (num5 > num4)
+                    int LinkGroupSize = M.ReadByte(pLinkStart + i);
+                    if (LinkGroupSize > BiggestLinkGroupSize)
                     {
-                        num4 = num5;
+                        BiggestLinkGroupSize = LinkGroupSize;
                     }
                 }
-                return num4;
+                return BiggestLinkGroupSize;
             }
         }
 
@@ -43,25 +43,25 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 0x3C);
-                int num2 = M.ReadInt(Address + 0x40);
-                int num3 = num2 - num;
-                if (num3 <= 0 || num3 > 6)
+                int pLinkStart = M.ReadInt(Address + 0x60);
+                int pLinkEnd = M.ReadInt(Address + 0x68);
+                int LinkGroupingCount = pLinkEnd - pLinkStart;
+                if (LinkGroupingCount <= 0 || LinkGroupingCount > 6)
                 {
                     return list;
                 }
-                int num4 = 0;
+                int LinkCounter = 0;
                 List<int> socketList = SocketList;
-                for (int i = 0; i < num3; i++)
+                for (int i = 0; i < LinkGroupingCount; i++)
                 {
-                    int num5 = M.ReadByte(num + i);
-                    var array = new int[num5];
-                    for (int j = 0; j < num5; j++)
+                    int LinkGroupSize = M.ReadByte(pLinkStart + i);
+                    var array = new int[LinkGroupSize];
+                    for (int j = 0; j < LinkGroupSize; j++)
                     {
-                        array[j] = socketList[j + num4];
+                        array[j] = socketList[j + LinkCounter];
                     }
                     list.Add(array);
-                    num4 += num5;
+                    LinkCounter += LinkGroupSize;
                 }
                 return list;
             }
@@ -76,7 +76,7 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                long num = Address + 12;
+                long num = Address + 0x18;
                 for (int i = 0; i < 6; i++)
                 {
                     int num2 = M.ReadInt(num);
