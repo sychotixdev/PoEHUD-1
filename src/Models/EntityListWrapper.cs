@@ -10,12 +10,12 @@ namespace PoeHUD.Models
     {
         private readonly GameController gameController;
         private readonly HashSet<string> ignoredEntities;
-        private Dictionary<int, EntityWrapper> entityCache;
+        private Dictionary<long, EntityWrapper> entityCache;
 
         public EntityListWrapper(GameController gameController)
         {
             this.gameController = gameController;
-            entityCache = new Dictionary<int, EntityWrapper>();
+            entityCache = new Dictionary<long, EntityWrapper>();
             ignoredEntities = new HashSet<string>();
             gameController.Area.OnAreaChange += OnAreaChanged;
         }
@@ -60,14 +60,14 @@ namespace PoeHUD.Models
             if (gameController.Area.CurrentArea == null)
                 return;
 
-            Dictionary<int, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
-            var newCache = new Dictionary<int, EntityWrapper>();
+            Dictionary<long, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
+            var newCache = new Dictionary<long, EntityWrapper>();
             foreach (var keyEntity in newEntities)
             {
                 if (!keyEntity.Value.IsValid)
                     continue;
 
-                int entityAddress = keyEntity.Key;
+                long entityAddress = keyEntity.Key;
                 string uniqueEntityName = keyEntity.Value.Path + entityAddress;
 
                 if (ignoredEntities.Contains(uniqueEntityName))
