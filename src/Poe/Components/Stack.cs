@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.Components
                 {
                     return 0;
                 }
-                int res = M.ReadInt(Address + 0xC);
+                int res = M.ReadInt(Address + 0x18);
                 return res;
             }
         }
