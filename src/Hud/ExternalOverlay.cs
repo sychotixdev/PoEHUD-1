@@ -83,8 +83,6 @@ namespace PoeHUD.Hud
 
         private Vector2 GetLeftCornerMap()
         {
-            return new Vector2(300, 300);
-
             var ingameState = gameController.Game.IngameState;
             RectangleF clientRect = ingameState.IngameUi.Map.SmallMinimap.GetClientRect();
             var diagnosticElement = ingameState.LatencyRectangle;
