@@ -68,7 +68,7 @@ namespace PoeHUD.Poe.Elements
                         return e.GetComponent<WorldItem>().ItemEntity;
 
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0xA5C);
+                        return ReadObject<Entity>(Address + 0xB18);
                 }
                 return null;
             }

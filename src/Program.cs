@@ -91,10 +91,17 @@ namespace PoeHUD
                 sb.Append("IngameState: " + gameController.Game.IngameState.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
+
+                sb.Append("IngameData: " + gameController.Game.IngameState.Data.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("ServerData: " + gameController.Game.IngameState.ServerData.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
                 sb.Append("DiagnosticInfoType: " + gameController.Game.IngameState.DiagnosticInfoType);
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("Camera addr: " + gameController.Game.IngameState.Camera.Address.ToString("X"));
+                sb.Append("GetInventoryZone: " + (gameController.Game.IngameState.IngameUi.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x330).ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
                 /*

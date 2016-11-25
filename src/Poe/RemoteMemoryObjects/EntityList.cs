@@ -19,7 +19,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private void CollectEntities(long addr, Dictionary<long, Entity> list)
         {
             long num = addr;
-            addr = M.ReadLong(addr + 4);
+            addr = M.ReadLong(addr + 8);
             var hashSet = new HashSet<long>();
             var queue = new Queue<long>();
             queue.Enqueue(addr);
