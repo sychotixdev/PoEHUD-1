@@ -119,7 +119,7 @@ namespace PoeHUD.Models
             while (true)
             {
                 hashSet.Add(num);
-                if (gameController.Memory.ReadInt(num + 8) == entity.Address)
+                if (gameController.Memory.ReadInt(num + 0x10) == entity.Address)
                 {
                     break;
                 }
@@ -129,7 +129,7 @@ namespace PoeHUD.Models
                     return null;
                 }
             }
-            return gameController.Game.ReadObject<EntityLabel>(num + 12);
+            return gameController.Game.ReadObject<EntityLabel>(num + 0x18);
         }
     }
 }
