@@ -13,12 +13,12 @@ namespace PoeHUD.Poe
 
         public Memory M { get; }
         public long Address { get; }
-        private int NumberOfRecords => M.ReadInt(Address + 0x30, 0x20);
+        private int NumberOfRecords => M.ReadInt(Address + 0x48, 0x28);
 
         protected IEnumerable<long> RecordAddresses()
         {
-            long firstRec = M.ReadLong(Address + 0x30, 0x4);
-            long lastRec = M.ReadLong(Address + 0x30, 0x8);
+            long firstRec = M.ReadLong(Address + 0x48, 0x8);
+            long lastRec = M.ReadLong(Address + 0x48, 0x10);
             int cnt = NumberOfRecords;
 
             long recLen = (lastRec - firstRec) / cnt;

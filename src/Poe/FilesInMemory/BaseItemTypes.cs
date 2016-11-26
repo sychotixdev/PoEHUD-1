@@ -37,11 +37,11 @@ namespace PoeHUD.Poe.FilesInMemory
                 string key = M.ReadStringU(M.ReadLong(i));
                 var baseItemType = new BaseItemType
                 {
-                    BaseName = M.ReadStringU(M.ReadLong(i + 0x14)),
-                    ClassName = M.ReadStringU(M.ReadLong(i + 0x8, 0)),
-                    Width = M.ReadInt(i + 0xC),
-                    Height = M.ReadInt(i + 0x10),
-                    DropLevel = M.ReadInt(i + 0x1C)
+                    ClassName = M.ReadStringU(M.ReadLong(i + 0x10, 0)),
+                    Width = M.ReadInt(i + 0x18),
+                    Height = M.ReadInt(i + 0x1C),
+                    BaseName = M.ReadStringU(M.ReadLong(i + 0x20)),
+                    DropLevel = M.ReadInt(i + 0x30)
                 };
                 if (!contents.ContainsKey(key))
                 {

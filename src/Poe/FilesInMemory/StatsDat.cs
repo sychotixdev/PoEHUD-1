@@ -47,12 +47,12 @@ namespace PoeHUD.Poe.FilesInMemory
             public StatRecord(Memory m, long addr)
             {
                 Key = m.ReadStringU(m.ReadLong(addr + 0), 255);
-                Unknown4 = m.ReadByte(addr + 4) != 0;
-                Unknown5 = m.ReadByte(addr + 5) != 0;
-                Unknown6 = m.ReadByte(addr + 6) != 0;
-                Type = Key.Contains("%") ? StatType.Percents : (StatType)m.ReadLong(addr + 7);
-                UnknownB = m.ReadByte(addr + 0xB) != 0;
-                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0xC), 255);
+                Unknown4 = m.ReadByte(addr + 0x8) != 0;
+                Unknown5 = m.ReadByte(addr + 0x9) != 0;
+                Unknown6 = m.ReadByte(addr + 0xA) != 0;
+                Type = Key.Contains("%") ? StatType.Percents : (StatType)m.ReadInt(addr + 0xB);
+                UnknownB = m.ReadByte(addr + 0xF) != 0;
+                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x10), 255);
             }
 
             public override string ToString()

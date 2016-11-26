@@ -65,57 +65,57 @@ namespace PoeHUD.Poe.FilesInMemory
             public IntRange[] StatRange;
             public int[] TagChances;
             public TagsDat.TagRecord[] Tags; // Game refers to Tags.dat line
-            public int Unknown4;
+            public int Unknown8;
             public string UserFriendlyName;
             // more fields can be added (see in visualGGPK)
 
             public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
             {
                 Key = m.ReadStringU(m.ReadInt(addr + 0));
-                Unknown4 = m.ReadInt(addr + 4);
-                MinLevel = m.ReadInt(addr + 0x10);
+                Unknown8 = m.ReadInt(addr + 0x8);
+                MinLevel = m.ReadInt(addr + 0x1C);
 
                 StatNames = new[]
                 {
-                    m.ReadLong(addr + 0x18) == 0
-                        ? null
-                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x18)))],
-                    m.ReadLong(addr + 0x20) == 0
-                        ? null
-                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x20)))],
                     m.ReadLong(addr + 0x28) == 0
                         ? null
                         : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x28)))],
-                    m.ReadLong(addr + 0x30) == 0
+                    m.ReadLong(addr + 0x38) == 0
                         ? null
-                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x30)))]
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x38)))],
+                    m.ReadLong(addr + 0x48) == 0
+                        ? null
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x48)))],
+                    m.ReadLong(addr + 0x58) == 0
+                        ? null
+                        : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x58)))]
                 };
 
-                Domain = m.ReadInt(addr + 0x34);
-                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x38));
-                AffixType = (ModType)m.ReadInt(addr + 0x3C);
-                Group = m.ReadStringU(m.ReadLong(addr + 0x40));
+                Domain = m.ReadInt(addr + 0x60);
+                UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x64));
+                AffixType = (ModType)m.ReadInt(addr + 0x6C);
+                Group = m.ReadStringU(m.ReadLong(addr + 0x70));
 
                 StatRange = new[]
                 {
-                    new IntRange(m.ReadInt(addr + 0x44), m.ReadInt(addr + 0x48)),
-                    new IntRange(m.ReadInt(addr + 0x4C), m.ReadInt(addr + 0x50)),
-                    new IntRange(m.ReadInt(addr + 0x54), m.ReadInt(addr + 0x58)),
-                    new IntRange(m.ReadInt(addr + 0x5C), m.ReadInt(addr + 0x60))
+                    new IntRange(m.ReadInt(addr + 0x78), m.ReadInt(addr + 0x7C)),
+                    new IntRange(m.ReadInt(addr + 0x80), m.ReadInt(addr + 0x84)),
+                    new IntRange(m.ReadInt(addr + 0x88), m.ReadInt(addr + 0x8C)),
+                    new IntRange(m.ReadInt(addr + 0x90), m.ReadInt(addr + 0x94))
                 };
 
-                Tags = new TagsDat.TagRecord[m.ReadLong(addr + 0x64)];
-                long ta = m.ReadLong(addr + 0x68);
+                Tags = new TagsDat.TagRecord[m.ReadInt(addr + 0x98)];
+                long ta = m.ReadLong(addr + 0xA0);
                 for (int i = 0; i < Tags.Length; i++)
                 {
-                    long ii = ta + 4 + 8 * i;
+                    long ii = ta + 0x8 + 0x10 * i;
                     Tags[i] = tagsDat.records[m.ReadStringU(m.ReadLong(ii, 0), 255)];
                 }
 
-                TagChances = new int[m.ReadLong(addr + 0x6C)];
-                long tc = m.ReadLong(addr + 0x70);
+                TagChances = new int[m.ReadInt(addr + 0xA8)];
+                long tc = m.ReadLong(addr + 0xB0);
                 for (int i = 0; i < Tags.Length; i++)
-                    TagChances[i] = m.ReadInt(tc + 4 * i);
+                    TagChances[i] = m.ReadInt(tc + 4 + 4 * i);
             }
 
             private class LevelComparer : IComparer<ModRecord>

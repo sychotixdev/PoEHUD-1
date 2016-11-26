@@ -34,7 +34,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public TagRecord(Memory m, long addr)
             {
                 Key = m.ReadStringU(m.ReadLong(addr + 0), 255);
-                Hash = m.ReadInt(addr + 4);
+                Hash = m.ReadInt(addr + 0x8);
             }
         }
     }

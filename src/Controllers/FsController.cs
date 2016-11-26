@@ -23,10 +23,10 @@ namespace PoeHUD.Controllers
             files = GetAllFiles();
             ItemClassesDisplay = new ItemClassesDisplay();
 
-            //BaseItemTypes = new BaseItemTypes(mem, FindFile("Data/BaseItemTypes.dat"), ItemClassesDisplay);
-            //Tags = new TagsDat(mem, FindFile("Data/Tags.dat"));
-            //Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
-            //Mods = new ModsDat(mem, FindFile("Data/Mods.dat"), Stats, Tags);
+            BaseItemTypes = new BaseItemTypes(mem, FindFile("Data/BaseItemTypes.dat"), ItemClassesDisplay);
+            Tags = new TagsDat(mem, FindFile("Data/Tags.dat"));
+            Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
+            Mods = new ModsDat(mem, FindFile("Data/Mods.dat"), Stats, Tags);
         }
             
         public Dictionary<string, long> GetAllFiles()
