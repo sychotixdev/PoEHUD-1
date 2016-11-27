@@ -31,16 +31,16 @@ namespace PoeHUD.Poe
 
         protected List<T> GetChildren<T>() where T : Element, new()
         {
-            const int listOffset = 0x1C + OffsetBuffers;
+            const int listOffset = 0x3C + OffsetBuffers;
             var list = new List<T>();
-            if (M.ReadInt(Address + listOffset + 4) == 0 || M.ReadInt(Address + listOffset) == 0 ||
+            if (M.ReadInt(Address + listOffset + 8) == 0 || M.ReadInt(Address + listOffset) == 0 ||
                 ChildCount > 1000)
             {
                 return list;
             }
             for (int i = 0; i < ChildCount; i++)
             {
-                list.Add(GetObject<T>(M.ReadInt(Address + listOffset, i * 4)));
+                list.Add(GetObject<T>(M.ReadInt(Address + listOffset, i * 8)));
             }
             return list;
         }
