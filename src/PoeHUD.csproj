@@ -237,6 +237,7 @@
     <Compile Include="Hud\Health\CreatureType.cs" />
     <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Models\AreaInstance.cs" />
+    <Compile Include="Poe\Components\DiesAfterTime.cs" />
     <Compile Include="Poe\Components\Flask.cs" />
     <Compile Include="Poe\Components\Inventories.cs" />
     <Compile Include="Poe\Components\Stack.cs" />

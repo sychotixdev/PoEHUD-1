@@ -26,7 +26,7 @@ using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
-using PoeHUD.Hud.DebugPlug;
+using PoeHUD.DebugPlug;
 
 namespace PoeHUD.Hud
 {

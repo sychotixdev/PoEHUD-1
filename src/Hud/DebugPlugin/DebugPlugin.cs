@@ -13,8 +13,9 @@ using PoeHUD.Hud.Settings;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.Elements;
+using PoeHUD.Hud;
 
-namespace PoeHUD.Hud.DebugPlug
+namespace PoeHUD.DebugPlug
 {
     public class DebugPlugin : SizedPlugin<DebugPluginSettings>
     {
@@ -27,8 +28,19 @@ namespace PoeHUD.Hud.DebugPlug
             GameController = gameController;
         }
 
+        private EntityWrapper LastEntity;
+        protected override void OnEntityAdded(EntityWrapper entityWrapper)
+        {
+            LastEntity = entityWrapper;
+              
+
+        }
+
+
         public override void Render()
         {
+
+        /*
 
             bool found = false;
             Element uiHover = GameController.Game.IngameState.UIHover;
@@ -40,9 +52,13 @@ namespace PoeHUD.Hud.DebugPlug
             var mods = item.GetComponent<Mods>();
 
             LogMsg("ItemMods: ", -2, Color.GreenYellow);
+            LogMsg("ItemLevel: " + mods.ItemLevel, -2, Color.GreenYellow);
+            LogMsg("RequiredLevel: " + mods.RequiredLevel, -2, Color.GreenYellow);
+
+
             foreach (var mod in mods.ItemMods)
             {
-                LogMsg("mod: '" + mod.Name + "' : " + mod.Address.ToString("x"), -2, Color.GreenYellow);
+                LogMsg("mod: '" + mod.Name + "' level: " + mod.Level + " : " + mod.Address.ToString("x"), -2, Color.GreenYellow);
             }
 
             LogMsg(" ", -2, Color.GreenYellow);
@@ -52,8 +68,11 @@ namespace PoeHUD.Hud.DebugPlug
                 string saveDbg = "";
                 saveDbg += "uiHoverAddr: " + uiHover.Address.ToString("x") + Environment.NewLine + Environment.NewLine;
                 saveDbg += "ItemAddr: " + item.Address.ToString("x") + Environment.NewLine;
-                saveDbg += "HasMods?: " + item.HasComponent<Mods>() + Environment.NewLine;
+
                 saveDbg += "ModsAddr: " + mods.Address.ToString("x") + Environment.NewLine;
+
+                if (LastEntity != null)
+                    saveDbg += "LEnt: " + LastEntity.Address.ToString("x") + Environment.NewLine;
 
 
                 System.IO.File.WriteAllText("_DBG.txt", saveDbg);
@@ -63,18 +82,35 @@ namespace PoeHUD.Hud.DebugPlug
 
             //LogMsg("ModsAddr: " + mods.Address.ToString("x"), -2, Color.GreenYellow);
             //LogMsg("ItemRarity: " + mods.ItemRarity, -2, Color.GreenYellow);
+            */
 
 
-
-       
-
-
-            var comps = item.GetComponents();
-            foreach (var comp in comps)
+            if (LastEntity != null)
             {
-                LogMsg($"'{comp.Key}' : {comp.Value.ToString("x")}", -2, Color.GreenYellow);
-            }
+                //LogMsg(LastEntity.Address.ToString("x"), -2, Color.White);
 
+
+
+                var comps = LastEntity.InternalEntity.GetComponents();
+                foreach (var comp in comps)
+                {
+                    LogMsg($"'{comp.Key}' : {comp.Value.ToString("x")}", -2, Color.GreenYellow);
+                }
+
+                var dat = LastEntity.GetComponent<Life>();
+
+                foreach (var comp in dat.Buffs)
+                {
+                    LogMsg($"'{comp.Name}' : {comp.Timer}", -2, Color.GreenYellow);
+                }
+
+                LogMsg("datAddr: " + dat.Address.ToString("x") , -2, Color.White);
+
+                if (WinApi.IsKeyDown(Keys.D0))
+                {
+                    System.IO.File.WriteAllText("_DBG.txt", dat.Address.ToString("x"));
+                }
+            }
 
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
@@ -122,8 +158,12 @@ namespace PoeHUD.Hud.DebugPlug
             DebugLog.Clear();
             DebugDrawInfo.Clear();
         }
-        
+
         //If delay is -1 message will newer be destroyed
+        public static void LogMsg(object o, float delay)
+        {
+            DebugLog.Add(new DisplayMessage(o.ToString(), delay, Color.White));
+        }
         public static void LogMsg(object o, float delay, Color color)
         {
             DebugLog.Add(new DisplayMessage(o.ToString(), delay, color));

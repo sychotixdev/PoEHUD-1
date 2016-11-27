@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.Elements
         }
 
         public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
-        public Element Label => ReadObject<Element>(Address + 0x8);
+        public Element Label => ReadObject<Element>(Address + 0x10);//Not sure
         public bool CanPickUp => labelInfo.Value == 0;
 
         public TimeSpan TimeLeft
@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                int address = M.ReadInt(Address + OffsetBuffers + 0x30C);
+                long address = M.ReadLong(Address + OffsetBuffers + 0x30C);
                 for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
                 {
                     yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);

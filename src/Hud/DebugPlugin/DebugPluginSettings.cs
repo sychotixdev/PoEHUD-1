@@ -1,7 +1,7 @@
 ﻿using PoeHUD.Hud.Settings;
 using SharpDX;
 
-namespace PoeHUD.Hud.DebugPlug
+namespace PoeHUD.DebugPlug
 {
     public class DebugPluginSettings : SettingsBase
     {

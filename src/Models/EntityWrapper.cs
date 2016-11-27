@@ -31,6 +31,8 @@ namespace PoeHUD.Models
         {
         }
 
+        public Entity InternalEntity => internalEntity.Address == 0 ? null : internalEntity;
+
         public string Path { get; }
         public bool IsValid => internalEntity.IsValid && IsInList && cachedId == internalEntity.Id;
         public long Address => internalEntity.Address;
