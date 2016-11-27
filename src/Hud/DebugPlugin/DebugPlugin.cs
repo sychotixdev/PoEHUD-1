@@ -29,6 +29,7 @@ namespace PoeHUD.Hud.DebugPlug
 
         public override void Render()
         {
+
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();
