@@ -28,7 +28,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void loadItems(StatsDat sDat, TagsDat tagsDat)
         {
-            foreach (int addr in RecordAddresses())
+            foreach (long addr in RecordAddresses())
             {
                 var r = new ModRecord(M, sDat, tagsDat, addr);
                 if (records.ContainsKey(r.Key))
@@ -65,14 +65,14 @@ namespace PoeHUD.Poe.FilesInMemory
             public IntRange[] StatRange;
             public int[] TagChances;
             public TagsDat.TagRecord[] Tags; // Game refers to Tags.dat line
-            public int Unknown8;
+            public long Unknown8;//Unknown pointer
             public string UserFriendlyName;
             // more fields can be added (see in visualGGPK)
 
             public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
             {
                 Key = m.ReadStringU(m.ReadInt(addr + 0));
-                Unknown8 = m.ReadInt(addr + 0x8);
+                Unknown8 = m.ReadLong(addr + 0x8);
                 MinLevel = m.ReadInt(addr + 0x1C);
 
                 StatNames = new[]
@@ -91,8 +91,10 @@ namespace PoeHUD.Poe.FilesInMemory
                         : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x58)))]
                 };
 
-                Domain = m.ReadInt(addr + 0x60);
+                Domain = m.ReadLong(addr + 0x60);
+
                 UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x64));
+
                 AffixType = (ModType)m.ReadInt(addr + 0x6C);
                 Group = m.ReadStringU(m.ReadLong(addr + 0x70));
 
