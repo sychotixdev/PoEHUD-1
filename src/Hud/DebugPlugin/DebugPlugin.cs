@@ -30,6 +30,52 @@ namespace PoeHUD.Hud.DebugPlug
         public override void Render()
         {
 
+            bool found = false;
+            Element uiHover = GameController.Game.IngameState.UIHover;
+            var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
+
+            Entity item = uiHover.ReadObject<Entity>(uiHover.Address + 0xB18);
+
+
+            var mods = item.GetComponent<Mods>();
+
+            LogMsg("ItemMods: ", -2, Color.GreenYellow);
+            foreach (var mod in mods.ItemMods)
+            {
+                LogMsg("mod: '" + mod.Name + "' : " + mod.Address.ToString("x"), -2, Color.GreenYellow);
+            }
+
+            LogMsg(" ", -2, Color.GreenYellow);
+
+            if (WinApi.IsKeyDown(Keys.D0))
+            {
+                string saveDbg = "";
+                saveDbg += "uiHoverAddr: " + uiHover.Address.ToString("x") + Environment.NewLine + Environment.NewLine;
+                saveDbg += "ItemAddr: " + item.Address.ToString("x") + Environment.NewLine;
+                saveDbg += "HasMods?: " + item.HasComponent<Mods>() + Environment.NewLine;
+                saveDbg += "ModsAddr: " + mods.Address.ToString("x") + Environment.NewLine;
+
+
+                System.IO.File.WriteAllText("_DBG.txt", saveDbg);
+            }
+
+            LogMsg("ItemAddr: " + item.Address.ToString("x"), -2, Color.GreenYellow);
+
+            //LogMsg("ModsAddr: " + mods.Address.ToString("x"), -2, Color.GreenYellow);
+            //LogMsg("ItemRarity: " + mods.ItemRarity, -2, Color.GreenYellow);
+
+
+
+       
+
+
+            var comps = item.GetComponents();
+            foreach (var comp in comps)
+            {
+                LogMsg($"'{comp.Key}' : {comp.Value.ToString("x")}", -2, Color.GreenYellow);
+            }
+
+
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();
