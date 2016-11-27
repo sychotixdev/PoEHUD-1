@@ -78,16 +78,13 @@ namespace PoeHUD.Poe.Elements
         {
             if (inventoryItemTooltip() != null && inventoryItemTooltip().IsVisible)
             {
-                DebugPlug.DebugPlugin.LogMsg("ToolTipType.InventoryItem", -2);
                 return ToolTipType.InventoryItem;
             }
             if (toolTipOnground != null && toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
             {
-                DebugPlug.DebugPlugin.LogMsg("ToolTipType.ItemOnGround", -2);
                 return ToolTipType.ItemOnGround;
             }
-
-            DebugPlug.DebugPlugin.LogMsg("ToolTipType.None", -2);
+            
             return ToolTipType.None;
         }
     }

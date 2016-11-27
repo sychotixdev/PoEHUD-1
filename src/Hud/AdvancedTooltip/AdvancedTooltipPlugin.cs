@@ -76,18 +76,13 @@ namespace PoeHUD.Hud.AdvancedTooltip
                     id = poeEntity.Id;
                 }
 
-
-            
-
                 if (itemEntity == null || itemEntity.Id != id)
                 {
                     List<ItemMod> itemMods = modsComponent.ItemMods;
                     mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel)).ToList();
                     itemEntity = poeEntity;
                 }
-
-                DebugPlug.DebugPlugin.LogMsg("poeEntity.Id: " + poeEntity.Id, 0);
-                return;
+              
                 foreach (string tier in from item in mods where item.CouldHaveTiers() && item.Tier == 1 select " \u2605 ")
                 {
                     Graphics.DrawText(tier, 18, tooltipRect.TopLeft.Translate(0, 56), Settings.ItemMods.T1Color);

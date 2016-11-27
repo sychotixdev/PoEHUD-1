@@ -16,28 +16,8 @@ namespace PoeHUD.Hud.AdvancedTooltip
         public ModValue(ItemMod mod, FsController fs, int iLvl)
         {
             string name = mod.RawName;
-            DebugPlug.DebugPlugin.LogMsg("name: " + name, 0);
-
-
-            DebugPlug.DebugPlugin.LogMsg("records.Count: " + fs.Mods.records.Count, 0);
-
-            foreach(var record_ in fs.Mods.records)
-            {
-                DebugPlug.DebugPlugin.LogMsg("record: " + record_.Key + "|" + record_.Value.UserFriendlyName, 0);
-            }
-            try
-            {
-                Record = fs.Mods.records[name];
-            
-            }
-            catch
-            {
-                DebugPlug.DebugPlugin.LogMsg("Error: ", 0);
-            }
-
+            Record = fs.Mods.records[name];
             AffixType = Record.AffixType;
-            DebugPlug.DebugPlugin.LogMsg("AffixType: " + AffixType, 0);
-
             AffixText = String.IsNullOrEmpty(Record.UserFriendlyName) ? Record.Key : Record.UserFriendlyName;
             IsCrafted = Record.Domain == 10;
             StatValue = new[] { mod.Value1, mod.Value2, mod.Value3, mod.Value4 };

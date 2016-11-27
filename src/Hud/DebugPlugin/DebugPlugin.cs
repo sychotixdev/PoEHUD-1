@@ -32,8 +32,10 @@ namespace PoeHUD.DebugPlug
         protected override void OnEntityAdded(EntityWrapper entityWrapper)
         {
             LastEntity = entityWrapper;
-              
 
+            var dat = LastEntity.GetComponent<ObjectMagicProperties>();
+
+            LogMsg($"datRar: {dat.Rarity}", 2, Color.GreenYellow);
         }
 
 
@@ -84,34 +86,19 @@ namespace PoeHUD.DebugPlug
             //LogMsg("ItemRarity: " + mods.ItemRarity, -2, Color.GreenYellow);
             */
 
-
+            
             if (LastEntity != null)
             {
-                //LogMsg(LastEntity.Address.ToString("x"), -2, Color.White);
+                var dat = LastEntity.GetComponent<ObjectMagicProperties>();
 
+                LogMsg($"datAddr: {dat.Rarity}", -2, Color.GreenYellow);
 
-
-                var comps = LastEntity.InternalEntity.GetComponents();
-                foreach (var comp in comps)
+                foreach (var comp in dat.Mods)
                 {
-                    LogMsg($"'{comp.Key}' : {comp.Value.ToString("x")}", -2, Color.GreenYellow);
-                }
-
-                var dat = LastEntity.GetComponent<Life>();
-
-                foreach (var comp in dat.Buffs)
-                {
-                    LogMsg($"'{comp.Name}' : {comp.Timer}", -2, Color.GreenYellow);
-                }
-
-                LogMsg("datAddr: " + dat.Address.ToString("x") , -2, Color.White);
-
-                if (WinApi.IsKeyDown(Keys.D0))
-                {
-                    System.IO.File.WriteAllText("_DBG.txt", dat.Address.ToString("x"));
+                    LogMsg($"{comp}", -2, Color.GreenYellow);
                 }
             }
-
+            
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();

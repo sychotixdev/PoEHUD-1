@@ -58,7 +58,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public static IComparer<ModRecord> ByLevelComparer = new LevelComparer();
             public readonly string Key;
             public ModType AffixType;
-            public long Domain;
+            public int Domain;
             public string Group;
             public int MinLevel;
             public StatsDat.StatRecord[] StatNames; // Game refers to Stats.dat line
@@ -71,7 +71,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
             public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
             {
-                Key = m.ReadStringU(m.ReadInt(addr + 0));
+                Key = m.ReadStringU(m.ReadLong(addr + 0));
                 Unknown8 = m.ReadLong(addr + 0x8);
                 MinLevel = m.ReadInt(addr + 0x1C);
 
@@ -91,7 +91,7 @@ namespace PoeHUD.Poe.FilesInMemory
                         : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x58)))]
                 };
 
-                Domain = m.ReadLong(addr + 0x60);
+                Domain = m.ReadInt(addr + 0x60);
 
                 UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x64));
 
@@ -106,7 +106,7 @@ namespace PoeHUD.Poe.FilesInMemory
                     new IntRange(m.ReadInt(addr + 0x90), m.ReadInt(addr + 0x94))
                 };
 
-                Tags = new TagsDat.TagRecord[m.ReadInt(addr + 0x98)];
+                Tags = new TagsDat.TagRecord[m.ReadLong(addr + 0x98)];
                 long ta = m.ReadLong(addr + 0xA0);
                 for (int i = 0; i < Tags.Length; i++)
                 {

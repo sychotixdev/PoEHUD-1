@@ -34,7 +34,7 @@ namespace PoeHUD.Poe.Components
                 }
                 for (long i = begin; i < end; i += 0x28)
                 {
-                    string mod = M.ReadStringU(M.ReadInt(i + 0x20, 0));
+                    string mod = M.ReadStringU(M.ReadLong(i + 0x20, 0));
                     list.Add(mod);
                 }
                 return list;
