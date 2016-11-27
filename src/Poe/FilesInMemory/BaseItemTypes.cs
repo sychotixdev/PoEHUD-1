@@ -32,17 +32,19 @@ namespace PoeHUD.Poe.FilesInMemory
 
         private void LoadItemTypes()
         {
-            foreach (int i in RecordAddresses())
+            foreach (long i in RecordAddresses())
             {
                 string key = M.ReadStringU(M.ReadLong(i));
                 var baseItemType = new BaseItemType
                 {
                     ClassName = M.ReadStringU(M.ReadLong(i + 0x10, 0)),
+
                     Width = M.ReadInt(i + 0x18),
                     Height = M.ReadInt(i + 0x1C),
                     BaseName = M.ReadStringU(M.ReadLong(i + 0x20)),
                     DropLevel = M.ReadInt(i + 0x30)
                 };
+
                 if (!contents.ContainsKey(key))
                 {
                     contents.Add(key, baseItemType);
