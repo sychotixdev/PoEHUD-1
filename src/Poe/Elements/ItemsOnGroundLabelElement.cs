@@ -12,7 +12,7 @@ namespace PoeHUD.Poe.Elements
             labelInfo = new Lazy<long>(GetLabelInfo);
         }
 
-        public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
+        public Entity ItemOnGround => ReadObject<Entity>(Address + 0x18);
         public Element Label => ReadObject<Element>(Address + 0x10);//Not sure
         public bool CanPickUp => labelInfo.Value == 0;
 
