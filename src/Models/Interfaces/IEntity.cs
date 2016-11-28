@@ -5,8 +5,7 @@ namespace PoeHUD.Models.Interfaces
     public interface IEntity
     {
         string Path { get; }
-        int Id { get; }
-        long LongId { get; }
+        long Id { get; }
         bool IsValid { get; }
         bool IsHostile { get; }
         long Address { get; }

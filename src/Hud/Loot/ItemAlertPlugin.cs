@@ -231,9 +231,9 @@ namespace PoeHUD.Hud.Loot
             currentAlerts.Add(entity, drawStyle);
             CurrentIcons[entity] = new MapIcon(entity, new HudTexture("currency.png", drawStyle.TextColor), () => Settings.ShowItemOnMap, Settings.LootIcon);
 
-            if (Settings.PlaySound && !playedSoundsCache.Contains(entity.LongId))
+            if (Settings.PlaySound && !playedSoundsCache.Contains(entity.Id))
             {
-                playedSoundsCache.Add(entity.LongId);
+                playedSoundsCache.Add(entity.Id);
                 Sounds.AlertSound.Play(Settings.SoundVolume);
             }
         }

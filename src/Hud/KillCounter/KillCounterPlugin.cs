@@ -113,9 +113,9 @@ namespace PoeHUD.Hud.KillCounter
                 monstersHashSet = new HashSet<long>();
                 countedIds[areaHash] = monstersHashSet;
             }
-            if (!monstersHashSet.Contains(entityWrapper.LongId))
+            if (!monstersHashSet.Contains(entityWrapper.Id))
             {
-                monstersHashSet.Add(entityWrapper.LongId);
+                monstersHashSet.Add(entityWrapper.Id);
                 MonsterRarity rarity = entityWrapper.GetComponent<ObjectMagicProperties>().Rarity;
                 if (entityWrapper.IsHostile && counters.ContainsKey(rarity))
                 {
