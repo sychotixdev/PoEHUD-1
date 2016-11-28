@@ -11,7 +11,7 @@ namespace PoeHUD.Models
 {
     public class EntityWrapper : IEntity
     {
-        private readonly int cachedId;
+        private readonly long cachedId;
         private readonly Dictionary<string, long> components;
         private readonly GameController gameController;
         private readonly Entity internalEntity;
@@ -24,7 +24,7 @@ namespace PoeHUD.Models
             components = internalEntity.GetComponents();
             Path = internalEntity.Path;
             cachedId = internalEntity.Id;
-            LongId = internalEntity.LongId;
+            LongId = internalEntity.Id;
         }
 
         public EntityWrapper(GameController Poe, long address) : this(Poe, Poe.Game.GetObject<Entity>(address))
@@ -36,7 +36,7 @@ namespace PoeHUD.Models
         public string Path { get; }
         public bool IsValid => internalEntity.IsValid && IsInList && cachedId == internalEntity.Id;
         public long Address => internalEntity.Address;
-        public int Id => cachedId;
+        public long Id => cachedId;
         public bool IsHostile => internalEntity.IsHostile;
         public long LongId { get; }
         public bool IsAlive => GetComponent<Life>().CurHP > 0;

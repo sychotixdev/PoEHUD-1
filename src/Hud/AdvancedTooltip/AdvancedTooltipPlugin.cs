@@ -64,7 +64,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
                
 
                 var modsComponent = poeEntity.GetComponent<Mods>();
-                int id = 0;
+                long id = 0;
                 if (inventoryItemIcon.ToolTipType == ToolTipType.InventoryItem)
                 {
                

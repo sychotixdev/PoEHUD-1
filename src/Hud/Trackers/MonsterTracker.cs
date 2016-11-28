@@ -15,7 +15,7 @@ namespace PoeHUD.Hud.Trackers
 {
     public class MonsterTracker : PluginWithMapIcons<MonsterTrackerSettings>
     {
-        private readonly HashSet<int> alreadyAlertedOf;
+        private readonly HashSet<long> alreadyAlertedOf;
         private readonly Dictionary<EntityWrapper, MonsterConfigLine> alertTexts;
         private readonly Dictionary<MonsterRarity, Func<EntityWrapper, Func<string, string>, CreatureMapIcon>> iconCreators;
         private readonly Dictionary<string, MonsterConfigLine> modAlerts, typeAlerts;
@@ -23,7 +23,7 @@ namespace PoeHUD.Hud.Trackers
         public MonsterTracker(GameController gameController, Graphics graphics, MonsterTrackerSettings settings)
             : base(gameController, graphics, settings)
         {
-            alreadyAlertedOf = new HashSet<int>();
+            alreadyAlertedOf = new HashSet<long>();
             alertTexts = new Dictionary<EntityWrapper, MonsterConfigLine>();
             modAlerts = LoadConfig("config/monster_mod_alerts.txt");
             typeAlerts = LoadConfig("config/monster_name_alerts.txt");

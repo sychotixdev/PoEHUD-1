@@ -94,14 +94,14 @@ namespace PoeHUD.Hud.Dps
                 if (hp > -1000000 && hp < 10000000)
                 {
                     int lastHP;
-                    if (lastMonsters.TryGetValue(monster.LongId, out lastHP))
+                    if (lastMonsters.TryGetValue(monster.Id, out lastHP))
                     {
                         if (lastHP != hp)
                         {
                             totalDamage += lastHP - hp;
                         }
                     }
-                    lastMonsters[monster.LongId] = hp;
+                    lastMonsters[monster.Id] = hp;
                 }
             }
             return totalDamage < 0 ? 0 : totalDamage;

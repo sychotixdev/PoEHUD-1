@@ -10,9 +10,8 @@ namespace PoeHUD.Poe
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
-        public int Id => M.ReadInt(Address + 0x38);
+        public long Id => M.ReadInt(Address + 0x38);
         public int InventoryId => M.ReadInt(Address + 0x58);
-        public long LongId => (long)Id << 32 ^ Path.GetHashCode();
 
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
