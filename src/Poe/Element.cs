@@ -33,14 +33,14 @@ namespace PoeHUD.Poe
         {
             const int listOffset = 0x3C + OffsetBuffers;
             var list = new List<T>();
-            if (M.ReadInt(Address + listOffset + 8) == 0 || M.ReadInt(Address + listOffset) == 0 ||
+            if (M.ReadLong(Address + listOffset + 8) == 0 || M.ReadLong(Address + listOffset) == 0 ||
                 ChildCount > 1000)
             {
                 return list;
             }
             for (int i = 0; i < ChildCount; i++)
             {
-                list.Add(GetObject<T>(M.ReadInt(Address + listOffset, i * 8)));
+                list.Add(GetObject<T>(M.ReadLong(Address + listOffset, i * 8)));
             }
             return list;
         }
