@@ -169,7 +169,7 @@ namespace PoeHUD.Hud.Loot
 
                     foreach(var label in GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels)
                     {
-                        DebugPlug.DebugPlugin.LogMsg("ItemOnGroundAddr: " + label.ItemOnGround.Address.ToString("x"), -2);
+                        DebugPlug.DebugPlugin.LogMsg("ItemsOnGroundLabel Addr: " + label.ItemOnGround.Address.ToString("x"), -2);
                     }
 
                     currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
