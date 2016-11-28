@@ -32,10 +32,6 @@ namespace PoeHUD.DebugPlug
         protected override void OnEntityAdded(EntityWrapper entityWrapper)
         {
             LastEntity = entityWrapper;
-
-            var dat = LastEntity.GetComponent<ObjectMagicProperties>();
-
-            LogMsg($"datRar: {dat.Rarity}", 2, Color.GreenYellow);
         }
 
 
@@ -89,14 +85,12 @@ namespace PoeHUD.DebugPlug
             
             if (LastEntity != null)
             {
-                var dat = LastEntity.GetComponent<ObjectMagicProperties>();
+                var dat = LastEntity.GetComponent<WorldItem>();
 
-                LogMsg($"datAddr: {dat.Rarity}", -2, Color.GreenYellow);
+                LogMsg($"WorldItemAddr: {dat.Address.ToString("x")}", -2, Color.GreenYellow);
+                LogMsg($"WorldItemAddr.EntityAddr: {dat.ItemEntity.Address.ToString("x")}", -2, Color.GreenYellow);
 
-                foreach (var comp in dat.Mods)
-                {
-                    LogMsg($"{comp}", -2, Color.GreenYellow);
-                }
+
             }
             
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
@@ -140,6 +134,8 @@ namespace PoeHUD.DebugPlug
 
 
         private static List<string> DebugDrawInfo = new List<string>();
+        private static List<DisplayMessage> DebugLog = new List<DisplayMessage>();
+
         private void ClearLog()
         {
             DebugLog.Clear();
@@ -162,7 +158,7 @@ namespace PoeHUD.DebugPlug
             DebugDrawInfo.Add(o.ToString());
         }
 
-        public static List<DisplayMessage> DebugLog = new List<DisplayMessage>();
+       
         public class DisplayMessage
         {
             public DisplayMessage(string Message, float Delay, Color Color)

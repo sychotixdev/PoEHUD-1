@@ -5,11 +5,11 @@ namespace PoeHUD.Poe.Elements
 {
     public class ItemsOnGroundLabelElement : Element
     {
-        private readonly Lazy<int> labelInfo;
+        private readonly Lazy<long> labelInfo;
 
         public ItemsOnGroundLabelElement()
         {
-            labelInfo = new Lazy<int>(GetLabelInfo);
+            labelInfo = new Lazy<long>(GetLabelInfo);
         }
 
         public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
@@ -37,16 +37,17 @@ namespace PoeHUD.Poe.Elements
             get
             {
                 long address = M.ReadLong(Address + OffsetBuffers + 0x30C);
-                for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
+
+                for (long nextAddress = M.ReadLong(address); nextAddress != address; nextAddress = M.ReadLong(nextAddress))
                 {
                     yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
                 }
             }
         }
 
-        private int GetLabelInfo()
+        private long GetLabelInfo()
         {
-            return Label.Address != 0 ? M.ReadInt(Label.Address + OffsetBuffers + 0x454) : 0;
+            return Label.Address != 0 ? M.ReadLong(Label.Address + OffsetBuffers + 0x454) : 0;
         }
     }
 }

@@ -69,7 +69,6 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 {
                
                     id = poeEntity.InventoryId;
-                    DebugPlug.DebugPlugin.LogMsg("id: " + id, 0);
                 }
                 else
                 {

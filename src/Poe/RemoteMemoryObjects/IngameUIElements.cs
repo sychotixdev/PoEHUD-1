@@ -18,6 +18,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xC40 + Offsets.GarenaTWDelta);
+
+                DebugPlug.DebugPlugin.LogMsg("ItemsOnGroundLabelElementAddr: " + Address.ToString("x"), -2);
+
                 return itemsOnGroundLabelRoot.Children;
             }
         }

@@ -133,6 +133,9 @@ namespace PoeHUD.Hud.Loot
                 foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlerts.Where(x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid))
                 {
                     string text = GetItemName(kv);
+
+                  
+
                     if (text == null)
                     {
                         continue;
@@ -142,19 +145,37 @@ namespace PoeHUD.Hud.Loot
                     if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
                     {
                         shouldUpdate = true;
+                        DebugPlug.DebugPlugin.LogMsg("Go update: " + text, -2);
                     }
                     else
                     {
                         if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
+                        {
+                            DebugPlug.DebugPlugin.LogMsg("Draw: " + text, -2);
                             position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                        }
+                        else
+                        {
+                            DebugPlug.DebugPlugin.LogMsg("Can't Draw: " + text, -2);
+                        }
                     }
+
+
                 }
                 Size = new Size2F(0, position.Y); //bug absent width
 
                 if (shouldUpdate)
                 {
+
+                    foreach(var label in GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels)
+                    {
+                        DebugPlug.DebugPlugin.LogMsg("ItemOnGroundAddr: " + label.ItemOnGround.Address.ToString("x"), -2);
+                    }
+
                     currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
                         .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
+
+
                 }
             }
         }
@@ -177,7 +198,9 @@ namespace PoeHUD.Hud.Loot
             if (Settings.Enable && entity != null && !GameController.Area.CurrentArea.IsTown
                 && !currentAlerts.ContainsKey(entity) && entity.HasComponent<WorldItem>())
             {
+               
                 IEntity item = entity.GetComponent<WorldItem>().ItemEntity;
+
                 if (Settings.Alternative && !string.IsNullOrEmpty(Settings.FilePath))
                 {
                     var result = visitor.Visit(item);
@@ -188,10 +211,11 @@ namespace PoeHUD.Hud.Loot
                     }
                 }
                 else
-                {
+                {               
                     ItemUsefulProperties props = initItem(item);
                     if (props == null)
                         return;
+                
                     if (props.ShouldAlert(currencyNames, Settings))
                     {
                         AlertDrawStyle drawStyle = props.GetDrawStyle();
@@ -366,6 +390,7 @@ namespace PoeHUD.Hud.Loot
             BaseItemType bit = GameController.Files.BaseItemTypes.Translate(item.Path);
             if (bit == null)
                 return null;
+
             string name = bit.BaseName;
             CraftingBase craftingBase = new CraftingBase();
             if (Settings.Crafting)
