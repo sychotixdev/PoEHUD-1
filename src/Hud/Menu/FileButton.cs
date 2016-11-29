@@ -6,16 +6,20 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using ColorGdi = System.Drawing.Color;
+using System;
 
 namespace PoeHUD.Hud.Menu
 {
     public sealed class FileButton : MenuItem
     {
         private readonly FileNode path;
+        private string PoeDirectory;
 
         public FileButton(FileNode path)
         {
             this.path = path;
+            string documentsPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            PoeDirectory = Path.Combine(documentsPath, @"My Games\Path of Exile");
         }
 
         public override int DesiredWidth => 180;
@@ -46,6 +50,7 @@ namespace PoeHUD.Hud.Menu
                     {
                         Filter = "filter files (*.filter)|*.filter|All files (*.*)|*.*"
                     };
+                    filedialog.InitialDirectory = PoeDirectory;
                     if (filedialog.ShowDialog() == DialogResult.OK)
                     {
                         path.Value = filedialog.FileName;
