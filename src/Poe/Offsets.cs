@@ -138,7 +138,7 @@ namespace PoeHUD.Poe
 
             Base = 0xfa9708;
             AreaChangeCount = 0xFA27CC;
-            FileRoot = 0x7FF791276120 - m.AddressOfProcess;
+            FileRoot = 0x1156120;
         }
     }
 }
