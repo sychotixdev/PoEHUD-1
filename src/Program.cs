@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Text;
 using System.IO;
+using Tools;
 
 namespace PoeHUD
 {
@@ -75,6 +76,7 @@ namespace PoeHUD
                 offs.DoPatternScans(memory);
                 var gameController = new GameController(memory);
 
+#if DEBUG
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append("AddressOfProcess: " + memory.AddressOfProcess.ToString("X"));
@@ -140,7 +142,7 @@ namespace PoeHUD
                 sb.Append(memory.DebugStr);
 
                 File.WriteAllText("__BaseOffsets.txt", sb.ToString());
-
+#endif
 
 
 
