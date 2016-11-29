@@ -27,7 +27,10 @@ namespace PoeHUD.Hud.Menu
             string text = string.IsNullOrEmpty(path) ? "  Select file" : Path.GetFileName(path);
             float size = DesiredHeight - 2;
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
-            var textPosition = new Vector2(Bounds.X + Bounds.Width / 2 - size / 2, Bounds.Y + Bounds.Height / 2);
+
+            //var textPosition = new Vector2(Bounds.X + Bounds.Width / 2 - size / 2, Bounds.Y + Bounds.Height / 2);//Fixed FileButton text offset to the left.
+            var textPosition = new Vector2(Bounds.X + Bounds.Width, Bounds.Y + Bounds.Height / 2);
+
             graphics.DrawText(text, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Center);
             var rectangle = new RectangleF(Bounds.Left + 5, Bounds.Top + 3, size, size - 5);
             graphics.DrawImage(string.IsNullOrEmpty(path) ? "openFile.png" : "done.png", rectangle);
