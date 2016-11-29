@@ -134,8 +134,6 @@ namespace PoeHUD.Hud.Loot
                 {
                     string text = GetItemName(kv);
 
-                  
-
                     if (text == null)
                     {
                         continue;
@@ -145,37 +143,21 @@ namespace PoeHUD.Hud.Loot
                     if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
                     {
                         shouldUpdate = true;
-                        DebugPlug.DebugPlugin.LogMsg("Go update: " + text, -2);
                     }
                     else
                     {
                         if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
                         {
-                            DebugPlug.DebugPlugin.LogMsg("Draw: " + text, -2);
                             position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
                         }
-                        else
-                        {
-                            DebugPlug.DebugPlugin.LogMsg("Can't Draw: " + text, -2);
-                        }
                     }
-
-
                 }
                 Size = new Size2F(0, position.Y); //bug absent width
 
                 if (shouldUpdate)
                 {
-
-                    foreach(var label in GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels)
-                    {
-                        DebugPlug.DebugPlugin.LogMsg("ItemsOnGroundLabel Addr: " + label.Address.ToString("x"), -2);
-                    }
-
                     currentLabels = GameController.Game.IngameState.IngameUi.ItemsOnGroundLabels
                         .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
-
-
                 }
             }
         }

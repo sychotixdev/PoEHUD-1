@@ -82,7 +82,7 @@ namespace PoeHUD.DebugPlug
             //LogMsg("ItemRarity: " + mods.ItemRarity, -2, Color.GreenYellow);
             */
 
-            
+            /*
             if (LastEntity != null)
             {
                 var dat = LastEntity.GetComponent<WorldItem>();
@@ -92,7 +92,7 @@ namespace PoeHUD.DebugPlug
 
 
             }
-            
+            */
             if (DebugDrawInfo.Count == 0 && DebugLog.Count == 0) return;
 
             Vector2 startPosition = StartDrawPointFunc();

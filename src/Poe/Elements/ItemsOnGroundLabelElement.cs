@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.Elements
         }
 
         public Entity ItemOnGround => ReadObject<Entity>(Address + 0x18);
-        public Element Label => ReadObject<Element>(Address + 0x10);//Not sure
+        public Element Label => ReadObject<Element>(Address + 0x10);
         public bool CanPickUp => labelInfo.Value == 0;
 
         public TimeSpan TimeLeft

@@ -136,9 +136,9 @@ namespace PoeHUD.Poe
             AreaChangeCount = m.ReadLong(m.AddressOfProcess + array[2] + 0x30) - m.AddressOfProcess;
             */
 
-            Base = 0xfa6f38;
-            AreaChangeCount = 0xFA001C;
-            FileRoot = 0x01153490;
+            Base = 0xfa9708;
+            AreaChangeCount = 0xFA27CC;
+            FileRoot = 0x7FF791276120 - m.AddressOfProcess;
         }
     }
 }
