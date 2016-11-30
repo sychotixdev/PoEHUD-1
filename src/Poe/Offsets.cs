@@ -8,7 +8,7 @@ namespace PoeHUD.Poe
     public class Offsets
     {
         public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
-        public static Offsets Steam = new Offsets { IgsOffset = 0x1C, IgsDelta = -0x4, ExeName = "PathOfExileSteam" };
+        public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
         
         /*
 	    PathOfExile_x64.exe+FA5F38 - 40 5F                 - pop rdi
