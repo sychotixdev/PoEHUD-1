@@ -8,8 +8,8 @@ namespace PoeHUD.Poe
 
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64", FileRoot = 0x1156120 };
-        public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam", FileRoot = 0x11700b0 };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
+        public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
 
         /*
         PathOfExile_x64.exe+45FFC0 - 40 53                 - push rbx
@@ -31,30 +31,37 @@ namespace PoeHUD.Poe
         }, "xxxxxxxxxxxxxxxxxxxxxxxxxx");
 
         /*
-        private static readonly Pattern fileRootPattern = new Pattern(new byte[]
-        {
-            0xc7, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6a, 0x00, 0xc7, 0x05
-        }, "xx?xxxxxxxx");
-        */
-        private static readonly Pattern fileRootPattern = new Pattern(new byte[]
-        {
-            0xB7, 0x00, 0x00, 0x00, 0x00, 0xB9, 0x00, 0x00,
-            0x00, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00, 0xFF,
-            0x15
-        }, "x????x????x????xx");
-        /*
-        003F1BF4   E8 4A944E00      CALL PathOfEx.008DB043
-        003F1BF9   68 0867D400      PUSH PathOfEx.00D46708
-        003F1BFE   C745 FC FFFFFFFF MOV DWORD PTR SS:[EBP-4],-1
-        003F1C05   E8 C4954E00      CALL PathOfEx.008DB1CE
-        003F1C0A   83C4 08          ADD ESP,8
-        003F1C0D   FFB7 2C180000    PUSH DWORD PTR DS:[EDI+182C]
-        003F1C13   B9 1067D400      MOV ECX,PathOfEx.00D46710      <---PointerToFileRoot
-        003F1C18   E8 D33B0400      CALL PathOfEx.004357F0
-        003F1C1D   FF15 C8839D00    CALL DWORD PTR DS:[<&USER32.ReleaseCaptu>; USER32.ReleaseCapture
+        00007FF6E2077CB0 | 48 8B C4                       | mov rax,rsp                                  |
+        00007FF6E2077CB3 | 48 89 48 08                    | mov qword ptr ds:[rax+8],rcx                 |
+        00007FF6E2077CB7 | 55                             | push rbp                                     |
+        00007FF6E2077CB8 | 41 56                          | push r14                                     |
+        00007FF6E2077CBA | 41 57                          | push r15                                     | r15:"minkernel\\ntdll\\ldrinit.c"
+        00007FF6E2077CBC | 48 8D A8 48 FF FF FF           | lea rbp,qword ptr ds:[rax-B8]                |
+        00007FF6E2077CC3 | 48 81 EC A0 01 00 00           | sub rsp,1A0                                  |
+        00007FF6E2077CCA | 48 C7 44 24 40 FE FF FF FF     | mov qword ptr ss:[rsp+40],FFFFFFFFFFFFFFFE   | [rsp+40]:"sed at 0x%p. Status = 0x%x\n"
+        00007FF6E2077CD3 | 48 89 58 10                    | mov qword ptr ds:[rax+10],rbx                | rbx:"LdrpInitializeProcess"
+        00007FF6E2077CD7 | 48 89 70 18                    | mov qword ptr ds:[rax+18],rsi                |
+        00007FF6E2077CDB | 48 89 78 20                    | mov qword ptr ds:[rax+20],rdi                |
+        00007FF6E2077CDF | 33 D2                          | xor edx,edx                                  |
+        00007FF6E2077CE1 | 48 8D 0D 38 E4 DB 00           | lea rcx,qword ptr ds:[7FF6E2E36120]          | <---FileRoot RIP
+        00007FF6E2077CE8 | E8 63 06 00 00                 | call pathofexile_x64 - 2.4.3c.7FF6E2078350   |
+        00007FF6E2077CED | 90                             | nop                                          |
+        00007FF6E2077CEE | 48 8B 35 33 E4 DB 00           | mov rsi,qword ptr ds:[7FF6E2E36128]          |
+        00007FF6E2077CF5 | 48 8B 1E                       | mov rbx,qword ptr ds:[rsi]                   | rbx:"LdrpInitializeProcess"
+        00007FF6E2077CF8 | 45 33 F6                       | xor r14d,r14d                                |
+        00007FF6E2077CFB | 4C 8D 3D 16 83 89 00           | lea r15,qword ptr ds:[7FF6E2910018]          | r15:"minkernel\\ntdll\\ldrinit.c"
+        00007FF6E2077D02 | 48 89 9D C0 00 00 00           | mov qword ptr ss:[rbp+C0],rbx                |
+        00007FF6E2077D09 | 48 3B DE                       | cmp rbx,rsi                                  | rbx:"LdrpInitializeProcess"        
         */
 
-
+        private static readonly Pattern fileRootPattern = new Pattern(new byte[]
+        {
+                  0x89, 0x58, 0x10,
+            0x48, 0x89, 0x70, 0x18,
+            0x48, 0x89, 0x78, 0x20,
+            0x33, 0xD2,
+            0x48, 0x8D, 0x0D
+        }, "xxxxxxxxxxxxxxxx");
 
         /*  areaChangePattern
 
@@ -68,6 +75,7 @@ namespace PoeHUD.Poe
         PathOfExile_x64.exe+348734 - FF 05 E2.68.C5.00        - inc [PathOfExile_x64.exe+F9F01C] { [0000000A] } <--Here
         PathOfExile_x64.exe+34873A - 48 8B C8              - mov rcx,rax
         */
+
         private static readonly Pattern areaChangePattern = new Pattern(new byte[]
         {
             0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -95,6 +103,7 @@ namespace PoeHUD.Poe
              C7 86 BC 30 00 00 01 00 00 00      mov     dword ptr [esi+30BCh], 1
              EB 11                              jmp     short loc_5F3972
         */
+
         public long AreaChangeCount { get; private set; }
         public long Base { get; private set; }
         public string ExeName { get; private set; }
@@ -111,19 +120,13 @@ namespace PoeHUD.Poe
         public long areaCC_pointer;
         public void DoPatternScans(Memory m)
         {
-            long[] array = m.FindPatterns(basePtrPattern, areaChangePattern); //, fileRootPattern, areaChangePattern);
+            long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x1A) + array[0] + 0x1E;
-
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-            /*
-            FileRoot = m.ReadLong(m.AddressOfProcess + array[1] + 0x6) - m.AddressOfProcess;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x10) + array[1] + 0x14;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
-            */
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[1] + 0x22) + array[1] + 0x26;
-
-            //Base = 0xfa9708;
-            //FileRoot = 0x1156120;
-            //AreaChangeCount = 0xFA27CC;
+            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x22) + array[2] + 0x26;
+            System.Console.WriteLine("AreaChangeCount Pointer: " + (AreaChangeCount + m.AddressOfProcess).ToString("x8"));
         }
     }
 }

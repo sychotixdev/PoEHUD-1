@@ -208,7 +208,7 @@ namespace PoeHUD.Framework
 
                 bool found = false;
 
-                for (int offset = 0; offset < exeImage.Length - patternLength; offset++)
+                for (int offset = 0; offset < exeImage.Length - patternLength; offset += 4)
                 {
                     if (CompareData(pattern, exeImage, offset))
                     {
