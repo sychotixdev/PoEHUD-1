@@ -7,10 +7,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public TheGame(Memory m)
         {
             M = m;
-            Address = m.ReadLong(Offsets.Base + m.AddressOfProcess);//0xC40
+            Address = m.ReadLong(Offsets.Base + m.AddressOfProcess, 0x8, 0xf8);//0xC40
             Game = this;
         }
-        public IngameState IngameState => ReadObject<IngameState>(Address + 0xB88);
+        public IngameState IngameState => ReadObject<IngameState>(Address + 0x138);
         public int AreaChangeCount => M.ReadInt(M.AddressOfProcess + Offsets.AreaChangeCount);
     }
 }
