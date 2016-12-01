@@ -5,10 +5,11 @@ using System.IO;
 
 namespace PoeHUD.Poe
 {
+
     public class Offsets
     {
-        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
-        public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
+        public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64", FileRoot = 0x1156120 };
+        public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam", FileRoot = 0x11700b0 };
 
         /*
         PathOfExile_x64.exe+45FFC0 - 40 53                 - push rbx
@@ -18,7 +19,7 @@ namespace PoeHUD.Poe
         PathOfExile_x64.exe+45FFD7 - 48 8B 05 FA57CF00     - mov rax,[PathOfExile_x64.exe+11557D8] { [004D2D10] } <----RIP to Base
         PathOfExile_x64.exe+45FFDE - 48 85 C0              - test rax,rax
         PathOfExile_x64.exe+45FFE1 - 0F85 84000000         - jne PathOfExile_x64.exe+46006B
-		 */
+         */
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
@@ -100,12 +101,11 @@ namespace PoeHUD.Poe
         public long FileRoot { get; private set; }
         public int IgsDelta { get; private set; }
         public int IgsOffset { get; private set; }
-        public int GarenaTWDelta = 0;
         //public int InGameOffset { get; private set; }
 
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
 
-     
+
 
         //public long basePointer;
         public long areaCC_pointer;
@@ -122,7 +122,7 @@ namespace PoeHUD.Poe
             AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[1] + 0x22) + array[1] + 0x26;
 
             //Base = 0xfa9708;
-            FileRoot = 0x1156120;
+            //FileRoot = 0x1156120;
             //AreaChangeCount = 0xFA27CC;
         }
     }
