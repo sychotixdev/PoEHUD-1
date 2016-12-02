@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.Components
 {
     public class Mods : Component
     {
-        public string UniqueName => Address != 0 ? M.ReadStringU(M.ReadInt(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadInt(Address + 0x30, 0x18, 4)) : string.Empty;
+        public string UniqueName => Address != 0 ? M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4)) : string.Empty;
         public bool Identified => Address != 0 && M.ReadByte(Address + 0x88) == 1;
         public ItemRarity ItemRarity => Address != 0 ? (ItemRarity)M.ReadInt(Address + 0x8C) : ItemRarity.Normal;
         public List<ItemMod> ItemMods

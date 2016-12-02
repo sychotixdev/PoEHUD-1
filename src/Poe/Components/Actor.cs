@@ -13,20 +13,20 @@ namespace PoeHUD.Poe.Components
 
         public bool isMoving => (ActionId & 128) > 0;
 
-        public List<int> Minions
+        public List<long> Minions
         {
             get
             {
-                var list = new List<int>();
+                var list = new List<long>();
                 if (Address == 0)
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 0x300);
-                int num2 = M.ReadInt(Address + 0x308);
-                for (int i = num; i < num2; i += 8)
+                long num = M.ReadLong(Address + 0x300);
+                long num2 = M.ReadLong(Address + 0x308);
+                for (long i = num; i < num2; i += 8)
                 {
-                    int item = M.ReadInt(i);
+                    long item = M.ReadLong(i);
                     list.Add(item);
                 }
                 return list;
@@ -39,11 +39,11 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            int num = M.ReadInt(Address + 0x300);
-            int num2 = M.ReadInt(Address + 0x308);
-            for (int i = num; i < num2; i += 8)
+            long num = M.ReadLong(Address + 0x300);
+            long num2 = M.ReadLong(Address + 0x308);
+            for (long i = num; i < num2; i += 8)
             {
-                int num3 = M.ReadInt(i);
+                long num3 = M.ReadLong(i);
                 if (num3 == entity.Id)
                 {
                     return true;

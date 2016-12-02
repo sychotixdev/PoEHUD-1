@@ -38,16 +38,16 @@ namespace PoeHUD.Poe.Components
             get
             {
                 var list = new List<Buff>();
-                int start = M.ReadInt(Address + 0xD8);
-                int end = M.ReadInt(Address + 0xE0);
-                int count = (end - start) / 8;
+                long start = M.ReadLong(Address + 0xD8);
+                long end = M.ReadLong(Address + 0xE0);
+                int count = (int)(end - start) / 8;
                 if (count <= 0 || count > 32)
                 {
                     return list;
                 }
                 for (int i = 0; i < count; i++)
                 {
-                    list.Add(ReadObject<Buff>(M.ReadInt(start + i * 8) + 8));
+                    list.Add(ReadObject<Buff>(M.ReadLong(start + i * 8) + 8));
                 }
                 return list;
             }

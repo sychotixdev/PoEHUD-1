@@ -105,7 +105,7 @@ namespace PoeHUD.Models
             }
         }
 
-        public EntityWrapper GetEntityById(int id)
+        public EntityWrapper GetEntityById(long id)
         {
             EntityWrapper result;
             return entityCache.TryGetValue(id, out result) ? result : null;

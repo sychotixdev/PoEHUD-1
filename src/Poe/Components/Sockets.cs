@@ -14,9 +14,9 @@ namespace PoeHUD.Poe.Components
                 {
                     return 0;
                 }
-                int pLinkStart = M.ReadInt(Address + 0x60);
-                int pLinkEnd = M.ReadInt(Address + 0x68);
-                int LinkGroupingCount = pLinkEnd - pLinkStart;
+                long pLinkStart = M.ReadLong(Address + 0x60);
+                long pLinkEnd = M.ReadLong(Address + 0x68);
+                long LinkGroupingCount = pLinkEnd - pLinkStart;
                 if (LinkGroupingCount <= 0 || LinkGroupingCount > 6)
                 {
                     return 0;

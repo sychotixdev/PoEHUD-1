@@ -15,7 +15,7 @@ namespace PoeHUD.Poe.Components
                 {
                     return "";
                 }
-                return NameLength < 8 ? M.ReadStringU(Address + 0x20, NameLength * 2) : M.ReadStringU(M.ReadInt(Address + 0x20), NameLength * 2);
+                return NameLength < 8 ? M.ReadStringU(Address + 0x20, NameLength * 2) : M.ReadStringU(M.ReadLong(Address + 0x20), NameLength * 2);
             }
         }
 
