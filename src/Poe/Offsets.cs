@@ -11,7 +11,7 @@ namespace PoeHUD.Poe
         public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
         public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
 
-        /*
+        /* Base Pointer
         PathOfExile_x64.exe+45FFC0 - 40 53                 - push rbx
         PathOfExile_x64.exe+45FFC2 - 48 83 EC 50           - sub rsp,50 { 80 }
         PathOfExile_x64.exe+45FFC6 - 48 C7 44 24 20 FEFFFFFF - mov [rsp+20],FFFFFFFE { -2 }
@@ -30,7 +30,7 @@ namespace PoeHUD.Poe
             0x48, 0x8b, 0x05
         }, "xxxxxxxxxxxxxxxxxxxxxxxxxx");
 
-        /*
+        /* FileRoot Pointer
         00007FF6E2077CB0 | 48 8B C4                       | mov rax,rsp                                  |
         00007FF6E2077CB3 | 48 89 48 08                    | mov qword ptr ds:[rax+8],rcx                 |
         00007FF6E2077CB7 | 55                             | push rbp                                     |
@@ -63,7 +63,7 @@ namespace PoeHUD.Poe
             0x48, 0x8D, 0x0D
         }, "xxxxxxxxxxxxxxxx");
 
-        /*  areaChangePattern
+        /* Area Change
         00007FF63317CE40 | 48 83 EC 58                    | sub rsp,58                                      |
         00007FF63317CE44 | 4C 8B C1                       | mov r8,rcx                                      |
         00007FF63317CE47 | 41 B9 01 00 00 00              | mov r9d,1                                       |
@@ -87,11 +87,6 @@ namespace PoeHUD.Poe
              0x48, 0x8B, 0x49, 0x10
         }, "xxxxxxxxxxxxxxxxx");
 
-
-        private static readonly Pattern inGameOffsetPattern =
-            new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
-                "xxxxxxx????xx????xx????????xx");
-
         /*
              8B 0F                              mov     ecx, [edi]
              6A 01                              push    1
@@ -101,6 +96,11 @@ namespace PoeHUD.Poe
              C7 86 BC 30 00 00 01 00 00 00      mov     dword ptr [esi+30BCh], 1
              EB 11                              jmp     short loc_5F3972
         */
+
+        private static readonly Pattern inGameOffsetPattern =
+            new Pattern(@"\x8B\x0F\x6A\x01\x51\xFF\x15\x00\x00\x00\x00\x88\x9F\x00\x00\x00\x00\xC7\x86\x00\x00\x00\x00\x00\x00\x00\x00\xEB\x11",
+                "xxxxxxx????xx????xx????????xx");
+
 
         public long AreaChangeCount { get; private set; }
         public long Base { get; private set; }
