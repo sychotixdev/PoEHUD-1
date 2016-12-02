@@ -64,30 +64,28 @@ namespace PoeHUD.Poe
         }, "xxxxxxxxxxxxxxxx");
 
         /*  areaChangePattern
-
-        PathOfExile_x64.exe+3486C4 - E8 8BAD6700           - call PathOfExile_x64.exe+9C3454
-        PathOfExile_x64.exe+348719 - 90                    - nop 
-        PathOfExile_x64.exe+34871A - 48 8B 86 C8.1A.00.00     - mov rax,[rsi+00001AC8]
-        PathOfExile_x64.exe+348721 - 33 D2                 - xor edx,edx
-        PathOfExile_x64.exe+348723 - 48 8B 88 98.0D.00.00     - mov rcx,[rax+00000D98]
-        PathOfExile_x64.exe+34872A - E8 11.F9.54.00           - call PathOfExile_x64.exe+898040
-        PathOfExile_x64.exe+34872F - E8 FC.01.05.00           - call PathOfExile_x64.exe+398930
-        PathOfExile_x64.exe+348734 - FF 05 E2.68.C5.00        - inc [PathOfExile_x64.exe+F9F01C] { [0000000A] } <--Here
-        PathOfExile_x64.exe+34873A - 48 8B C8              - mov rcx,rax
+        00007FF63317CE40 | 48 83 EC 58                    | sub rsp,58                                      |
+        00007FF63317CE44 | 4C 8B C1                       | mov r8,rcx                                      |
+        00007FF63317CE47 | 41 B9 01 00 00 00              | mov r9d,1                                       |
+        00007FF63317CE4D | 48 8B 49 10                    | mov rcx,qword ptr ds:[rcx+10]                   |
+        00007FF63317CE51 | 48 89 4C 24 30                 | mov qword ptr ss:[rsp+30],rcx                   |
+        00007FF63317CE56 | 48 85 C9                       | test rcx,rcx                                    |
+        00007FF63317CE59 | 74 11                          | je pathofexile_x64 - alpha 2.5.7FF63317CE6C     |
+        00007FF63317CE5B | 41 8B C1                       | mov eax,r9d                                     |
+        00007FF63317CE5E | F0 0F C1 41 54                 | lock xadd dword ptr ds:[rcx+54],eax             |
+        00007FF63317CE63 | 8B 05 7B 09 F0 00              | mov eax,dword ptr ds:[<AreaChangeCount>]        |
+        00007FF63317CE69 | 89 41 50                       | mov dword ptr ds:[rcx+50],eax                   |
+        00007FF63317CE6C | 49 8B 08                       | mov rcx,qword ptr ds:[r8]                       |
+        00007FF63317CE6F | 49 8B 40 18                    | mov rax,qword ptr ds:[r8+18]                    |
         */
 
         private static readonly Pattern areaChangePattern = new Pattern(new byte[]
         {
-            0xE8, 0x00, 0x00, 0x00, 0x00,
-            0x90,
-            0x48, 0x8B, 0x86, 0x00,  0x00, 0x00, 0x00,
-            0x33, 0xd2,
-            0x48, 0x8B, 0x88, 0x00, 0x00, 0x00, 0x00,
-            0xE8, 0x00, 0x00, 0x00, 0x00,
-            0xE8, 0x00, 0x00, 0x00, 0x00,
-            0xFF, 0x05, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x8B, 0xC8,
-        }, "x????xxxx????xxxxx????x????x????xx????xxx");
+             0x48, 0x83, 0xEC, 0x58,
+             0x4C, 0x8B, 0xC1,
+             0x41, 0xB9, 0x01, 0x00, 0x00, 0x00,
+             0x48, 0x8B, 0x49, 0x10
+        }, "xxxxxxxxxxxxxxxxx");
 
 
         private static readonly Pattern inGameOffsetPattern =
@@ -113,10 +111,6 @@ namespace PoeHUD.Poe
         //public int InGameOffset { get; private set; }
 
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
-
-
-
-        //public long basePointer;
         public long areaCC_pointer;
         public void DoPatternScans(Memory m)
         {
@@ -125,7 +119,7 @@ namespace PoeHUD.Poe
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x10) + array[1] + 0x14;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x22) + array[2] + 0x26;
+            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x25) + array[2] + 0x29;
             System.Console.WriteLine("AreaChangeCount Pointer: " + (AreaChangeCount + m.AddressOfProcess).ToString("x8"));
         }
     }
