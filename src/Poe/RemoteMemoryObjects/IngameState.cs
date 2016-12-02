@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Camera Camera => GetObject<Camera>(Address + 0x16e4 + Offsets.IgsOffsetDelta);
         
         public IngameData Data => ReadObject<IngameData>(Address + 0x160 + Offsets.IgsOffset);
-        public bool InGame => true;// ServerData.IsInGame;
+        public bool InGame => ServerData.IsInGame;
         public ServerData ServerData => ReadObjectAt<ServerData>(0x168 + Offsets.IgsOffset);
         public IngameUIElements IngameUi => ReadObjectAt<IngameUIElements>(0x5C0 + Offsets.IgsOffset);
         public Element UIRoot => ReadObjectAt<Element>(0xC98 + Offsets.IgsOffset);
