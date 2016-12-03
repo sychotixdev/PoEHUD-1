@@ -3,6 +3,12 @@
 
 Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
 
+Metadata/Monsters/BreachBosses/BreachBossChaosWild; BreachBossChaosWild; ffD2742D
+Metadata/Monsters/BreachBosses/BreachBossColdWild; BreachBossColdWild; ffD2742D
+Metadata/Monsters/BreachBosses/BreachBossFireWild; BreachBossFireWild; ffD2742D
+Metadata/Monsters/BreachBosses/BreachBossWild; BreachBossWild; ffD2742D
+Metadata/Monsters/BreachBosses/BreachBossPhysicalWild; BreachBossPhysicalWild; ffD2742D
+
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Kaom's Cache; ffD2742D
 Metadata/Monsters/Daemon/BarrelOfSpidersDaemonUnique; Strange Barrel; ffD2742D
 Metadata/Monsters/Daemon/EternalUrnDaemonCommon; Unique Strongbox 1; ffD2742D
