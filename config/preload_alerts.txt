@@ -3,11 +3,24 @@
 
 Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
 
-Metadata/Monsters/BreachBosses/BreachBossChaosWild; BreachBossChaosWild; ffD2742D
-Metadata/Monsters/BreachBosses/BreachBossColdWild; BreachBossColdWild; ffD2742D
-Metadata/Monsters/BreachBosses/BreachBossFireWild; BreachBossFireWild; ffD2742D
-Metadata/Monsters/BreachBosses/BreachBossWild; BreachBossWild; ffD2742D
-Metadata/Monsters/BreachBosses/BreachBossPhysicalWild; BreachBossPhysicalWild; ffD2742D
+# BREACH LEAGUE
+Metadata/Chests/Breach/BreachChest1Large; Xoph's Clasped Hand; ffFF5A5A
+Metadata/Chests/Breach/BreachChest2Large; Tul's Clasped Hand; ffE0ffff
+Metadata/Chests/Breach/BreachChest3Large; Esh's Clasped Hand; ff6495ED
+Metadata/Chests/Breach/BreachChest4Large; Uul-Netol's Clasped Hand; ffD2B48C
+Metadata/Chests/Breach/BreachChest5Large; Chayula's Clasped Hand; ffE8B2CE
+
+Metadata/Monsters/BreachBosses/BreachBossFireWild; Lord Xoph, Dark Embers; ffFF5A5A
+Metadata/Monsters/BreachBosses/BreachBossColdWild;  Lord Tul, Creeping Avalanche; ffE0ffff
+Metadata/Monsters/BreachBosses/BreachBossLightningWild; Lord Esh, Forked Thought; ff6495ED
+Metadata/Monsters/BreachBosses/BreachBossChaosWild; Lord Chayula, Who Dreamt; ffC23B80
+Metadata/Monsters/BreachBosses/BreachBossPhysicalWild; Lord Uul-Netol, Unburdened Flesh; ffD2B48C
+
+Metadata/Monsters/BreachBosses/BreachBossFireMap; Lord Xoph, Dark Embers; ffFF5A5A
+Metadata/Monsters/BreachBosses/BreachBossColdMap;  Lord Tul, Creeping Avalanche; ffE0ffff
+Metadata/Monsters/BreachBosses/BreachBossLightningMap; Lord Esh, Forked Thought; ff6495ED
+Metadata/Monsters/BreachBosses/BreachBossChaosMap; Lord Chayula, Who Dreamt; ffC23B80
+Metadata/Monsters/BreachBosses/BreachBossPhysicalMap; Lord Uul-Netol, Unburdened Flesh; ffD2B48C
 
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Kaom's Cache; ffD2742D
 Metadata/Monsters/Daemon/BarrelOfSpidersDaemonUnique; Strange Barrel; ffD2742D
