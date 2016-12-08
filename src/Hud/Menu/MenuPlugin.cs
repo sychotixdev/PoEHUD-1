@@ -390,6 +390,7 @@ namespace PoeHUD.Hud.Menu
             AddChild(iconSizeMenu, "Chests Icon", settingsHub.PoiTrackerSettings.ChestsIcon);
             AddChild(iconSizeMenu, "Strongboxes Icon", settingsHub.PoiTrackerSettings.StrongboxesIcon);
             AddChild(iconSizeMenu, "PerandusChest Icon", settingsHub.PoiTrackerSettings.PerandusChestIcon);
+            AddChild(iconSizeMenu, "BreachChest Icon", settingsHub.PoiTrackerSettings.BreachChestIcon);
             AddChild(iconSizeMenu, "Item loot Icon", settingsHub.ItemAlertSettings.LootIcon);
             AddChild(mapIconsMenu, "Minimap icons", settingsHub.MapIconsSettings.IconsOnMinimap);
             AddChild(mapIconsMenu, "Large map icons", settingsHub.MapIconsSettings.IconsOnLargeMap);

@@ -18,7 +18,7 @@ namespace PoeHUD.Hud.Trackers
             "Metadata/NPC/Missions/Wild/StrDexInt",
             "Metadata/NPC/Missions/Wild/StrInt"
         };
-        
+
         private static readonly List<string> cadiro = new List<string>
         {
             "Metadata/NPC/League/Cadiro"
@@ -83,6 +83,12 @@ namespace PoeHUD.Hud.Trackers
             }
             if (e.HasComponent<Chest>() && !e.GetComponent<Chest>().IsOpened)
             {
+                if (e.Path.Contains("BreachChest"))
+                {
+                    DebugPlug.DebugPlugin.LogMsg(e.Path, 5);
+                    return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.BreachChestColor), () => Settings.BreachChest, Settings.BreachChestIcon);
+                }
+
                 return e.GetComponent<Chest>().IsStrongbox
                     ? new ChestMapIcon(e, new HudTexture("strongbox.png",
                     e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIcon)
