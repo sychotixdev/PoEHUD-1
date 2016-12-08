@@ -1,7 +1,9 @@
 using PoeHUD.Models;
+using PoeHUD.Framework;
 using PoeHUD.Poe.Components;
 using System;
 using System.Numerics;
+using System.Windows.Forms;
 using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
 using Vector4 = System.Numerics.Vector4;
@@ -25,7 +27,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
             var playerMoving = isplayer && localPlayer.GetComponent<Actor>().isMoving;
             float x, y;
-            long addr = Address + 0x1c4;
+            long addr = Address + 0x17c;
             fixed (byte* numRef = M.ReadBytes(addr, 0x40))
             {
                 Matrix4x4 matrix = *(Matrix4x4*)numRef;
