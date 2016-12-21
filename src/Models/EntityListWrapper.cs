@@ -113,17 +113,18 @@ namespace PoeHUD.Models
 
         public EntityLabel GetLabelForEntity(Entity entity)
         {
-            var hashSet = new HashSet<int>();
-            int entityLabelMap = gameController.Game.IngameState.EntityLabelMap;
-            int num = entityLabelMap;
+            var hashSet = new HashSet<long>();
+            long entityLabelMap = gameController.Game.IngameState.EntityLabelMap;
+            long num = entityLabelMap;
+            
             while (true)
             {
                 hashSet.Add(num);
-                if (gameController.Memory.ReadInt(num + 0x10) == entity.Address)
+                if (gameController.Memory.ReadLong(num + 0x10) == entity.Address)
                 {
                     break;
                 }
-                num = gameController.Memory.ReadInt(num);
+                num = gameController.Memory.ReadLong(num);
                 if (hashSet.Contains(num) || num == 0 || num == -1)
                 {
                     return null;
