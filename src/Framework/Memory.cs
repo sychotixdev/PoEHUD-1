@@ -62,11 +62,6 @@ namespace PoeHUD.Framework
             return Process.HasExited || closed;
         }
 
-        public int ReadInt(int addr)
-        {
-            return BitConverter.ToInt32(ReadMem(addr, 4), 0);
-        }
-
         public int ReadInt(long addr)
         {
             return BitConverter.ToInt32(ReadMem(addr, 4), 0);
@@ -152,19 +147,9 @@ namespace PoeHUD.Framework
             return replaceNull ? RTrimNull(@string) : @string;
         }
 
-        public byte ReadByte(int addr)
-        {
-            return ReadBytes(addr, 1).FirstOrDefault();
-        }
-
         public byte ReadByte(long addr)
         {
             return ReadBytes(addr, 1).FirstOrDefault();
-        }
-
-        public byte[] ReadBytes(int addr, int length)
-        {
-            return ReadMem(addr, length);
         }
 
         public byte[] ReadBytes(long addr, int length)
@@ -181,12 +166,6 @@ namespace PoeHUD.Framework
             }
         }
 
-        private byte[] ReadMem(int addr, int size)
-        {
-            var array = new byte[size];
-            WinApi.ReadProcessMemory(procHandle, (IntPtr)addr, array);
-            return array;
-        }
         private byte[] ReadMem(long addr, int size)
         {
             var array = new byte[size];

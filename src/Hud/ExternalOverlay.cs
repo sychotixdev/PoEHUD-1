@@ -27,6 +27,7 @@ using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
 using PoeHUD.DebugPlug;
+using PoeHUD.Hud.PluginExtension;
 
 namespace PoeHUD.Hud
 {
@@ -165,7 +166,9 @@ namespace PoeHUD.Hud
 
             plugins.Add(new AdvancedTooltipPlugin(gameController, graphics, settings.AdvancedTooltipSettings, settings));
             plugins.Add(new InventoryPreviewPlugin(gameController, graphics, settings.InventoryPreviewSettings));
+            plugins.Add(new PluginExtensionPlugin(gameController, graphics));//Should be before MenuPlugin (MenuPlugin will initialise creating the menu in all plugins)
             plugins.Add(new MenuPlugin(gameController, graphics, settings));
+        
 
             Deactivate += OnDeactivate;
             FormClosing += OnClosing;

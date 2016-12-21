@@ -1,0 +1,22 @@
+1) Create a folder for your plugin in "plugins" directory.
+2) Create a new project in visual studio as "Class Library" in that folder.
+3) Go to project properties, set:
+	a) Application->Target framework: ".NET Framework 4.6.1"
+	b) Build->Output Path: "..\..\" (without brackets) (your dll file will be copied to your plugin directory)
+4) Add reference to PoeHUD.exe (it can be with other name) and set "Copy local: false" in properties.
+5) Optional: (but required for SharpDX drawing) add libraries in "PoEHUD64\lib" directory (also set "Copy local: false" in properties).
+5) Create a class, add "using PoeHUD.Plugins;" at the top, and inherit it from "BasePlugin" 
+or from "BaseSettingsPlugin<MySettings>" if your plugin need some settings to save, where "MySettings" is your class for options inherited from "SettingsBase".
+6) Do your stuff by overriding functions from base class.
+7) Detailed information about errors that was occurred in plugin you can found in ErrorsLog.txt in your plugin folder.
+
+Everything other is the same as PoeHud programming.
+
+To make a settings class for "BaseSettingsPlugin" just make a class inherited from "SettingsBase". To add some options to PoeHUD menu use "Menu" attribute. For example:
+[Menu("Auto Update")]
+public ToggleNode AutoUpdate { get; set; }
+
+Check existing sources of other plugins for more information.
+
+Note: Use carefully the class constructor for your code, errors from it can't be handled & logged.
+Also don't forget to turn on your plugin in PoeHUD menu, otherwice it will not be rendered.

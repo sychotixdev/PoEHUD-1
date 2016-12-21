@@ -199,6 +199,8 @@
     <Compile Include="Hud\Menu\ColorButton.cs" />
     <Compile Include="Hud\Menu\MenuSettings.cs" />
     <Compile Include="Hud\Menu\RootButton.cs" />
+    <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
+    <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
     <Compile Include="Hud\PluginWithMapIcons.cs" />
     <Compile Include="Hud\Settings\ColorNode.cs" />
@@ -238,9 +240,15 @@
     <Compile Include="Hud\Health\CreatureType.cs" />
     <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Models\AreaInstance.cs" />
+    <Compile Include="Plugins\BasePlugin.cs" />
+    <Compile Include="Plugins\BaseSettingsPlugin.cs" />
+    <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\Components\Base.cs" />
+    <Compile Include="Poe\Components\CurrencyInfo.cs" />
     <Compile Include="Poe\Components\DiesAfterTime.cs" />
     <Compile Include="Poe\Components\Flask.cs" />
     <Compile Include="Poe\Components\Inventories.cs" />
+    <Compile Include="Poe\Components\RenderItem.cs" />
     <Compile Include="Poe\Components\Stack.cs" />
     <Compile Include="Poe\Elements\HPbarElement.cs" />
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />

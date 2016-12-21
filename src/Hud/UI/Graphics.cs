@@ -141,6 +141,19 @@ namespace PoeHUD.Hud.UI
             DrawImage(fileName, rectangle, Color.White, repeatX);
         }
 
+        public void DrawPluginImage(string fileName, RectangleF rectangle, float repeatX = 1f)
+        {
+            try
+            {
+                textureRenderer.DrawImage(fileName, rectangle, Color.White, repeatX);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load texture {fileName}: {e.Message}");
+                Environment.Exit(0);
+            }
+        }
+
         public void DrawImage(string fileName, RectangleF rectangle, RectangleF uvCoords)
         {
             DrawImage(fileName, rectangle, uvCoords, Color.White);
@@ -151,6 +164,19 @@ namespace PoeHUD.Hud.UI
             try
             {
                 textureRenderer.DrawImage("textures/" + fileName, rectangle, uvCoords, color);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load texture {fileName}: {e.Message}");
+                Environment.Exit(0);
+            }
+        }
+
+        public void DrawImage(string fileName, Vertexes.TexturedVertex[] data, Color color, float repeatX = 1f)
+        {
+            try
+            {
+                textureRenderer.DrawImage("textures/" + fileName, data, color, repeatX);
             }
             catch (Exception e)
             {

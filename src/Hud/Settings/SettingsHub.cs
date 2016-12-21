@@ -20,7 +20,7 @@ namespace PoeHUD.Hud.Settings
     {
         private const string SETTINGS_FILE_NAME = "config/settings.json";
 
-        private static readonly JsonSerializerSettings jsonSettings;
+        public static readonly JsonSerializerSettings jsonSettings;
 
         static SettingsHub()
         {

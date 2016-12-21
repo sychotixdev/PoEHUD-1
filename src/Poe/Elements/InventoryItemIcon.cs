@@ -10,6 +10,9 @@ namespace PoeHUD.Poe.Elements
         private readonly Func<ItemOnGroundTooltip> toolTipOnground;
         private ToolTipType? toolTip;
 
+        public int InventPosX => M.ReadInt(Address + 0xb20);
+        public int InventPosY => M.ReadInt(Address + 0xb24);
+
         public InventoryItemIcon()
         {
             toolTipOnground = () => Game.IngameState.IngameUi.ItemOnGroundTooltip;
@@ -59,7 +62,7 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
 
-                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xC48);
+                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xC40);
                         if (le == null)
                             return null;
                         Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x2FC);

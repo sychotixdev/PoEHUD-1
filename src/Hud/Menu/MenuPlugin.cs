@@ -18,6 +18,7 @@ namespace PoeHUD.Hud.Menu
         private readonly Action<MouseInfo> onMouseDown, onMouseUp, onMouseMove;
         private bool holdKey;
         private RootButton root;
+        public static event Action<RootButton> eInitMenu = delegate { };//For spawning the menu in external plugins
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub)
             : base(gameController, graphics, settingsHub.MenuSettings)
@@ -62,26 +63,26 @@ namespace PoeHUD.Hud.Menu
             }
         }
 
-        private static MenuItem AddChild(MenuItem parent, string text, ToggleNode node, string key = null, Func<MenuItem, bool> hide = null)
+        public static MenuItem AddChild(MenuItem parent, string text, ToggleNode node, string key = null, Func<MenuItem, bool> hide = null)
         {
             var item = new ToggleButton(parent, text, node, key, hide);
             parent.AddChild(item);
             return item;
         }
 
-        private static void AddChild(MenuItem parent, FileNode path)
+        public static void AddChild(MenuItem parent, FileNode path)
         {
             var item = new FileButton(path);
             parent.AddChild(item);
         }
 
-        private static void AddChild(MenuItem parent, string text, ColorNode node)
+        public static void AddChild(MenuItem parent, string text, ColorNode node)
         {
             var item = new ColorButton(text, node);
             parent.AddChild(item);
         }
 
-        private static void AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
+        public static void AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
         {
             var item = new Picker<T>(text, node);
             parent.AddChild(item);
@@ -421,6 +422,8 @@ namespace PoeHUD.Hud.Menu
             AddChild(menuSettings, "Menu font size", settingsHub.MenuSettings.MenuFontSize);
             AddChild(menuSettings, "Title font size", settingsHub.MenuSettings.TitleFontSize);
             AddChild(menuSettings, "Picker font size", settingsHub.MenuSettings.PickerFontSize);
+
+            eInitMenu(root);//Spawning the menu in external plugins
         }
 
         private bool OnMouseEvent(MouseEventID id, Point position)

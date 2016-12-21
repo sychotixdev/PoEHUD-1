@@ -2,17 +2,7 @@ namespace PoeHUD.Poe.Components
 {
     public class Stack : Component
     {
-        public int Size
-        {
-            get
-            {
-                if (Address == 0)
-                {
-                    return 0;
-                }
-                int res = M.ReadInt(Address + 0x18);
-                return res;
-            }
-        }
+        public int Size => Address == 0 ? 0 : M.ReadInt(Address + 0x18);//0xC ?
+        public CurrencyInfo Info => Address != 0 ? ReadObject<CurrencyInfo>(Address + 0x10) : null;
     }
 }
