@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.Elements
                 {
                     return "";
                 }
-                return LabelLen >= 8 ? M.ReadStringU(M.ReadInt(Address + 0xBB8), LabelLen * 2) : M.ReadStringU(Address + 0xBC8, LabelLen * 2);
+                return LabelLen >= 8 ? M.ReadStringU(M.ReadLong(Address + 0xBB8), LabelLen * 2) : M.ReadStringU(Address + 0xBC8, LabelLen * 2);
             }
         }
     }

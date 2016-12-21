@@ -2,7 +2,7 @@
 {
     public class DiagnosticElement : RemoteMemoryObject
     {
-        public long DiagnosticArray => M.ReadInt(Address + 0x0);
+        public long DiagnosticArray => M.ReadLong(Address + 0x0);
         public float CurrValue => M.ReadFloat(DiagnosticArray + 0x13C);
         public int X => M.ReadInt(Address + 0x8);
         public int Y => M.ReadInt(Address + 0xC);
