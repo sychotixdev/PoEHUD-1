@@ -1,0 +1,6 @@
+To add loading images functionality use InventoryPreview.dll file from "ExtraPermissions" folder and copy it to this folder with replace.
+Go to properties of this file and press Unblock button, otherwice you got error in PoeHUD.
+
+Programming notes:
+To compile dll with images uncommit the first line of plugin:
+//#define LoadImagesCode //<< Loading images, uncommit this line

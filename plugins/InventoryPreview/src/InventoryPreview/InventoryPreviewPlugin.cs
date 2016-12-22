@@ -1,4 +1,5 @@
-﻿using PoeHUD.Controllers;
+﻿//#define LoadImagesCode //<< Loading images, uncommit this line
+using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Framework.InputHooks;
 using PoeHUD.Models.Interfaces;
@@ -98,6 +99,7 @@ namespace InventoryPreview
 
             if (cell.IsUsed)
             {
+#if LoadImagesCode
                 if (!string.IsNullOrEmpty(cell.IconMetadata))
                 {
                     var getImg = GetImage(cell.IconMetadata);
@@ -107,7 +109,7 @@ namespace InventoryPreview
                         Graphics.DrawPluginImage(getImg.FilePath, rectangleF);
                     }
                 }
-
+#endif
                 if (cell.IsStackable)
                 {
                     int textSize = (int)(Settings.CellSize / 2.7f);
@@ -355,6 +357,9 @@ namespace InventoryPreview
             MouseHook.MouseDown -= onMouseDown;
         }
 
+
+#if LoadImagesCode
+
         private Dictionary<string, ImageCache> ImagesCache = new Dictionary<string, ImageCache>();
 
         private ImageCache GetImage(string metadata)
@@ -429,5 +434,6 @@ namespace InventoryPreview
                 }
             }
         }
+#endif
     }
 }
