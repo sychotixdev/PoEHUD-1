@@ -8,6 +8,7 @@ using System.Reflection;
 using PoeHUD.Plugins;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using PoeHUD.Hud.Menu;
+using Trinet.Core.IO.Ntfs;
 
 namespace PoeHUD.Hud.PluginExtension
 {
@@ -48,6 +49,16 @@ namespace PoeHUD.Hud.PluginExtension
         }
         private void TryLoadDll(string path, string dir)
         {
+            if(!ProcessFile_Real(path))
+            {
+                //LogMessage("Plugin unblocked: " + path, 5);
+            }
+            else
+            {
+                LogMessage("Can't unblock plugin: " + path, 5);
+                return;
+            }
+
             var myAsm = Assembly.LoadFrom(path);
             if (myAsm == null) return;
 
@@ -62,6 +73,28 @@ namespace PoeHUD.Hud.PluginExtension
                     LogMessage("Loaded plugin: " + type.Name, 3);
                 }
             }
+        }
+
+        private const string ZoneName = "Zone.Identifier";
+        static bool ProcessFile_Real(string path)
+        {
+            bool result = FileSystem.AlternateDataStreamExists(path, ZoneName);
+            if (result)
+            {
+                // Clear the read-only attribute, if set:
+                FileAttributes attributes = File.GetAttributes(path);
+                if (FileAttributes.ReadOnly == (FileAttributes.ReadOnly & attributes))
+                {
+                    attributes &= ~FileAttributes.ReadOnly;
+                    File.SetAttributes(path, attributes);
+                }
+
+                result = FileSystem.DeleteAlternateDataStream(path, ZoneName);
+
+                result = FileSystem.AlternateDataStreamExists(path, ZoneName);//Check again
+            }
+
+            return result;
         }
 
         #region PluginMethods
