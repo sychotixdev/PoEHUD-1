@@ -17,7 +17,7 @@ namespace PoeHUD.Plugins
         {
             PluginName = GetType().Name;
         }
-        public PluginExtensionPlugin API;
+        public static PluginExtensionPlugin API;
         protected GameController GameController => API.GameController;
         protected Graphics Graphics => API.Graphics;
         protected Memory Memory => GameController.Memory;
@@ -133,22 +133,19 @@ namespace PoeHUD.Plugins
             }
         }
 
-        protected void LogError(string message, float displayTime)
+        public static void LogError(string message, float displayTime)
         {
             if(API == null)
                 return;
 
-            API.LogError(PluginName + ": " + message, displayTime);
+            API.LogError(message, displayTime);
         }
-        protected void LogMessage(string message, float displayTime, bool printPluginName = false)
+        public static void LogMessage(string message, float displayTime)
         {
             if (API == null)
                 return;
 
-            if (printPluginName)
-                API.LogMessage(PluginName + ": " + message, displayTime);
-            else
-                API.LogMessage(message, displayTime);
+            API.LogMessage(message, displayTime);
         }
 
         public void iInit(PluginExtensionPlugin api, ExternalPlugin pluginData)

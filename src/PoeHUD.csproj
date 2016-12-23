@@ -149,6 +149,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="Trinet.Core.IO.Ntfs">
+      <HintPath>..\lib\Trinet.Core.IO.Ntfs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\FsController.cs" />

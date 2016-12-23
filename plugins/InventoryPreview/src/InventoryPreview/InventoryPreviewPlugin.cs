@@ -22,6 +22,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Color = SharpDX.Color;
+using System.Runtime.InteropServices;
 
 namespace InventoryPreview
 {
@@ -41,7 +42,7 @@ namespace InventoryPreview
             cells = new CellData[CELLS_X_COUNT, CELLS_Y_COUNT];
         }
         
-        private bool CellDrawFlag = false;//Don't draw already drawn cells
+        private bool CellDrawFlag = false;//Don't draw already drawn cells flag
 
         private bool Initialised = false;
         public override void Render()
@@ -128,7 +129,7 @@ namespace InventoryPreview
             }
         
 
-            //Don't draw cells that already drawn
+            //Don't draw cells that already drawn for this item
             for (int i = x; i < x + cell.ItemSizeX; i++)
             {
                 for (int j = y; j < y + cell.ItemSizeY; j++)
@@ -336,9 +337,7 @@ namespace InventoryPreview
         private void AddItemToCells(int x, int y, int itemSizeX, int itemSizeY, bool stackable, string itemName, int stackSize, int maxStackSize, string iconMetadata)
         {
             if (!iconMetadata.EndsWith(".dds"))
-            {
                 iconMetadata = "";
-            }
 
             for (int i = x; i < x + itemSizeX; i++)
             {
@@ -359,9 +358,9 @@ namespace InventoryPreview
 
         private ImageCache GetImage(string metadata)
         {
-            ImageCache result = null;
+            ImageCache result;
 
-            if(!ImagesCache.TryGetValue(metadata, out result))
+            if (!ImagesCache.TryGetValue(metadata, out result))
             {
                 result = DownloadImage(metadata);
                 ImagesCache.Add(metadata, result);
@@ -370,13 +369,14 @@ namespace InventoryPreview
             return result;
         }
 
-
         //Images from site:
-        //http://web.poe.garena.ru/image/Art/2DItems/Currency/CurrencyRerollRare.png
+        //http://web.poe.garena.com/image/Art/2DItems/Currency/CurrencyRerollRare.png
         private ImageCache DownloadImage(string metadata)
         {
+            //Metadata will be always contains (ends with) ".dds" keyword. Check AddItemToCells.
+
             metadata = metadata.Replace(".dds", ".png");
-            var url = "http://web.poe.garena.ru/image/" + metadata;
+            var url = "http://web.poe.garena.com/image/" + metadata;
 
             var filePath = PluginDirectory + "/resources/";
             filePath = filePath.Substring(filePath.IndexOf(@"\plugins\") + 1) + metadata;
@@ -387,6 +387,7 @@ namespace InventoryPreview
                 FilePath = filePath,
                 Url = url
             };
+
 
             try
             {
@@ -401,8 +402,8 @@ namespace InventoryPreview
                     Directory.CreateDirectory(settingsDirName);
 
                 WebClient webClient = new WebClient();
-                webClient.DownloadFileAsync(new Uri(img.Url), img.FilePath);
-                webClient.DownloadFileCompleted += img.OnGetDownloadedStringCompleted;
+                webClient.DownloadDataAsync(new Uri(img.Url), img.FilePath);
+                webClient.DownloadDataCompleted += img.OnGetDownloadedStringCompleted;
             }
             catch
             {
@@ -413,20 +414,36 @@ namespace InventoryPreview
 
         private class ImageCache
         {
-            public bool bIsDownloaded = false;
+            public bool bIsDownloaded;
             public string Url;
             public string FilePath;
 
-            public void OnGetDownloadedStringCompleted(object sender, AsyncCompletedEventArgs e)
+            public void OnGetDownloadedStringCompleted(object sender, DownloadDataCompletedEventArgs e)
             {
                 if (e.Error == null)
                 {
-                    bIsDownloaded = true;
+                    Bitmap flaskImg;
+                    using (var ms = new MemoryStream(e.Result))
+                    {
+                        flaskImg = new Bitmap(ms);
+                    }
+
+                    if (FilePath.Contains("Flasks"))//Cut 1/3 of flask image
+                    {
+                        flaskImg = CropImage(flaskImg, new System.Drawing.Rectangle(0, 0, flaskImg.Width / 3, flaskImg.Height));
+                    }
+
+                    flaskImg.Save(FilePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                    bIsDownloaded = true;//Due to async processing this must be in the last line
                 }
-                else
-                {
-                    //MessageBox.Show("Error download: " + e.Error.ToString());
-                }
+            }
+
+
+            //from http://stackoverflow.com/questions/9484935/how-to-cut-a-part-of-image-in-c-sharp
+            public Bitmap CropImage(Bitmap source, System.Drawing.Rectangle section)
+            {
+                return source.Clone(section, source.PixelFormat);
             }
         }
     }

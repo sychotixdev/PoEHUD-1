@@ -49,11 +49,7 @@ namespace PoeHUD.Hud.PluginExtension
         }
         private void TryLoadDll(string path, string dir)
         {
-            if(!ProcessFile_Real(path))
-            {
-                //LogMessage("Plugin unblocked: " + path, 5);
-            }
-            else
+            if(ProcessFile_Real(path))
             {
                 LogMessage("Can't unblock plugin: " + path, 5);
                 return;
