@@ -6,7 +6,6 @@ using PoeHUD.Hud.Dps;
 using PoeHUD.Hud.Health;
 using PoeHUD.Hud.Icons;
 using PoeHUD.Hud.Interfaces;
-using PoeHUD.Hud.InventoryPreview;
 using PoeHUD.Hud.KillCounter;
 using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Menu;
@@ -165,7 +164,6 @@ namespace PoeHUD.Hud
             plugins.AddRange(underPanel.GetPlugins());
 
             plugins.Add(new AdvancedTooltipPlugin(gameController, graphics, settings.AdvancedTooltipSettings, settings));
-            plugins.Add(new InventoryPreviewPlugin(gameController, graphics, settings.InventoryPreviewSettings));
             plugins.Add(new PluginExtensionPlugin(gameController, graphics));//Should be before MenuPlugin (MenuPlugin will initialise creating the menu in all plugins)
             plugins.Add(new MenuPlugin(gameController, graphics, settings));
         

@@ -401,16 +401,6 @@ namespace PoeHUD.Hud.Menu
             AddChild(mapIconsMenu, "Chests", settingsHub.PoiTrackerSettings.Chests);
             AddChild(mapIconsMenu, "Masters", settingsHub.PoiTrackerSettings.Masters);
 
-            // Inventory preview
-            MenuItem showInventoryPreviewMenu = AddChild(root, "Inventory preview", settingsHub.InventoryPreviewSettings.Enable);
-            AddChild(showInventoryPreviewMenu, "Auto update", settingsHub.InventoryPreviewSettings.AutoUpdate);
-            AddChild(showInventoryPreviewMenu, "Free cell color", settingsHub.InventoryPreviewSettings.CellFreeColor);
-            AddChild(showInventoryPreviewMenu, "Used cell color", settingsHub.InventoryPreviewSettings.CellUsedColor);
-            AddChild(showInventoryPreviewMenu, "Cell size", settingsHub.InventoryPreviewSettings.CellSize);
-            AddChild(showInventoryPreviewMenu, "Cell padding", settingsHub.InventoryPreviewSettings.CellPadding);
-            AddChild(showInventoryPreviewMenu, "Position X", settingsHub.InventoryPreviewSettings.PositionX);
-            AddChild(showInventoryPreviewMenu, "Position Y", settingsHub.InventoryPreviewSettings.PositionY);
-
             //Menu Settings
             var menuSettings = AddChild(root, "Menu settings", settingsHub.MenuSettings.ShowMenu, "F12");
             AddChild(menuSettings, "Menu font color", settingsHub.MenuSettings.MenuFontColor);

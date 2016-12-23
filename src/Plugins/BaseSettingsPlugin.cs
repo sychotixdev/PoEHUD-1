@@ -85,7 +85,7 @@ namespace PoeHUD.Plugins
             }
         }
 
-        public override void InitialiseMenu(RootButton mainMenu)
+        public override void InitialiseMenu(MenuItem mainMenu)
         {
             var menu = MenuPlugin.AddChild(mainMenu, PluginName, Settings.Enable);
             var settingsProps = Settings.GetType().GetProperties();

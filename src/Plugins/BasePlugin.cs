@@ -3,9 +3,7 @@ using PoeHUD.Hud.PluginExtension;
 using PoeHUD.Controllers;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using System;
-using System;
 using System.IO;
-using System.Windows.Forms;
 using PoeHUD.Hud.Menu;
 using PoeHUD.Framework;
 
@@ -91,7 +89,7 @@ namespace PoeHUD.Plugins
             }
             eSaveSettings();
         }
-        private void iInitialiseMenu(RootButton menu)
+        private void iInitialiseMenu(MenuItem menu)
         {
             try { InitialiseMenu(menu); }
             catch (Exception e)
@@ -106,7 +104,7 @@ namespace PoeHUD.Plugins
         public virtual void EntityAdded(EntityWrapper entityWrapper) { }
         public virtual void EntityRemoved(EntityWrapper entityWrapper) { }
         public virtual void OnClose() { }
-        public virtual void InitialiseMenu(RootButton menu) { }
+        public virtual void InitialiseMenu(MenuItem menu) { }
 
         public float PluginErrorDisplayTime = 3;
         private string LogFileName = "ErrorLog.txt";

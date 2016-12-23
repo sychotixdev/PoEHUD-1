@@ -3,7 +3,6 @@ using PoeHUD.Hud.AdvancedTooltip;
 using PoeHUD.Hud.Dps;
 using PoeHUD.Hud.Health;
 using PoeHUD.Hud.Icons;
-using PoeHUD.Hud.InventoryPreview;
 using PoeHUD.Hud.KillCounter;
 using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Menu;
@@ -48,7 +47,6 @@ namespace PoeHUD.Hud.Settings
             PreloadAlertSettings = new PreloadAlertSettings();
             XpRateSettings = new XpRateSettings();
             HealthBarSettings = new HealthBarSettings();
-            InventoryPreviewSettings = new InventoryPreviewSettings();
             KillCounterSettings = new KillCounterSettings();
         }
 
@@ -81,9 +79,6 @@ namespace PoeHUD.Hud.Settings
 
         [JsonProperty("Health bar")]
         public HealthBarSettings HealthBarSettings { get; private set; }
-
-        [JsonProperty("Inventory preview")]
-        public InventoryPreviewSettings InventoryPreviewSettings { get; private set; }
 
         [JsonProperty("Kills Counter")]
         public KillCounterSettings KillCounterSettings { get; private set; }

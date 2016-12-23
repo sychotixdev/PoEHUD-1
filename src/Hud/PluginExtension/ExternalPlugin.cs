@@ -2,7 +2,6 @@
 using PoeHUD.Plugins;
 using PoeHUD.Models;
 using System.Reflection;
-using System.Windows.Forms;
 using PoeHUD.Hud.Menu;
 
 namespace PoeHUD.Hud.PluginExtension
@@ -78,7 +77,7 @@ namespace PoeHUD.Hud.PluginExtension
 
             var menuInitMethod = typeof(BasePlugin).GetMethod("iInitialiseMenu", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             if (menuInitMethod != null)
-                API.eInitMenu += delegate(RootButton menu) { menuInitMethod.Invoke(PluginInstance, new object[] { menu }); };
+                API.eInitMenu += delegate(MenuItem menu) { menuInitMethod.Invoke(PluginInstance, new object[] { menu }); };
 
             
        
