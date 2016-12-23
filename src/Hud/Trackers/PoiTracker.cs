@@ -85,7 +85,6 @@ namespace PoeHUD.Hud.Trackers
             {
                 if (e.Path.Contains("BreachChest"))
                 {
-                    DebugPlug.DebugPlugin.LogMsg(e.Path, 5);
                     return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.BreachChestColor), () => Settings.BreachChest, Settings.BreachChestIcon);
                 }
 
