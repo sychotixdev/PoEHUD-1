@@ -151,7 +151,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="Trinet.Core.IO.Ntfs">
       <HintPath>..\lib\Trinet.Core.IO.Ntfs.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
