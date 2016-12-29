@@ -55,6 +55,9 @@ namespace PoeHUD.Plugins
                 LogError($"Plugin {PluginName} error load settings!", 3);
                 Settings = new TSettings();
             }
+
+            if (Settings.Enable == null)
+                Settings.Enable = false;
         }
 
         private void SaveSettings()

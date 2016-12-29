@@ -227,6 +227,9 @@ namespace InventoryPreview
 
                     var baseC = item.GetComponent<Base>();
 
+                    int ItemCellsSizeX = baseC.ItemCellsSizeX;
+                    int ItemCellsSizeY = baseC.ItemCellsSizeY;
+
                     CurPickItemCount++;
 
                     Task.Factory.StartNew(async () =>
@@ -237,6 +240,7 @@ namespace InventoryPreview
                         {
                             await Task.Delay(30);
 
+                            //We want to prevent the item was added more than once
                             if (curItemPickCount != CurPickItemCount)
                                 return;
 
@@ -251,7 +255,7 @@ namespace InventoryPreview
 
                         if (!item.IsValid)
                         {
-                            TryToAutoAddItem(itemName, stackable, stackSize, maxStackSize, baseC.ItemCellsSizeX, baseC.ItemCellsSizeY, resourcePath);
+                            TryToAutoAddItem(itemName, stackable, stackSize, maxStackSize, ItemCellsSizeX, ItemCellsSizeY, resourcePath);
                         }
                     });
 
@@ -377,9 +381,8 @@ namespace InventoryPreview
 
             metadata = metadata.Replace(".dds", ".png");
             var url = "http://web.poe.garena.com/image/" + metadata;
-
-            var filePath = PluginDirectory + "/resources/";
-            filePath = filePath.Substring(filePath.IndexOf(@"\plugins\") + 1) + metadata;
+            
+            var filePath = LocalPluginDirectory + "/resources/" + metadata;
 
 
             ImageCache img = new ImageCache()

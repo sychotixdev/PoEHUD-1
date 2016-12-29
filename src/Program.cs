@@ -82,7 +82,7 @@ namespace PoeHUD
                 sb.Append("AddressOfProcess: " + memory.AddressOfProcess.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("GameControllerOffsRead: " + offs.Base.ToString("X"));
+                sb.Append("GameController full: " + (offs.Base + memory.AddressOfProcess).ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
                 sb.Append("GameController: " + (offs.Base + memory.AddressOfProcess).ToString("X"));
@@ -98,13 +98,17 @@ namespace PoeHUD
                 sb.Append("IngameData: " + gameController.Game.IngameState.Data.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
+                sb.Append("IngameUi: " + gameController.Game.IngameState.IngameUi.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
+                sb.Append("UIRoot: " + gameController.Game.IngameState.UIRoot.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
                 sb.Append("ServerData: " + gameController.Game.IngameState.ServerData.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("DiagnosticInfoType: " + gameController.Game.IngameState.DiagnosticInfoType);
-                sb.Append(System.Environment.NewLine);
 
-                sb.Append("GetInventoryZone: " + (gameController.Game.IngameState.IngameUi.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x330).ToString("X"));
+                sb.Append("GetInventoryZone: " + memory.ReadLong(gameController.Game.IngameState.IngameUi.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x42c).ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
                 sb.Append("Area Addr: " + gameController.Game.IngameState.Data.CurrentArea.Address.ToString("X"));
@@ -113,29 +117,8 @@ namespace PoeHUD
                 sb.Append("Area Name: " + gameController.Game.IngameState.Data.CurrentArea.Name);
                 sb.Append(System.Environment.NewLine);
 
-                /*
-                sb.Append("CurLatency: " + gameController.Game.IngameState.CurLatency);
-                sb.Append(System.Environment.NewLine);
 
-                sb.Append("TimeInGame Float: " + gameController.Game.IngameState.TimeInGameF);
-                sb.Append(System.Environment.NewLine);
-
-
-                sb.Append("Area change pointer: " + offs.areaCC_pointer.ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
-                sb.Append("Area change pointer (global): " + (offs.areaCC_pointer + memory.AddressOfProcess).ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
-                sb.Append("Area change addr: " + offs.AreaChangeCount.ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
-                sb.Append("Area change addr (global): " + (offs.AreaChangeCount + memory.AddressOfProcess).ToString("X"));
-                sb.Append(System.Environment.NewLine);
-                */
-
-
-                sb.Append("Area change: " + memory.ReadInt(offs.AreaChangeCount + memory.AddressOfProcess));
+                sb.Append("Area change: " + memory.ReadLong(offs.AreaChangeCount + memory.AddressOfProcess));
                 sb.Append(System.Environment.NewLine);
                 sb.Append(System.Environment.NewLine);
 

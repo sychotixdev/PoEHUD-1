@@ -22,6 +22,7 @@ namespace PoeHUD.Plugins
 
 
         protected string PluginDirectory;
+        protected string LocalPluginDirectory;
         public string PluginName;
 
         protected Action eSaveSettings = delegate { };
@@ -148,8 +149,9 @@ namespace PoeHUD.Plugins
 
         public void iInit(PluginExtensionPlugin api, ExternalPlugin pluginData)
         {
+            API = api;
             PluginDirectory = pluginData.PluginDir;
-            API = api;      
+            LocalPluginDirectory = PluginDirectory.Substring(PluginDirectory.IndexOf(@"\plugins\") + 1); 
         }
 
         public void Destroy()
