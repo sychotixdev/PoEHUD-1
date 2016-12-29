@@ -32,24 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PoeHUD">
-      <HintPath>..\..\..\..\..\..\..\..\PoeHUD.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\PoeHUD.exe</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>..\..\..\..\..\..\..\..\lib\SharpDX.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\lib\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Desktop">
-      <HintPath>..\..\..\..\..\..\..\..\lib\SharpDX.Desktop.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\lib\SharpDX.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>..\..\..\..\..\..\..\..\lib\SharpDX.Direct3D9.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\lib\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Mathematics">
-      <HintPath>..\..\..\..\..\..\..\..\lib\SharpDX.Mathematics.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\lib\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,10 +54,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Utils">
-      <HintPath>..\..\..\Utils.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapsExchange.cs" />
