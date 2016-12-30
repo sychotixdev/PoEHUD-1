@@ -166,9 +166,12 @@ namespace MapsExchange
 
         public override void Render()
         {
+            if (!GameController.Game.IngameState.IngameUi.OpenLeftPanel.IsVisible)
+                return;
+
             CurrentHoverItem = GameController.Game.IngameState.UIHover.AsObject<InventoryItemIcon>();
 
-            if (CurrentHoverItem.Item != null)
+            if (CurrentHoverItem.ToolTipType == ToolTipType.InventoryItem && CurrentHoverItem.Item != null)
             {
                 CurInventRoot = CurrentHoverItem.Parent;
             }
