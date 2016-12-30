@@ -16,13 +16,13 @@ namespace PoeHUD.Plugins
             PluginName = GetType().Name;
         }
         public static PluginExtensionPlugin API;
-        protected GameController GameController => API.GameController;
-        protected Graphics Graphics => API.Graphics;
-        protected Memory Memory => GameController.Memory;
+        public GameController GameController => API.GameController;
+        public Graphics Graphics => API.Graphics;
+        public Memory Memory => GameController.Memory;
 
 
-        protected string PluginDirectory;
-        protected string LocalPluginDirectory;
+        public string PluginDirectory { get; private set; }
+        public string LocalPluginDirectory { get; private set; }
         public string PluginName;
 
         protected Action eSaveSettings = delegate { };
