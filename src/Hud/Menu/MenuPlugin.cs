@@ -76,16 +76,18 @@ namespace PoeHUD.Hud.Menu
             parent.AddChild(item);
         }
 
-        public static void AddChild(MenuItem parent, string text, ColorNode node)
+        public static MenuItem AddChild(MenuItem parent, string text, ColorNode node)
         {
             var item = new ColorButton(text, node);
             parent.AddChild(item);
+            return item;
         }
 
-        public static void AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
+        public static MenuItem AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
         {
             var item = new Picker<T>(text, node);
             parent.AddChild(item);
+            return item;
         }
 
         private void CreateMenu()

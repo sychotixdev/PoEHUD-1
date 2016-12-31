@@ -93,23 +93,37 @@ namespace PoeHUD.Plugins
             var menu = MenuPlugin.AddChild(mainMenu, PluginName, Settings.Enable);
             var settingsProps = Settings.GetType().GetProperties();
 
+            Dictionary<int, MenuItem> RootMenu = new Dictionary<int, MenuItem>();
+
             foreach (var property in settingsProps)
             {
                 var menuAttrib = property.GetCustomAttribute<MenuAttribute>();
 
-                if(menuAttrib != null)
+                MenuItem parentMenu = menu;
+
+                if (menuAttrib != null)
                 {
+                    if (menuAttrib.parentIndex != -1)
+                    {
+                        if (RootMenu.ContainsKey(menuAttrib.parentIndex))
+                            parentMenu = RootMenu[menuAttrib.parentIndex];
+                        else
+                            LogError($"{PluginName}: Can't find parent menu with index '{menuAttrib.parentIndex}'!", 5);
+                    }
+
+                    MenuItem resultItem = null;
+
                     var propType = property.PropertyType;
 
                     if (propType == typeof(ToggleNode))
                     {
                         ToggleNode option = property.GetValue(Settings) as ToggleNode;
-                        MenuPlugin.AddChild(menu, menuAttrib.MenuName, option);
+                        resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
                     else if (propType == typeof(ColorNode))
                     {
                         ColorNode option = property.GetValue(Settings) as ColorNode;
-                        MenuPlugin.AddChild(menu, menuAttrib.MenuName, option);
+                        resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }                    
                     else if (propType.IsGenericType)
                     {
@@ -132,25 +146,39 @@ namespace PoeHUD.Plugins
                                 if (argType == typeof(int))
                                 {
                                     RangeNode<int> option = property.GetValue(Settings) as RangeNode<int>;
-                                    MenuPlugin.AddChild(menu, menuAttrib.MenuName, option);
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                                 }
                                 else if (argType == typeof(float))
                                 {
                                     RangeNode<float> option = property.GetValue(Settings) as RangeNode<float>;
-                                    MenuPlugin.AddChild(menu, menuAttrib.MenuName, option);
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                                 }
                                 else
-                                    LogError($"Generic node argument '{argType.Name}' is not defined in code. Node type: " + propType.Name, 5);
+                                    LogError($"{PluginName}: Generic node argument '{argType.Name}' is not defined in code. Node type: " + propType.Name, 5);
                             }
                             else
-                                LogError("Can't get GenericTypeArguments from option type: " + propType.Name, 5);
+                                LogError($"{PluginName}: Can't get GenericTypeArguments from option type: " + propType.Name, 5);
                         }
                         else
-                            LogError("Generic option node is not defined in code: " + genericType.Name, 5);
+                            LogError($"{PluginName}: Generic option node is not defined in code: " + genericType.Name, 5);
                         
                     }
                     else
-                        LogError("Type of option node is not defined: " + propType.Name, 5);
+                        LogError($"{PluginName}: Type of option node is not defined: " + propType.Name, 5);
+
+
+
+                    if (menuAttrib.index != -1 && resultItem != null)
+                    {
+                        if(!RootMenu.ContainsKey(menuAttrib.index))
+                        {
+                            RootMenu.Add(menuAttrib.index, resultItem);
+                        }
+                        else
+                        {
+                            LogError($"{PluginName}: Can't add menu '{menuAttrib.MenuName}', plugin already contains menu with index '{menuAttrib.index}'!", 5);
+                        }
+                    }
                 }
             }
         }

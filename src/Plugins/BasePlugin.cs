@@ -27,26 +27,26 @@ namespace PoeHUD.Plugins
 
         protected Action eSaveSettings = delegate { };
         protected Action eLoadSettings = delegate { };
-        protected bool bClearLogOnStartup = true;
+        //protected bool bClearLogOnStartup = true;
 
         public virtual bool bAllowRender => true;
 
         #region ExternalInvokeMethods
-        private void iInitialise()
+        public void iInitialise()
         {
+            /*  //Deleting log is disabled
             if (bClearLogOnStartup)
             {
                 try
-                {
-                    File.Delete(logPath);//Clear log
+                {  
+                    //File.Delete(logPath);//Clear log
                 }
                 catch (Exception e)
                 {
                     LogError("Can't clear ErrorLog. Error: " + e.Message, 5);
-                }
-              
+                }    
             }
-            
+            */
             eLoadSettings();
 
             try { Initialise(); }
@@ -55,7 +55,7 @@ namespace PoeHUD.Plugins
                 HandlePluginError("Initialise", e);
             }   
         }
-        private void iRender()
+        public void iRender()
         {
             if (!bAllowRender) return;
 
@@ -65,7 +65,7 @@ namespace PoeHUD.Plugins
                 HandlePluginError("Render", e);
             }
         }
-        private void iEntityAdded(EntityWrapper entityWrapper)
+        public void iEntityAdded(EntityWrapper entityWrapper)
         {
             try { EntityAdded(entityWrapper); }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace PoeHUD.Plugins
                 HandlePluginError("EntityAdded", e);
             }
         }
-        private void iEntityRemoved(EntityWrapper entityWrapper)
+        public void iEntityRemoved(EntityWrapper entityWrapper)
         {
             try { EntityRemoved(entityWrapper); }
             catch (Exception e)
@@ -81,7 +81,7 @@ namespace PoeHUD.Plugins
                 HandlePluginError("EntityRemoved", e);
             }
         }
-        private void iOnClose()
+        public void iOnClose()
         { 
             try { OnClose(); }
             catch (Exception e)
@@ -90,7 +90,7 @@ namespace PoeHUD.Plugins
             }
             eSaveSettings();
         }
-        private void iInitialiseMenu(MenuItem menu)
+        public void iInitialiseMenu(MenuItem menu)
         {
             try { InitialiseMenu(menu); }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace PoeHUD.Plugins
 
         private void HandlePluginError(string methodName, Exception exception)
         {
-            LogError($"Error in function: '{methodName}' : {exception.Message}", PluginErrorDisplayTime);
+            LogError($"Plugin: '{PluginName}', Error in function: '{methodName}' : '{exception.Message}'", PluginErrorDisplayTime);
 
             try
             {
