@@ -5,6 +5,12 @@
 #Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate; danger.wav; ffFF0000; dot_orange.png
 #Example Metadata/Monsters/Exiles/ExileRanger1; Orra Greengate; ; ; dot_orange.png
 
+Metadata/Monsters/BreachBosses/BreachBossChaosWild; Breachlord Chayula nearby; inception.wav; ffFFFF00; dot_orange.png
+Metadata/Monsters/BreachBosses/BreachBossFireWild; Breachlord Xoph nearby; inception.wav; ffFFFF00; dot_orange.png
+Metadata/Monsters/BreachBosses/BreachBossColdWild; Breachlord Tul nearby; inception.wav; ffFFFF00; dot_orange.png
+Metadata/Monsters/BreachBosses/BreachBossLightningWild; Breachlord Esh nearby; inception.wav; ffFFFF00; dot_orange.png
+Metadata/Monsters/BreachBosses/BreachBossPhysicalWild; Breachlord Uul-Netol nearby; inception.wav; ffFFFF00; dot_orange.png
+
 Metadata/Monsters/Exiles/ExileRanger1; Exile Orra Greengate nearby;attention.wav; ffFEC076; ms-orange.png
 Metadata/Monsters/Exiles/ExileRanger2; Exile Thena Moga nearby;attention.wav; ffFEC076; ms-orange.png
 Metadata/Monsters/Exiles/ExileRanger3; Exile Antalie Napora nearby;attention.wav; ffFEC076; ms-orange.png
