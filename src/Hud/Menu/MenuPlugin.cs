@@ -70,6 +70,13 @@ namespace PoeHUD.Hud.Menu
             return item;
         }
 
+        public static MenuItem AddChild(MenuItem parent, string text)
+        {
+            var item = new SimpleMenu(parent, text);
+            parent.AddChild(item);
+            return item;
+        }
+
         public static void AddChild(MenuItem parent, FileNode path)
         {
             var item = new FileButton(path);

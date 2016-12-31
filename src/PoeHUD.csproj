@@ -200,12 +200,14 @@
     <Compile Include="Hud\Menu\ColorButton.cs" />
     <Compile Include="Hud\Menu\MenuSettings.cs" />
     <Compile Include="Hud\Menu\RootButton.cs" />
+    <Compile Include="Hud\Menu\SimpleMenu.cs" />
     <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
     <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
     <Compile Include="Hud\PluginWithMapIcons.cs" />
     <Compile Include="Hud\Settings\ColorNode.cs" />
     <Compile Include="Hud\Settings\Converters\FileNodeConverter.cs" />
+    <Compile Include="Hud\Settings\EmptyNode.cs" />
     <Compile Include="Hud\Settings\FileNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
