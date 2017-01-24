@@ -187,14 +187,14 @@ namespace PoeHUD.Framework
 
                 bool found = false;
 
-                for (int offset = 0; offset < exeImage.Length - patternLength; offset += 4)
+                for (int offset = 0; offset < exeImage.Length - patternLength; offset ++)
                 {
                     if (CompareData(pattern, exeImage, offset))
                     {
                         found = true;
                         address[iPattern] = offset;
                         DebugStr += "Pattern " + iPattern + " is found at " + (AddressOfProcess + offset).ToString("X") + " offset: " + offset.ToString("X") + Environment.NewLine;
-                        //break;
+                        break;
                     }
                 }
 
