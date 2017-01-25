@@ -56,12 +56,9 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
-                  0x89, 0x58, 0x10,
-            0x48, 0x89, 0x70, 0x18,
-            0x48, 0x89, 0x78, 0x20,
-            0x33, 0xD2,
-            0x48, 0x8D, 0x0D
-        }, "xxxxxxxxxxxxxxxx");
+            0x48, 0x8D, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xCB, 0xE8, 0x41, 0xF5, 0xFF, 0xFF
+        }, "xxx????xxxxxxxx");
+
 
         /* Area Change
         00007FF63317CE40 | 48 83 EC 58                    | sub rsp,58                                      |
@@ -118,7 +115,7 @@ namespace PoeHUD.Poe
             Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x1A) + array[0] + 0x1E;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
 
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x10) + array[1] + 0x14;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
 
             AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x25) + array[2] + 0x29;
