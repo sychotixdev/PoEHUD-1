@@ -1,6 +1,6 @@
 ﻿namespace PoeHUD.Poe.EntityComponents
 {
-	public class Base : Component
+    public class Base : Component
 	{
 
         public string Name

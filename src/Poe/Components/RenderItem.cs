@@ -1,7 +1,4 @@
-﻿using System;
-using SharpDX;
-
-namespace PoeHUD.Poe.Components
+﻿namespace PoeHUD.Poe.Components
 {
     public class RenderItem : Component
     {

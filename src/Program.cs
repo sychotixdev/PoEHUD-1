@@ -7,10 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Text;
-using System.IO;
-using Tools;
+using System.Windows.Forms;
 
 namespace PoeHUD
 {

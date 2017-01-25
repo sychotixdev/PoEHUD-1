@@ -1,6 +1,6 @@
 namespace PoeHUD.Poe.EntityComponents
 {
-	public class Charges : Component
+    public class Charges : Component
 	{
 		public int NumCharges
 		{

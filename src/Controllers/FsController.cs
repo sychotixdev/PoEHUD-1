@@ -15,7 +15,7 @@ namespace PoeHUD.Controllers
         public readonly TagsDat Tags;
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
-        private bool isLoaded;
+        //private bool isLoaded;
 
         public FsController(Memory mem)
         {

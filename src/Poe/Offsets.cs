@@ -1,6 +1,5 @@
 using PoeHUD.Framework;
 using PoeHUD.Models;
-using System.IO;
 
 
 namespace PoeHUD.Poe

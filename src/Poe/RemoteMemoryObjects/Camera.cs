@@ -1,9 +1,7 @@
 using PoeHUD.Models;
-using PoeHUD.Framework;
 using PoeHUD.Poe.Components;
 using System;
 using System.Numerics;
-using System.Windows.Forms;
 using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
 using Vector4 = System.Numerics.Vector4;
