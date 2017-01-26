@@ -1,11 +1,11 @@
-﻿using PoeHUD.Models;
+﻿using PoeHUD.Controllers;
+using PoeHUD.Framework;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Hud.PluginExtension;
-using PoeHUD.Controllers;
-using Graphics = PoeHUD.Hud.UI.Graphics;
+using PoeHUD.Models;
 using System;
 using System.IO;
-using PoeHUD.Hud.Menu;
-using PoeHUD.Framework;
+using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Plugins
 {

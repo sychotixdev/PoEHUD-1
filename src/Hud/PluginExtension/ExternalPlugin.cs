@@ -1,8 +1,6 @@
-﻿using System;
-using PoeHUD.Plugins;
-using PoeHUD.Models;
+﻿using PoeHUD.Plugins;
+using System;
 using System.Reflection;
-using PoeHUD.Hud.Menu;
 
 namespace PoeHUD.Hud.PluginExtension
 {

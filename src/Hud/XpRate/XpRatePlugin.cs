@@ -2,6 +2,7 @@
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Preload;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
@@ -10,7 +11,6 @@ using SharpDX.Direct3D9;
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.XpRate
 {

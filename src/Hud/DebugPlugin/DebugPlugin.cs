@@ -1,6 +1,6 @@
 ﻿using PoeHUD.Controllers;
-using PoeHUD.Framework;
-using PoeHUD.Framework.Helpers;
+using PoeHUD.Hud;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using SharpDX;
@@ -8,24 +8,18 @@ using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Poe;
-using PoeHUD.Poe.Components;
-using PoeHUD.Poe.Elements;
-using PoeHUD.Hud;
 
 namespace PoeHUD.DebugPlug
 {
     public class DebugPlugin : SizedPlugin<DebugPluginSettings>
     {
         private readonly SettingsHub settingsHub;
-        private readonly GameController GameController;
+        //private readonly GameController GameController;
         public DebugPlugin(GameController gameController, Graphics graphics, DebugPluginSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
             this.settingsHub = settingsHub;
-            GameController = gameController;
+            //GameController = gameController;
         }
 
         private EntityWrapper LastEntity;
