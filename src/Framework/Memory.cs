@@ -124,7 +124,7 @@ namespace PoeHUD.Framework
         private static string RTrimNull(string text)
         {
             int num = text.IndexOf('\0');
-            return num > 0 ? text.Substring(0, num) : String.Empty;
+            return num > 0 ? text.Substring(0, num) : text;
         }
 
         /// <summary>
@@ -141,6 +141,10 @@ namespace PoeHUD.Framework
                 return string.Empty;
             }
             byte[] mem = ReadMem(addr, length);
+            if (mem.Length == 0)
+            {
+                return String.Empty;
+            }
             if (mem[0] == 0 && mem[1] == 0)
                 return string.Empty;
             string @string = Encoding.Unicode.GetString(mem);
