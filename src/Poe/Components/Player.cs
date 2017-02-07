@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.Components
                 {
                     return "";
                 }
-                int NameLength = M.ReadInt(Address + 0x28);
+                int NameLength = M.ReadInt(Address + 0x30);
                 if (NameLength > 512)
                 {
                     return "";
