@@ -2,7 +2,6 @@ using PoeHUD.Controllers;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vector3 = SharpDX.Vector3;

@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PoeHUD.Controllers;
-using PoeHUD.Hud.Interfaces;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Hud.UI;
-using PoeHUD.Models;
-using SharpDX;
-using System.IO;
-using Newtonsoft.Json;
-using System.Windows.Forms;
+﻿using Newtonsoft.Json;
 using PoeHUD.Hud.Menu;
+using PoeHUD.Hud.Settings;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using MenuItem = PoeHUD.Hud.Menu.MenuItem;
-using PoeHUD.Hud.PluginExtension;
 
 namespace PoeHUD.Plugins
 {

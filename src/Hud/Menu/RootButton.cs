@@ -2,8 +2,8 @@
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace PoeHUD.Hud.Menu
 {

@@ -1,4 +1,5 @@
 ﻿using PoeHUD.Controllers;
+using PoeHUD.DebugPlug;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.AdvancedTooltip;
@@ -9,6 +10,7 @@ using PoeHUD.Hud.Interfaces;
 using PoeHUD.Hud.KillCounter;
 using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Menu;
+using PoeHUD.Hud.PluginExtension;
 using PoeHUD.Hud.Preload;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.Trackers;
@@ -25,8 +27,6 @@ using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
-using PoeHUD.DebugPlug;
-using PoeHUD.Hud.PluginExtension;
 
 namespace PoeHUD.Hud
 {

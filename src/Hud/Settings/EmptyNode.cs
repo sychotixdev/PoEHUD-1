@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PoeHUD.Hud.Settings
+﻿namespace PoeHUD.Hud.Settings
 {
     public sealed class EmptyNode
     {

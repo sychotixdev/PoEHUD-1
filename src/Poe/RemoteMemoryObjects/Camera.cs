@@ -1,9 +1,7 @@
 using PoeHUD.Models;
-using PoeHUD.Framework;
 using PoeHUD.Poe.Components;
 using System;
 using System.Numerics;
-using System.Windows.Forms;
 using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
 using Vector4 = System.Numerics.Vector4;
@@ -14,8 +12,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public int Width => M.ReadInt(Address + 0x4);
         public int Height => M.ReadInt(Address + 0x8);
-        public float ZFar => M.ReadFloat(Address + 0x254);
-        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0x1f8), M.ReadFloat(Address + 0x1fc), M.ReadFloat(Address + 0x200));
+        public float ZFar => M.ReadFloat(Address + 0x25C);
+        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0x200), M.ReadFloat(Address + 0x204), M.ReadFloat(Address + 0x208));
 
         //cameraarray 0x17c
 
@@ -27,7 +25,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
             var playerMoving = isplayer && localPlayer.GetComponent<Actor>().isMoving;
             float x, y;
-            long addr = Address + 0x17c;
+            long addr = Address + 0x184;
             fixed (byte* numRef = M.ReadBytes(addr, 0x40))
             {
                 Matrix4x4 matrix = *(Matrix4x4*)numRef;

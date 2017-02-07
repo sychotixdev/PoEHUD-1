@@ -2,6 +2,7 @@
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Preload;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
@@ -10,7 +11,6 @@ using SharpDX.Direct3D9;
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using PoeHUD.Hud.Settings;
 
 namespace PoeHUD.Hud.XpRate
 {
@@ -93,7 +93,7 @@ namespace PoeHUD.Hud.XpRate
                         string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
                         Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, AreaNameColor, FontDrawFlags.Right);
                         Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
-                        Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
+                        Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.XphTextColor, FontDrawFlags.Right);
                         Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
                         Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.TimeLeftColor, FontDrawFlags.Right);
                         string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);

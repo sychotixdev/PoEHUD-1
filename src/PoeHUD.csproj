@@ -118,9 +118,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -247,6 +244,7 @@
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Base.cs" />
+    <Compile Include="Poe\Components\Charges.cs" />
     <Compile Include="Poe\Components\CurrencyInfo.cs" />
     <Compile Include="Poe\Components\DiesAfterTime.cs" />
     <Compile Include="Poe\Components\Flask.cs" />

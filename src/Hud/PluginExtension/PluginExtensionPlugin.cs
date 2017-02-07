@@ -1,14 +1,13 @@
 ﻿using PoeHUD.Controllers;
-using System;
 using PoeHUD.Hud.Interfaces;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Models;
-using System.Collections.Generic;
+using PoeHUD.Plugins;
+using System;
 using System.IO;
 using System.Reflection;
-using PoeHUD.Plugins;
-using Graphics = PoeHUD.Hud.UI.Graphics;
-using PoeHUD.Hud.Menu;
 using Trinet.Core.IO.Ntfs;
+using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Hud.PluginExtension
 {
