@@ -30,33 +30,33 @@ namespace PoeHUD.Poe
         }, "xxxxxxxxxxxxxxxxxxxxxxxxxx");
 
         /* FileRoot Pointer
-        00007FF6E2077CB0 | 48 8B C4                       | mov rax,rsp                                  |
-        00007FF6E2077CB3 | 48 89 48 08                    | mov qword ptr ds:[rax+8],rcx                 |
-        00007FF6E2077CB7 | 55                             | push rbp                                     |
-        00007FF6E2077CB8 | 41 56                          | push r14                                     |
-        00007FF6E2077CBA | 41 57                          | push r15                                     | r15:"minkernel\\ntdll\\ldrinit.c"
-        00007FF6E2077CBC | 48 8D A8 48 FF FF FF           | lea rbp,qword ptr ds:[rax-B8]                |
-        00007FF6E2077CC3 | 48 81 EC A0 01 00 00           | sub rsp,1A0                                  |
-        00007FF6E2077CCA | 48 C7 44 24 40 FE FF FF FF     | mov qword ptr ss:[rsp+40],FFFFFFFFFFFFFFFE   | [rsp+40]:"sed at 0x%p. Status = 0x%x\n"
-        00007FF6E2077CD3 | 48 89 58 10                    | mov qword ptr ds:[rax+10],rbx                | rbx:"LdrpInitializeProcess"
-        00007FF6E2077CD7 | 48 89 70 18                    | mov qword ptr ds:[rax+18],rsi                |
-        00007FF6E2077CDB | 48 89 78 20                    | mov qword ptr ds:[rax+20],rdi                |
-        00007FF6E2077CDF | 33 D2                          | xor edx,edx                                  |
-        00007FF6E2077CE1 | 48 8D 0D 38 E4 DB 00           | lea rcx,qword ptr ds:[7FF6E2E36120]          | <---FileRoot RIP
-        00007FF6E2077CE8 | E8 63 06 00 00                 | call pathofexile_x64 - 2.4.3c.7FF6E2078350   |
-        00007FF6E2077CED | 90                             | nop                                          |
-        00007FF6E2077CEE | 48 8B 35 33 E4 DB 00           | mov rsi,qword ptr ds:[7FF6E2E36128]          |
-        00007FF6E2077CF5 | 48 8B 1E                       | mov rbx,qword ptr ds:[rsi]                   | rbx:"LdrpInitializeProcess"
-        00007FF6E2077CF8 | 45 33 F6                       | xor r14d,r14d                                |
-        00007FF6E2077CFB | 4C 8D 3D 16 83 89 00           | lea r15,qword ptr ds:[7FF6E2910018]          | r15:"minkernel\\ntdll\\ldrinit.c"
-        00007FF6E2077D02 | 48 89 9D C0 00 00 00           | mov qword ptr ss:[rbp+C0],rbx                |
-        00007FF6E2077D09 | 48 3B DE                       | cmp rbx,rsi                                  | rbx:"LdrpInitializeProcess"        
+            PathOfExile_x64.exe+3B3180 - 48 8B C4              - mov rax,rsp
+            PathOfExile_x64.exe+3B3183 - 48 89 48 08           - mov [rax+08],rcx
+            PathOfExile_x64.exe+3B3187 - 55                    - push rbp
+            PathOfExile_x64.exe+3B3188 - 41 56                 - push r14
+            PathOfExile_x64.exe+3B318A - 41 57                 - push r15
+            PathOfExile_x64.exe+3B318C - 48 8D A8 48FFFFFF     - lea rbp,[rax-000000B8]
+            PathOfExile_x64.exe+3B3193 - 48 81 EC A0010000     - sub rsp,000001A0 { 416 }
+            PathOfExile_x64.exe+3B319A - 48 C7 44 24 40 FEFFFFFF - mov [rsp+40],FFFFFFFE { -2 }
+            PathOfExile_x64.exe+3B31A3 - 48 89 58 10           - mov [rax+10],rbx
+            PathOfExile_x64.exe+3B31A7 - 48 89 70 18           - mov [rax+18],rsi
+            PathOfExile_x64.exe+3B31AB - 48 89 78 20           - mov [rax+20],rdi
+            PathOfExile_x64.exe+3B31AF - 33 D2                 - xor edx,edx
+            PathOfExile_x64.exe+3B31B1 - 48 8D 0D C864DE00     - lea rcx,[PathOfExile_x64.exe+1199680] { [1.00] }
+            PathOfExile_x64.exe+3B31B8 - E8 63060000           - call PathOfExile_x64.exe+3B3820
+            PathOfExile_x64.exe+3B31BD - 90                    - nop
+            PathOfExile_x64.exe+3B31BE - 48 8B 35 C364DE00     - mov rsi,[PathOfExile_x64.exe+1199688] { [241FA6992E0] }
+            PathOfExile_x64.exe+3B31C5 - 48 8B 1E              - mov rbx,[rsi]
+            PathOfExile_x64.exe+3B31C8 - 45 33 F6              - xor r14d,r14d
+            PathOfExile_x64.exe+3B31CB - 4C 8D 3D 3EF08A00     - lea r15,[PathOfExile_x64.exe+C62210] { [7FF62940A460] }
+            PathOfExile_x64.exe+3B31D2 - 48 89 9D C0000000     - mov [rbp+000000C0],rbx
+            PathOfExile_x64.exe+3B31D9 - 48 3B DE              - cmp rbx,rsi
         */
 
         private static readonly Pattern fileRootPattern = new Pattern(new byte[]
         {
-            0x48, 0x8D, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xCB, 0xE8, 0x41, 0xF5, 0xFF, 0xFF
-        }, "xxx????xxxxxxxx");
+            0x48, 0x8D, 0x0D, 0x00, 0x00, 0x00, 0x00, 0xE8, 0x63, 0x06, 0x00, 0x00, 0x90
+        }, "xxx????xxxxxx");
 
 
         /* Area Change
