@@ -141,7 +141,8 @@ namespace PoeHUD.Hud.Health
                 foreach (var buff in buffs)
                 {
                     var buffName = buff.Name;
-                    if (HasDebuff(debuffPanelConfig.Bleeding, buffName, isHostile))
+                    if (HasDebuff(debuffPanelConfig.Bleeding, buffName, isHostile) ||
+                    HasDebuff(debuffPanelConfig.Corruption, buffName, isHostile))
                         debuffTable |= 1;
                     else if (HasDebuff(debuffPanelConfig.Poisoned, buffName, isHostile))
                         debuffTable |= 2;
