@@ -2,6 +2,6 @@ namespace PoeHUD.Poe.Elements
 {
     public class Inventory : Element
     {
-        public RemoteMemoryObjects.Inventory InventoryModel => ReadObject<RemoteMemoryObjects.Inventory>(Address + 0x984);
+        public RemoteMemoryObjects.InventoryList AllInventories => GetObjectAt<RemoteMemoryObjects.InventoryList>(0xAB0);
     }
 }

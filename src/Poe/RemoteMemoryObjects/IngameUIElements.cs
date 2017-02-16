@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element QuestTracker => ReadObjectAt<Element>(0xB58);
         public Element OpenLeftPanel => ReadObjectAt<Element>(0xB98);
         public Element OpenRightPanel => ReadObjectAt<Element>(0xBA0);
-        public Element InventoryPanel => ReadObjectAt<Element>(0xBD0);
+        public Elements.Inventory InventoryPanel => ReadObjectAt<Elements.Inventory>(0xBD0);
         public Element TreePanel => ReadObjectAt<Element>(0xC00);
         public Element AtlasPanel => ReadObjectAt<Element>(0xC08);
         public Map Map => ReadObjectAt<Map>(0xC38);
