@@ -2,21 +2,22 @@ namespace PoeHUD.Models.Enums
 {
     public enum InventoryIndex
     {
-        PlayerInventory,
+        None,
+        Helm,
+        Amulet,
         Chest,
         LWeapon,
         RWeapon,
-        Helm,
-        Amulet,
+        LWeaponSwap,
+        RWeaponSwap,
         LRing,
         RRing,
         Gloves,
-        Boots,
         Belt,
-        Flasks,
-        LWeaponSwap = 14,
-        RWeaponSwap,
-        Stash1 = 24,
-        Stash2
+        Boots,
+        PlayerInventory,
+        Flask
+        //Stash1 = 24,
+        //Stash2
     }
 }
