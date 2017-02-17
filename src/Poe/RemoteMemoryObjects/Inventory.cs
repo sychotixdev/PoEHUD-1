@@ -38,5 +38,19 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return list;
             }
         }
+        // Will return the item based on x,y format.
+        // Give more controll to user what to do with
+        // dublicate items (items taking more than 1 slot)
+        // or slots where items doesn't exists (return null).
+        public Entity this[int x, int y, int xLength]
+        {
+            get
+            {
+                long invAddr = M.ReadLong(Address + 0x410, 0x5F0, 0x30);
+                y = y * xLength;
+                long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
+                return ReadObject<Entity>(itmAddr);
+            }
+        }
     }
 }
