@@ -10,6 +10,7 @@ namespace PoeHUD.Hud.XpRate
             Enable = true;
             OnlyAreaName = false;
             ShowLatency = true;
+            ShowFps = true;
             ShowInTown = true;
             TextSize = new RangeNode<int>(16, 10, 20);
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
@@ -23,6 +24,7 @@ namespace PoeHUD.Hud.XpRate
 
         public ToggleNode ShowInTown { get; set; }
         public ToggleNode ShowLatency { get; set; }
+        public ToggleNode ShowFps { get; set; }
         public ToggleNode OnlyAreaName { get; set; }
         public RangeNode<int> TextSize { get; set; }
         public ColorNode BackgroundColor { get; set; }

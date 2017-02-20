@@ -199,9 +199,7 @@ namespace PoeHUD.Hud.Menu
 
             // Xph Display
             MenuItem xpRateMenu = AddChild(MenuRootButton, "Xph & area", settingsHub.XpRateSettings.Enable, "F10");
-            MenuItem areaName = AddChild(xpRateMenu, "Only area name", settingsHub.XpRateSettings.OnlyAreaName);
-            AddChild(areaName, "Show latency", settingsHub.XpRateSettings.ShowLatency);
-            AddChild(areaName, "Latency color", settingsHub.XpRateSettings.LatencyTextColor);
+            AddChild(xpRateMenu, "Only area name", settingsHub.XpRateSettings.OnlyAreaName);
             AddChild(xpRateMenu, "Show in town", settingsHub.XpRateSettings.ShowInTown);
             AddChild(xpRateMenu, "Font size", settingsHub.XpRateSettings.TextSize);
             AddChild(xpRateMenu, "Fps font color", settingsHub.XpRateSettings.FpsTextColor);
@@ -211,6 +209,8 @@ namespace PoeHUD.Hud.Menu
             AddChild(xpRateMenu, "Timer font color", settingsHub.XpRateSettings.TimerTextColor);
             AddChild(xpRateMenu, "Latency font color", settingsHub.XpRateSettings.LatencyTextColor);
             AddChild(xpRateMenu, "Background color", settingsHub.XpRateSettings.BackgroundColor);
+            AddChild(xpRateMenu, "Show latency", settingsHub.XpRateSettings.ShowLatency);
+            AddChild(xpRateMenu, "Show fps", settingsHub.XpRateSettings.ShowFps);
 
             // Item Alert
             MenuItem itemAlertMenu = AddChild(MenuRootButton, "Item alert", settingsHub.ItemAlertSettings.Enable);
