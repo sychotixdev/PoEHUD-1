@@ -6,22 +6,22 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameUIElements : RemoteMemoryObject
     {
-        public Element QuestTracker => ReadObjectAt<Element>(0x9BC);
-        public Element OpenLeftPanel => ReadObjectAt<Element>(0x9EC);
-        public Element OpenRightPanel => ReadObjectAt<Element>(0x9F0);
-        public Element InventoryPanel => ReadObjectAt<Element>(0xA00);
-        public Element TreePanel => ReadObjectAt<Element>(0xA18);
-        public Element AtlasPanel => ReadObjectAt<Element>(0xA1C);
-        public Map Map => ReadObjectAt<Map>(0xA34);
+        public Element QuestTracker => ReadObjectAt<Element>(0x9C0);
+        public Element OpenLeftPanel => ReadObjectAt<Element>(0x9F0);
+        public Element OpenRightPanel => ReadObjectAt<Element>(0x9F4);
+        public Element InventoryPanel => ReadObjectAt<Element>(0xA04);
+        public Element TreePanel => ReadObjectAt<Element>(0xA1C);
+        public Element AtlasPanel => ReadObjectAt<Element>(0xA20);
+        public Map Map => ReadObjectAt<Map>(0xA38);
         public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
         {
             get
             {
-                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xA38);
+                var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xA3C);
                 return itemsOnGroundLabelRoot.Children;
             }
         }
-        public Element GemLvlUpPanel => ReadObjectAt<Element>(0xB0C);
-        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB1C);
+        public Element GemLvlUpPanel => ReadObjectAt<Element>(0xB10);
+        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB28);
     }
 }
