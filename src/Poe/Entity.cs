@@ -5,7 +5,7 @@ namespace PoeHUD.Poe
 {
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
-        private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30, 0);
+        private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30);
         private long ComponentList => M.ReadLong(Address + 0x8);
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
@@ -30,7 +30,7 @@ namespace PoeHUD.Poe
         {
             string name = typeof(T).Name;
             long componentLookup = ComponentLookup;
-            addr = componentLookup;
+            addr = M.ReadLong(componentLookup);
             int i = 0;
             while (!M.ReadString(M.ReadLong(addr + 0x10)).Equals(name))
             {
@@ -52,15 +52,16 @@ namespace PoeHUD.Poe
         {
             var dictionary = new Dictionary<string, long>();
             long componentLookup = ComponentLookup;
-            long addr = componentLookup;
-            do
+            // the first address is a base object that doesn't contain a component, so read the first component
+            long addr = M.ReadLong(componentLookup);
+            while (addr != componentLookup && addr != 0 && addr != -1)
             {
                 string name = M.ReadString(M.ReadLong(addr + 0x10));
                 long componentAddress = M.ReadLong(ComponentList + M.ReadInt(addr + 0x18) * 8);
                 if (!dictionary.ContainsKey(name) && !string.IsNullOrWhiteSpace(name))
                     dictionary.Add(name, componentAddress);
                 addr = M.ReadLong(addr);
-            } while (addr != componentLookup && addr != 0 && addr != -1);
+            }
             return dictionary;
         }
 
