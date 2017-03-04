@@ -1,6 +1,5 @@
 using PoeHUD.Poe.Elements;
 using System.Collections.Generic;
-using System.IO;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -9,7 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Element QuestTracker => ReadObjectAt<Element>(0x9C0);
         public Element OpenLeftPanel => ReadObjectAt<Element>(0x9F0);
         public Element OpenRightPanel => ReadObjectAt<Element>(0x9F4);
-        public Element InventoryPanel => ReadObjectAt<Element>(0xA04);
+        public Elements.Inventory InventoryPanel => ReadObjectAt<Elements.Inventory>(0xA04);
         public Element TreePanel => ReadObjectAt<Element>(0xA1C);
         public Element AtlasPanel => ReadObjectAt<Element>(0xA20);
         public Map Map => ReadObjectAt<Map>(0xA38);
