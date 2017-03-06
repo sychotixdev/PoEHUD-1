@@ -217,7 +217,7 @@ namespace PoeHUD.Hud.Loot
                                                                                     var poeCorruptedContext = statement.poeCorrupted();
                                                                                     if (poeCorruptedContext != null)
                                                                                     {
-                                                                                        identified = Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
+                                                                                        corrupted = Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
                                                                                     }
                                                                                 }
                                                                             }
