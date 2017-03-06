@@ -88,6 +88,8 @@ namespace PoeHUD.Hud.Loot
                 var textColor = defaultTextColor;
                 var borderWidth = defaultBorderWidth;
                 var sound = -1;
+                var identified = false;
+                var corrupted = false;
                 var statements = block.statement();
 
                 foreach (var statement in statements)
@@ -189,17 +191,35 @@ namespace PoeHUD.Hud.Loot
                                                                     {
                                                                         borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
                                                                     }
-                                                                    else {
+                                                                    else
+                                                                    {
                                                                         var poeTextColorContext = statement.poeTextColor();
                                                                         if (poeTextColorContext != null)
                                                                         {
                                                                             textColor = ToColor(poeTextColorContext.color());
                                                                         }
-                                                                        else {
+                                                                        else
+                                                                        {
                                                                             var poeAlertSoundContext = statement.poeAlertSound();
                                                                             if (poeAlertSoundContext != null)
                                                                             {
                                                                                 sound = Convert.ToInt32(poeAlertSoundContext.id().GetText());
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                var poeIdentifiedContext = statement.poeIdentified();
+                                                                                if (poeIdentifiedContext != null)
+                                                                                {
+                                                                                    identified = Convert.ToBoolean(poeIdentifiedContext.Boolean().GetText());
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    var poeCorruptedContext = statement.poeCorrupted();
+                                                                                    if (poeCorruptedContext != null)
+                                                                                    {
+                                                                                        identified = Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
