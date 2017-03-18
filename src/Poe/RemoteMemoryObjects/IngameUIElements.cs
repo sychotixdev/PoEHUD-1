@@ -21,6 +21,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
         }
         public Element GemLvlUpPanel => ReadObjectAt<Element>(0xB10);
-        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB28);
+        public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xB20);
     }
 }
