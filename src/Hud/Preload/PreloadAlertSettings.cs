@@ -115,6 +115,11 @@ namespace PoeHUD.Hud.Preload
             DenaLorenni = new ColorBGRA(254, 192, 118, 255);
             VanthAgiel = new ColorBGRA(254, 192, 118, 255);
             LaelFuria = new ColorBGRA(254, 192, 118, 255);
+            OyraOna = new ColorBGRA(254, 192, 118, 255);
+            BoltBrownfur = new ColorBGRA(254, 192, 118, 255);
+            AilentiaRac = new ColorBGRA(254, 192, 118, 255);
+            UlyssesMorvant = new ColorBGRA(254, 192, 118, 255);
+            AurelioVoidsinger = new ColorBGRA(254, 192, 118, 255);
         }
 
         public ColorNode CadiroTrader { get; set; }
@@ -221,5 +226,10 @@ namespace PoeHUD.Hud.Preload
         public ColorNode DenaLorenni { get; set; }
         public ColorNode VanthAgiel { get; set; }
         public ColorNode LaelFuria { get; set; }
+        public ColorNode OyraOna { get; set; }
+        public ColorNode BoltBrownfur { get; set; }
+        public ColorNode AilentiaRac { get; set; }
+        public ColorNode UlyssesMorvant { get; set; }
+        public ColorNode AurelioVoidsinger { get; set; }
     }
 }

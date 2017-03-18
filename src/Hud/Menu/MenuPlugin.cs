@@ -285,6 +285,11 @@ namespace PoeHUD.Hud.Menu
             AddChild(exiles, "Dena Lorenni", settingsHub.PreloadAlertSettings.DenaLorenni);
             AddChild(exiles, "Vanth Agiel", settingsHub.PreloadAlertSettings.VanthAgiel);
             AddChild(exiles, "Lael Furia", settingsHub.PreloadAlertSettings.LaelFuria);
+            AddChild(exiles, "OyraOna", settingsHub.PreloadAlertSettings.OyraOna);
+            AddChild(exiles, "BoltBrownfur", settingsHub.PreloadAlertSettings.BoltBrownfur);
+            AddChild(exiles, "AilentiaRac", settingsHub.PreloadAlertSettings.AilentiaRac);
+            AddChild(exiles, "UlyssesMorvant", settingsHub.PreloadAlertSettings.UlyssesMorvant);
+            AddChild(exiles, "AurelioVoidsinger", settingsHub.PreloadAlertSettings.AurelioVoidsinger);
 
             var strongboxes = AddChild(preloadMenu, "Strongboxes", settingsHub.PreloadAlertSettings.Strongboxes);
             AddChild(strongboxes, "Arcanist", settingsHub.PreloadAlertSettings.ArcanistStrongbox);
