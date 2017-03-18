@@ -180,7 +180,7 @@ namespace PoeHUD.Hud.Loot
             if (Settings.Enable && entity != null && !GameController.Area.CurrentArea.IsTown
                 && !currentAlerts.ContainsKey(entity) && entity.HasComponent<WorldItem>())
             {
-               
+
                 IEntity item = entity.GetComponent<WorldItem>().ItemEntity;
 
                 if (Settings.Alternative && !string.IsNullOrEmpty(Settings.FilePath))
@@ -193,11 +193,11 @@ namespace PoeHUD.Hud.Loot
                     }
                 }
                 else
-                {               
+                {
                     ItemUsefulProperties props = initItem(item);
                     if (props == null)
                         return;
-                
+
                     if (props.ShouldAlert(currencyNames, Settings))
                     {
                         AlertDrawStyle drawStyle = props.GetDrawStyle();
@@ -211,7 +211,7 @@ namespace PoeHUD.Hud.Loot
         private void PrepareForDrawingAndPlaySound(EntityWrapper entity, AlertDrawStyle drawStyle)
         {
             currentAlerts.Add(entity, drawStyle);
-            CurrentIcons[entity] = new MapIcon(entity, new HudTexture("currency.png", drawStyle.BorderColor), () => Settings.ShowItemOnMap, Settings.LootIcon);
+            CurrentIcons[entity] = new MapIcon(entity, new HudTexture("currency.png", Settings.LootIconBorderColor ? drawStyle.BorderColor : drawStyle.TextColor), () => Settings.ShowItemOnMap, Settings.LootIcon);
 
             if (Settings.PlaySound && !playedSoundsCache.Contains(entity.Id))
             {
