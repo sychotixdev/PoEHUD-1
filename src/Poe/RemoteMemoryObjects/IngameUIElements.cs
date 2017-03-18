@@ -5,7 +5,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameUIElements : RemoteMemoryObject
     {
-        public Element QuestTracker => ReadObjectAt<Element>(0xB58);
+        public Element QuestTracker => ReadObjectAt<Element>(0xB60);
         public Element OpenLeftPanel => ReadObjectAt<Element>(0xBA0);
         public Element OpenRightPanel => ReadObjectAt<Element>(0xBA8);
         public Elements.Inventory InventoryPanel => ReadObjectAt<Elements.Inventory>(0xBD8);
