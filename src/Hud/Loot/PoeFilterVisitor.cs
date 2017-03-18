@@ -83,6 +83,8 @@ namespace PoeHUD.Hud.Loot
                 var poeSocketsCondition = true;
                 var poeLinkedSocketsCondition = true;
                 var poeSocketGroupCondition = true;
+                var poeIdentifiedCondition = true;
+                var poeCorruptedCondition = true;
                 var backgroundColor = AlertDrawStyle.DefaultBackgroundColor;
                 var borderColor = Color.White;
                 var textColor = defaultTextColor;
@@ -189,17 +191,30 @@ namespace PoeHUD.Hud.Loot
                                                                     {
                                                                         borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
                                                                     }
-                                                                    else {
+                                                                    else
+                                                                    {
                                                                         var poeTextColorContext = statement.poeTextColor();
                                                                         if (poeTextColorContext != null)
                                                                         {
                                                                             textColor = ToColor(poeTextColorContext.color());
                                                                         }
-                                                                        else {
+                                                                        else
+                                                                        {
                                                                             var poeAlertSoundContext = statement.poeAlertSound();
                                                                             if (poeAlertSoundContext != null)
                                                                             {
                                                                                 sound = Convert.ToInt32(poeAlertSoundContext.id().GetText());
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                var poeIdentifiedContext = statement.poeIdentified();
+                                                                                if (poeIdentifiedContext != null)
+                                                                                {
+                                                                                    var valFromFilter = Convert.ToBoolean(poeIdentifiedContext.Boolean().GetText());
+                                                                                    poeIdentifiedCondition &= itemRarity != ItemRarity.Normal ?
+                                                                                        valFromFilter == mods.Identified
+                                                                                            : valFromFilter == false;
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -219,7 +234,7 @@ namespace PoeHUD.Hud.Loot
 
                 if (itemLevelCondition && dropLevelCondition && poeClassCondition && poeBaseTypeCondition &&
                     poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition &&
-                    poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition)
+                    poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition && poeCorruptedCondition)
                 {
                     if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
                         return null;
