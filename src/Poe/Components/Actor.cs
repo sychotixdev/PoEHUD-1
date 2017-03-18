@@ -13,6 +13,8 @@ namespace PoeHUD.Poe.Components
 
         public bool isMoving => (ActionId & 128) > 0;
 
+        public bool isAttacking => (ActionId & 2) > 0;
+
         public List<long> Minions
         {
             get
