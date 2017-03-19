@@ -423,7 +423,8 @@ namespace InventoryPreview
 
             public void OnGetDownloadedStringCompleted(object sender, DownloadDataCompletedEventArgs e)
             {
-                if (e.Error == null)
+                var contentType = ((WebClient)sender).ResponseHeaders[HttpResponseHeader.ContentType];
+                if (e.Error == null && contentType == "image/png")
                 {
                     Bitmap flaskImg;
                     using (var ms = new MemoryStream(e.Result))
@@ -439,6 +440,9 @@ namespace InventoryPreview
                     flaskImg.Save(FilePath, System.Drawing.Imaging.ImageFormat.Png);
 
                     bIsDownloaded = true;//Due to async processing this must be in the last line
+                } else
+                {
+                    LogError("InventoryPreviewPlugin Warning: Invalid Url, ask Admin to fix plugin URL.", 10);
                 }
             }
 
