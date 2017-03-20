@@ -124,7 +124,7 @@ namespace InventoryPreview
                     Graphics.DrawImage("menu-colors.png", backgroundRect, Settings.BackgroundColor);
                     var color = cell.CurrentStackSize == cell.MaxStackSize ? new Color(0, 186, 154) : Color.White;
 
-                    Graphics.DrawText(cell.CurrentStackSize + "/" + cell.MaxStackSize, textSize, textPos, color, SharpDX.Direct3D9.FontDrawFlags.Center);
+                    Graphics.DrawText(cell.CurrentStackSize.ToString(), textSize, textPos, color, SharpDX.Direct3D9.FontDrawFlags.Center);
                 }
             }
         
