@@ -117,7 +117,7 @@ namespace PoeHUD.Poe.FilesInMemory
                 TagChances = new int[m.ReadInt(addr + 0xA8)];
                 long tc = m.ReadLong(addr + 0xB0);
                 for (int i = 0; i < Tags.Length; i++)
-                    TagChances[i] = m.ReadInt(tc + 4 + 4 * i);
+                    TagChances[i] = m.ReadInt(tc + 4 * i);
             }
 
             private class LevelComparer : IComparer<ModRecord>
