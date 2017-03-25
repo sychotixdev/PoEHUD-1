@@ -42,7 +42,12 @@ namespace PoeHUD.Hud.Loot
                 return null;
             var basename = baseItemType.BaseName;
             var dropLevel = baseItemType.DropLevel;
-            var className = baseItemType.ClassName;
+            Models.ItemClass tmp;
+            string className;
+            if (gameController.Files.itemClasses.contents.TryGetValue(baseItemType.ClassName, out tmp))
+                className = tmp.ClassName;
+            else
+                className = baseItemType.ClassName;
             var width = baseItemType.Width;
             var height = baseItemType.Height;
             var blocks = context.block();
