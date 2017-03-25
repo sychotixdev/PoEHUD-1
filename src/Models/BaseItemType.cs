@@ -8,5 +8,6 @@ namespace PoeHUD.Models
         public int DropLevel { get; set; }
         public string BaseName { get; set; }
         public string[] Tags;
+        public string[] MoreTagsFromPath;
     }
 }

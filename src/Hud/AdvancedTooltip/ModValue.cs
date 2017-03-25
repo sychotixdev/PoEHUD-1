@@ -13,10 +13,10 @@ namespace PoeHUD.Hud.AdvancedTooltip
     {
         private readonly int totalTiers = 1;
 
-        public ModValue(ItemMod mod, FsController fs, int iLvl)
+        public ModValue(ItemMod mod, FsController fs, int iLvl, Models.BaseItemType baseItem)
         {
-            string name = mod.RawName;
-            Record = fs.Mods.records[name];
+            string baseClassName = baseItem.ClassName.ToLower().Replace(' ', '_');
+            Record = fs.Mods.records[mod.RawName];
             AffixType = Record.AffixType;
             AffixText = String.IsNullOrEmpty(Record.UserFriendlyName) ? Record.Key : Record.UserFriendlyName;
             IsCrafted = Record.Domain == 10;
@@ -28,29 +28,111 @@ namespace PoeHUD.Hud.AdvancedTooltip
             List<ModsDat.ModRecord> allTiers;
             if (fs.Mods.recordsByTier.TryGetValue(Tuple.Create(Record.Group, Record.AffixType), out allTiers))
             {
-                IEnumerable<string> validTags = Record.Tags.Select(t => t.Key)
-                    .Where((t, tIdx) => Record.TagChances
-                    .Where((c, cIdx) => tIdx == cIdx && c > 0).Any());
                 bool tierFound = false;
                 totalTiers = 0;
-                foreach (ModsDat.ModRecord record in allTiers.Where(record => record.Tags.Where((t, tIdx) => record.TagChances
-                    .Where((c, cIdx) => tIdx == cIdx && c > 0 && (t.Key == "default" || validTags.Contains(t.Key)))
-                    .Any()).Any()).Where(record => record.StatNames[0] == Record.StatNames[0] && record.StatNames[1] == Record.StatNames[1]
-                                                   && record.StatNames[2] == Record.StatNames[2] && record.StatNames[3] == Record.StatNames[3]))
+                var keyRcd = Record.Key.Where(c => char.IsLetter(c)).ToArray<char>();
+                foreach (var tmp in allTiers)
                 {
-                    totalTiers++;
-                    if (record.Equals(Record))
+                    var keyrcd = tmp.Key.Where(k => char.IsLetter(k)).ToArray<char>();
+                    if (!keyrcd.SequenceEqual(keyRcd))
+                        continue;
+
+                    int baseChance;
+                    if (!tmp.TagChances.TryGetValue(baseClassName, out baseChance))
+                        baseChance = -1;
+
+                    int defaultChance;
+                    if (!tmp.TagChances.TryGetValue("default", out defaultChance))
+                        defaultChance = 0;
+
+                    int tagChance = -1;
+                    foreach (var tg in baseItem.Tags)
                     {
-                        Tier = totalTiers;
-                        tierFound = true;
+                        if (tmp.TagChances.ContainsKey(tg))
+                            tagChance = tmp.TagChances[tg];
                     }
-                    if (!tierFound && record.MinLevel <= iLvl)
+
+                    int moreTagChance = -1;
+                    foreach ( var tg in baseItem.MoreTagsFromPath)
                     {
-                        subOptimalTierDistance++;
+                        if (tmp.TagChances.ContainsKey(tg))
+                            moreTagChance = tmp.TagChances[tg];
                     }
+
+                    #region GetOnlyValidMods
+                        switch (baseChance)
+                        {
+                            case 0:
+                                break;
+                            case -1: //baseClass name not found in mod tags.
+                                switch (tagChance)
+                                {
+                                    case 0:
+                                        break;
+                                    case -1: //item tags not found in mod tags.
+                                        switch (moreTagChance)
+                                        {
+                                            case 0:
+                                                break;
+                                            case -1://more item tags not found in mod tags.
+                                                if (defaultChance > 0)
+                                                {
+                                                    totalTiers++;
+                                                    if (tmp.Equals(Record))
+                                                    {
+                                                        Tier = totalTiers;
+                                                        tierFound = true;
+                                                    }
+                                                    if (!tierFound && tmp.MinLevel <= iLvl)
+                                                    {
+                                                        subOptimalTierDistance++;
+                                                    }
+                                                }
+                                                break;
+                                            default:
+                                                totalTiers++;
+                                                if (tmp.Equals(Record))
+                                                {
+                                                    Tier = totalTiers;
+                                                    tierFound = true;
+                                                }
+                                                if (!tierFound && tmp.MinLevel <= iLvl)
+                                                {
+                                                    subOptimalTierDistance++;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        totalTiers++;
+                                        if (tmp.Equals(Record))
+                                        {
+                                            Tier = totalTiers;
+                                            tierFound = true;
+                                        }
+                                        if (!tierFound && tmp.MinLevel <= iLvl)
+                                        {
+                                            subOptimalTierDistance++;
+                                        }
+                                        break;
+                                }
+                                break;
+                            default:
+                                totalTiers++;
+                                if(tmp.Equals(Record))
+                                {
+                                    Tier = totalTiers;
+                                    tierFound = true;
+                                }
+                                if (!tierFound && tmp.MinLevel <= iLvl)
+                                {
+                                    subOptimalTierDistance++;
+                                }
+                                break;
+                        }
+                    #endregion
                 }
             }
-
             double hue = totalTiers == 1 ? 180 : 120 - Math.Min(subOptimalTierDistance, 3) * 40;
             Color = ColorUtils.ColorFromHsv(hue, totalTiers == 1 ? 0 : 1, 1);
         }

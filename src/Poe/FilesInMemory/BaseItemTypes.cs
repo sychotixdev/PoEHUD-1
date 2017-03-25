@@ -2,6 +2,7 @@ using PoeHUD.Framework;
 using PoeHUD.Models;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
@@ -48,6 +49,28 @@ namespace PoeHUD.Poe.FilesInMemory
                 {
                     long ii = ta + 0x8 + 0x10 * k;
                     baseItemType.Tags[k] = M.ReadStringU(M.ReadLong(ii, 0), 255);
+                }
+
+                string[] tmpTags = key.Split('/');
+                string tmpKey;
+                if (tmpTags.Length > 3)
+                {
+                    baseItemType.MoreTagsFromPath = new string[tmpTags.Length - 3];
+                    for (int k = 2; k < tmpTags.Length - 1; k++)
+                    {
+                        // This Regex and if condition change Item Path Category e.g. TwoHandWeapons
+                        // To tag strings type e.g. two_hand_weapon
+                        tmpKey = Regex.Replace(tmpTags[k], @"(?<!_)([A-Z])", "_$1").ToLower().Remove(0, 1);
+                        if (tmpKey[tmpKey.Length - 1] == 's')
+                            tmpKey = tmpKey.Remove(tmpKey.Length - 1);
+
+                        baseItemType.MoreTagsFromPath[k - 2] = tmpKey;
+                    }
+                }
+                else
+                {
+                    baseItemType.MoreTagsFromPath = new string[1];
+                    baseItemType.MoreTagsFromPath[0] = "";
                 }
 
                 if (!contents.ContainsKey(key))

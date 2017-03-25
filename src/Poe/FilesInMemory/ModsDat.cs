@@ -63,7 +63,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public int MinLevel;
             public StatsDat.StatRecord[] StatNames; // Game refers to Stats.dat line
             public IntRange[] StatRange;
-            public int[] TagChances;
+            public Dictionary<string, int> TagChances;
             public TagsDat.TagRecord[] Tags; // Game refers to Tags.dat line
             public long Unknown8;//Unknown pointer
             public string UserFriendlyName;
@@ -114,10 +114,12 @@ namespace PoeHUD.Poe.FilesInMemory
                     Tags[i] = tagsDat.records[m.ReadStringU(m.ReadLong(ii, 0), 255)];
                 }
 
-                TagChances = new int[m.ReadInt(addr + 0xA8)];
+                TagChances = new Dictionary<string,int>(m.ReadInt(addr + 0xA8));
                 long tc = m.ReadLong(addr + 0xB0);
                 for (int i = 0; i < Tags.Length; i++)
-                    TagChances[i] = m.ReadInt(tc + 4 * i);
+                {
+                    TagChances[Tags[i].Key] = m.ReadInt(tc + 4 * i);
+                }
             }
 
             private class LevelComparer : IComparer<ModRecord>
