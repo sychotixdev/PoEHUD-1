@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using PoeHUD.Plugins;
-using PoeHUD.Framework;
 using PoeHUD.Poe;
-using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.EntityComponents;
 using PoeHUD.Models;
-using PoeHUD.Poe.Components;
-using Map = PoeHUD.Poe.Components.Map;
-using PoeHUD.Hud.AdvancedTooltip;
 using SharpDX;
 
 namespace MapsExchange

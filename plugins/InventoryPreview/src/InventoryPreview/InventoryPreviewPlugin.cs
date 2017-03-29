@@ -1,7 +1,6 @@
 ﻿using PoeHUD.Controllers;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Framework.InputHooks;
-using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.RemoteMemoryObjects;
@@ -20,9 +19,7 @@ using PoeHUD.Poe.EntityComponents;
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Color = SharpDX.Color;
-using System.Runtime.InteropServices;
 
 namespace InventoryPreview
 {
