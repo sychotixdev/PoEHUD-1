@@ -134,7 +134,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
                     { 3, settings.T3Color }
                 };
 
-            if (item.AffixType != ModsDat.ModType.Hidden)
+            if (item.AffixType != ModsDat.ModType.Unique)
             {
                 if (item.CouldHaveTiers()) { affix += $" T{item.Tier} "; }
 

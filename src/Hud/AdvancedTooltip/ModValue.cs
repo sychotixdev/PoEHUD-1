@@ -19,7 +19,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
             Record = fs.Mods.records[mod.RawName];
             AffixType = Record.AffixType;
             AffixText = String.IsNullOrEmpty(Record.UserFriendlyName) ? Record.Key : Record.UserFriendlyName;
-            IsCrafted = Record.Domain == 10;
+            IsCrafted = Record.Domain == ModsDat.ModDomain.Master;
             StatValue = new[] { mod.Value1, mod.Value2, mod.Value3, mod.Value4 };
             Tier = -1;
 

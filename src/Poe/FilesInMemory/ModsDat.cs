@@ -8,11 +8,36 @@ namespace PoeHUD.Poe.FilesInMemory
     {
         public enum ModType
         {
+            // Details: http://pathofexile.gamepedia.com/Modifiers#Mod_Generation_Type
             Prefix = 1,
             Suffix = 2,
-            Hidden = 3,
-            NemesisMod = 4,
-            Other = 5
+            Unique = 3,
+            Nemesis = 4,
+            Corrupted = 5,
+            BloodLines = 6,
+            Torment = 7,
+            Tempest = 8,
+            Talisman = 9,
+            Enchantment = 10,
+            EssenceMonster = 11
+        }
+
+        public enum ModDomain
+        {
+            // Details: http://pathofexile.gamepedia.com/Modifiers#Mod_Domain
+            Item = 1,
+            Flask = 2,
+            Monster = 3,
+            Chest = 4,
+            Area = 5,
+            unknown1 = 6,
+            unknown2 = 7,
+            unknown3 = 8,
+            Stance = 9,
+            Master = 10,
+            Jewel = 11,
+            Atlas = 12,
+            LeagueStone = 13
         }
 
         public Dictionary<string, ModRecord> records =
@@ -35,7 +60,7 @@ namespace PoeHUD.Poe.FilesInMemory
                     continue;
 
                 records.Add(r.Key, r);
-                bool addToItemIiers = r.Domain != 3;
+                bool addToItemIiers = r.Domain != ModDomain.Monster;
                 if (!addToItemIiers) continue;
                 Tuple<string, ModType> byTierKey = Tuple.Create(r.Group, r.AffixType);
                 List<ModRecord> groupMembers;
@@ -58,7 +83,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public static IComparer<ModRecord> ByLevelComparer = new LevelComparer();
             public readonly string Key;
             public ModType AffixType;
-            public int Domain;
+            public ModDomain Domain;
             public string Group;
             public int MinLevel;
             public StatsDat.StatRecord[] StatNames; // Game refers to Stats.dat line
@@ -91,7 +116,7 @@ namespace PoeHUD.Poe.FilesInMemory
                         : sDat.records[m.ReadStringU(m.ReadLong(m.ReadLong(addr + 0x58)))]
                 };
 
-                Domain = m.ReadInt(addr + 0x60);
+                Domain = (ModDomain)m.ReadInt(addr + 0x60);
 
                 UserFriendlyName = m.ReadStringU(m.ReadLong(addr + 0x64));
 
