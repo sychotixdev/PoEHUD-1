@@ -13,6 +13,7 @@
 
         public int ItemCellsSizeX => M.ReadInt(Address + 0x10, 0x10);
         public int ItemCellsSizeY => M.ReadInt(Address + 0x10, 0x14);
+        public bool isCorrupted => M.ReadByte(Address + 0xD8) == 1;
 
         // 0x8 - link to base item
         // +0x10 - Name

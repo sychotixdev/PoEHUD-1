@@ -5,6 +5,7 @@ using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
+using PoeHUD.Poe.EntityComponents;
 using SharpDX;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace PoeHUD.Hud.Loot
                 className = tmp.ClassName;
             else
                 className = baseItemType.ClassName;
+            var itemBase = entity.GetComponent<Base>();
             var width = baseItemType.Width;
             var height = baseItemType.Height;
             var blocks = context.block();
@@ -220,14 +222,14 @@ namespace PoeHUD.Hud.Loot
                                                                                         valFromFilter == mods.Identified
                                                                                             : valFromFilter == false;
                                                                                 }
-                                                                                //else
-                                                                                //{
-                                                                                //    var poeCorruptedContext = statement.poeCorrupted();
-                                                                                //    if (poeCorruptedContext != null)
-                                                                                //    {
-                                                                                //       poeCorruptedCondition &= mods.Corrupted == Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
-                                                                                //    }
-                                                                                //}
+                                                                                else
+                                                                                {
+                                                                                    var poeCorruptedContext = statement.poeCorrupted();
+                                                                                    if (poeCorruptedContext != null)
+                                                                                    {
+                                                                                        poeCorruptedCondition &= itemBase.isCorrupted == Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
