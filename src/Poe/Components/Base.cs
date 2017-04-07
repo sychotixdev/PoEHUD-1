@@ -7,7 +7,7 @@
         {
             get
             {
-                return this.M.ReadStringU(this.M.ReadInt(this.Address +0x8, 0x10), 256);
+                return M.ReadStringU(M.ReadLong(Address + 0x10, 0x18), 256);
             }
         }
 

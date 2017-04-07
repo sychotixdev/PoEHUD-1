@@ -259,6 +259,7 @@
     <Compile Include="Poe\Elements\HPbarElement.cs" />
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
     <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
+    <Compile Include="Poe\Elements\StashElement.cs" />
     <Compile Include="Poe\FileInMemory.cs" />
     <Compile Include="Poe\FilesInMemory\ItemClasses.cs" />
     <Compile Include="Poe\FilesInMemory\StatsDat.cs" />
@@ -286,7 +287,6 @@
     <Compile Include="Poe\Component.cs" />
     <Compile Include="Models\EntityWrapper.cs" />
     <Compile Include="Models\EntityListWrapper.cs" />
-    <Compile Include="Models\Legacy\LegacyInventory.cs" />
     <Compile Include="Models\Enums\ItemRarity.cs" />
     <Compile Include="Models\Enums\ItemStatEnum.cs" />
     <Compile Include="Models\ItemStats.cs" />
@@ -319,7 +319,7 @@
     <Compile Include="Poe\RemoteMemoryObjects\ItemMod.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ServerData.cs" />
     <Compile Include="Poe\Element.cs" />
-    <Compile Include="Poe\Elements\Inventory.cs" />
+    <Compile Include="Poe\Elements\InventoryElement.cs" />
     <Compile Include="Poe\Elements\Map.cs" />
     <Compile Include="Poe\Elements\InventoryItemIcon.cs" />
     <Compile Include="Poe\Elements\WindowState.cs" />
