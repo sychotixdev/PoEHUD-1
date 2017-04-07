@@ -1,3 +1,4 @@
+using System;
 using PoeHUD.Models.Interfaces;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ namespace PoeHUD.Poe
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
-       
+
 
         public bool IsHostile => (M.ReadByte(M.ReadLong(Address + 0x38) + 0x130) & 1) == 0;
 
@@ -57,6 +58,17 @@ namespace PoeHUD.Poe
             while (addr != componentLookup && addr != 0 && addr != -1)
             {
                 string name = M.ReadString(M.ReadLong(addr + 0x10));
+                string nameStart = name;
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    char[] arr = name.ToCharArray();
+                    arr = Array.FindAll(arr, (c => (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c) || c == '-')));
+                    name = new string(arr);
+                }
+                if (String.IsNullOrWhiteSpace(name) || name != nameStart)
+                {
+                    break;
+                }
                 long componentAddress = M.ReadLong(ComponentList + M.ReadInt(addr + 0x18) * 8);
                 if (!dictionary.ContainsKey(name) && !string.IsNullOrWhiteSpace(name))
                     dictionary.Add(name, componentAddress);
@@ -96,7 +108,7 @@ namespace PoeHUD.Poe
             long componentLookup = ComponentLookup;
             long addr = componentLookup;
 
-         
+
 
             do
             {
