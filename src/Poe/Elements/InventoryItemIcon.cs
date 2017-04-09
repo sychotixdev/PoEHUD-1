@@ -3,6 +3,11 @@ using System;
 
 namespace PoeHUD.Poe.Elements
 {
+    // Don't confuse this class name with it's purpose.
+    // Purpose of this class is to handle/deal with Hover Items, rather than
+    // Inventory Item. Hovered items can be on Chat, inventory or on ground.
+    // However, if item isn't being hover on then this class isn't reponsible
+    // for getting it's info and might give incorrect result.
     public class InventoryItemIcon : Element
     {
         private readonly Func<Element> inventoryItemTooltip;
