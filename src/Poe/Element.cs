@@ -72,7 +72,7 @@ namespace PoeHUD.Poe
             return new Vector2(num, num2);
         }
 
-        public RectangleF GetClientRect()
+        public virtual RectangleF GetClientRect()
         {
             var vPos = GetParentPos();
             float width = Game.IngameState.Camera.Width;

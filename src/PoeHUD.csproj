@@ -215,6 +215,7 @@
     <Compile Include="Models\BaseItemType.cs" />
     <Compile Include="Models\ConfigLineBase.cs" />
     <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
+    <Compile Include="Models\Enums\InventoryType.cs" />
     <Compile Include="Models\ItemClass.cs" />
     <Compile Include="Models\MonsterConfigLine.cs" />
     <Compile Include="Hud\Trackers\MonsterTrackerSettings.cs" />
@@ -258,7 +259,11 @@
     <Compile Include="Poe\Components\Shrine.cs" />
     <Compile Include="Poe\Components\Stack.cs" />
     <Compile Include="Poe\Components\TriggerableBlockage.cs" />
+    <Compile Include="Poe\Elements\InventoryElements\DivinationInventoryItem.cs" />
+    <Compile Include="Poe\Elements\InventoryElements\EssenceInventoryItem.cs" />
     <Compile Include="Poe\Elements\HPbarElement.cs" />
+    <Compile Include="Poe\Elements\InventoryElements\CurrencyInventoryItem.cs" />
+    <Compile Include="Poe\Elements\InventoryElements\NormalInventoryItem.cs" />
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
     <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
     <Compile Include="Poe\Elements\StashElement.cs" />
