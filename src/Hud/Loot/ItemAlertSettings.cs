@@ -32,7 +32,7 @@ namespace PoeHUD.Hud.Loot
             WithBorder = true;
             WithSound = false;
             Alternative = true;
-            FilePath = "config/thisBest.filter";
+            FilePath = "config/neversink's.filter";
         }
 
         public ToggleNode ShowItemOnMap { get; set; }
