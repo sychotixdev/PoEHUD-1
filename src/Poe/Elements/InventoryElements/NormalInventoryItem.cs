@@ -2,8 +2,8 @@ namespace PoeHUD.Poe.Elements
 {
     public class NormalInventoryItem : Element
     {
-        public int InventPosX => M.ReadInt(Address + 0xb20);
-        public int InventPosY => M.ReadInt(Address + 0xb24);
+        public virtual int InventPosX => M.ReadInt(Address + 0xb20);
+        public virtual int InventPosY => M.ReadInt(Address + 0xb24);
 
         public Entity Item
         {

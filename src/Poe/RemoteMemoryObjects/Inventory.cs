@@ -27,37 +27,59 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return InventoryType.InvalidInventory;
             }
         }
-
         public InventoryType InvType => GetInvType();
 
+        private Element getInventoryElement()
+        {
+            switch(InvType)
+            {
+                case InventoryType.PlayerInventory:
+                case InventoryType.NormalStash:
+                case InventoryType.QuadStash:
+                    return this.AsObject<Element>();
+                case InventoryType.CurrencyStash:
+                case InventoryType.EssenceStash:
+                    return this.AsObject<Element>().Parent;
+                case InventoryType.DivinationStash:
+                    //TODO: implementation.
+                    return null;
+                default:
+                    return null;
+            }
+        }
+        public Element InventoryRootElement => getInventoryElement();
+
         // Shows Item details of visible inventory/stashes
-        public List<Element> VisibleInventoryItems
+        public List<NormalInventoryItem> VisibleInventoryItems
         {
             get
             {
-                var list = new List<Element>();
-                var InventoryItemRoot = this.AsObject<Element>();
-                if (!InventoryItemRoot.IsVisible)
-                    return list;
+                var InvRoot = InventoryRootElement;
+                if (InvRoot == null)
+                    return null;
+                else if (!InvRoot.IsVisible)
+                    return null;
+
+                var list = new List<NormalInventoryItem>();
                 switch (InvType)
                 {
                     case InventoryType.PlayerInventory:
                     case InventoryType.NormalStash:
                     case InventoryType.QuadStash:
-                        foreach (var item in InventoryItemRoot.Children)
+                        foreach (var item in InvRoot.Children)
                         {
                             list.Add(item.AsObject<NormalInventoryItem>());
                         }
                         break;
                     case InventoryType.CurrencyStash:
-                        foreach (var item in InventoryItemRoot.Parent.Children)
+                        foreach (var item in InvRoot.Children)
                         {
                             if (item.ChildCount > 0)
                                 list.Add(item.Children[0].AsObject<CurrencyInventoryItem>());
                         }
                         break;
                     case InventoryType.EssenceStash:
-                        foreach (var item in InventoryItemRoot.Parent.Children)
+                        foreach (var item in InvRoot.Children)
                         {
                             if (item.ChildCount > 0)
                                 list.Add(item.Children[0].AsObject<EssenceInventoryItem>());
