@@ -18,6 +18,10 @@ namespace PoeHUD.Hud.Health
         public HealthBar(EntityWrapper entity, HealthBarSettings settings)
         {
             Entity = entity;
+            if (entity.Path.Contains("GoddessOfJustice"))
+            {
+                return;
+            }
             if (entity.HasComponent<Player>())
             {
                 Type = CreatureType.Player;
