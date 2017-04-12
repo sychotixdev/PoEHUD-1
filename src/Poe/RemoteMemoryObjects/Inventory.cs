@@ -106,6 +106,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 long invAddr = M.ReadLong(Address + 0x410, 0x5F0, 0x30);
                 y = y * xLength;
                 long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
+                if (itmAddr <= 0)
+                    return null;
                 return ReadObject<Entity>(itmAddr);
             }
         }
