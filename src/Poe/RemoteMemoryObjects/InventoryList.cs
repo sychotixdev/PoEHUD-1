@@ -5,7 +5,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class InventoryList : RemoteMemoryObject
     {
-        public int InventoryCount => 15;
+        public static int InventoryCount => 15;
 
         public Inventory this[InventoryIndex inv]
         {
