@@ -11,7 +11,7 @@ namespace PoeHUD.Poe
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
-        public long Id => M.ReadLong(Address + 0x38);
+        public long Id => (long)M.ReadInt(Address + 0x28) << 32 ^ Path.GetHashCode();
         public int InventoryId => M.ReadInt(Address + 0x58);
 
         /// <summary>
