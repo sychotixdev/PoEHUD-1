@@ -10,14 +10,20 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private InventoryType GetInvType()
         {
+        // For Poe MemoryLeak bug where ChildCount of PlayerInventory keep
+        // Increasing on Area/Map Change. Ref:
+        // http://www.ownedcore.com/forums/mmo/path-of-exile/poe-bots-programs/511580-poehud-overlay-updated-362.html#post3718876
+        // Orriginal Value of ChildCount should be 0x18
+            for (int j = 1; j < InventoryList.InventoryCount; j++)
+                if (Game.IngameState.IngameUi.InventoryPanel[(InventoryIndex)j].Address == Address)
+                    return InventoryType.PlayerInventory;
+
             switch (this.AsObject<Element>().Parent.ChildCount)
             {
                 case 0x6f:
                     return InventoryType.EssenceStash;
                 case 0x26:
                     return InventoryType.CurrencyStash;
-                case 0x18:
-                    return InventoryType.PlayerInventory;
                 case 0x05:
                     return InventoryType.DivinationStash;
                 case 0x01:
