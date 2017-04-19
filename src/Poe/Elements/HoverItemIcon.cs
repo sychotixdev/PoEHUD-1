@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.Elements
     // Inventory Item. Hovered items can be on Chat, inventory or on ground.
     // However, if item isn't being hover on then this class isn't reponsible
     // for getting it's info and might give incorrect result.
-    public class InventoryItemIcon : Element
+    public class HoverItemIcon : Element
     {
         private readonly Func<Element> inventoryItemTooltip;
         private readonly Func<Element> itemInChatTooltip;
@@ -18,7 +18,7 @@ namespace PoeHUD.Poe.Elements
         public int InventPosX => M.ReadInt(Address + 0xb20);
         public int InventPosY => M.ReadInt(Address + 0xb24);
 
-        public InventoryItemIcon()
+        public HoverItemIcon()
         {
             toolTipOnground = () => Game.IngameState.IngameUi.ItemOnGroundTooltip;
             inventoryItemTooltip = () => ReadObject<Element>(Address + 0xAD0);

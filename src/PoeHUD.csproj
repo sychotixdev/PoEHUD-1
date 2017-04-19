@@ -328,7 +328,7 @@
     <Compile Include="Poe\Element.cs" />
     <Compile Include="Poe\Elements\InventoryElement.cs" />
     <Compile Include="Poe\Elements\Map.cs" />
-    <Compile Include="Poe\Elements\InventoryItemIcon.cs" />
+    <Compile Include="Poe\Elements\HoverItemIcon.cs" />
     <Compile Include="Poe\Elements\WindowState.cs" />
     <Compile Include="Poe\Components\Positioned.cs" />
     <Compile Include="Poe\Components\Quality.cs" />

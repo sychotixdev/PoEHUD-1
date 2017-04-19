@@ -52,7 +52,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
                     holdKey = false;
                 }
                 Element uiHover = GameController.Game.IngameState.UIHover;
-                var inventoryItemIcon = uiHover.AsObject<InventoryItemIcon>();
+                var inventoryItemIcon = uiHover.AsObject<HoverItemIcon>();
                 if (inventoryItemIcon == null)
                     return;
                 Element tooltip = inventoryItemIcon.Tooltip;
