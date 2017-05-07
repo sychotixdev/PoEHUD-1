@@ -249,6 +249,7 @@
     <Compile Include="Plugins\BasePlugin.cs" />
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\Components\AttributeRequirements.cs" />
     <Compile Include="Poe\Components\Base.cs" />
     <Compile Include="Poe\Components\Charges.cs" />
     <Compile Include="Poe\Components\CurrencyInfo.cs" />
