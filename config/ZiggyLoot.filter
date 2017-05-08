@@ -1,0 +1,638 @@
+﻿# Script edited with Filtration - https://github.com/ben-wallis/Filtration
+# ## ZIGGYD's LOOT FILTER ###
+# Designed to be as lightweight, natural and unobtrusive as possible.
+# Highlighting to teach vendor recipes.
+# Works from level 1 to 100!
+# # Start Filter ##
+# Version 2.6.1 (Legacy League)
+Show
+    BaseType "Mirror of Kalandra"
+    SetTextColor 0 0 0
+    SetBackgroundColor 255 128 255
+    SetBorderColor 0 0 0
+    SetFontSize 45
+    PlayAlertSound 8 100
+
+# Quest Items Made Bigger
+Show
+    Class "Quest Items"
+    SetFontSize 45
+
+# Breach Rings
+Show
+    BaseType "Breach Ring"
+    SetBorderColor 128 0 128
+    SetFontSize 42
+
+# Racing/Leveling Sapphire Ring Highlight for Merveil
+Show
+    BaseType "Sapphire Ring"
+    ItemLevel <= 14
+    SetBorderColor 30 144 255
+    SetFontSize 45
+
+# Racing/Leveling General Jewellery Size Increase
+Show
+    Class "Rings" "Amulets" "Belts"
+    ItemLevel <= 24
+    SetFontSize 42
+
+# Racing/Leveling: Boots Larger
+Show
+    Class "Boots"
+    ItemLevel <= 14
+    SetFontSize 41
+
+Show
+    LinkedSockets = 3
+    LinkedSockets = 4
+    ItemLevel <= 20
+    SetFontSize 39
+
+# Distinguish Jewels
+Show
+    BaseType "Crimson Jewel" "Cobalt Jewel" "Viridian Jewel"
+    SetBorderColor 98 0 255
+
+# Reliquary
+Show
+    BaseType "Ancient Reliquary Key"
+    SetTextColor 255 206 152
+    SetBackgroundColor 23 15 0
+    SetBorderColor 255 165 0
+    SetFontSize 45
+    PlayAlertSound 7 100
+
+# Leaguestones
+Show
+    Class "Leaguestone"
+    SetBackgroundColor 23 0 0
+    SetBorderColor 210 0 0
+    SetFontSize 42
+    PlayAlertSound 4 70
+
+# Map Fragments
+Show
+    Class "Map Fragments" "Map Fragment"
+    SetFontSize 42
+
+# High Tier Maps
+Show
+    DropLevel >= 79
+    Class "Maps"
+    SetBorderColor 210 0 0
+    SetFontSize 44
+
+# Mid Tier Maps
+Show
+    DropLevel >= 74
+    DropLevel <= 78
+    Class "Maps"
+    SetFontSize 40
+
+# White Tier Maps (& Safety Catchall)
+Show
+    Class "Maps"
+    SetFontSize 37
+
+# Perandus League
+Show
+    BaseType "Perandus Coin"
+    SetTextColor 255 165 0
+    SetBackgroundColor 0 0 0
+    SetBorderColor 255 165 0
+    SetFontSize 40
+
+# Essence (Not that you'd miss them anyway)
+Show
+    Class "Currency"
+    BaseType "Essence" "Remnant of Corruption"
+    SetBackgroundColor 0 0 105
+    SetBorderColor 0 0 255 211
+    SetFontSize 40
+
+# Silver Coins
+Show
+    BaseType "Silver Coin"
+    SetTextColor 222 222 222
+    SetBackgroundColor 92 92 92
+    SetBorderColor 219 219 219
+    SetFontSize 45
+
+# Labyrinth Keys
+Show
+    BaseType "Silver Key" "Treasure Key" "Golden Key"
+    SetTextColor 74 230 58
+    SetBorderColor 74 230 58
+    SetFontSize 42
+
+Show
+    BaseType "Talisman"
+    SetBackgroundColor 0 128 0 106
+    SetBorderColor 0 128 0
+    SetFontSize 38
+
+# All Remaining Map Items
+Show
+    Class "Maps" "Map Fragments" "Labyrinth Map Item"
+    SetFontSize 41
+
+# Divination Cards
+Show
+    Class "Card"
+    SetBorderColor 153 255 255
+    SetFontSize 38
+    PlayAlertSound 9 88
+
+# Breach Splinters
+Show
+    BaseType "Splinter of Xoph" "Splinter of Tul" "Splinter of Esh" "Splinter of Uul-Netol" "Splinter of Chayula"
+    SetTextColor 184 0 184
+    SetBorderColor 128 0 128
+    SetFontSize 45
+
+# Currency Tier Highlighting
+Show
+    BaseType "Exalted Orb" "Eternal Orb" "Divine Orb" "Master Cartographer's Seal" "Master Cartographer's Sextant" "Stacked Deck" "Blessing of Xoph" "Blessing of Tul" "Blessing of Esh" "Blessing of Uul-Netol" "Blessing of Chayula"
+    SetTextColor 230 214 177
+    SetBorderColor 230 214 177
+    SetFontSize 45
+    PlayAlertSound 7 100
+
+Show
+    BaseType "Chaos Orb" "Gemcutter's Prism" "Regal Orb" "Orb of Alchemy" "Vaal Orb" "Orb of Fusing" "Orb of Scouring" "Blessed Orb" "Cartographer's Chisel" "Orb of Regret" "Glassblower's Bauble" "Journeyman Cartographer's Seal" "Journeyman Cartographer's Sextant" "Apprentice Cartographer's Seal" "Apprentice Cartographer's Sextant"
+    SetTextColor 219 190 147
+    SetFontSize 43
+
+# Low Currency
+Show
+    Class "Stackable Currency" "Currency"
+    SetTextColor 201 188 156
+    SetBackgroundColor 0 0 0 211
+    SetFontSize 40
+
+# Quality Gems
+Show
+    BaseType "Enhance" "Enlighten" "Empower"
+    SetBackgroundColor 0 0 0
+    SetBorderColor 0 128 128
+    SetFontSize 43
+
+# Quality Gems
+Show
+    Quality >= 5
+    Class "Gem"
+    SetBackgroundColor 0 0 0
+    SetBorderColor 0 128 128
+
+# Other Important Things
+Show
+    Class "Quest Items" "Map" "Currency" "Gems"
+
+Show
+    Class "Fishing Rods"
+    SetTextColor 255 128 255
+    SetBorderColor 255 128 255
+    SetFontSize 45
+
+# 5 & 6 Links Highlighting Based on Rarity
+Show
+    LinkedSockets >= 5
+    Rarity = Normal
+    SetTextColor 255 255 255
+    SetBackgroundColor 20 20 20
+    SetBorderColor 180 180 180
+    SetFontSize 42
+    PlayAlertSound 1 100
+
+Show
+    LinkedSockets >= 5
+    Rarity = Magic
+    SetTextColor 136 136 255
+    SetBackgroundColor 0 15 31
+    SetBorderColor 136 136 255
+    SetFontSize 42
+    PlayAlertSound 1 100
+
+Show
+    LinkedSockets >= 5
+    Rarity = Rare
+    SetTextColor 255 255 119
+    SetBackgroundColor 30 30 0
+    SetBorderColor 180 180 60
+    SetFontSize 42
+    PlayAlertSound 1 100
+
+Show
+    LinkedSockets >= 5
+    Rarity = Unique
+    SetTextColor 175 96 37
+    SetBackgroundColor 31 15 2
+    SetBorderColor 175 96 37
+    SetFontSize 42
+    PlayAlertSound 1 100
+
+# Show All Other Uniques
+Show
+    Rarity = Unique
+    SetFontSize 36
+
+# 6 Sockets for 7 Jewellers
+Show
+    LinkedSockets < 5
+    Sockets = 6
+    Rarity < Unique
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+    SetFontSize 38
+
+# Chromatic Items
+Show
+    LinkedSockets >= 3
+    SocketGroup "RGB"
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Chisel Recipe (20% Hammer + Any Endgame Map)
+Show
+    BaseType "Gavel" "Stone Hammer" "Rock Breaker"
+    Rarity = Normal
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Chisel Recipe (20% Hammer + Any Endgame Map)
+Show
+    Quality >= 12
+    BaseType "Gavel" "Stone Hammer" "Rock Breaker"
+    Rarity = Magic
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Blacksmith's Whetstones & Armorer's Scraps
+Show
+    Quality = 20
+    Class "Gloves" "Helmets" "Boots" "Daggers" "Wands" "Claws" "One Hand Swords" "One Hand Maces"
+    Rarity = Normal
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Blacksmith's Whetstones & Armorer's Scraps
+Show
+    Quality = 20
+    BaseType "Spirit Shield" "Buckler" "Spiked Shield"
+    Rarity = Normal
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Glassblower's Baubles (Vendor 40% Total Quality)
+Show
+    Quality >= 5
+    Class "Flask"
+    SetBackgroundColor 33 30 26
+    SetBorderColor 128 119 99
+
+# Prioritizes Smaller Bases for Space Efficiency
+Show
+    Height = 3
+    Width = 2
+    Class "Bows"
+    Rarity = Rare
+    ItemLevel >= 60
+    ItemLevel < 75
+
+Show
+    Height = 3
+    Width = 1
+    Rarity = Rare
+    ItemLevel >= 60
+    ItemLevel < 75
+    SetFontSize 36
+
+Show
+    Class "Gloves" "Boots" "Helmets" "Body Armours"
+    Rarity = Rare
+    ItemLevel >= 60
+    ItemLevel < 75
+    SetFontSize 36
+
+Show
+    Class "Rings" "Belts" "Amulets"
+    Rarity = Rare
+    ItemLevel >= 60
+    ItemLevel < 75
+    SetFontSize 38
+
+# Prioritizes Smaller Bases for Space Efficiency
+Show
+    Height = 3
+    Width = 2
+    Class "Bows"
+    Rarity = Rare
+    ItemLevel >= 75
+    SetTextColor 255 255 119
+    SetBackgroundColor 0 0 0
+
+Show
+    Height = 3
+    Width = 1
+    Rarity = Rare
+    ItemLevel >= 75
+    SetTextColor 255 255 119
+    SetBackgroundColor 0 0 0
+    SetFontSize 36
+
+Show
+    Class "Helm" "Boot" "Glove" "Body"
+    Rarity = Rare
+    ItemLevel >= 75
+    SetTextColor 255 255 119
+    SetBackgroundColor 0 0 0
+    SetFontSize 36
+
+# High ilvl Jewellery Slightly Brighter
+Show
+    Class "Ring" "Belt" "Amulet"
+    Rarity = Rare
+    ItemLevel >= 75
+    SetTextColor 255 255 51
+    SetBackgroundColor 0 0 0
+    SetFontSize 38
+
+# Shows 3 Sockets Gear for Level, Stops Showing At End of Normal Difficulty
+Show
+    LinkedSockets = 3
+    ItemLevel <= 32
+
+#Disabled Block Start
+# Maraketh Bases (Interesting Implicit Effects)
+#Show
+#    BaseType "Sai" "Fleshripper" "Eclipse Staff" "Dragoon Sword" "Gemini Claw" "Exquisite Blade" "Behemoth Mace" "Maraketh Bow" "Tiger Hook" "Profane Wand" "Runic Hatchet" "Sambar Sceptre" "Coronal Maul" "Sacrificial Garb"
+#    SetBackgroundColor 0 0 0 126
+#    SetFontSize 30
+#Disabled Block End
+
+# Crafting Bases 1
+Show
+    BaseType "Vaal Regalia"
+    ItemLevel >= 84
+    SetBorderColor 0 100 150 200
+    SetFontSize 38
+
+# Crafting Bases 2
+Show
+    BaseType "Steel Ring" "Opal Ring" "Marble Amulet" "Crystal Belt" "Bone Helmet" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
+    SetBorderColor 3 88 171
+    SetFontSize 38
+
+# ilvl 84 Crafting & Enchanting Helm Bases
+Show
+    Class "Helmets"
+    BaseType "Royal Burgonet" "Eternal Burgonet" "Lion Pelt" "Hubris Circlet" "Pig-Faced Bascinet" "Nightmare Bascinet" "Prophet Crown" "Praetor Crown" "Deicide Mask"
+    Rarity <= Magic
+    ItemLevel >= 84
+    SetBackgroundColor 0 0 0 138
+    SetBorderColor 0 61 135
+
+# High Priority Chance Orb Bases
+Show
+    BaseType "Occultist's Vestment" "Prophecy Wand" "Judgement Staff" "Glorious Plate" "Sorcerer Boots" "Assassin's Garb" "Jewelled Foil" "Deicide Mask" "Leather Belt"
+    Rarity = Normal
+    ItemLevel >= 60
+    SetBackgroundColor 31 17 7
+    SetBorderColor 175 96 37 193
+
+# Shows 4 Sockets Armor for Level, Stops Showing At Map Level (Endgame)
+Show
+    LinkedSockets >= 4
+    Class "Body Armours" "Boots" "Gloves" "Helmets"
+    ItemLevel <= 60
+
+# Racing/Leveling Quicksilvers
+Show
+    BaseType "Quicksilver Flask"
+    ItemLevel <= 24
+    SetFontSize 45
+    PlayAlertSound 8 100
+
+# Useful Flasks
+Show
+    Class "Utility Flasks"
+
+# Racing/Leveling Flasks
+Show
+    BaseType "Small Life Flask" "Medium Life Flask" "Large Life Flask" "Large Mana Flask" "Medium Mana Flask"
+    ItemLevel <= 12
+    SetFontSize 45
+
+# Racing/Leveling Flasks
+Show
+    BaseType "Large Life Flask" "Large Mana Flask" "Greater Life Flask" "Grand Life Flask" "Giant Life Flask" "Greater Mana Flask" "Grand Mana Flask" "Giant Mana Flask"
+    ItemLevel <= 24
+    SetFontSize 45
+
+Hide
+    BaseType "Eternal Life Flask" "Divine Life Flask"
+    ItemLevel >= 75
+
+Show
+    BaseType "Eternal Life Flask" "Divine Life Flask"
+
+Hide
+    BaseType "Hallowed Life Flask"
+    ItemLevel >= 65
+
+Show
+    BaseType "Hallowed Life Flask"
+
+Show
+    Class "Life Flasks" "Mana Flasks" "Hybrid Flasks"
+    ItemLevel <= 60
+
+# Hiding Bad Jewellery Bases
+Hide
+    BaseType "Paua Ring" "Coral Amulet" "Studded Belt" "Cloth Belt"
+    Rarity = Normal
+    ItemLevel >= 12
+    SetBackgroundColor 17 17 17 100
+    SetFontSize 22
+
+# Showing all other jewellery
+Show
+    Class "Rings" "Amulets" "Belts"
+
+# Show All Other Rares
+Show
+    Rarity >= Rare
+
+Show
+    ItemLevel < 12
+
+Show
+    DropLevel >= 2
+    Rarity = Normal
+    ItemLevel < 13
+
+Show
+    DropLevel >= 4
+    Rarity = Normal
+    ItemLevel < 14
+
+Show
+    DropLevel >= 6
+    Rarity >= Normal
+    ItemLevel < 16
+
+Show
+    DropLevel >= 8
+    Rarity = Normal
+    ItemLevel < 18
+
+Show
+    DropLevel >= 10
+    Rarity = Normal
+    ItemLevel < 20
+
+Show
+    DropLevel >= 13
+    Rarity = Normal
+    ItemLevel < 22
+
+Show
+    DropLevel >= 16
+    Rarity = Normal
+    ItemLevel < 24
+
+Show
+    DropLevel >= 18
+    Rarity = Normal
+    ItemLevel < 26
+
+Show
+    DropLevel >= 20
+    Rarity = Normal
+    ItemLevel < 28
+
+Show
+    DropLevel >= 22
+    Rarity >= Normal
+    ItemLevel < 30
+    SetFontSize 34
+
+Show
+    DropLevel >= 24
+    Rarity >= Normal
+    ItemLevel < 32
+    SetFontSize 34
+
+Show
+    DropLevel >= 26
+    Rarity >= Normal
+    ItemLevel < 34
+    SetFontSize 33
+
+Show
+    DropLevel >= 30
+    Rarity >= Normal
+    ItemLevel < 36
+    SetFontSize 33
+
+Show
+    DropLevel >= 32
+    Rarity >= Normal
+    ItemLevel < 38
+    SetFontSize 32
+
+Show
+    DropLevel >= 34
+    Rarity >= Normal
+    ItemLevel < 40
+    SetFontSize 32
+
+Show
+    DropLevel >= 35
+    Rarity >= Normal
+    ItemLevel < 42
+    SetFontSize 31
+
+Show
+    DropLevel >= 40
+    Rarity >= Normal
+    ItemLevel < 46
+    SetFontSize 31
+
+Show
+    DropLevel >= 42
+    Rarity >= Normal
+    ItemLevel < 48
+    SetFontSize 30
+
+Show
+    DropLevel >= 44
+    Rarity >= Normal
+    ItemLevel < 50
+    SetFontSize 30
+
+Show
+    DropLevel >= 46
+    Rarity >= Normal
+    ItemLevel < 52
+    SetFontSize 30
+
+Show
+    DropLevel >= 48
+    Rarity >= Normal
+    ItemLevel < 54
+    SetFontSize 30
+
+Show
+    DropLevel >= 52
+    Rarity >= Normal
+    ItemLevel < 56
+    SetFontSize 30
+
+Show
+    DropLevel >= 54
+    Rarity >= Normal
+    ItemLevel < 58
+    SetFontSize 30
+
+Show
+    DropLevel >= 56
+    Rarity >= Normal
+    ItemLevel < 60
+    SetFontSize 30
+
+Show
+    DropLevel >= 58
+    Rarity >= Normal
+    ItemLevel < 62
+    SetFontSize 30
+
+#Disabled Block Start
+#Show
+#    DropLevel >= 60
+#    Rarity >= Normal
+#    ItemLevel < 64
+#    SetFontSize 30
+#Disabled Block End
+
+#Disabled Block Start
+#Show
+#    DropLevel >= 62
+#    Rarity >= Normal
+#    ItemLevel < 66
+#    SetFontSize 30
+#Disabled Block End
+
+#Disabled Block Start
+#Show
+#    DropLevel >= 64
+#    Rarity >= Normal
+#    ItemLevel < 68
+#    SetFontSize 30
+#Disabled Block End
+
+# Hide Everything Else of Little to No Value
+Hide
+    SetBackgroundColor 17 17 17 100
+    SetFontSize 26
