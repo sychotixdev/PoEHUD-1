@@ -34,7 +34,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 hashSet.Add(nextAddr);
                 if (nextAddr != num && nextAddr != 0)
                 {
-                    int EntityID = M.ReadInt(nextAddr + 0x28, 0x28);
+                    int EntityID = M.ReadInt(nextAddr + 0x28, 0x40);
                     if (!list.ContainsKey(EntityID))
                     {
                         long address = M.ReadLong(nextAddr + 0x28);

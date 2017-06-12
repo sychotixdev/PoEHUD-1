@@ -2,10 +2,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameData : RemoteMemoryObject
     {
-        public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x10);
-        public int CurrentAreaLevel => M.ReadInt(Address + 0x18);
-        public int CurrentAreaHash => M.ReadInt(Address + 0x38);
-        public Entity LocalPlayer => ReadObject<Entity>(Address + 0x180);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x240);
+        public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x28);
+        public int CurrentAreaLevel => (int)M.ReadByte(Address + 0x40);
+        public int CurrentAreaHash => M.ReadInt(Address + 0x60);
+        public Entity LocalPlayer => ReadObject<Entity>(Address + 0x1A8);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x270);
     }
 }
