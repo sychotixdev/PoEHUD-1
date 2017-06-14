@@ -6,7 +6,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class Inventory : RemoteMemoryObject
     {
-        public long ItemCount => M.ReadLong(Address + 0x410, 0x5F0, 0x50);
+        public long ItemCount => M.ReadLong(Address + 0x410, 0x5F8, 0x40);
 
         private InventoryType GetInvType()
         {
@@ -109,7 +109,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                long invAddr = M.ReadLong(Address + 0x410, 0x5F0, 0x30);
+                long invAddr = M.ReadLong(Address + 0x410, 0x5F8, 0x20);
                 y = y * xLength;
                 long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
                 if (itmAddr <= 0)
