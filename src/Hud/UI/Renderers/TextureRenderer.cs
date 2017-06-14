@@ -28,10 +28,10 @@ namespace PoeHUD.Hud.UI.Renderers
         public void DrawLine(Vector2 p1, Vector2 p2, float width, Color color)
         {
             Vector2 dir = RotateVect(NormalizeVector(p2 - p1) * width, 90);
-
-            Vector2 pTopLt = p1 + dir;
+            
+            Vector2 pTopLt = p1 + (width <= 1f ? Vector2.Zero : dir);//if width <= 1 we don't need to shift offset on both sides
             Vector2 pTopRt = p1 - dir;
-            Vector2 pBotLt = p2 + dir;
+            Vector2 pBotLt = p2 + (width <= 1f ? Vector2.Zero : dir);
             Vector2 pBotRt = p2 - dir;
 
             ColoredVertex[] data =
