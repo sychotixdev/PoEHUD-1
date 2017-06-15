@@ -7,7 +7,7 @@ Reads data from Path of Exile client application and displays it on transparent 
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
 
 ### Donation Info
-Donations can be made [here](https://www.paypal.me/TehCheat)
+Donations can be made [here](https://www.paypal.me/TehCheat)  Please include a message with your OC user name, if you have one.
 
 ### Keyboard Info
 
