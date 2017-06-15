@@ -123,11 +123,11 @@ namespace PoeHUD.Hud.PluginExtension
 
 
 
-        public void LogError(string message, float displayTime)
+        public void LogError(object message, float displayTime)
         {
             DebugPlug.DebugPlugin.LogMsg(message, displayTime, SharpDX.Color.Red);
         }
-        public void LogMessage(string message, float displayTime)
+        public void LogMessage(object message, float displayTime)
         {
             DebugPlug.DebugPlugin.LogMsg(message, displayTime);
         }

@@ -108,7 +108,7 @@ namespace PoeHUD.Plugins
         public virtual void InitialiseMenu(MenuItem menu) { }
 
         public float PluginErrorDisplayTime = 3;
-        private string LogFileName = "ErrorLog.txt";
+        public string LogFileName = "ErrorLog.txt";
 
         private string logPath => PluginDirectory + "\\" + LogFileName;
 
@@ -131,7 +131,13 @@ namespace PoeHUD.Plugins
                 LogError(" Can't save error log. Error: " + e.Message, 5);
             }
         }
-
+        public static void LogError(object message, float displayTime)
+        {
+            if(message == null)
+                LogError("null", displayTime);
+            else
+                LogError(message.ToString(), displayTime);
+        }
         public static void LogError(string message, float displayTime)
         {
             if(API == null)
@@ -139,12 +145,28 @@ namespace PoeHUD.Plugins
 
             API.LogError(message, displayTime);
         }
+
+        public static void LogMessage(object message, float displayTime)
+        {
+            if (message == null)
+                LogMessage("null", displayTime);
+            else
+                LogMessage(message.ToString(), displayTime);
+        }
         public static void LogMessage(string message, float displayTime)
         {
             if (API == null)
                 return;
 
             API.LogMessage(message, displayTime);
+        }
+
+        public static void LogMessage(object message, float displayTime, SharpDX.Color color)
+        {
+            if (message == null)
+                DebugPlug.DebugPlugin.LogMsg("null", displayTime, color);
+            else
+                DebugPlug.DebugPlugin.LogMsg(message.ToString(), displayTime, color);
         }
 
         public void iInit(PluginExtensionPlugin api, ExternalPlugin pluginData)
