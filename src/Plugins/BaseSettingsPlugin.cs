@@ -11,7 +11,7 @@ namespace PoeHUD.Plugins
     public class BaseSettingsPlugin<TSettings> : BasePlugin where TSettings : SettingsBase, new()
     {
         public TSettings Settings { get; private set; }
-        public string SettingsFileName = "config.ini";
+        private string SettingsFileName = "config.ini";
 
         public BaseSettingsPlugin()
         {

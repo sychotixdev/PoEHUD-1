@@ -108,7 +108,7 @@ namespace PoeHUD.Plugins
         public virtual void InitialiseMenu(MenuItem menu) { }
 
         public float PluginErrorDisplayTime = 3;
-        public string LogFileName = "ErrorLog.txt";
+        private string LogFileName = "ErrorLog.txt";
 
         private string logPath => PluginDirectory + "\\" + LogFileName;
 

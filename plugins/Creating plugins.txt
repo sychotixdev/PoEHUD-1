@@ -32,8 +32,6 @@ Properties:
 *) Memory - for reading from memory
 *) PluginName - used for displaying plugin name in errors (default value: GetType().Name(from plugin Type name), can be changed).
 *) PluginErrorDisplayTime - handled error display time in seconds (default value: 3, can be changed, but not recommended).
-*) LogFileName - file name for logging errors (default value: "ErrorLog.txt", can be changed, but not recommended).
-*) SettingsFileName - file name for saving config (default value: "config.ini", can be changed, but not recommended).
 *) bAllowRender - used for disabling rendering if plugin is disabled in menu (bAllowRender -> Settings.Enable). Can be overrided (but not recommended);
 
 Functions:
