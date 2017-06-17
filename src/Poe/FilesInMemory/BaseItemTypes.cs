@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.FilesInMemory
 {
     public class BaseItemTypes : FileInMemory
     {
-        private readonly Dictionary<string, BaseItemType> contents = new Dictionary<string, BaseItemType>();
+        public readonly Dictionary<string, BaseItemType> contents = new Dictionary<string, BaseItemType>();
 
         public BaseItemTypes(Memory m, long address) : base(m, address)
         {

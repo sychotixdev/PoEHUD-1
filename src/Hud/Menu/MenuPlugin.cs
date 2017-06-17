@@ -97,6 +97,13 @@ namespace PoeHUD.Hud.Menu
             return item;
         }
 
+        public static MenuItem AddChild(MenuItem parent, string text, HotkeyNode node)
+        {
+            var item = new HotkeyButton(text, node);
+            parent.AddChild(item);
+            return item;
+        }
+
         private void CreateMenu()
         {
             root = new RootButton(new Vector2(Settings.X, Settings.Y));
