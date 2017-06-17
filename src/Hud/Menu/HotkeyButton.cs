@@ -35,7 +35,7 @@ namespace PoeHUD.Hud.Menu
 
             var textPosition = new Vector2(Bounds.X - 50 + Bounds.Width / 3, Bounds.Y + Bounds.Height / 2);
 
-            var buttonDisplayName = Name + ": " + (bKeysScan ? "press any key" : node.Value.ToString());
+            var buttonDisplayName = Name + ": " + (bKeysScan ? "Press any key..." : "[" + node.Value.ToString() + "]");
             graphics.DrawText(buttonDisplayName, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
 
@@ -55,8 +55,6 @@ namespace PoeHUD.Hud.Menu
                 {
                     if(WinApi.IsKeyDown(key))
                     {
-                        //DebugPlug.DebugPlugin.LogMsg("KeyPressed: " + key, 0);
-
                         if(key != Keys.Escape)
                         {
                             node.Value = key;
@@ -80,17 +78,13 @@ namespace PoeHUD.Hud.Menu
 
         public override void SetHovered(bool hover)
         {
-            //Action func = null;
+            if (!hover)
+                bKeysScan = false;
+
             Children.ForEach(x =>
             {
                 x.SetVisible(hover);
-
-                //I dunno what to do with this in hotkey version
-                //var toggleButton = x as ToggleButton;
-                //if (hover && toggleButton?.hide != null)
-                //    func = toggleButton.Hide;
             });
-            //func?.Invoke();
         }
     }
 }
