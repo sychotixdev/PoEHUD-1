@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
             int NameLength = M.ReadInt(add + 0x690, 0x5E0);
             return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) : M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
         }
-        public List<string> getAllStashName()
+        public List<string> getAllStashNames()
         {
             List<string> ret = new List<string>();
             for (int i = 0; i < TotalStashes; i++)
