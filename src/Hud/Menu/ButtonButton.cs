@@ -5,25 +5,18 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Linq;
-using System.Windows.Forms;
-using PoeHUD.Framework;
-using System.Collections.Generic;
 
 namespace PoeHUD.Hud.Menu
 {
-    public class HotkeyButton : MenuItem
+    public class ButtonButton : MenuItem
     {
         public readonly string Name;
-        private readonly HotkeyNode node;
-        private bool bKeysScan;
-        private IEnumerable<Keys> KeyCodes;
+        private readonly ButtonNode node;
 
-        public HotkeyButton(string name, HotkeyNode node)
+        public ButtonButton(string name, ButtonNode node)
         {
             Name = name;
             this.node = node;
-
-            KeyCodes = Enum.GetValues(typeof(Keys)).Cast<Keys>();
         }
 
         public override int DesiredWidth => 180;
@@ -34,11 +27,8 @@ namespace PoeHUD.Hud.Menu
             if (!IsVisible) { return; }
 
             var textPosition = new Vector2(Bounds.X - 50 + Bounds.Width / 3, Bounds.Y + Bounds.Height / 2);
-
-            var buttonDisplayName = Name + ": " + (bKeysScan ? "Press any key..." : "[" + node.Value + "]");
-            graphics.DrawText(buttonDisplayName, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
+            graphics.DrawText(Name, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
-
 
             if (Children.Count > 0)
             {
@@ -48,39 +38,25 @@ namespace PoeHUD.Hud.Menu
                 graphics.DrawImage("menu-arrow.png", imgRect);
             }
             Children.ForEach(x => x.Render(graphics, settings));
-
-            if(bKeysScan)
-            {
-                foreach (var key in KeyCodes)
-                {
-                    if(WinApi.IsKeyDown(key))
-                    {
-                        if(key != Keys.Escape)
-                        {
-                            node.Value = key;
-                        }
-
-                        bKeysScan = false;
-                        break;
-                    }
-                }
-            }
         }
 
-         
         protected override void HandleEvent(MouseEventID id, Vector2 pos)
         {
             if (id == MouseEventID.LeftButtonDown)
             {
-                bKeysScan = true;
+                try
+                {
+                    node.OnPressed();
+                }
+                catch
+                {
+                    DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: ButtonNode.OnPressed", 10, SharpDX.Color.Red);
+                }
             }
         }
 
         public override void SetHovered(bool hover)
         {
-            if (!hover)
-                bKeysScan = false;
-
             Children.ForEach(x =>
             {
                 x.SetVisible(hover);

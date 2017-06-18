@@ -7,11 +7,12 @@ namespace PoeHUD.Hud.Settings
     public class HotkeyNode
     {
         [JsonIgnore]
-        public Action OnValueChanged;
+        public Action OnValueChanged = delegate { };
         private Keys value;
 
         public HotkeyNode()
         {
+            value = Keys.Space;
         }
 
         public HotkeyNode(Keys value)
@@ -27,7 +28,15 @@ namespace PoeHUD.Hud.Settings
                 if (this.value != value)
                 {
                     this.value = value;
-                    OnValueChanged?.Invoke();
+                
+                    try
+                    {
+                        OnValueChanged();
+                    }
+                    catch
+                    {
+                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: HotkeyNode.OnValueChanged", 10, SharpDX.Color.Red);
+                    }
                 }
             }
         }

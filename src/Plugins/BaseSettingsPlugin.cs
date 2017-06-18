@@ -123,6 +123,18 @@ namespace PoeHUD.Plugins
                         HotkeyNode option = property.GetValue(Settings) as HotkeyNode;
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
+                    else if (propType == typeof(ButtonNode))
+                    {
+                        ButtonNode option = property.GetValue(Settings) as ButtonNode;
+                        resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                    }
+                    else if (propType == typeof(ListNode))
+                    {
+                        ListNode option = property.GetValue(Settings) as ListNode;
+                        var listButton  = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                        resultItem = listButton;
+                        option.SettingsListButton = listButton;
+                    }
                     else if (propType.IsGenericType)
                     {
                         //Actually we can use reflection to find correct method in MenuPlugin by argument types and invoke it, but I don't have enough time for this way..

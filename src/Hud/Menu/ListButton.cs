@@ -11,19 +11,52 @@ using System.Collections.Generic;
 
 namespace PoeHUD.Hud.Menu
 {
-    public class HotkeyButton : MenuItem
+    public class ListButton : MenuItem
     {
         public readonly string Name;
-        private readonly HotkeyNode node;
-        private bool bKeysScan;
-        private IEnumerable<Keys> KeyCodes;
+        private readonly ListNode node;
+        private List<string> ListValues;
+        private readonly List<MenuItem> SubMenuValues;
 
-        public HotkeyButton(string name, HotkeyNode node)
+        public ListButton(string name, ListNode node)
         {
             Name = name;
             this.node = node;
+            SubMenuValues = new List<MenuItem>();
+        }
 
-            KeyCodes = Enum.GetValues(typeof(Keys)).Cast<Keys>();
+        public void StartInitItems()
+        {
+            SetValues(node.ListValues);
+        }
+
+        public void SetValues(List<string> values)
+        {
+            ListValues = values;
+            if (ListValues == null) return;
+
+            if(SubMenuValues.Count > 0)
+            {
+                foreach(var child in SubMenuValues)
+                {
+                    Children.Remove(child);
+                }
+                SubMenuValues.Clear();
+            }
+
+            foreach (var listValue in ListValues)
+            {
+                var buttonNode = new ButtonNode();
+                buttonNode.OnPressed += delegate { ChangedValue(listValue); };
+                var valueToggleButton = MenuPlugin.AddChild(this, listValue, buttonNode);
+                SubMenuValues.Add(valueToggleButton);
+            }
+        }
+
+        private void ChangedValue(string value)
+        {
+            node.Value = value;
+            HideChildren();
         }
 
         public override int DesiredWidth => 180;
@@ -35,7 +68,7 @@ namespace PoeHUD.Hud.Menu
 
             var textPosition = new Vector2(Bounds.X - 50 + Bounds.Width / 3, Bounds.Y + Bounds.Height / 2);
 
-            var buttonDisplayName = Name + ": " + (bKeysScan ? "Press any key..." : "[" + node.Value + "]");
+            var buttonDisplayName = Name + ": [" + node.Value + "]";
             graphics.DrawText(buttonDisplayName, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
 
@@ -48,42 +81,31 @@ namespace PoeHUD.Hud.Menu
                 graphics.DrawImage("menu-arrow.png", imgRect);
             }
             Children.ForEach(x => x.Render(graphics, settings));
-
-            if(bKeysScan)
-            {
-                foreach (var key in KeyCodes)
-                {
-                    if(WinApi.IsKeyDown(key))
-                    {
-                        if(key != Keys.Escape)
-                        {
-                            node.Value = key;
-                        }
-
-                        bKeysScan = false;
-                        break;
-                    }
-                }
-            }
         }
 
-         
+
         protected override void HandleEvent(MouseEventID id, Vector2 pos)
         {
             if (id == MouseEventID.LeftButtonDown)
             {
-                bKeysScan = true;
+                Children.ForEach(x =>
+                {
+                    x.SetVisible(true);
+                });
             }
         }
 
         public override void SetHovered(bool hover)
         {
-            if (!hover)
-                bKeysScan = false;
+            if (hover) return;
+            HideChildren();
+        }
 
+        private void HideChildren()
+        {
             Children.ForEach(x =>
             {
-                x.SetVisible(hover);
+                x.SetVisible(false);
             });
         }
     }
