@@ -10,7 +10,7 @@ namespace PoeHUD.Plugins
 {
     public class BaseSettingsPlugin<TSettings> : BasePlugin where TSettings : SettingsBase, new()
     {
-        protected TSettings Settings { get; private set; }
+        public TSettings Settings { get; private set; }
         private string SettingsFileName = "config.ini";
 
         public BaseSettingsPlugin()
@@ -117,6 +117,23 @@ namespace PoeHUD.Plugins
                     else if (propType == typeof(EmptyNode))
                     {
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName);
+                    }
+                    else if (propType == typeof(HotkeyNode))
+                    {
+                        HotkeyNode option = property.GetValue(Settings) as HotkeyNode;
+                        resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                    }
+                    else if (propType == typeof(ButtonNode))
+                    {
+                        ButtonNode option = property.GetValue(Settings) as ButtonNode;
+                        resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                    }
+                    else if (propType == typeof(ListNode))
+                    {
+                        ListNode option = property.GetValue(Settings) as ListNode;
+                        var listButton  = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                        resultItem = listButton;
+                        option.SettingsListButton = listButton;
                     }
                     else if (propType.IsGenericType)
                     {

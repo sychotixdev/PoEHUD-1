@@ -1,4 +1,6 @@
-﻿namespace PoeHUD.Hud.Settings
+﻿using Newtonsoft.Json;
+
+namespace PoeHUD.Hud.Settings
 {
     public sealed class RangeNode<T> where T : struct
     {
@@ -14,7 +16,11 @@
         }
 
         public T Value { get; set; }
+
+        [JsonIgnore]
         public T Min { get; set; }
+
+        [JsonIgnore]
         public T Max { get; set; }
 
         public static implicit operator T(RangeNode<T> node)

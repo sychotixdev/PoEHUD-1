@@ -25,6 +25,55 @@ namespace PoeHUD.Hud.UI.Renderers
             sprite.Begin();
         }
 
+        public void DrawLine(Vector2 p1, Vector2 p2, float width, Color color)
+        {
+            Vector2 dir = RotateVect(NormalizeVector(p2 - p1) * width, 90);
+            
+            Vector2 pTopLt = p1 + (width <= 1f ? Vector2.Zero : dir);//if width <= 1 we don't need to shift offset on both sides
+            Vector2 pTopRt = p1 - dir;
+            Vector2 pBotLt = p2 + (width <= 1f ? Vector2.Zero : dir);
+            Vector2 pBotRt = p2 - dir;
+
+            ColoredVertex[] data =
+           {
+                new ColoredVertex(pTopLt.X, pTopLt.Y, color),
+                new ColoredVertex(pTopRt.X, pTopRt.Y, color),
+                new ColoredVertex(pBotRt.X, pBotRt.Y, color),
+                new ColoredVertex(pBotLt.X, pBotLt.Y, color)
+            };
+            device.SetTexture(0, null);
+            DrawColoredVertices(PrimitiveType.TriangleFan, 2, data);
+        }
+
+        private Vector2 RotateVect(Vector2 v, float angle)
+        {
+            var theta = ConvertToRadians(angle);
+
+            var cs = Math.Cos(theta);
+            var sn = Math.Sin(theta);
+            var px = v.X * cs - v.Y * sn;
+            var py = v.X * sn + v.Y * cs;
+            return new Vector2((float)px, (float)py);
+        }
+
+        public double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
+
+        public Vector2 NormalizeVector(Vector2 vec)
+        {
+            var length = VectorLength(vec);
+            vec.X /= length;
+            vec.Y /= length;
+            return vec;
+        }
+
+        public float VectorLength(Vector2 vec)
+        {
+            return (float)Math.Sqrt((vec.X * vec.X) + (vec.Y * vec.Y));
+        }
+
         public void DrawBox(RectangleF rect, Color color)
         {
             ColoredVertex[] data =

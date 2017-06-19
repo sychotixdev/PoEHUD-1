@@ -9,6 +9,7 @@ using SharpDX;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -94,6 +95,28 @@ namespace PoeHUD.Hud.Menu
         {
             var item = new Picker<T>(text, node);
             parent.AddChild(item);
+            return item;
+        }
+
+        public static MenuItem AddChild(MenuItem parent, string text, HotkeyNode node)
+        {
+            var item = new HotkeyButton(text, node);
+            parent.AddChild(item);
+            return item;
+        }
+
+        public static MenuItem AddChild(MenuItem parent, string text, ButtonNode node)
+        {
+            var item = new ButtonButton(text, node);
+            parent.AddChild(item);
+            return item;
+        }
+
+        public static ListButton AddChild(MenuItem parent, string text, ListNode node)
+        {
+            var item = new ListButton(text, node);
+            parent.AddChild(item);
+            item.StartInitItems();//Can't be in ListButton.ctor coz first of all ListButton menu should be added to childs to initialise it's own bounds.
             return item;
         }
 

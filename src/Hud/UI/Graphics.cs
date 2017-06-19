@@ -126,6 +126,11 @@ namespace PoeHUD.Hud.UI
             return fontRenderer.MeasureText(text, "Verdana", height, align);
         }
 
+        public void DrawLine(Vector2 p1, Vector2 p2, float borderWidth, Color color)
+        {
+            textureRenderer.DrawLine(p1, p2, borderWidth, color);
+        }
+
         public void DrawBox(RectangleF rectangle, Color color)
         {
             textureRenderer.DrawBox(rectangle, color);
