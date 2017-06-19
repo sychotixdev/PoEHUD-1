@@ -20,32 +20,52 @@ namespace PoeHUD.Poe.Elements
         public Element PreviousStashButton => Address != 0 ? this.Children[2].Children[0].Children[1].Children[4] : null;
         public Element ClearSearchButton => Address != 0 ? this.Children[3].Children[3].Children[1] : null;
 
-        public Inventory getStashInventory(int number)
+        public Inventory VisibleStash => GetVisibleStash();
+        private Inventory GetVisibleStash()
         {
-            if (number >= TotalStashes)
-                return null;
-            if (StashInventoryPanel.Children[number].ChildCount == 0)
-                return null;
-            return StashInventoryPanel.Children[number].Children[0].Children[0].AsObject<Inventory>();
+            Inventory ret = null;
+            for (int i = 0; i < TotalStashes; i++)
+            {
+                if (StashInventoryPanel.Children[i].ChildCount == 0)
+                    continue;
+                ret = StashInventoryPanel.Children[i].Children[0].Children[0].AsObject<Inventory>();
+                if (ret.InventoryRootElement.IsVisible)
+                {
+                    return ret;
+                }
+            }
+            return null;
         }
-        public string getStashName(int number)
-        {
-            if (number >= TotalStashes || number < 0)
-                return string.Empty;
-            long add = StashListPanel.Children[2].Children[number].Address;
-            int NameLength = M.ReadInt(add + 0x690, 0x5E0);
-            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) : M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
-        }
-        public List<string> getAllStashNames()
+
+        public List<string> AllStashNames => GetAllStashNames();
+        private List<string> GetAllStashNames()
         {
             List<string> ret = new List<string>();
             for (int i = 0; i < TotalStashes; i++)
             {
-                ret.Add(getStashName(i));
+                ret.Add(GetStashName(i));
             }
             return ret;
         }
-        public Element getStashTitleElement(string stashName)
+
+        public Inventory GetStashInventoryByIndex(int index)
+        {
+            if (index >= TotalStashes)
+                return null;
+            if (StashInventoryPanel.Children[index].ChildCount == 0)
+                return null;
+            return StashInventoryPanel.Children[index].Children[0].Children[0].AsObject<Inventory>();
+        }
+        public string GetStashName(int index)
+        {
+            if (index >= TotalStashes || index < 0)
+                return string.Empty;
+            long add = StashListPanel.Children[2].Children[index].Address;
+            int NameLength = M.ReadInt(add + 0x690, 0x5E0);
+            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) : M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
+        }
+        // Making it private because currently no plugin use it.
+        private Element GetStashTitleElement(string stashName)
         {
             long addr = 0;
             int NameLength = 0;
