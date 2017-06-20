@@ -60,7 +60,7 @@ namespace PoeHUD.Poe.Elements
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
-            long add = StashListPanel.Children[2].Children[index].Address;
+            long add = GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x190, 0x9A0)).Children[index].Address;
             int NameLength = M.ReadInt(add + 0x690, 0x5E0);
             return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) : M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
         }
