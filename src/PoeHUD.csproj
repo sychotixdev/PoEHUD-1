@@ -150,6 +150,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="Tools">
+      <HintPath>Tools\bin\Release\Tools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Trinet.Core.IO.Ntfs">
       <HintPath>..\lib\Trinet.Core.IO.Ntfs.dll</HintPath>
       <Private>True</Private>
@@ -389,12 +393,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Tools\Tools.fsproj">
-      <Project>{5f2ae016-51d1-42c4-95cd-4e12118e3a6e}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="poehud.ico" />
