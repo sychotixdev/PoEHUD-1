@@ -48,8 +48,34 @@ namespace PoeHUD.Hud.Menu
             {
                 var buttonNode = new ButtonNode();
                 buttonNode.OnPressed += delegate { ChangedValue(listValue); };
-                var valueToggleButton = MenuPlugin.AddChild(this, listValue, buttonNode);
+                var valueToggleButton = new ButtonButton(listValue, buttonNode);
+                AddChild(valueToggleButton);
                 SubMenuValues.Add(valueToggleButton);
+            }
+            WrapChilds();
+        }
+
+        public int WrapChildRowCount = 10;
+        private void WrapChilds()
+        {
+            int childCount = Children.Count;
+            int column = 1;
+            int row = 0;
+            var listBounds = Bounds;
+
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = Children[i];
+                var posX = listBounds.X + (DesiredWidth * column);
+                var posY = listBounds.Y + (DesiredHeight * row);
+
+                child.Bounds = new RectangleF(posX, posY, DesiredWidth, DesiredHeight);
+                row++;
+                if(row > WrapChildRowCount)
+                {
+                    row = 0;
+                    column++;
+                }
             }
         }
 

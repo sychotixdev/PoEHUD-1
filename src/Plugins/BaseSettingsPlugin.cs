@@ -104,31 +104,31 @@ namespace PoeHUD.Plugins
 
                     var propType = property.PropertyType;
 
-                    if (propType == typeof(ToggleNode))
+                    if (propType == typeof(ToggleNode) || propType.IsSubclassOf(typeof(ToggleNode)))
                     {
                         ToggleNode option = property.GetValue(Settings) as ToggleNode;
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
-                    else if (propType == typeof(ColorNode))
+                    else if (propType == typeof(ColorNode) || propType.IsSubclassOf(typeof(ColorNode)))
                     {
                         ColorNode option = property.GetValue(Settings) as ColorNode;
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
-                    else if (propType == typeof(EmptyNode))
+                    else if (propType == typeof(EmptyNode) || propType.IsSubclassOf(typeof(EmptyNode)))
                     {
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName);
                     }
-                    else if (propType == typeof(HotkeyNode))
+                    else if (propType == typeof(HotkeyNode) || propType.IsSubclassOf(typeof(HotkeyNode)))
                     {
                         HotkeyNode option = property.GetValue(Settings) as HotkeyNode;
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
-                    else if (propType == typeof(ButtonNode))
+                    else if (propType == typeof(ButtonNode) || propType.IsSubclassOf(typeof(ButtonNode)))
                     {
                         ButtonNode option = property.GetValue(Settings) as ButtonNode;
                         resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                     }
-                    else if (propType == typeof(ListNode))
+                    else if (propType == typeof(ListNode) || propType.IsSubclassOf(typeof(ListNode)))
                     {
                         ListNode option = property.GetValue(Settings) as ListNode;
                         var listButton  = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
