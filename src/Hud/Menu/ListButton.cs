@@ -114,9 +114,10 @@ namespace PoeHUD.Hud.Menu
         {
             if (id == MouseEventID.LeftButtonDown)
             {
+                bool visible = Children.Any(x => x.IsVisible);
                 Children.ForEach(x =>
                 {
-                    x.SetVisible(true);
+                    x.SetVisible(!visible);
                 });
             }
         }
