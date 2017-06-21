@@ -12,13 +12,15 @@ namespace PoeHUD.Poe.Elements
         private Element StashListPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA48, 0x10, 0xb48)) : null;
 
         public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA28)) : null;
+        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x10, 0xB20)) : null;
+        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0x10, 0xA30, 0xB58)) : null;
         // TODO: Gonna convert this to Address + offset mode later on.
-        public Element ViewAllStashPanel => Address != 0 ? StashListPanel.Children[2] : null;
+        /*
         public Element SearchBar => Address != 0 ? this.Children[3].Children[3].Children[0] : null;
-        public Element ViewAllStashButton => Address != 0 ? this.Children[2].Children[0].Children[1].Children[2] : null;
         public Element NextStashButton => Address != 0 ? this.Children[2].Children[0].Children[1].Children[5] : null;
         public Element PreviousStashButton => Address != 0 ? this.Children[2].Children[0].Children[1].Children[4] : null;
         public Element ClearSearchButton => Address != 0 ? this.Children[3].Children[3].Children[1] : null;
+        */
 
         public Inventory VisibleStash => GetVisibleStash();
         private Inventory GetVisibleStash()
@@ -60,9 +62,11 @@ namespace PoeHUD.Poe.Elements
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
-            long add = GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x190, 0x9A0)).Children[index].Address;
+            long add = GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x190,
+                                          0x9A0)).Children[index].Address;
             int NameLength = M.ReadInt(add + 0x690, 0x5E0);
-            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) : M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
+            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) :
+                                    M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
         }
         // Making it private because currently no plugin use it.
         private Element GetStashTitleElement(string stashName)
