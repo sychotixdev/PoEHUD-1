@@ -32,8 +32,6 @@ namespace PoeHUD.Poe.Elements
                     continue;
                 ret = StashInventoryPanel.Children[i].Children[0].Children[0].AsObject<Inventory>();
 
-                if (ret == null) return null;
-
                 if (ret.InventoryRootElement.IsVisible)
                 {
                     return ret;

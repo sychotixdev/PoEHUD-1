@@ -47,8 +47,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 case InventoryType.EssenceStash:
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
-                    //TODO: implementation.
-                    return null;
+                    return this.AsObject<Element>().Parent;//TODO: check is that correct.
                 default:
                     return null;
             }
