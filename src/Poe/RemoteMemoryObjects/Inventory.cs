@@ -47,7 +47,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 case InventoryType.EssenceStash:
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
-                    return this.AsObject<Element>().Parent;//TODO: check is that correct.
+                    return this.AsObject<Element>().Children[1];
                 default:
                     return null;
             }
@@ -91,7 +91,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                         }
                         break;
                     case InventoryType.DivinationStash:
-                        //Implementation TODO.
+                        foreach (var item in InvRoot.Children)
+                        {
+                            if (item.Children[1].ChildCount > 0)
+                                list.Add(item.Children[1].Children[0].AsObject<DivinationInventoryItem>());
+                        }
                         break;
                 }
                 return list;
