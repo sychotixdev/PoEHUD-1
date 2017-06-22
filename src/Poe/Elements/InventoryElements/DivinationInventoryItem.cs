@@ -11,7 +11,14 @@ namespace PoeHUD.Poe.Elements
 
         public override RectangleF GetClientRect()
         {
-            return Parent.GetClientRect();
+            var tmp = Parent.GetClientRect();
+
+            // div stash tab scrollbar element scroll value calculator
+            var addr = this.Parent.Parent.Parent.Parent.Children[2].Address + 0xA64;
+            float sub = M.ReadInt(addr) * (float)107.5;
+            tmp.Y -= sub;
+
+            return tmp;
         }
     }
 }
