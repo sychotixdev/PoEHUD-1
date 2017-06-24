@@ -12,6 +12,7 @@ namespace PoeHUD.Plugins
     {
         public TSettings Settings { get; private set; }
         private string SettingsFileName = "config.ini";
+        public MenuItem PluginSettingsRootMenu { get; private set; }
 
         public BaseSettingsPlugin()
         {
@@ -79,7 +80,7 @@ namespace PoeHUD.Plugins
 
         public override void InitialiseMenu(MenuItem mainMenu)
         {
-            var menu = MenuPlugin.AddChild(mainMenu, PluginName, Settings.Enable);
+            PluginSettingsRootMenu = MenuPlugin.AddChild(mainMenu, PluginName, Settings.Enable);
             var settingsProps = Settings.GetType().GetProperties();
 
             Dictionary<int, MenuItem> RootMenu = new Dictionary<int, MenuItem>();
@@ -88,7 +89,7 @@ namespace PoeHUD.Plugins
             {
                 var menuAttrib = property.GetCustomAttribute<MenuAttribute>();
 
-                MenuItem parentMenu = menu;
+                MenuItem parentMenu = PluginSettingsRootMenu;
 
                 if (menuAttrib != null)
                 {
