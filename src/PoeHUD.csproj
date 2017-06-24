@@ -210,6 +210,7 @@
     <Compile Include="Hud\Menu\RootButton.cs" />
     <Compile Include="Hud\Menu\SimpleMenu.cs" />
     <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
+    <Compile Include="Hud\PluginExtension\FileOperationAPIWrapper.cs" />
     <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
     <Compile Include="Hud\PluginWithMapIcons.cs" />

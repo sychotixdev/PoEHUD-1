@@ -20,6 +20,7 @@ namespace PoeHUD.Hud.Menu
         private bool holdKey;
         private RootButton root;
         public static event Action<RootButton> eInitMenu = delegate { };//For spawning the menu in external plugins
+        public static Func<MouseEventID, Vector2, bool> ExternalMouseClick = delegate { return false; };//I dunno how to handle this in plugins. Seems there is only this way
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub)
             : base(gameController, graphics, settingsHub.MenuSettings)
@@ -463,7 +464,9 @@ namespace PoeHUD.Hud.Menu
             }
 
             Vector2 mousePosition = GameController.Window.ScreenToClient(position.X, position.Y);
-            return root.OnMouseEvent(id, mousePosition);
+
+            bool result = ExternalMouseClick(id, mousePosition);
+            return root.OnMouseEvent(id, mousePosition) || result;
         }
     }
 }

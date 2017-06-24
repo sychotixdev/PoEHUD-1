@@ -12,10 +12,12 @@ namespace PoeHUD.Hud.Menu
         private MenuItem currentHover;
         private bool visible;
         public event Action eOnClose = delegate { };
+        public static RootButton Instance;
 
         public RootButton(Vector2 position)
         {
             Bounds = new RectangleF(position.X - 5, position.Y - 3, DesiredWidth, DesiredHeight);
+            Instance = this;
         }
 
         public override int DesiredWidth => 80;
@@ -51,15 +53,20 @@ namespace PoeHUD.Hud.Menu
 
             if (Bounds.Contains(pos) && id == MouseEventID.LeftButtonDown)
             {
-                visible = !visible;
-                if (!visible) eOnClose();
-
-                currentHover = null;
-                Children.ForEach(button => button.SetVisible(visible));
+                CloseRootMenu();
                 return true;
             }
 
             return false;
+        }
+
+        public void CloseRootMenu()
+        {
+            visible = !visible;
+            if (!visible) eOnClose();
+
+            currentHover = null;
+            Children.ForEach(button => button.SetVisible(visible));
         }
 
         public override void Render(Graphics graphics, MenuSettings settings)
