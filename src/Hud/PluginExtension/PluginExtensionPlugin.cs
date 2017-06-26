@@ -66,6 +66,10 @@ namespace PoeHUD.Hud.PluginExtension
                     if (Directory.Exists(backupDir))
                         FileOperationAPIWrapper.MoveToRecycleBin(backupDir);
 
+                    var logFilePAth = Path.Combine(pluginDirectoryInfo.FullName, "%PluginUpdateLog.txt");
+                    if (File.Exists(logFilePAth))
+                        File.Delete(logFilePAth);
+
                     if (MoveDirectoryFiles(pluginDirectoryInfo.FullName, pluginTempUpdateDir, pluginDirectoryInfo.FullName))
                     {
                         PluginUpdateLog.Add("Deleting temp dir:\t" + pluginTempUpdateDir);
@@ -74,10 +78,8 @@ namespace PoeHUD.Hud.PluginExtension
                     else
                     {
                         LogMessage("PoeHUD PluginUpdater: some files wasn't moved or replaced while update (check %PluginUpdateLog.txt). You can move them manually: " + pluginTempUpdateDir, 20);
+                        File.WriteAllLines(logFilePAth, PluginUpdateLog.ToArray());
                     }
-                
-                    var logFilePAth = Path.Combine(pluginDirectoryInfo.FullName, "%PluginUpdateLog.txt");
-                    File.WriteAllLines(logFilePAth, PluginUpdateLog.ToArray());
                 }
 
                 var directoryDlls = pluginDirectoryInfo.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
