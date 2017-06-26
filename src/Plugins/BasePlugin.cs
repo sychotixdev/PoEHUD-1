@@ -27,27 +27,13 @@ namespace PoeHUD.Plugins
 
         protected Action eSaveSettings = delegate { };
         protected Action eLoadSettings = delegate { };
-        //protected bool bClearLogOnStartup = true;
 
         public virtual bool bAllowRender => true;
 
         #region ExternalInvokeMethods
         public void iInitialise()
         {
-            /*  //Deleting log is disabled
-            if (bClearLogOnStartup)
-            {
-                try
-                {  
-                    //File.Delete(logPath);//Clear log
-                }
-                catch (Exception e)
-                {
-                    LogError("Can't clear ErrorLog. Error: " + e.Message, 5);
-                }    
-            }
-            */
-            eLoadSettings();
+   
 
             try { Initialise(); }
             catch (Exception e)
@@ -96,6 +82,15 @@ namespace PoeHUD.Plugins
             catch (Exception e)
             {
                 HandlePluginError("InitialiseMenu", e);
+            }
+        }
+
+        public void iLoadSettings()
+        {
+            try { eLoadSettings(); }
+            catch (Exception e)
+            {
+                HandlePluginError("LoadSettings", e);
             }
         }
         #endregion

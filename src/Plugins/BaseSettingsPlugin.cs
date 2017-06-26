@@ -134,7 +134,6 @@ namespace PoeHUD.Plugins
                         ListNode option = property.GetValue(Settings) as ListNode;
                         var listButton  = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                         resultItem = listButton;
-                        option.SettingsListButton = listButton;
                     }
                     else if (propType.IsGenericType)
                     {

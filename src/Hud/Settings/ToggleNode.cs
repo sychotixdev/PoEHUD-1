@@ -16,6 +16,11 @@ namespace PoeHUD.Hud.Settings
             Value = value;
         }
 
+        public void SetValueNoEvent(bool newValue)
+        {
+            value = newValue;
+        }
+
         public bool Value
         {
             get { return value; }

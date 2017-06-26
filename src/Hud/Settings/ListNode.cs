@@ -15,16 +15,13 @@ namespace PoeHUD.Hud.Settings
         public ListNode()
         {
         }
-
-        public List<string> ListValues { get; private set; }// Use SetListValues function to set
+        
         [JsonIgnore]
         public ListButton SettingsListButton;
 
         public void SetListValues(List<string> values)
         {
-            ListValues = values;
-            if (SettingsListButton != null)//coz "init menu" called after "Plugin.Initialise()"
-                SettingsListButton.SetValues(ListValues);
+            SettingsListButton.SetValues(values);
         }
 
         public string Value

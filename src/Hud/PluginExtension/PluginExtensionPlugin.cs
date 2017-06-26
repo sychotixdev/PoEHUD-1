@@ -21,14 +21,16 @@ namespace PoeHUD.Hud.PluginExtension
             GameController = gameController;
             Graphics = graphics;
             SearchPlugins();
+            LoadSettings();  
+            InitMenuForPlugins(); 
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
-            MenuPlugin.eInitMenu += InitMenuForPlugins;
         }
         
-        private void InitMenuForPlugins(RootButton mainMenu)
+        private void InitMenuForPlugins()
         {
+            RootButton mainMenu = MenuPlugin.MenuRootButton;
             var pluginsMenu = MenuPlugin.AddChild(mainMenu, "Plugins", true);
             eInitMenu(pluginsMenu);
         }
@@ -38,6 +40,7 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action<MenuItem> eInitMenu = delegate { };
+        public event Action eLoadSettings = delegate { };
         public event Action eClose = delegate { };
         public static List<BasePlugin> Plugins = new List<BasePlugin>();
         private List<string> PluginUpdateLog;
@@ -178,7 +181,7 @@ namespace PoeHUD.Hud.PluginExtension
                 {
                     var extPlugin = new ExternalPlugin(type, this, dir);
                     Plugins.Add(extPlugin.BPlugin);
-                    LogMessage("Loaded plugin: " + type.Name, 3);
+                    LogMessage("Loaded plugin: " + type.Name, 1);
                 }
             }
         }
@@ -209,6 +212,10 @@ namespace PoeHUD.Hud.PluginExtension
         public void InitPlugins()
         {
             eInitialise();
+        }
+        public void LoadSettings()
+        {
+            eLoadSettings();
         }
         public void Render()
         {

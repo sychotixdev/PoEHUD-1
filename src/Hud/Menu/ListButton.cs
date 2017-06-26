@@ -17,17 +17,13 @@ namespace PoeHUD.Hud.Menu
         private readonly ListNode node;
         private List<string> ListValues;
         private readonly List<MenuItem> SubMenuValues;
+        private ToggleNode HighlightedNode;
 
         public ListButton(string name, ListNode node)
         {
             Name = name;
             this.node = node;
             SubMenuValues = new List<MenuItem>();
-        }
-
-        public void StartInitItems()
-        {
-            SetValues(node.ListValues);
         }
 
         public void SetValues(List<string> values)
@@ -46,9 +42,13 @@ namespace PoeHUD.Hud.Menu
 
             foreach (var listValue in ListValues)
             {
-                var buttonNode = new ButtonNode();
-                buttonNode.OnPressed += delegate { ChangedValue(listValue); };
-                var valueToggleButton = new ButtonButton(listValue, buttonNode);
+                var buttonNode = new ToggleNode();
+                buttonNode.Value = node.Value == listValue;
+                if (buttonNode.Value)
+                    HighlightedNode = buttonNode;
+
+                buttonNode.OnValueChanged += delegate { ChangedValue(listValue, buttonNode); };
+                var valueToggleButton = new ToggleButton(this, listValue, buttonNode, null, null);
                 AddChild(valueToggleButton);
                 SubMenuValues.Add(valueToggleButton);
             }
@@ -79,8 +79,12 @@ namespace PoeHUD.Hud.Menu
             }
         }
 
-        private void ChangedValue(string value)
+        private void ChangedValue(string value, ToggleNode pressedNode)
         {
+            if (HighlightedNode != null) HighlightedNode.SetValueNoEvent(false);
+            pressedNode.SetValueNoEvent(true);
+            HighlightedNode = pressedNode;
+
             node.Value = value;
             HideChildren();
         }

@@ -164,9 +164,8 @@ namespace PoeHUD.Hud
             plugins.AddRange(underPanel.GetPlugins());
 
             plugins.Add(new AdvancedTooltipPlugin(gameController, graphics, settings.AdvancedTooltipSettings, settings));
-            plugins.Add(new PluginExtensionPlugin(gameController, graphics));//Should be before MenuPlugin (MenuPlugin will initialise creating the menu in all plugins)
             plugins.Add(new MenuPlugin(gameController, graphics, settings));
-        
+            plugins.Add(new PluginExtensionPlugin(gameController, graphics));//Should be after MenuPlugin
 
             Deactivate += OnDeactivate;
             FormClosing += OnClosing;

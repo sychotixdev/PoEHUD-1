@@ -45,6 +45,8 @@ namespace PoeHUD.Hud.Menu
             if (key != null) graphics.DrawText(string.Concat("[", key, "]"), 12, Bounds.TopRight.Translate(-50, 0), settings.MenuFontColor);
             graphics.DrawText(Name, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
+
+            graphics.DrawImage("menu-slider.png", new RectangleF(Bounds.X + 5, Bounds.Y, Bounds.Width - 10, Bounds.Height), Color.Lerp(Color.Transparent, color, 0.6f));
             graphics.DrawImage("menu-slider.png", new RectangleF(Bounds.X + 5, Bounds.Y + 3 * Bounds.Height / 4 + 2, Bounds.Width - 10, 4), color);
 
             if (Children.Count > 0)
