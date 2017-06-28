@@ -9,8 +9,10 @@ namespace PoeHUD.Controllers
 {
     public class GameController
     {
+        public static GameController Instance;
         public GameController(Memory memory)
         {
+            Instance = this;
             Memory = memory;
             Area = new AreaController(this);
             EntityListWrapper = new EntityListWrapper(this);

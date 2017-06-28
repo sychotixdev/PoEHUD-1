@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PoeHUD.Framework;
 using System.Collections.Generic;
+using PoeHUD.Controllers;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -39,7 +40,7 @@ namespace PoeHUD.Hud.Menu
                 }
                 SubMenuValues.Clear();
             }
-
+      
             foreach (var listValue in ListValues)
             {
                 var buttonNode = new ToggleNode();
@@ -49,15 +50,21 @@ namespace PoeHUD.Hud.Menu
 
                 buttonNode.OnValueChanged += delegate { ChangedValue(listValue, buttonNode); };
                 var valueToggleButton = new ToggleButton(this, listValue, buttonNode, null, null);
+
                 AddChild(valueToggleButton);
                 SubMenuValues.Add(valueToggleButton);
             }
             WrapChilds();
         }
 
-        public int WrapChildRowCount = 10;
+
         private void WrapChilds()
         {
+            var windowRect = GameController.Instance.Window.GetWindowRectangle();
+
+            int WrapChildRowCount = (int)((windowRect.Height - Bounds.BottomLeft.Y) / DesiredHeight);
+            WrapChildRowCount--;
+
             int childCount = Children.Count;
             int column = 1;
             int row = 0;
