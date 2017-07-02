@@ -52,14 +52,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return null;
             }
         }
-        public Element InventoryRootElement => getInventoryElement();
+        public Element InventoryUiElement => getInventoryElement();
 
         // Shows Item details of visible inventory/stashes
         public List<NormalInventoryItem> VisibleInventoryItems
         {
             get
             {
-                var InvRoot = InventoryRootElement;
+                var InvRoot = InventoryUiElement;
                 if (InvRoot == null)
                     return null;
                 else if (!InvRoot.IsVisible)
