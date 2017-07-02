@@ -168,6 +168,13 @@ namespace PoeHUD.Hud.Trackers
             alertTexts.Remove(entity);
         }
 
+        private string[] HiddenIcons = new string[]
+        {
+            "ms-red-gray.png",      //White     
+            "ms-blue-gray.png",     //Magic
+            "ms-yellow-gray.png",   //Rare
+            "ms-purple-gray.png"    //Uniq
+        };
         private MapIcon GetMapIconForMonster(EntityWrapper entity, MonsterConfigLine monsterConfigLine)
         {
             if (!entity.IsHostile)
@@ -178,8 +185,16 @@ namespace PoeHUD.Hud.Trackers
             MonsterRarity monsterRarity = entity.GetComponent<ObjectMagicProperties>().Rarity;
             Func<EntityWrapper, Func<string, string>, CreatureMapIcon> iconCreator;
 
+            string overrideIcon = null;
+            var life = entity.GetComponent<Life>();
+            if (life.HasBuff("hidden_monster"))
+            {
+                overrideIcon = HiddenIcons[(int)monsterRarity];
+            }
+
+
             return iconCreators.TryGetValue(monsterRarity, out iconCreator)
-                ? iconCreator(entity, text => monsterConfigLine?.MinimapIcon ?? text) : null;
+                ? iconCreator(entity, text => monsterConfigLine?.MinimapIcon ?? overrideIcon ?? text) : null;
         }
 
         private void PlaySound(IEntity entity, string soundFile)

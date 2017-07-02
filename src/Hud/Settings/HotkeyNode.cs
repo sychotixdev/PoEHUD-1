@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using PoeHUD.Framework;
 
 namespace PoeHUD.Hud.Settings
 {
@@ -49,6 +50,20 @@ namespace PoeHUD.Hud.Settings
         public static implicit operator HotkeyNode(Keys value)
         {
             return new HotkeyNode(value);
+        }
+
+        private bool _pressed;
+        public bool PressedOnce()
+        {
+            if(WinApi.IsKeyDown(value))
+            {
+                if (_pressed) return false;
+                _pressed = true;
+                return true;
+            }
+
+            _pressed = false;
+            return false;
         }
     }
 }

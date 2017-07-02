@@ -46,6 +46,7 @@ For example:
 
 using PoeHUD.Hud.Settings;
 using PoeHUD.Plugins;
+using SharpDX;
 
 public class MySettings : SettingsBase
 {
