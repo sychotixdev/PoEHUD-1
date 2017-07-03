@@ -27,6 +27,8 @@ namespace PoeHUD.Hud.Menu
         public override void Render(Graphics graphics, MenuSettings settings)
         {
             if (!IsVisible) { return; }
+            base.Render(graphics, settings);
+
             string text = string.IsNullOrEmpty(path) ? "  Select file" : Path.GetFileName(path);
             float size = DesiredHeight - 2;
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);

@@ -10,6 +10,8 @@ namespace PoeHUD.Hud.Menu
         public readonly List<MenuItem> Children;
         public bool IsVisible;
         private MenuItem currentHover;
+        public string TooltipText;
+        private static Vector2 MousePos;
 
         protected MenuItem()
         {
@@ -30,6 +32,7 @@ namespace PoeHUD.Hud.Menu
 
         public void OnEvent(MouseEventID id, Vector2 pos)
         {
+            MousePos = pos;
             if (id == MouseEventID.MouseMove)
             {
                 if (TestBounds(pos))
@@ -40,8 +43,10 @@ namespace PoeHUD.Hud.Menu
                         currentHover.SetHovered(false);
                         currentHover = null;
                     }
+                
                     return;
                 }
+
                 if (currentHover != null)
                 {
                     if (currentHover.TestHit(pos))
@@ -73,7 +78,25 @@ namespace PoeHUD.Hud.Menu
             }
         }
 
-        public abstract void Render(Graphics graphics, MenuSettings settings);
+        public virtual void Render(Graphics graphics, MenuSettings settings)
+        {
+            if (Bounds.Contains(MousePos) && !string.IsNullOrEmpty(TooltipText))
+            {
+                var tooltipRect = Bounds;
+                tooltipRect.Y -= tooltipRect.Height + 10;
+                tooltipRect.X += tooltipRect.Width;
+
+                tooltipRect.Width = TooltipText.Length * 9 + 10;
+
+                graphics.DrawBox(tooltipRect, new Color(0, 0, 0, 230));
+
+                var buubleRect = new RectangleF(tooltipRect.X - 23, tooltipRect.Y, 23, 45);
+
+                graphics.DrawImage("tooltip.png", buubleRect);
+
+                graphics.DrawText(TooltipText, 20, tooltipRect.TopLeft + new Vector2(5, 0));
+            }
+        }
 
         public virtual void SetHovered(bool hover)
         {

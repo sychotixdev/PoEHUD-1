@@ -24,6 +24,8 @@ namespace PoeHUD.Hud.Menu
         public override void Render(Graphics graphics, MenuSettings settings)
         {
             if (!IsVisible) { return; }
+            base.Render(graphics, settings);
+
             float colorSize = DesiredHeight - 6;
             graphics.DrawImage("menu-background.png", new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height), settings.BackgroundColor);
             var textPosition = new Vector2(Bounds.X - 60 + Bounds.Width / 2 - colorSize, Bounds.Y + Bounds.Height / 2);

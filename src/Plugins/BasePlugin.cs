@@ -9,7 +9,7 @@ using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Plugins
 {
-    public class BasePlugin
+    public abstract class BasePlugin
     {
         public BasePlugin()
         {
@@ -33,8 +33,6 @@ namespace PoeHUD.Plugins
         #region ExternalInvokeMethods
         public void iInitialise()
         {
-   
-
             try { Initialise(); }
             catch (Exception e)
             {

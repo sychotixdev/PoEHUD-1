@@ -177,18 +177,22 @@ namespace PoeHUD.Plugins
                         LogError($"{PluginName}: Type of option node is not defined: " + propType.Name, 5);
 
 
-
-                    if (menuAttrib.index != -1 && resultItem != null)
+                    if(resultItem != null)
                     {
-                        if(!RootMenu.ContainsKey(menuAttrib.index))
+                        resultItem.TooltipText = menuAttrib.Tooltip;
+
+                        if (menuAttrib.index != -1)
                         {
-                            RootMenu.Add(menuAttrib.index, resultItem);
+                            if (!RootMenu.ContainsKey(menuAttrib.index))
+                            {
+                                RootMenu.Add(menuAttrib.index, resultItem);
+                            }
+                            else
+                            {
+                                LogError($"{PluginName}: Can't add menu '{menuAttrib.MenuName}', plugin already contains menu with index '{menuAttrib.index}'!", 5);
+                            }
                         }
-                        else
-                        {
-                            LogError($"{PluginName}: Can't add menu '{menuAttrib.MenuName}', plugin already contains menu with index '{menuAttrib.index}'!", 5);
-                        }
-                    }
+                    }  
                 }
             }
         }

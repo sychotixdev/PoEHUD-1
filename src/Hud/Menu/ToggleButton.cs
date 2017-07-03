@@ -40,6 +40,8 @@ namespace PoeHUD.Hud.Menu
         public override void Render(Graphics graphics, MenuSettings settings)
         {
             if (!IsVisible) { return; }
+            base.Render(graphics, settings);
+
             Color color = node.Value ? settings.EnabledBoxColor : settings.DisabledBoxColor;
             var textPosition = new Vector2(Bounds.X - 50 + Bounds.Width / 3, Bounds.Y + Bounds.Height / 2);
             if (key != null) graphics.DrawText(string.Concat("[", key, "]"), 12, Bounds.TopRight.Translate(-50, 0), settings.MenuFontColor);
@@ -57,6 +59,7 @@ namespace PoeHUD.Hud.Menu
                 graphics.DrawImage("menu-arrow.png", imgRect);
             }
             Children.ForEach(x => x.Render(graphics, settings));
+         
         }
 
         protected override void HandleEvent(MouseEventID id, Vector2 pos)

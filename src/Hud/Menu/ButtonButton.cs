@@ -25,6 +25,7 @@ namespace PoeHUD.Hud.Menu
         public override void Render(Graphics graphics, MenuSettings settings)
         {
             if (!IsVisible) { return; }
+            base.Render(graphics, settings);
 
             var textPosition = new Vector2(Bounds.X - 50 + Bounds.Width / 3, Bounds.Y + Bounds.Height / 2);
             graphics.DrawText(Name, settings.MenuFontSize, textPosition, settings.MenuFontColor, FontDrawFlags.VerticalCenter | FontDrawFlags.Left);
