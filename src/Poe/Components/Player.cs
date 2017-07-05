@@ -23,6 +23,6 @@ namespace PoeHUD.Poe.Components
 		public int Strength => Address != 0 ? M.ReadInt(Address + 0x4c) : 0;
 		public int Dexterity => Address != 0 ? M.ReadInt(Address + 0x50) : 0;
 		public int Intelligence => Address != 0 ? M.ReadInt(Address + 0x54) : 0;
-        public int Level => Address != 0 ? M.ReadInt(Address + 0x58) : 1;
+        public int Level => Address != 0 ? M.ReadByte(Address + 0x58) : 1;
     }
 }
