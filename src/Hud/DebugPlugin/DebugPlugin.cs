@@ -83,17 +83,26 @@ namespace PoeHUD.DebugPlug
         //If delay is -1 message will newer be destroyed
         public static void LogMsg(object o, float delay)
         {
-            DebugLog.Add(new DisplayMessage(o.ToString(), delay, Color.White));
+            if (o == null)
+                DebugLog.Add(new DisplayMessage("Null", delay, Color.White));
+            else
+                DebugLog.Add(new DisplayMessage(o.ToString(), delay, Color.White));
         }
         public static void LogMsg(object o, float delay, Color color)
         {
-            DebugLog.Add(new DisplayMessage(o.ToString(), delay, color));
+            if (o == null)
+                DebugLog.Add(new DisplayMessage("Null", delay, color));
+            else
+                DebugLog.Add(new DisplayMessage(o.ToString(), delay, color));
         }
 
         //Show the message without destroying
         public static void LogInfoMsg(object o)
         {
-            DebugDrawInfo.Add(o.ToString());
+            if (o == null)
+                DebugDrawInfo.Add("Null");
+            else
+                DebugDrawInfo.Add(o.ToString());
         }
 
        

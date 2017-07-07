@@ -79,6 +79,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
         public class ModRecord
         {
+            public long Address;
             public const int NumberOfStats = 4;
             public static IComparer<ModRecord> ByLevelComparer = new LevelComparer();
             public readonly string Key;
@@ -96,6 +97,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
             public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
             {
+                Address = addr;
                 Key = m.ReadStringU(m.ReadLong(addr + 0));
                 Unknown8 = m.ReadLong(addr + 0x8);
                 MinLevel = m.ReadInt(addr + 0x1C);

@@ -47,7 +47,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 case InventoryType.EssenceStash:
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
-                    return this.AsObject<Element>().Children[1];
+                    //return this.AsObject<Element>().Children[1];// - throws an errors (out of range exception)
+                    var elmnt = this.AsObject<Element>();
+
+                    if (elmnt.ChildCount > 0)
+                        return elmnt.Children[1];
+                    else
+                        return elmnt;   //At least will not throw errors
+
                 default:
                     return null;
             }
