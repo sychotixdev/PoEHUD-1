@@ -41,7 +41,8 @@ namespace PoeHUD.Poe.Components
                 long start = M.ReadLong(Address + 0xD8);
                 long end = M.ReadLong(Address + 0xE0);
                 int count = (int)(end - start) / 8;
-                if (count <= 0 || count > 32)
+                // Randomly bumping to 256 from 32... no idea what real value is.
+                if (count <= 0 || count > 256)
                 {
                     return list;
                 }
