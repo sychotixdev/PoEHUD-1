@@ -64,3 +64,4 @@ git submodule update --init --recursive
 * Windows Vista or newer (XP won't work)
 * Path of Exile should be running in Windowed or Windowed Fullscreen mode (the pure Fullscreen mode does not let PoeHUD draw anything over the game window)
 * Windows Aero transparency effects must be enabled. (If you get a black screen this is the issue)
+* DirectX 9 redistributable.
