@@ -15,8 +15,8 @@ namespace PoeHUD.Poe.Elements
         private readonly Func<ItemOnGroundTooltip> toolTipOnground;
         private ToolTipType? toolTip;
 
-        public int InventPosX => M.ReadInt(Address + 0xb20);
-        public int InventPosY => M.ReadInt(Address + 0xb24);
+        public int InventPosX => M.ReadInt(Address + 0xb30);
+        public int InventPosY => M.ReadInt(Address + 0xb34);
 
         public HoverItemIcon()
         {
