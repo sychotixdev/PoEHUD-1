@@ -7,13 +7,23 @@ namespace PoeHUD.Poe.Elements
     {
         public long TotalStashes => StashInventoryPanel.ChildCount;
 
-        private Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA48, 0x10, 0xb28)) : null;
-        private Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA48, 0x10, 0xb38)) : null;
-        private Element StashListPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA48, 0x10, 0xb48)) : null;
+        //Children[2].Children[0].Children[1].Children[0]
+        private Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA78, 0x10, 0xb30)) : null;
 
-        public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA28)) : null;
-        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x10, 0xB20)) : null;
-        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0x10, 0xA30, 0xB58)) : null;
+        //Children[2].Children[0].Children[1].Children[1]
+        private Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA78, 0x10, 0xb40)) : null;
+
+        //Children[2].Children[0].Children[1].Children[3]
+        private Element StashListPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA78, 0x10, 0xb50)) : null;
+
+        //Children[0]
+        public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA58)) : null;
+
+        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x10, 0xB28)) : null;
+
+        //Children[2].Children[0].Children[1].Children[2]
+        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA78, 0xb60)) : null;
+
         // TODO: Gonna convert this to Address + offset mode later on.
         /*
         public Element SearchBar => Address != 0 ? this.Children[3].Children[3].Children[0] : null;
@@ -63,11 +73,10 @@ namespace PoeHUD.Poe.Elements
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
-            long add = GetObject<Element>(M.ReadLong(StashListPanel.Address + 0x190,
-                                          0x9A0)).Children[index].Address;
-            int NameLength = M.ReadInt(add + 0x690, 0x5E0);
-            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D0, NameLength * 2) :
-                                    M.ReadStringU(M.ReadLong(add + 0x690, 0x5D0), NameLength * 2);
+            long add = ViewAllStashPanel.Children[index].Address;
+            int NameLength = M.ReadInt(add + 0x690, 0x5E8);
+            return NameLength < 8 ? M.ReadStringU(M.ReadLong(add + 0x690) + 0x5D8, NameLength * 2) :
+                                    M.ReadStringU(M.ReadLong(add + 0x690, 0x5D8), NameLength * 2);
         }
         // Making it private because currently no plugin use it.
         private Element GetStashTitleElement(string stashName)
