@@ -19,9 +19,9 @@ namespace PoeHUD.Poe
         public Element Parent => ReadObject<Element>(Address + 0xA4 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0xAC + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0xB0 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x1D4 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x1D8 + OffsetBuffers);
-        public float Scale => M.ReadFloat(Address + 0x1A0 + OffsetBuffers);
+        public float Scale => M.ReadFloat(Address + 0x1A8 + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x1DC + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x1E0 + OffsetBuffers);
 
         public bool IsVisible
         {

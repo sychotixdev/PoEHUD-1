@@ -21,7 +21,7 @@ namespace PoeHUD.Poe.Elements
         public HoverItemIcon()
         {
             toolTipOnground = () => Game.IngameState.IngameUi.ItemOnGroundTooltip;
-            inventoryItemTooltip = () => ReadObject<Element>(Address + 0xAD8);
+            inventoryItemTooltip = () => ReadObject<Element>(Address + 0xAE8);
             itemInChatTooltip = () => ReadObject<Element>(Address + 0x7B8);
         }
 
@@ -76,16 +76,16 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
 
-                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xCC0);
+                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xCD0);
                         if (le == null)
                             return null;
-                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x304);
+                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x30C);
                         if (e == null)
                             return null;
                         return e.GetComponent<WorldItem>().ItemEntity;
 
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0xB28);
+                        return ReadObject<Entity>(Address + 0xB30);
                 }
                 return null;
             }
