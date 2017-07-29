@@ -37,6 +37,7 @@ Metadata/Monsters/Daemon/WeylamsWarchestUnique; Weylam's War Chest; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest4; Ashes of the Condemned; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest3; Empyrean Apparatus; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonSandstormDaemon; Deshret's Storm; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonExileUniqueChest1; Unique Exile Strongbox; ffD2742D
 
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
