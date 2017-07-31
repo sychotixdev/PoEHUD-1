@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int Width => M.ReadInt(Address + 0x4);
         public int Height => M.ReadInt(Address + 0x8);
         public float ZFar => M.ReadFloat(Address + 0x1D8);
-        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0x15C), M.ReadFloat(Address + 0x160), M.ReadFloat(Address + 0x164));
+        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0x144), M.ReadFloat(Address + 0x148), M.ReadFloat(Address + 0x14C));
 
         private static Vector2 oldplayerCord;
 
@@ -23,7 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
             var playerMoving = isplayer && localPlayer.GetComponent<Actor>().isMoving;
             float x, y;
-            int addr = Address + 0x114;
+            int addr = Address + 0x158;
             fixed (byte* numRef = M.ReadBytes(addr, 0x40))
             {
                 Matrix4x4 matrix = *(Matrix4x4*)numRef;
