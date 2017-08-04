@@ -17,11 +17,11 @@ namespace PoeHUD.Poe
         public bool IsVisibleLocal => (M.ReadInt(Address + 0x94 + OffsetBuffers) & 1) == 1;
         public Element Root => ReadObject<Element>(Address + 0x9C + OffsetBuffers);
         public Element Parent => ReadObject<Element>(Address + 0xA4 + OffsetBuffers);
-        public float X => M.ReadFloat(Address + 0xAC + OffsetBuffers);
-        public float Y => M.ReadFloat(Address + 0xB0 + OffsetBuffers);
-        public float Scale => M.ReadFloat(Address + 0x1A8 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x1DC + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x1E0 + OffsetBuffers);
+        public float X => M.ReadFloat(Address + 0xD4 + OffsetBuffers);
+        public float Y => M.ReadFloat(Address + 0xD8 + OffsetBuffers);
+        public float Scale => M.ReadFloat(Address + 0x1D0 + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x204 + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x208 + OffsetBuffers);
 
         public bool IsVisible
         {
