@@ -37,6 +37,7 @@ namespace PoeHUD.Poe.Elements
         {
             Inventory ret = null;
             for (int i = 0; i < TotalStashes; i++)
+
             {
                 if (StashInventoryPanel.Children[i].ChildCount == 0)
                     continue;

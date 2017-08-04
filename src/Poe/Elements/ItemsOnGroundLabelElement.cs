@@ -12,8 +12,8 @@ namespace PoeHUD.Poe.Elements
             labelInfo = new Lazy<long>(GetLabelInfo);
         }
 
-        public Entity ItemOnGround => ReadObject<Entity>(Address + 0x10);
-        public Element Label => ReadObject<Element>(Address + 0x18);
+        public Entity ItemOnGround => ReadObject<Entity>(Address + 0x18);
+        public Element Label => ReadObject<Element>(Address + 0x10);
         public bool CanPickUp => labelInfo.Value == 0;
 
         public TimeSpan TimeLeft
@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                long address = M.ReadLong(Address + OffsetBuffers + 0x354);
+                long address = M.ReadLong(Address + OffsetBuffers + 0x31C);
 
                 for (long nextAddress = M.ReadLong(address); nextAddress != address; nextAddress = M.ReadLong(nextAddress))
                 {
@@ -47,7 +47,7 @@ namespace PoeHUD.Poe.Elements
 
         private long GetLabelInfo()
         {
-            return Label.Address != 0 ? M.ReadLong(Label.Address + OffsetBuffers + 0x454) : 0;
+            return Label.Address != 0 ? M.ReadLong(Label.Address + OffsetBuffers + 0x45C) : 0; // potential candidates: 0x414, 0x45C, 0x494, 0x4A4, 0x4B4
         }
     }
 }

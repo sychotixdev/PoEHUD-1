@@ -10,24 +10,24 @@ namespace PoeHUD.Poe
         public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
         public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
 
-        /* Base Pointer
-        PathOfExile_x64.exe+45FFC0 - 40 53                 - push rbx
-        PathOfExile_x64.exe+45FFC2 - 48 83 EC 50           - sub rsp,50 { 80 }
-        PathOfExile_x64.exe+45FFC6 - 48 C7 44 24 20 FEFFFFFF - mov [rsp+20],FFFFFFFE { -2 }
-        PathOfExile_x64.exe+45FFCF - C7 44 24 60 00000000  - mov [rsp+60],00000000 { 0 }
-        PathOfExile_x64.exe+45FFD7 - 48 8B 05 FA57CF00     - mov rax,[PathOfExile_x64.exe+11557D8] { [004D2D10] } <----RIP to Base
-        PathOfExile_x64.exe+45FFDE - 48 85 C0              - test rax,rax
-        PathOfExile_x64.exe+45FFE1 - 0F85 84000000         - jne PathOfExile_x64.exe+46006B
-         */
+        /*
+        00007FF7C584CDB0 | 40 53                                    | push rbx                                   |
+        00007FF7C584CDB2 | 48 83 EC 30                              | sub rsp,30                                 |
+        00007FF7C584CDB6 | 48 C7 44 24 20 FE FF FF FF               | mov qword ptr ss:[rsp+20],FFFFFFFFFFFFFFFE |
+        00007FF7C584CDBF | 48 8B 05 12 5D 02 01                     | mov rax,qword ptr ds:[7FF7C6872AD8]        |
+        00007FF7C584CDC6 | 48 85 C0                                 | test rax,rax                               |
+        */
+
+        //    40 53 48 83 EC ?? 48 C7 44 24 20 FE FF FF FF 48 8B 05 ?? ?? ?? ?? 48 85 C0
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
             0x40, 0x53,
-            0x48, 0x83, 0xEC, 0x50,
+            0x48, 0x83, 0xEC, 0x00,
             0x48, 0xC7, 0x44, 0x24, 0x20, 0xFE, 0xFF, 0xFF, 0xFF,
-            0xC7, 0x44, 0x24, 0x60, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x8b, 0x05
-        }, "xxxxxxxxxxxxxxxxxxxxxxxxxx");
+            0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00,
+            0x48, 0x85, 0xC0
+        }, "xxxxx?xxxxxxxxxxxx????xxx");
 
         /* FileRoot Pointer
             PathOfExile_x64.exe+3B3180 - 48 8B C4              - mov rax,rsp
@@ -114,7 +114,7 @@ namespace PoeHUD.Poe
         public void DoPatternScans(Memory m)
         {
             long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x1A) + array[0] + 0x1E;
+            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x12) + array[0] + 0x16;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
 
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
