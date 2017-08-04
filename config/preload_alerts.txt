@@ -22,18 +22,19 @@ Metadata/Monsters/BreachBosses/BreachBossLightningMap; Lord Esh, Forked Thought;
 Metadata/Monsters/BreachBosses/BreachBossChaosMap; Lord Chayula, Who Dreamt; ffC23B80
 Metadata/Monsters/BreachBosses/BreachBossPhysicalMap; Lord Uul-Netol, Unburdened Flesh; ffD2B48C
 
-Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Kaom's Cache; ffD2742D
 Metadata/Monsters/Daemon/BarrelOfSpidersDaemonUnique; Strange Barrel; ffD2742D
-Metadata/Monsters/Daemon/EternalUrnDaemonCommon; Unique Strongbox 1; ffD2742D
-Metadata/Monsters/Daemon/EternalUrnDaemonUncommon1; Unique Strongbox 2; ffD2742D
-Metadata/Monsters/Daemon/EternalUrnDaemonUncommon2; Unique Strongbox 3; ffD2742D
-Metadata/Monsters/Daemon/EternalUrnDaemonRare1; Unique Strongbox 4; ffD2742D
-Metadata/Monsters/Daemon/EternalUrnDaemonRare2; Unique Strongbox 5; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonKaomTotems;  Kaom's Cache; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest2; Kaom's Cache; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest3; Empyrean Apparatus; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest4; Ashes of the Condemned; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonTormentContinous;  Ashes of the Condemned; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonSandstormDaemon; Deshret's Storm; ffD2742D
+Metadata/Monsters/Daemon/ChestDaemonSummonExileUniqueChest1;  Perandus Bank; ffD2742D
+Metadata/Monsters/Daemon/WeylamsWarchestUnique; Weylam's War Chest; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonFireWarband; Redblade Cache; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonColdWarband; Mutewind Cache; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonLightningWarband; Brinerot Cache; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonChaosWarband; Renegades Cache; ffD2742D
-Metadata/Monsters/Daemon/ChestDaemonSummonRareUniqueChest4; Ashes of the Condemned; ff00FF00
 
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
