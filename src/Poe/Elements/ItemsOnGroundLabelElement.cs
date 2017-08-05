@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                long address = M.ReadLong(Address + OffsetBuffers + 0x31C);
+                long address = M.ReadLong(Address + OffsetBuffers + 0x344);
 
                 for (long nextAddress = M.ReadLong(address); nextAddress != address; nextAddress = M.ReadLong(nextAddress))
                 {

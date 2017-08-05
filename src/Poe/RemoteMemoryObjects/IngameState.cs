@@ -17,7 +17,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public float CurentUIElementPosX => M.ReadFloat(Address + 0xCB0 + Offsets.IgsOffset);
         public float CurentUIElementPosY => M.ReadFloat(Address + 0xCB4 + Offsets.IgsOffset);
 
-        public long EntityLabelMap => M.ReadLong(Address + 0x98, 0xA48);
+        public long EntityLabelMap => M.ReadLong(Address + 0x98, 0xA70);
         public DiagnosticInfoType DiagnosticInfoType => (DiagnosticInfoType)M.ReadInt(Address + 0xD38 + Offsets.IgsOffset);
         public DiagnosticElement LatencyRectangle => GetObjectAt<DiagnosticElement>(0xF68 + Offsets.IgsOffset);
         public DiagnosticElement FrameTimeRectangle => GetObjectAt<DiagnosticElement>(0x13F8 + Offsets.IgsOffset);
