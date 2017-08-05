@@ -64,7 +64,7 @@ namespace PoeHUD
 
             if (pid == 0)
             {
-                MessageBox.Show("Path of Exile is not running!");
+                MessageBox.Show("You are a fking noob!, Either Path of Exile is not running! or You started x32 POE (DirectX9) with x64 PoeHUD or vice verse.");
                 return;
             }
 
