@@ -19,7 +19,7 @@ namespace PoeHUD.Poe
         /// </summary>
 
 
-        public bool IsHostile => (M.ReadByte(M.ReadLong(Address + 0x50) + 0x130) & 0x80) == 0;
+        public bool IsHostile => (M.ReadByte(M.ReadLong(Address + 0x50) + 0x130) & 1) == 0;
 
         public bool HasComponent<T>() where T : Component, new()
         {
