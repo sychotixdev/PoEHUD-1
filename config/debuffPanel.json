@@ -8,7 +8,8 @@ Filter:
   "Bleeding": {
     "puncture":0,
     "puncture_moving":0,
-    "physical_damage_and_bleed":0
+    "physical_damage_and_bleed":0,
+    "bleeding":0
   },
   "Corruption": {
     "corrupted_blood":0,
