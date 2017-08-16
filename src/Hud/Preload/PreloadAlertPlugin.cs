@@ -20,6 +20,7 @@ namespace PoeHUD.Hud.Preload
         private bool foundSpecificPerandusChest = false;
         private bool essencefound = false;
         private bool holdKey = false;
+        private bool isAreaChanged = false;
         public static Color AreaNameColor = new Color();
         private readonly SettingsHub settingsHub;
 
@@ -218,7 +219,12 @@ namespace PoeHUD.Hud.Preload
                 return;
             }
             
-            
+            if (isAreaChanged)
+            {
+                ResetArea();
+                Parse();
+                isAreaChanged = false;
+            }
 
             Vector2 startPosition = StartDrawPointFunc();
             Vector2 position = startPosition;
@@ -252,6 +258,7 @@ namespace PoeHUD.Hud.Preload
             ResetArea();
             essencefound = false;
             Parse();
+            isAreaChanged = true;
         }
 
         private void Parse()
