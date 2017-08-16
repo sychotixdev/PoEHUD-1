@@ -262,6 +262,8 @@ namespace PoeHUD.Hud.Preload
 
             int areaChangeCount = GameController.Game.AreaChangeCount;
             long listIterator = memory.ReadLong(pFileRoot + 0x8, 0x0);
+            
+            List<string> preloadStrings = new List<string>();
 
             for (int i = 0; i < count; i++)
             {
@@ -276,14 +278,22 @@ namespace PoeHUD.Hud.Preload
                 {
                     continue;
                 }
-
                 
                 string text = memory.ReadStringU(memory.ReadLong(listIterator + 0x10), 512);
 
                 if (text.Contains('@')) { text = text.Split('@')[0]; }
-                CheckForPreload(text);
-         
+
+                preloadStrings.Add(text);
+
             }
+
+            preloadStrings.Sort();
+
+            foreach (var strings in preloadStrings)
+            {
+                CheckForPreload(strings);
+            }
+
             ePreloadResult(alerts);
         }
 
