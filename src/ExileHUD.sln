@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoeHUD", "PoeHUD.csproj", "{E86368B2-AE1E-4489-A749-E29A0AB48F83}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F2AE016-51D1-42C4-95CD-4E12118E3A6E} = {5F2AE016-51D1-42C4-95CD-4E12118E3A6E}
+		{8F5D7D56-7A81-433A-B358-AB297A136183} = {8F5D7D56-7A81-433A-B358-AB297A136183}
+	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tools", "Tools\Tools.fsproj", "{5F2AE016-51D1-42C4-95CD-4E12118E3A6E}"
 EndProject
