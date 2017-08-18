@@ -79,7 +79,7 @@ namespace PoeHUD.Poe.Elements
                         ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xD00);
                         if (le == null)
                             return null;
-                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x30C);
+                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x334);
                         if (e == null)
                             return null;
                         return e.GetComponent<WorldItem>().ItemEntity;
