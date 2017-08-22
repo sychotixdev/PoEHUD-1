@@ -31,7 +31,7 @@ Metadata/Monsters/PopUpTrap/LabyrinthBossPylonReduceArmour; Fonts, Don't Kill; f
 Metadata/Terrain/Labyrinth/Objects/ToggleStatues/EmpowerStatue1; Conduits, Don't Click; ff00ff00
 Metadata/Monsters/Statue/IzaroGargoyleCold; Conduits, Don't Kill; ff00ff00
 
-#PlaceHolder; Idols, All Must Have Full life; ff00ff00
+#PlaceHolder; Idols, All Must Gain Full life; ff00ff00
 #PlaceHolder; Lieutenants, Don't Kill; ff00ff00
 
 # BREACH LEAGUE
