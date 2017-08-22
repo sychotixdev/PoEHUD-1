@@ -117,6 +117,20 @@ Metadata/Monsters/DemonBosses/DemonBoss2/Demon2BossSideArea; Wiraq, the Impaler;
 Metadata/Monsters/DemonBosses/DemonBoss3/Demon3BossSideArea; Ch'aska, Maker of Rain; ffDC143C
 Metadata/Monsters/SandSpitterEmerge/SandSpitterBossSideArea; Mother of the Hive; ffDC143C
 Metadata/Monsters/Seawitch/SeaWitchBossSideArea; Rima, Deep Temptress; ffDC143C
+#Extra vaal Bosses
+Metadata/Monsters/SandLeaper/SandLeaperBossSideArea; Quetzerxi; ffDC143C
+Metadata/Monsters/SkeletonSoldier/SkeletonSoldierMeleeBossSideArea; Calxipher; ffDC143C
+Metadata/Monsters/Banshee/VaalSideAreaBoss8; Iorphia, Dream Eater; ffDC143C
+Metadata/Monsters/VaalSideAreaBosses/VaalSideAreaBoss1; Huitepa the Blind; ffDC143C
+Metadata/Monsters/ZombieDismember/Blackguard/BlackguardZombieBossSideArea; Commander of Flesh; ffDC143C
+Metadata/Monsters/Cannibal/CannibalBossSideAreaLowbie; Perquil the Lucky; ffDC143C
+Metadata/Monsters/Squid/SquidBossSideAreaLowbie; The All-seeing Eye; ffDC143C
+Metadata/Monsters/WaterSpiral/WaterSpiralBossSideArea; Torrent of Fear; ffDC143C
+Metadata/Monsters/VaalSideAreaBosses/VaalSideAreaBoss3_; Anacuacotli, Death's Worship; ffDC143C
+Metadata/Monsters/VaalSideAreaBosses/VaalSideAreaBoss2; Daluatti, Stoneraiser; ffDC143C
+Metadata/Monsters/StatueFingerMage/VaalSideAreaBoss7; Exartze, the Woven Stone; ffDC143C
+Metadata/Monsters/VaalSideAreaBosses/VaalSideAreaBoss5; Guraq, Daylight's Blade; ffDC143C
+Metadata/Monsters/SandSpitterEmerge/SandSpitterBossSideAreaLowbie; Mother of the Hive; ffDC143C
 
 Metadata/Monsters/Axis/AxisCasterBossInvasion; Invasion Boss, Evocata Apocalyptica; ffDC143C
 Metadata/Monsters/Axis/AxisExperimenterBossInvasion; Invasion, Boss Docere Incarnatis; ffDC143C
