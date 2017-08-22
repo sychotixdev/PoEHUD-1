@@ -23,11 +23,16 @@ Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique1; Silver Unique Chest 1; f
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique2; Silver Unique Chest 2; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique3; Silver Unique Chest 3; ffd2742d
 
-# Izaro Phases (Phase, How to get extra key)
-Metadata/Monsters/Labyrinth/IzaroPortalCold; Portals, Dont Kill; ff00ff00
-Metadata/Monsters/FireElemental/FireElementalIzaro; Golems, Dont Kill; ff00ff00
+#Izaro Phases (Phase, How to get extra key)
+Metadata/Monsters/Labyrinth/IzaroPortalCold; Portals, Don't Kill; ff00ff00
+Metadata/Monsters/FireElemental/FireElementalIzaro; Essences, Don't Kill; ff00ff00
 Metadata/Terrain/Labyrinth/Objects/ChargeDisruptors/IzaroDisruptor; Charge Disrupters, Atleast 10 Charges; ff00ff00
-Metadata/Monsters/PopUpTrap/LabyrinthBossPylonReduceArmour; Fonts, Dont Kill ff00ff00
+Metadata/Monsters/PopUpTrap/LabyrinthBossPylonReduceArmour; Fonts, Don't Kill; ff00ff00
+Metadata/Terrain/Labyrinth/Objects/ToggleStatues/EmpowerStatue1; Conduits, Don't Click; ff00ff00
+Metadata/Monsters/Statue/IzaroGargoyleCold; Conduits, Don't Kill; ff00ff00
+
+#PlaceHolder; Idols, All Must Have Full life; ff00ff00
+#PlaceHolder; Lieutenants, Don't Kill; ff00ff00
 
 # BREACH LEAGUE
 Metadata/Chests/Breach/BreachChest1Large; Xoph's Clasped Hand; ffFF5A5A
