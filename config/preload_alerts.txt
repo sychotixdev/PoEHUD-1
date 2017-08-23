@@ -29,7 +29,7 @@ Metadata/Monsters/FireElemental/FireElementalIzaro; Essences, Don't Kill; ff00ff
 Metadata/Terrain/Labyrinth/Objects/ChargeDisruptors/IzaroDisruptor; Charge Disrupters, Atleast 10 Charges; ff00ff00
 Metadata/Monsters/PopUpTrap/LabyrinthBossPylonReduceArmour; Fonts, Don't Kill; ff00ff00
 Metadata/Terrain/Labyrinth/Objects/ToggleStatues/EmpowerStatue1; Conduits, Don't Click; ff00ff00
-Metadata/Monsters/Statue/IzaroGargoyleCold; Conduits, Don't Kill; ff00ff00
+Metadata/Monsters/Statue/IzaroGargoyleCold; Gargoyles, Don't Kill; ff00ff00
 Metadata/Monsters/Statue/IzaroChronosStatueCold; Idols, All Must Gain Full life; ff00ff00
 Metadata/Monsters/Labyrinth/LabyrinthLieutenantSkeletonMelee; Lieutenants, Don't Kill; ff00ff00
 
