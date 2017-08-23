@@ -43,6 +43,11 @@ namespace PoeHUD.Hud
             graphics.DrawImage(fileName, rectangle, color);
         }
 
+        public void DrawPluginImage(Graphics graphics, RectangleF rectangle)
+        {
+            graphics.DrawPluginImage(fileName, rectangle, color);
+        }
+
         public string FileName
         {
             get { return fileName; }
