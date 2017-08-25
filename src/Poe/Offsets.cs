@@ -202,7 +202,7 @@ namespace PoeHUD.Poe
         public void DoPatternScans(Memory m)
         {
             int[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern);
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x12) - m.AddressOfProcess;
+            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0xC) - m.AddressOfProcess;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x7) - m.AddressOfProcess;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));

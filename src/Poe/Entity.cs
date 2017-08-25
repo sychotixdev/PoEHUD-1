@@ -8,8 +8,8 @@ namespace PoeHUD.Poe
         private int ComponentLookup => M.ReadInt(Address, 0x2C, 0x18, 0);
         private int ComponentList => M.ReadInt(Address + 4);
         public string Path => M.ReadStringU(M.ReadInt(Address, 0x10));
-        public int Id => M.ReadInt(Address + 0x24);
-        public int InventoryId => M.ReadInt(Address + 0x28);
+        public int Id => M.ReadInt(Address + 0x2C);
+        public int InventoryId => M.ReadInt(Address + 0x30);
         public long LongId => (long)Id << 32 ^ Path.GetHashCode();
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace PoeHUD.Poe
         /// </summary>
         public bool IsValid => M.ReadInt(Address, 0x10, 0) == 0x65004D;
 
-        public bool IsHostile => (M.ReadByte(M.ReadInt(Address + 0x30) + 0xF8) & 1) == 0;
+        public bool IsHostile => (M.ReadByte(M.ReadInt(Address + 0x2C) + 0xF8) & 1) == 0;
 
         public bool HasComponent<T>() where T : Component, new()
         {

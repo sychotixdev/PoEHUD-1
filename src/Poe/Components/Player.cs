@@ -20,6 +20,6 @@ namespace PoeHUD.Poe.Components
         }
 
         public long XP => Address != 0 ? M.ReadUInt(Address + 0x30) : 0L;
-        public int Level => Address != 0 ? M.ReadInt(Address + 0x40) : 1;
+        public int Level => Address != 0 ? M.ReadByte(Address + 0x40) : 1;
     }
 }
