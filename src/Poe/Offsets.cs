@@ -207,6 +207,7 @@ namespace PoeHUD.Poe
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x7) - m.AddressOfProcess;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
             AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x12) - m.AddressOfProcess;
+            System.Console.WriteLine("AreaChangeCount Pointer: " + (AreaChangeCount + m.AddressOfProcess).ToString("x8"));
         }
     }
 }
