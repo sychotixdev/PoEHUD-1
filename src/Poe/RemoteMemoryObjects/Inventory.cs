@@ -22,7 +22,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 case 0x6f:
                     return InventoryType.EssenceStash;
-                case 0x30:
+                case 0x36:
                     return InventoryType.CurrencyStash;
                 case 0x05:
                     return InventoryType.DivinationStash;
