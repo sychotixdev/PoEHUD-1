@@ -37,8 +37,6 @@ type Scrambler private () =
                 if invalid (Path.GetFileName srcPath)
                    || (new FileInfo(srcPath)).CreationTimeUtc < DateTime.UtcNow.AddDays -0.5 then
                     let dstPath = encryptFile srcPath
-                    System.IO.File.Delete(@"PoeHud")
-                    Process.Start("CMD.exe", "/c  mklink PoeHud "+ dstPath) |> ignore
                     Process.Start(dstPath, sprintf "\"%s\"" srcPath) |> ignore
                 else result <- false
             with ex -> showError (sprintf "Failed to encrypt a file: %s" ex.Message)
