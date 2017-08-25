@@ -62,13 +62,13 @@ namespace PoeHUD.Poe.Elements
                         ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0xA3C);
                         if (le == null)
                             return null;
-                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x218);
+                        Entity e = le.ReadObjectAt<Entity>(OffsetBuffers + 0x23C);
                         if (e == null)
                             return null;
                         return e.GetComponent<WorldItem>().ItemEntity;
 
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0xA64);
+                        return ReadObject<Entity>(Address + 0xA84);
                 }
                 return null;
             }

@@ -145,7 +145,7 @@ namespace PoeHUD.Hud.Loot
                     }
                     else
                     {
-                        if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
+                        if (Settings.ShowText) // && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
                             position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
                     }
                 }
@@ -305,6 +305,7 @@ namespace PoeHUD.Hud.Loot
                     }
 
                     ColorNode borderColor = Settings.BorderSettings.BorderColor;
+                    /*
                     if (!entityLabel.CanPickUp)
                     {
                         borderColor = Settings.BorderSettings.NotMyItemBorderColor;
@@ -315,6 +316,7 @@ namespace PoeHUD.Hud.Loot
                             Graphics.DrawText(timeLeft.ToString(@"mm\:ss"), Settings.BorderSettings.TimerTextSize, rect.TopRight.Translate(4, 0));
                         }
                     }
+                    */
                     Graphics.DrawFrame(rect, Settings.BorderSettings.BorderWidth, borderColor);
                 }
             }

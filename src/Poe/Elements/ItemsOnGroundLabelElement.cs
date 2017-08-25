@@ -7,15 +7,18 @@ namespace PoeHUD.Poe.Elements
     {
         private readonly Lazy<int> labelInfo;
 
+        /*
         public ItemsOnGroundLabelElement()
         {
-            labelInfo = new Lazy<int>(GetLabelInfo);
+            //labelInfo = new Lazy<int>(GetLabelInfo);
         }
+        */
 
         public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
         public Element Label => ReadObject<Element>(Address + 0x8);
-        public bool CanPickUp => labelInfo.Value == 0;
+        //public bool CanPickUp => labelInfo.Value == 0;
 
+        /*
         public TimeSpan TimeLeft
         {
             get
@@ -28,15 +31,16 @@ namespace PoeHUD.Poe.Elements
                 return new TimeSpan();
             }
         }
+        */
 
-        public TimeSpan MaxTimeForPickUp => !CanPickUp ? TimeSpan.FromMilliseconds(M.ReadInt(labelInfo.Value + 0x1C)) : new TimeSpan();
+        //public TimeSpan MaxTimeForPickUp => !CanPickUp ? TimeSpan.FromMilliseconds(M.ReadInt(labelInfo.Value + 0x1C)) : new TimeSpan();
         public new bool IsVisible => Label.IsVisible;
 
         public new IEnumerable<ItemsOnGroundLabelElement> Children
         {
             get
             {
-                int address = M.ReadInt(Address + OffsetBuffers + 0x224);
+                int address = M.ReadInt(Address + OffsetBuffers + 0x244);
                 for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
                 {
                     yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
