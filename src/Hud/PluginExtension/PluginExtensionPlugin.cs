@@ -6,9 +6,9 @@ using PoeHUD.Plugins;
 using System;
 using System.IO;
 using System.Reflection;
-using Trinet.Core.IO.Ntfs;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using System.Collections.Generic;
+using Trinet.Core.IO.Ntfs;
 
 namespace PoeHUD.Hud.PluginExtension
 {
