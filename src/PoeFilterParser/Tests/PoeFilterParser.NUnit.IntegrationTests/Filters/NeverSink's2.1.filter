@@ -1,0 +1,1608 @@
+# Script edited with Filtration - https://github.com/ben-wallis/Filtration
+# ---------------------------------------------------------------------------------------------------------------
+# NeverSink's Indepth Loot Filter
+# VERSION 2.1 - Full
+# ---------------------------------------------------------------------------------------------------------------
+# 
+# You can always find the latest version here:
+# http://pastebin.com/Af00CbhA
+# Forum discussion thread:
+# http://www.pathofexile.com/forum/view-thread/1246208/page/1
+# Please use this thread for feedback, questions and suggestions
+# 
+# 1) Select-All + Copy this script from the "RAW Paste Data" at the bottom of the page.
+# 2) Paste the contents into a notepad/txt document anywhere on your PC
+# USE ANSI ENCODING IF YOU USE NOTEPAD++ OR ANY OTHER TEXT EDITOR
+# 3) Click File/Save As and select the following settings:
+# SAVE AS TYPE:Select "All Files"
+# FILE NAME:"NeverSink.filter" (Without the ")
+# SAVE LOCATION:C:/Users/Documents/My Games/Path of Exile
+# ENCODING (if available):ANSI
+# INGAME: Escape -> Options -> UI -> Scroll down -> Select NeverSink.filter
+# 
+# IF YOU CAN'T PICK UP ANY ITEMS, YOU LIKELY CHANGED THE "item select key" WHILE SCROLLING DOWN
+# 
+# 
+# DESIGN GOALS:
+# - This setup is designed to assist players during all stages of path of exile gameplay (Leveling AND Endgame).
+# - Highlight and notify players when worthwhile items drop
+# - Use intuitive colors, without breaking the PoE feeling and immersion much. Don't go overboard on colors!
+# - Provide light, scaling filtering during levelling
+# - Provide comprehensive and in-depth filtering during endgame play
+# - Provide evaluation help for high level rares based on criteria such as droplevel, itemlevel, item size, popularity and type. Helps you prioritize your pickups, while still showing everything!
+# - Highlight recipe material (Regal, Chromatics, Glassblowers, Jewelers) and crafting bases
+# - Easy to use setup
+# 
+# COLORS:
+# Most colors remain the same, I want the filter to be very intuitive
+# 
+# 1) Red/white big fontsize items are SUPER rare. 6links, mirrors, exalteds. Grab them, if you'll ever see them.
+# 2) Golden background items are high value currency
+# 3) Rare items above level 75 are displayed in a slightly darker hue (orangish) to represent their regal recipe value.
+# 4) Map level rare items with a BAD base have a red-ish background - it's usually not recommended to pick them up unless you have some free space
+# 5) Map level rare items with a GOOD base have a greenish background - you should try picking those up. These items are usually high bases or have a chance to be valuable with good rolls
+# 6) There is also a brighter green background. These rares are rings/jewels/amulets/belts. They are droplevel independent (only itemlevel), small and should be picked up anytime!
+# 7) Items with a white/grey background are good "utility pickups". They are 6sockets, Chromatic-recipe items, utility flasks or flasks with quality. Also good for colorblind players :)
+# 8) There is a blue outline around 5Linked items
+# 9) There's a barely visible black border around several items. It's just for contrast purposes.
+# 
+# ---------------------------------------------------------------------------------------------------------------
+# LOOKUP AND QUICKJUMP TABLE
+# ---------------------------------------------------------------------------------------------------------------
+# Select one of the strings below and use the search function
+# To jump to the section in the document
+# (also use Notepad++ as a edit tool if you're not using it already)
+# 
+# ALPHA # GLOBAL OVERRIDE - ADD YOUR OWN RULES THAT WILL OVERRIDE THE OTHERS HERE
+# 
+# 0000 # UTILITY AND JUST-IN-CASE
+# 0100 # TOP TIER RARITY
+# 0200 # UNIQUES AND MAPS
+# 0300 # CURRENCY
+# 0301 # TOP TIER: ETERNAL, DIVINE, EXALTED
+# 0302 # HIGH TIER: FROM ALCHEMY TO REGAL
+# 0303 # BOTTOM TIER: WISDOM AND PORTAL SCROLLS
+# 0304 # DIVINATION CARDS
+# 0305 # REMAINING CURRENCY
+# 0400 # SOCKET/LINK BASED stuff
+# 0500 # SKILL GEMS
+# 0600 # RARE ITEM HIGHLIGHTING
+# 060a # RARE RINGS, AMULETS, JEWELS, BELTS
+# 0601 # RARE DAGGERS
+# 0602 # RARE CLAWS
+# 0603 # RARE WANDS
+# 0604 # RARE SWORDS
+# 0605 # RARE AXES&MACES (1H)
+# 0606 # RARE SCEPTRES
+# 0607 # RARE STAVES
+# 0608 # RARE TWO HAND SWORDS + MACES + AXES
+# 0609 # RARE BOWS
+# 0610 # RARE QUIVERS
+# 0611 # RARE GLOVES, HELMETS, BOOTS
+# 0612 # RARE SHIELDS
+# 0613 # RARE BODY ARMOR
+# 0614 # RARES - REMAINING RULES
+# 0700 # NORMAL AND MAGIC ITEM RULES
+# 0701 # CHROMATIC ORB RECIPE ITEMS
+# 0702 # MAGIC RINGS, AMULETS, BELTS
+# 0703 # MAGIC JEWELS
+# 0704 # CHANCE ORB BASES - ADD YOUR ITEMS HERE
+# 0705 # HIGH LEVEL WHITE RINGS/AMULETS FOR ALCHING
+# 0706 # CHISEL RECIPE ITEMS
+# 0707 # HIGH LEVEL 4+ LINKED ITEMS
+# 0708 # TOP BASES FOR CRAFTING
+# 0709 # MARAKETH WEAPONS
+# 0710 # PRE-ENDGAME 20% QUALITY ITEMS
+# 0711 # ANIMATE WEAPON SCRIPT (DISABLED)
+# 0800 # FLASKS
+# 0801 # HIDE OUTDATED FLASKS
+# 0802 # HIDE NON-QUALITY RANDOM FLASK DROPS IN MAPS
+# 0803 # FLASKS - HIGHLIGHT NEW NORMAL FLASKS (Kudos to Antnee)
+# 0804 # FLASKS - HIGHLIGHT NEW MAGIC FLASKS (Kudos to Antnee)
+# 0805 # SHOW WHATEVER FLASKS REMAIN
+# 0900 # LEVELING
+# 0901 # LEVELING HIGHLIGHT JEWELRY
+# 0903 # LEVELING GENERAL RULES
+# 0904 # LEVELING WHITE ITEM PROGRESSION
+# 5000 # TEMP AND WIP ENTRIES
+# 5001 # WARBAND MODS
+# OMEGA # ADDITIONAL RULES - ADD YOUR OWN RULES THAT WON'T OVERRIDE THE OTHER RULES
+# 
+# 
+# XXXX # HIDE THE REST
+# 
+# ---------------------------------------------------------------------------------------------------------------
+# COLOR DATA FOR EASY SEARCH AND REPLACE
+# ---------------------------------------------------------------------------------------------------------------
+# 
+# Top Rarity/Currency ItemsSetTextColor 255 0 0SetBorderColor 255 0 0SetBackgroundColor 255 255 255 255
+# High CurrencySetTextColor 0 0 0SetBackgroundColor 213 159 15
+# 5LinksSetBorderColor 0 255 255
+# Vendor/UtilitySetBorderColor 0 0 0SetBackgroundColor 75 75 75
+# Good rares(endgame only)SetBorderColor 0 0 0SetBackgroundColor 25 55 25
+# Great rares(endgame only)SetBorderColor 25 180 25SetBackgroundColor 25 55 25
+# Bad rares(endgame only)SetBackgroundColor 65 25 25
+# Regal recipe(endgame only)SetTextColor 255 190 0
+# Normal Leveling HLSetTextColor 255 255 255 255
+# Magic Leveling HLSetTextColor 100 100 255
+# Magic JewelsSetBorderColor 0 0 100SetBackgroundColor 75 75 75
+# Portal/Wisdom Scroll FadeSetTextColor 170 158 130 215
+# Divination CARDSSetTextColor 150 50 190SetBorderColor 0 0 0
+# 
+# ---------------------------------------------------------------------------------------------------------------
+# SOUND DATA FOR EASY SEARCH AND REPLACE
+# ---------------------------------------------------------------------------------------------------------------
+# 
+# The filter only uses 3 sounds:
+# 
+# PlayAlertSound 1 100medium tier orb drop(from alchemy to regal), divination cards
+# PlayAlertSound 4 100map drops
+# PlayAlertSound 6 100uniques, high tier orb drop, 6 links, fishing rods
+# 
+# Why not use exlusive different sounds for top tier drops?
+# Because you will get used to the PlayAlertSound 6, you'll notice offscreen drops!
+# ---------------------------------------------------------------------------------------------------------------
+# FONT SIZE DATA FOR EASY SEARCH AND REPLACE
+# ---------------------------------------------------------------------------------------------------------------
+# 
+# SetFontSize 20Hidden gear
+# SetFontSize 30+32Normal type gear
+# SetFontSize 35Default font size (use it to remove a font size you don't like)
+# SetFontSize 38Maps, Medium rarity orbs, Divination Cards
+# SetFontSize 40Uniques, Empower/Enlighten gems, 5-Links
+# SetFontSize 42Divines, Exalteds, Eternal orbs
+# SetFontSize 50Mirror, Fishing Rod, 6-Link
+# 
+# ---------------------------------------------------------------------------------------------------------------
+# SCRIPT by NeverSink ( the-dude- in reddit)
+# ---------------------------------------------------------------------------------------------------------------
+
+
+
+# Section: ALPHA # GLOBAL OVERRIDE - ADD YOUR OWN RULES THAT WILL OVERRIDE THE OTHERS HERE
+
+# Section: 0000 # UTILITY AND JUST-IN-CASE
+
+Show
+    Class "Microtransactions"
+
+# Section: 0100 # TOP TIER RARITY
+
+Show
+    Class "Fishing Rod"
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
+    SetFontSize 50
+    PlayAlertSound 6 100
+
+Show
+    Rarity = Unique
+    SocketGroup "WWWWWW"
+    BaseType "Simple Robe"
+    SetFontSize 40
+    PlayAlertSound 6 100
+
+Show
+    LinkedSockets = 6
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
+    SetFontSize 44
+    PlayAlertSound 6 100
+
+Show
+    BaseType "Mirror of Kalandra"
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
+    SetFontSize 50
+    PlayAlertSound 6 100
+
+# Section: 0200 # UNIQUES AND MAPS
+
+Show
+    Rarity = Unique
+    SetFontSize 40
+    PlayAlertSound 6 100
+
+Show
+    Class "Maps"
+    SetFontSize 38
+    PlayAlertSound 4 100
+
+Show
+    Class "Maps" "Map Fragments"
+    SetFontSize 38
+    PlayAlertSound 4 100
+
+# Section: 0300 # CURRENCY
+
+Show
+    BaseType "Eternal Orb" "Divine Orb" "Exalted Orb" "Albino Rhoa Feather"
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
+    SetFontSize 44
+    PlayAlertSound 6 100
+
+Show
+    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Vaal Orb" "Cartographer's Chisel"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 0 0 0
+    SetFontSize 38
+    PlayAlertSound 1 100
+
+Show
+    BaseType "Orb of Chance" "Orb of Alteration" "Chromatic Orb" "Jeweller's Orb"
+    SetTextColor 190 178 135
+    SetBorderColor 210 0 0
+    PlayAlertSound 1 79
+
+Show
+    BaseType "Portal Scroll" "Scroll of Wisdom"
+    SetTextColor 170 158 130 215
+    SetBorderColor 255 40 0 220
+
+Show
+    Class "Divination"
+    SetTextColor 0 0 0
+    SetBackgroundColor 200 50 250
+    SetBorderColor 0 0 0
+    SetFontSize 38
+    PlayAlertSound 1 100
+
+Show
+    Class "Currency"
+    SetTextColor 0 128 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 210 0 0
+
+Show
+    Class "Stackable" "Currency"
+
+# Section: 0400 # SOCKET/LINK BASED stuff
+
+Show
+    LinkedSockets = 5
+    SetBorderColor 0 255 255
+    SetFontSize 40
+    PlayAlertSound 6 100
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Sockets = 6
+    SetTextColor 255 190 0
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+    SetFontSize 38
+
+Show
+    Sockets = 6
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+    SetFontSize 38
+
+Show
+    Sockets >= 3
+    SocketGroup "W"
+
+# Section: 0500 # SKILL GEMS
+
+Show # Gems: Highlight Vaal Gems
+    Class "Gem"
+    BaseType "Vaal"
+    SetBorderColor 30 150 180
+
+Show
+    Class "Gem"
+    BaseType "Portal" "Empower" "Enlighten" "Enhance"
+    SetBorderColor 30 150 180
+    SetFontSize 40
+    PlayAlertSound 6 100
+
+Show
+    Class "Gem"
+    BaseType "Spell Echo" "Multistrike" "Greater Multiple Projectiles"
+    SetBorderColor 30 150 180
+    SetFontSize 38
+
+Show
+    Quality > 0
+    Class "Gem"
+    SetBorderColor 30 150 180
+    SetFontSize 38
+
+Show
+    Class "Gems"
+
+# Section: 0600 # RARE ITEM HIGHLIGHTING
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Rings" "Amulets" "Belts" "Jewel"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 25 180 25
+    SetFontSize 38
+
+Show
+    Rarity = Rare
+    Class "Rings" "Amulets" "Belts" "Jewel"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 25 180 25
+    SetFontSize 38
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 58
+    Rarity = Rare
+    Class "Daggers"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 58
+    Rarity = Rare
+    Class "Daggers"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Daggers"
+    BaseType "Royal Skean" "Skean" "Stiletto" "Copper Kris" "Poignard" "Golden Kris"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Daggers"
+    BaseType "Royal Skean" "Skean" "Stiletto" "Copper Kris" "Poignard" "Golden Kris"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Claws"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Claws"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel < 50
+    Rarity = Rare
+    Class "Claws"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel < 50
+    Rarity = Rare
+    Class "Claws"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 59
+    Rarity = Rare
+    Class "Wands"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 59
+    Rarity = Rare
+    Class "Wands"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 60
+    Rarity = Rare
+    Class "One Hand Swords"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 60
+    Rarity = Rare
+    Class "One Hand Swords"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "One Hand Swords"
+    BaseType "Corsair Sword" "Gemstone Sword" "Graceful Sword" "Cutlass" "Apex Rapier" "Fancy Foil" "Serrated Foil" "Elegant Foil" "Jagged Foil"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "One Hand Swords"
+    BaseType "Corsair Sword" "Gemstone Sword" "Graceful Sword" "Cutlass" "Apex Rapier" "Fancy Foil" "Serrated Foil" "Elegant Foil" "Jagged Foil"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 54
+    Rarity = Rare
+    Class "One Hand Swords"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 54
+    Rarity = Rare
+    Class "One Hand Swords"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 64
+    Rarity = Rare
+    Class "One Hand Axes"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 64
+    Rarity = Rare
+    Class "One Hand Axes"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 64
+    Rarity = Rare
+    Class "One Hand Maces"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 64
+    Rarity = Rare
+    Class "One Hand Maces"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 54
+    Rarity = Rare
+    Class "One Hand Maces" "One Hand Axes"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 54
+    Rarity = Rare
+    Class "One Hand Maces" "One Hand Axes"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Sceptres"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Sceptres"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Sceptres"
+    BaseType "Abyssal Sceptre" "Crystal Sceptre" "Shadow Sceptre" "Quartz Sceptre"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Sceptres"
+    BaseType "Abyssal Sceptre" "Crystal Sceptre" "Shadow Sceptre" "Quartz Sceptre"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 65
+    Rarity = Rare
+    Class "Staves"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 65
+    Rarity = Rare
+    Class "Staves"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Staves"
+    BaseType "Lathi" "Serpentine Staff" "Coiled Staff"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Staves"
+    BaseType "Lathi" "Serpentine Staff" "Coiled Staff"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 56
+    Rarity = Rare
+    Class "Staves"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 56
+    Rarity = Rare
+    Class "Staves"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 64
+    Rarity = Rare
+    Class "Two Hand"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 64
+    Rarity = Rare
+    Class "Two Hand"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 56
+    Rarity = Rare
+    Class "Two Hand"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 56
+    Rarity = Rare
+    Class "Two Hand"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Bows"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 62
+    Rarity = Rare
+    Class "Bows"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 50
+    Rarity = Rare
+    Class "Bows"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 50
+    Rarity = Rare
+    Class "Bows"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Quivers"
+    BaseType "Spike-Point Arrow Quiver" "Broadhead Arrow Quiver" "Penetrating Arrow Quiver" "Two-Point Arrow Quiver"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Quivers"
+    BaseType "Spike-Point Arrow Quiver" "Broadhead Arrow Quiver" "Penetrating Arrow Quiver" "Two-Point Arrow Quiver"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 52
+    Rarity = Rare
+    Class "Gloves" "Boots" "Helmets"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 52
+    Rarity = Rare
+    Class "Gloves" "Boots" "Helmets"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 15
+    Rarity = Rare
+    Class "Gloves" "Boots" "Helmets"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 15
+    Rarity = Rare
+    Class "Gloves" "Boots" "Helmets"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 65
+    Rarity = Rare
+    Class "Shields"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 65
+    Rarity = Rare
+    Class "Shields"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 55
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Spirit Shield"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 55
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Spirit Shield"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Spirit Shield"
+    SetTextColor 255 190 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Spirit Shield"
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Branded Kite Shield" "Angelic Kite Shield" "Laminated Kite Shield" "Ceremonial Kite Shield"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Branded Kite Shield" "Angelic Kite Shield" "Laminated Kite Shield" "Ceremonial Kite Shield"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 60
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Buckler" "Spiked Shield"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 60
+    Rarity = Rare
+    Class "Shields"
+    BaseType "Buckler" "Spiked Shield"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 42
+    Rarity = Rare
+    Class "Shields"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 42
+    Rarity = Rare
+    Class "Shields"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    DropLevel >= 60
+    Rarity = Rare
+    Class "Body Armour"
+    SetTextColor 255 190 0
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 65
+    DropLevel >= 60
+    Rarity = Rare
+    Class "Body Armour"
+    SetBackgroundColor 25 55 25
+    SetBorderColor 0 0 0
+
+Show
+    ItemLevel >= 75
+    DropLevel <= 47
+    Rarity = Rare
+    Class "Body Armour"
+    SetTextColor 255 190 0
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 65
+    DropLevel <= 47
+    Rarity = Rare
+    Class "Body Armour"
+    SetBackgroundColor 65 25 25
+
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    SetTextColor 255 190 0
+
+Show
+    Rarity = Rare
+
+# Section: 0700 # NORMAL AND MAGIC ITEM RULES
+
+Show
+    SocketGroup "RGB"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+
+Show # Endgame: Show magic rings, amulets and belts.
+    Rarity = Magic
+    Class "Rings" "Amulets" "Belts"
+
+Show
+    Class "Jewel"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 150 200
+
+Show
+    Rarity = Normal
+    BaseType "Occultist's Vestment" "Imperial Bow" "Prophecy Wand" "Judgement Staff" "Gavel" "Agate Amulet" "Lapis Amulet" "Amber Amulet"
+    SetTextColor 255 255 255
+    SetBorderColor 0 100 0
+
+Show
+    Rarity = Normal
+    BaseType "Sacrificial Garb"
+    SetTextColor 255 255 255
+    SetBorderColor 0 100 0
+
+Show # Endgame: Show normal ilvl 75+ rings/amulets
+    ItemLevel >= 75
+    Rarity = Normal
+    Class "Rings" "Amulet" "Belts"
+    BaseType "Onyx" "Ruby" "Sapphire" "Topaz" "Two-Stone" "Diamond" "Prismatic" "Unset" "Gold" "Citrine" "Turquoise" "Agate" "Coral Ring" "Moonstone" "Leather" "Heavy" "Amber" "Jade" "Lapis"
+    SetTextColor 255 255 255
+    SetBorderColor 255 190 0
+    SetFontSize 32
+
+Show # Endgame: Show normal ilvl 60+ rings/amulets
+    ItemLevel >= 60
+    ItemLevel < 75
+    Class "Rings" "Amulet" "Belts"
+    BaseType "Onyx" "Ruby" "Sapphire" "Topaz" "Two-Stone" "Diamond" "Prismatic" "Unset" "Gold" "Citrine" "Turquoise" "Agate" "Coral Ring" "Moonstone" "Leather" "Heavy" "Amber" "Jade" "Lapis"
+    SetTextColor 255 255 255
+    SetFontSize 32
+
+Show # Chisel Recipe: Magic Gavels with 12+ qual
+    Quality > 11
+    Rarity = Magic
+    Rarity = Normal
+    BaseType "Gavel" "Rock Breaker" "Stone Hammer"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+    SetFontSize 32
+
+Show # Chisel Recipe: White Gavels
+    Rarity = Normal
+    Rarity = Normal
+    BaseType "Gavel" "Rock Breaker" "Stone Hammer"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+    SetFontSize 32
+
+Show # Endgame: Show high level 4 linked items (64+)
+    DropLevel >= 64
+    Rarity <= Magic
+    LinkedSockets >= 4
+    SetFontSize 32
+
+Show # Weapons: Show Ambusher CRAFTING
+    Rarity <= Magic
+    BaseType "Ambusher"
+    SetFontSize 32
+
+Show # Weapons: Show Harbinger Bow CRAFTING
+    Rarity <= Magic
+    BaseType "Harbinger Bow"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Gemini Claw (Life/Mana on hit)
+    Rarity <= Magic
+    BaseType "Gemini Claw"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Behemoth Mace (1h IAS mace)
+    Rarity <= Magic
+    BaseType "Behemoth Mace"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Sai (1h block dagger)
+    Rarity <= Magic
+    BaseType "Sai"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Tiger Hook (1h dodge sword)
+    Rarity <= Magic
+    BaseType "Tiger Hook"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Dragoon Sword (1h bleed foil)
+    Rarity <= Magic
+    BaseType "Dragoon Sword"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Runic Hatchet (1h phys axe)
+    Rarity <= Magic
+    BaseType "Runic Hatchet"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Maraketh Bow (2h MS bow)
+    Rarity <= Magic
+    BaseType "Maraketh Bow"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Exquisite Blade (2h crit blade)
+    Rarity <= Magic
+    BaseType "Exquisite Blade"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Eclipse Staff (2h crit staff)
+    Rarity <= Magic
+    BaseType "Eclipse Staff"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Fleshripper (2h crit axe)
+    Rarity <= Magic
+    BaseType "Fleshripper"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Coronal Maul (2h AOE mace)
+    Rarity <= Magic
+    BaseType "Coronal Maul"
+    SetFontSize 32
+
+Show # Maraketh Weapons: Show Sambar Sceptre (1H ele pen sceptre)
+    Rarity <= Magic
+    BaseType "Sambar Sceptre"
+    SetFontSize 32
+
+Show
+    ItemLevel <= 60
+    Quality = 20
+    Rarity <= Magic
+    Rarity = Normal
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+
+# Section: 0800 # FLASKS
+
+Show
+    Class "Utility Flasks"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+
+Show
+    Quality >= 1
+    BaseType "Flask"
+    SetBackgroundColor 75 75 75
+    SetBorderColor 0 0 0
+
+Hide
+    ItemLevel >= 35
+    BaseType "Flask"
+    BaseType "Small" "Medium" "Large" "Greater" "Grand"
+    SetFontSize 20
+
+Hide
+    ItemLevel >= 53
+    BaseType "Flask"
+    BaseType "Giant" "Colossal" "Sacred"
+    SetFontSize 20
+
+Hide # Endgame: Show non quality flasks in maps
+    ItemLevel >= 69
+    BaseType "Flask"
+    SetFontSize 20
+
+Show
+    ItemLevel <= 6
+    ItemLevel >= 3
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Medium"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 9
+    ItemLevel >= 5
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Large"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 15
+    ItemLevel >= 12
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Greater"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 21
+    ItemLevel >= 18
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Grand"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 27
+    ItemLevel >= 24
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Giant"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 33
+    ItemLevel >= 30
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Colossal"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 39
+    ItemLevel >= 36
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Sacred"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 45
+    ItemLevel >= 42
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Hallowed"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 51
+    ItemLevel >= 48
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Sanctified"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 62
+    ItemLevel >= 60
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Divine"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 67
+    ItemLevel >= 65
+    Rarity = Normal
+    Class "Flask"
+    BaseType "Eternal"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 6
+    ItemLevel >= 3
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Medium"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 9
+    ItemLevel >= 5
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Large"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 15
+    ItemLevel >= 12
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Greater"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 21
+    ItemLevel >= 18
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Grand"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 27
+    ItemLevel >= 24
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Giant"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 33
+    ItemLevel >= 30
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Colossal"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 39
+    ItemLevel >= 36
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Sacred"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 45
+    ItemLevel >= 42
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Hallowed"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 51
+    ItemLevel >= 48
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Sanctified"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 63
+    ItemLevel >= 60
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Divine"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 68
+    ItemLevel >= 65
+    Rarity = Magic
+    Class "Flask"
+    BaseType "Eternal"
+    SetTextColor 100 100 255
+
+Show
+    Rarity <= Magic
+    BaseType "Flask"
+    SetBorderColor 74 230 58
+    SetFontSize 30
+
+# Section: 0900 # LEVELING
+
+Show
+    ItemLevel < 35
+    Rarity = Normal
+    Class "Rings" "Amulets" "Belts"
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel < 45
+    Rarity = Magic
+    Class "Rings" "Amulets" "Belts"
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 66
+    Rarity = Normal
+    LinkedSockets >= 4
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 68
+    Rarity = Magic
+    LinkedSockets >= 4
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel <= 25
+    Rarity = Normal
+    LinkedSockets >= 3
+    SetTextColor 255 255 255
+
+Show
+    ItemLevel <= 25
+    Rarity = Magic
+    LinkedSockets >= 3
+    SetTextColor 100 100 255
+
+Show
+    ItemLevel < 62
+    Rarity = Magic
+
+Show
+    ItemLevel < 12
+
+Show
+    ItemLevel < 13
+    DropLevel >= 2
+    Rarity = Normal
+
+Show
+    ItemLevel < 14
+    DropLevel >= 4
+    Rarity = Normal
+
+Show
+    ItemLevel < 16
+    DropLevel >= 6
+    Rarity = Normal
+
+Show
+    ItemLevel < 18
+    DropLevel >= 8
+    Rarity = Normal
+
+Show
+    ItemLevel < 20
+    DropLevel >= 10
+    Rarity = Normal
+
+Show
+    ItemLevel < 22
+    DropLevel >= 13
+    Rarity = Normal
+
+Show
+    ItemLevel < 24
+    DropLevel >= 16
+    Rarity = Normal
+
+Show
+    ItemLevel < 26
+    DropLevel >= 19
+    Rarity = Normal
+
+Show
+    ItemLevel < 28
+    DropLevel >= 22
+    Rarity = Normal
+
+Show
+    ItemLevel < 30
+    DropLevel >= 24
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 30
+    DropLevel >= 28
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 32
+    DropLevel >= 26
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 32
+    DropLevel >= 30
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 34
+    DropLevel >= 28
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 34
+    DropLevel >= 32
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 36
+    DropLevel >= 32
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 36
+    DropLevel >= 34
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 38
+    DropLevel >= 34
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 38
+    DropLevel >= 37
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 40
+    DropLevel >= 37
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 40
+    DropLevel >= 39
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 42
+    DropLevel >= 39
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 42
+    DropLevel >= 41
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 46
+    DropLevel >= 43
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 46
+    DropLevel >= 45
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 48
+    DropLevel >= 46
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 48
+    DropLevel >= 47
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 50
+    DropLevel >= 48
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 50
+    DropLevel >= 49
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 52
+    DropLevel >= 50
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 52
+    DropLevel >= 52
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 54
+    DropLevel >= 52
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 54
+    DropLevel >= 54
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 56
+    DropLevel >= 54
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 56
+    DropLevel >= 56
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 58
+    DropLevel >= 56
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 58
+    DropLevel >= 58
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 60
+    DropLevel >= 58
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 60
+    DropLevel >= 60
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 62
+    DropLevel >= 60
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 62
+    DropLevel >= 62
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 64
+    DropLevel >= 63
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 64
+    DropLevel >= 64
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 66
+    DropLevel >= 65
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+Show
+    ItemLevel < 66
+    DropLevel >= 66
+    Rarity = Normal
+    Rarity <= Magic
+    SetFontSize 30
+
+Show
+    ItemLevel < 68
+    DropLevel >= 67
+    Rarity = Normal
+    Rarity <= Magic
+    Sockets >= 3
+    SetFontSize 30
+
+# Section: 5000 # TEMP AND WIP ENTRIES
+
+# Section: 5000 # WARBAND MODS
+
+Hide
+    Rarity = Magic
+    Class "Helmets"
+    SetBorderColor 120 30 30
+
+Hide
+    Rarity = Magic
+    Class "Gloves"
+    SetBorderColor 30 0 140
+
+Hide
+    Rarity = Magic
+    Class "Boots"
+    SetBorderColor 25 120 90
+
+# Section: OMEGA # ADDITIONAL RULES - ADD YOUR OWN RULES THAT WON'T OVERRIDE THE OTHER RULES
+
+# Section: XXXX # HIDE THE REST
+
+Hide # Minimize junk instead of hiding (if "Show")
+    SetBorderColor 0 0 0 0
+    SetFontSize 20
+

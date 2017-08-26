@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PoeFilterParser</id>
+    <version>$version$</version>
+    <title>PoeFilterParser</title>
+    <authors>smad2005</authors>
+    <owners>smad2005</owners>
+    <licenseUrl>https://raw.githubusercontent.com/smad2005/PoeFilterParser/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/smad2005/PoeFilterParser</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Item filter parser for poe</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Poe itemfilter parser antlr4 gplv3</tags>
+<dependencies>
+          <dependency id="Antlr4.Runtime" version="4.6.4" />
+</dependencies>
+  </metadata>
+<!--<files>
+        <file src="nuget\**" target="" />
+ </files>-->
+</package>
