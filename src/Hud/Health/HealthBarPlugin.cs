@@ -146,7 +146,8 @@ namespace PoeHUD.Hud.Health
                         debuffTable |= 1;
                     else if (HasDebuff(debuffPanelConfig.Poisoned, buffName, isHostile))
                         debuffTable |= 2;
-                    else if (HasDebuff(debuffPanelConfig.ChilledFrozen, buffName, isHostile))
+                    else if (HasDebuff(debuffPanelConfig.Chilled, buffName, isHostile) ||
+                        HasDebuff(debuffPanelConfig.Frozen, buffName, isHostile))
                         debuffTable |= 4;
                     else if (HasDebuff(debuffPanelConfig.Burning, buffName, isHostile))
                         debuffTable |= 8;

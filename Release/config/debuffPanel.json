@@ -25,13 +25,15 @@ Filter:
     "caustic_cloud":0,
     "chaos_bond_in_beam":0
   },
-  "ChilledFrozen": {
-    "chilled":0,
+  "Frozen": {
     "frozen":0,
-    "ground_ice_chill":0,
-    "chilling_bond_in_beam":0,
-    "cold_damage_and_freeze":0,
-    "monster_aura_chill":2
+    "cold_damage_and_freeze":0
+  },
+  "Chilled": {
+	"chilled":0,
+	"ground_ice_chill":0,
+	"chilling_bond_in_beam":0,
+	"monster_aura_chill":2
   },
   "Burning": {
     "ground_fire_burn":0,
