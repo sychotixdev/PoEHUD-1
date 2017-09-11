@@ -39,19 +39,19 @@ namespace PoeHUD.Hud.Icons
                 Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
                 float posZ = GameController.Player.GetComponent<Render>().Z;
                 Vector2 screenCenter = new Vector2(mapRect.Width / 2, mapRect.Height / 2).Translate(0, -20) + new Vector2(mapRect.X, mapRect.Y)
-                    + new Vector2(mapWindow.ShiftX, mapWindow.ShiftY);
+                    + new Vector2(mapWindow.LargeMapShiftX, mapWindow.LargeMapShiftY);
                 var diag = (float)Math.Sqrt(camera.Width * camera.Width + camera.Height * camera.Height);
                 float k = camera.Width < 1024f ? 1120f : 1024f;
-                float scale = k / camera.Height * camera.Width * 3 / 4;
+                float scale = k / camera.Height * camera.Width * 3f / 4f / mapWindow.LargeMapZoom;
 
                 foreach (MapIcon icon in getIcons().Where(x => x.IsVisible()))
                 {
                     float iconZ = icon.EntityWrapper.GetComponent<Render>().Z;
                     Vector2 point = screenCenter
-                        + MapIcon.DeltaInWorldToMinimapDelta(icon.WorldPosition - playerPos, diag, scale, (iconZ - posZ) / 20);
+                        + MapIcon.DeltaInWorldToMinimapDelta(icon.WorldPosition - playerPos, diag, scale, (iconZ - posZ)/(9f/mapWindow.LargeMapZoom));
 
                     HudTexture texture = icon.TextureIcon;
-                    int size = icon.SizeOfLargeIcon.GetValueOrDefault(icon.Size * 2);
+                    float size = icon.Size * 2;//icon.SizeOfLargeIcon.GetValueOrDefault(icon.Size * 2);
                     texture.Draw(Graphics, new RectangleF(point.X - size / 2f, point.Y - size / 2f, size, size));
                 }
             }

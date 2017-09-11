@@ -7,7 +7,7 @@ namespace PoeHUD.Hud
 {
     public class CreatureMapIcon : MapIcon
     {
-        public CreatureMapIcon(EntityWrapper entityWrapper, string hudTexture, Func<bool> show, int iconSize)
+        public CreatureMapIcon(EntityWrapper entityWrapper, string hudTexture, Func<bool> show, float iconSize)
             : base(entityWrapper, new HudTexture(hudTexture), show, iconSize)
         { }
 
@@ -19,7 +19,7 @@ namespace PoeHUD.Hud
 
     public class ChestMapIcon : MapIcon
     {
-        public ChestMapIcon(EntityWrapper entityWrapper, HudTexture hudTexture, Func<bool> show, int iconSize)
+        public ChestMapIcon(EntityWrapper entityWrapper, HudTexture hudTexture, Func<bool> show, float iconSize)
             : base(entityWrapper, hudTexture, show, iconSize)
         { }
 
@@ -33,7 +33,7 @@ namespace PoeHUD.Hud
     {
         private readonly Func<bool> show;
 
-        public MapIcon(EntityWrapper entityWrapper, HudTexture hudTexture, Func<bool> show, int iconSize = 10)
+        public MapIcon(EntityWrapper entityWrapper, HudTexture hudTexture, Func<bool> show, float iconSize = 10f)
         {
             EntityWrapper = entityWrapper;
             TextureIcon = hudTexture;
@@ -41,10 +41,10 @@ namespace PoeHUD.Hud
             Size = iconSize;
         }
 
-        public int? SizeOfLargeIcon { get; set; }
+        public float? SizeOfLargeIcon { get; set; }
         public EntityWrapper EntityWrapper { get; }
         public HudTexture TextureIcon { get; private set; }
-        public int Size { get; private set; }
+        public float Size { get; private set; }
         public Vector2 WorldPosition => EntityWrapper.GetComponent<Positioned>().GridPos;
 
         public static Vector2 DeltaInWorldToMinimapDelta(Vector2 delta, double diag, float scale, float deltaZ = 0)
