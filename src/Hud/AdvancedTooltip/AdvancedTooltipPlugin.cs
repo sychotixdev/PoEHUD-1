@@ -82,7 +82,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
                         GameController.Files.BaseItemTypes.Translate(poeEntity.Path))).ToList();
                     itemEntity = poeEntity;
                 }
-              
+
                 foreach (string tier in from item in mods where item.CouldHaveTiers() && item.Tier == 1 select " \u2605 ")
                 {
                     Graphics.DrawText(tier, 18, tooltipRect.TopLeft.Translate(0, 56), Settings.ItemMods.T1Color);
