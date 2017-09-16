@@ -54,9 +54,9 @@ poeFontSize: 'SetFontSize' DIGITS;
 poeTextColor: 'SetTextColor' color;
 poeBackgroundColor: 'SetBackgroundColor' color;
 poeBorderColor: 'SetBorderColor' color;
-id:DIGITS;
+soundId:DIGITS|'ShAlchemy'|'ShBlessed'|'ShChaos'|'ShDivine'|'ShExalted'|'ShFusing'|'ShGeneral'|'ShMirror'|'ShRegal'|'ShVaal';
 volume:DIGITS?;
-poeAlertSound: 'PlayAlertSound' id volume;
+poeAlertSound: 'PlayAlertSound' soundId volume;
 
 poeRarity: 'Rarity' compareOpNullable rariryParams;
 poeSocketGroup: 'SocketGroup' socketParams;
