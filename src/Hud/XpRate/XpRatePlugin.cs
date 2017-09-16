@@ -93,9 +93,9 @@ namespace PoeHUD.Hud.XpRate
                         string ping = $"ping:({GameController.Game.IngameState.CurLatency})";
                         Size2 areaNameSize = Graphics.DrawText(areaName, Settings.TextSize, position - 1, AreaNameColor, FontDrawFlags.Right);
                         Vector2 secondLine = position.Translate(-1, areaNameSize.Height + 2);
-                        Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.XphTextColor, FontDrawFlags.Right);
+                        Size2 xpRateSize = Graphics.DrawText(timeLeft, Settings.TextSize, secondLine, Settings.TimeLeftColor, FontDrawFlags.Right);
                         Vector2 thirdLine = secondLine.Translate(-1, xpRateSize.Height + 2);
-                        Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.TimeLeftColor, FontDrawFlags.Right);
+                        Size2 xpLeftSize = Graphics.DrawText(xpReceivingText, Settings.TextSize, thirdLine, Settings.XphTextColor, FontDrawFlags.Right);
                         string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);
                         Size2 timerSize = Graphics.MeasureText(timer, Settings.TextSize);
 
@@ -108,8 +108,14 @@ namespace PoeHUD.Hud.XpRate
                         if (dif < 0) { bounds.X += dif; bounds.Width -= dif; }
 
                         Graphics.DrawText(timer, Settings.TextSize, new Vector2(bounds.X + 70, position.Y), Settings.TimerTextColor);
-                        Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y), Settings.FpsTextColor);
-                        Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y), Settings.LatencyTextColor);
+                        if (Settings.ShowFps)
+                        {
+                            Graphics.DrawText(fps, Settings.TextSize, new Vector2(bounds.X + 70, secondLine.Y), Settings.FpsTextColor);
+                        }
+                        if (Settings.ShowLatency)
+                        {
+                            Graphics.DrawText(ping, Settings.TextSize, new Vector2(bounds.X + 70, thirdLine.Y), Settings.LatencyTextColor);
+                        }
                         Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
                         Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
                         Size = bounds.Size;
