@@ -338,3 +338,56 @@ Metadata/Monsters/Daemon/TempestDaemonEnvironmentalPhysical; Tempest Daemon
 Metadata/Monsters/Daemon/TempestDaemonEnvironmentalUberPhysical; Tempest Daemon
 Metadata/Monsters/Daemon/TempestDaemonEnvironmentalCurses; Tempest Daemon
 Metadata/Monsters/Daemon/TempestDaemonEnvironmentalSmoke; Tempest Daemon
+
+# HARBINGER
+Metadata/Monsters/Avatar/Avatar1; Harbinger Avatar1; ff3399ff
+Metadata/Monsters/Avatar/Avatar2; Harbinger Avatar2; ff3399ff
+Metadata/Monsters/Avatar/Avatar3_; Harbinger Avatar3_; ff3399ff
+Metadata/Monsters/Avatar/Avatar4; Harbinger Avatar4; ff3399ff
+Metadata/Monsters/Avatar/Avatar5; Harbinger Avatar5; ff3399ff
+Metadata/Monsters/Avatar/Avatar6; Harbinger Avatar6; ff3399ff
+Metadata/Monsters/Avatar/Avatar7; Harbinger Avatar7; ff3399ff
+Metadata/Monsters/Avatar/Avatar8; Harbinger Avatar8; ff3399ff
+Metadata/Monsters/Avatar/Avatar9; Harbinger Avatar9; ff3399ff
+Metadata/Monsters/Avatar/Avatar10; Harbinger Avatar10; ff3399ff
+Metadata/Monsters/Avatar/Avatar11; Harbinger Avatar11; ff3399ff
+Metadata/Monsters/Avatar/Avatar11Summoned_; Harbinger Avatar11Summoned_; ff3399ff
+Metadata/Monsters/Avatar/Avatar12; Harbinger Avatar12; ff3399ff
+Metadata/Monsters/Avatar/Avatar12Summoned; Harbinger Avatar12Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar13; Harbinger Avatar13; ff3399ff
+Metadata/Monsters/Avatar/Avatar13Summoned; Harbinger Avatar13Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar14; Harbinger Avatar14; ff3399ff
+Metadata/Monsters/Avatar/Avatar14Summoned; Harbinger Avatar14Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar15; Harbinger Avatar15; ff3399ff
+Metadata/Monsters/Avatar/Avatar15Summoned; Harbinger Avatar15Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar16; Harbinger Avatar16; ff3399ff
+Metadata/Monsters/Avatar/Avatar16Summoned; Harbinger Avatar16Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar17; Harbinger Avatar17; ff3399ff
+Metadata/Monsters/Avatar/Avatar17Summoned; Harbinger Avatar17Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar18; Harbinger Avatar18; ff3399ff
+Metadata/Monsters/Avatar/Avatar18Summoned; Harbinger Avatar18Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar19; Harbinger Avatar19; ff3399ff
+Metadata/Monsters/Avatar/Avatar19Summoned; Harbinger Avatar19Summoned; ff3399ff
+Metadata/Monsters/Avatar/Avatar20; Harbinger Avatar20; ff3399ff
+
+# Apparently better Harbingers?
+Metadata/Monsters/Avatar/Avatar21; Harbinger Avatar21; ffff00ff
+Metadata/Monsters/Avatar/Avatar22; Harbinger Avatar22; ffff00ff
+Metadata/Monsters/Avatar/Avatar23; Harbinger Avatar23; ffff00ff
+Metadata/Monsters/Avatar/Avatar24_; Harbinger Avatar24_; ffff00ff
+Metadata/Monsters/Avatar/Avatar25; Harbinger Avatar25; ffff00ff
+Metadata/Monsters/Avatar/Avatar26; Harbinger Avatar26; ffff00ff
+Metadata/Monsters/Avatar/Avatar27; Harbinger Avatar27; ffff00ff
+Metadata/Monsters/Avatar/Avatar28; Harbinger Avatar28; ffff00ff
+Metadata/Monsters/Avatar/Avatar29; Harbinger Avatar29; ffff00ff
+Metadata/Monsters/Avatar/Avatar30; Harbinger Avatar30; ffff00ff
+Metadata/Monsters/Avatar/Avatar31; Harbinger Avatar31; ffff00ff
+Metadata/Monsters/Avatar/Avatar32; Harbinger Avatar32; ffff00ff
+Metadata/Monsters/Avatar/Avatar33; Harbinger Avatar33; ffff00ff
+Metadata/Monsters/Avatar/Avatar34; Harbinger Avatar34; ffff00ff
+Metadata/Monsters/Avatar/Avatar35; Harbinger Avatar35; ffff00ff
+Metadata/Monsters/Avatar/Avatar36; Harbinger Avatar36; ffff00ff
+Metadata/Monsters/Avatar/Avatar37; Harbinger Avatar37; ffff00ff
+Metadata/Monsters/Avatar/Avatar38; Harbinger Avatar38; ffff00ff
+Metadata/Monsters/Avatar/Avatar39; Harbinger Avatar39; ffff00ff
+Metadata/Monsters/Avatar/Avatar40; Harbinger Avatar40; ffff00ff
