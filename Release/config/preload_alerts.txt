@@ -386,8 +386,3 @@ Metadata/Monsters/Avatar/Avatar32; Harbinger Avatar32; ffff00ff
 Metadata/Monsters/Avatar/Avatar33; Harbinger Avatar33; ffff00ff
 Metadata/Monsters/Avatar/Avatar34; Harbinger Avatar34; ffff00ff
 Metadata/Monsters/Avatar/Avatar35; Harbinger Avatar35; ffff00ff
-Metadata/Monsters/Avatar/Avatar36; Harbinger Avatar36; ffff00ff
-Metadata/Monsters/Avatar/Avatar37; Harbinger Avatar37; ffff00ff
-Metadata/Monsters/Avatar/Avatar38; Harbinger Avatar38; ffff00ff
-Metadata/Monsters/Avatar/Avatar39; Harbinger Avatar39; ffff00ff
-Metadata/Monsters/Avatar/Avatar40; Harbinger Avatar40; ffff00ff
