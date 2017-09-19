@@ -23,6 +23,8 @@ Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique1; Silver Unique Chest 1; f
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique2; Silver Unique Chest 2; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique3; Silver Unique Chest 3; ffd2742d
 
+Metadata/Chests/Labyrinth/LabyrinthRewardSilverSkillGems; Silver Skill Gems; ff00ff00
+
 #Izaro Phases (Phase, How to get extra key)
 Metadata/Monsters/Labyrinth/IzaroPortalCold; Portals, Don't Kill; ff00ff00
 Metadata/Monsters/FireElemental/FireElementalIzaro; Essences, Don't Kill; ff00ff00
