@@ -15,12 +15,23 @@ namespace PoeHUD.Hud.Health
         private const int DPS_FAST_CHECK_TIME = 200;
         private const int DPS_POP_TIME = 2000;
 
+        private static string[] IgnoreEntities = {
+            "GoddessOfJustice",
+            "MonsterFireTrap2",
+            "MonsterBlastRainTrap",
+            "Metadata/Monsters/Frog/FrogGod/SilverOrb",
+            "Metadata/Monsters/Frog/FrogGod/SilverPool"
+        };
+        private static List<string> IgnoreEntitiesList = new List<string>(IgnoreEntities);
+        
         public HealthBar(EntityWrapper entity, HealthBarSettings settings)
         {
             Entity = entity;
-            if (entity.Path.Contains("GoddessOfJustice"))
+            // If ignored entity found, skip
+            foreach (string _entity in IgnoreEntitiesList)
             {
-                return;
+                if (entity.Path.Contains(_entity))
+                    return;
             }
             if (entity.HasComponent<Player>())
             {
