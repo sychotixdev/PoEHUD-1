@@ -175,8 +175,25 @@ namespace PoeHUD.Hud.Trackers
             "ms-yellow-gray.png",   //Rare
             "ms-purple-gray.png"    //Uniq
         };
+
+        private static string[] IgnoreEntities = {
+            "GoddessOfJustice",
+            "MonsterFireTrap2",
+            "MonsterBlastRainTrap",
+            "Metadata/Monsters/Frog/FrogGod/SilverOrb",
+            "Metadata/Monsters/Frog/FrogGod/SilverPool"
+        };
+        private static List<string> IgnoreEntitiesList = new List<string>(IgnoreEntities);
+
         private MapIcon GetMapIconForMonster(EntityWrapper entity, MonsterConfigLine monsterConfigLine)
         {
+            // If ignored entity found, skip
+            foreach (string _entity in IgnoreEntitiesList)
+            {
+                if (entity.Path.Contains(_entity))
+                    return null;
+            }
+
             if (!entity.IsHostile)
             {
                 return new CreatureMapIcon(entity, "ms-cyan.png", () => Settings.Minions, Settings.MinionsIcon);
