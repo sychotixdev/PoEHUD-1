@@ -20,7 +20,10 @@ namespace PoeHUD.Hud.Menu
         private bool holdKey;
         public static RootButton MenuRootButton;
         public static event Action<RootButton> eInitMenu = delegate { };//For spawning the menu in external plugins
+
+        // Use this event if you want your mouse clicks to be handled by poehud and does not passed to the game {Stridemann}
         public static Func<MouseEventID, Vector2, bool> ExternalMouseClick = delegate { return false; };
+        // Use this event if you want your mouse clicks to be handled by poehud and passed to the game {Stridemann}
         public static Action<MouseEventID, Vector2> eMouseEvent = delegate {  };
 
 
@@ -461,18 +464,21 @@ namespace PoeHUD.Hud.Menu
 
         private bool OnMouseEvent(MouseEventID id, Point position)
         {
-            if (!Settings.Enable || !GameController.Window.IsForeground())
+            Vector2 mousePosition = Vector2.Zero;
+            bool result = false;
+
+            if (GameController.Window.IsForeground())
             {
-                return false;
+                mousePosition = GameController.Window.ScreenToClient(position.X, position.Y);
+                eMouseEvent(id, mousePosition);
+                if (Settings.Enable)
+                {
+                    //I dunno how to handle this in plugins. Seems there is only this way {Stridemann}
+                    result = ExternalMouseClick(id, mousePosition);
+                }
+                return MenuRootButton.OnMouseEvent(id, mousePosition) || result;
             }
-
-            Vector2 mousePosition = GameController.Window.ScreenToClient(position.X, position.Y);
-
-            eMouseEvent(id, mousePosition);
-
-            bool result = ExternalMouseClick(id, mousePosition);//I dunno how to handle this in plugins. Seems there is only this way
-
-            return MenuRootButton.OnMouseEvent(id, mousePosition) || result;
+            return result;
         }
     }
 }
