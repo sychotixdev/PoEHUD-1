@@ -176,14 +176,14 @@ namespace PoeHUD.Hud.Trackers
             "ms-purple-gray.png"    //Uniq
         };
 
-        private static string[] IgnoreEntities = {
+        private static List<string> IgnoreEntitiesList = new List<string>()
+        {
             "GoddessOfJustice",
             "MonsterFireTrap2",
             "MonsterBlastRainTrap",
             "Metadata/Monsters/Frog/FrogGod/SilverOrb",
             "Metadata/Monsters/Frog/FrogGod/SilverPool"
         };
-        private static List<string> IgnoreEntitiesList = new List<string>(IgnoreEntities);
 
         private MapIcon GetMapIconForMonster(EntityWrapper entity, MonsterConfigLine monsterConfigLine)
         {
