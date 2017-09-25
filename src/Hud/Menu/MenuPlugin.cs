@@ -475,8 +475,8 @@ namespace PoeHUD.Hud.Menu
                 {
                     //I dunno how to handle this in plugins. Seems there is only this way {Stridemann}
                     result = ExternalMouseClick(id, mousePosition);
+                    return MenuRootButton.OnMouseEvent(id, mousePosition) || result;
                 }
-                return MenuRootButton.OnMouseEvent(id, mousePosition) || result;
             }
             return result;
         }
