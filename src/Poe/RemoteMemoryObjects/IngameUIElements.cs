@@ -5,6 +5,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameUIElements : RemoteMemoryObject
     {
+        public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xB48);
+        public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0xB50);
         public Element QuestTracker => ReadObjectAt<Element>(0xBF8);
         public Element OpenLeftPanel => ReadObjectAt<Element>(0xC38);
         public Element OpenRightPanel => ReadObjectAt<Element>(0xC40);
