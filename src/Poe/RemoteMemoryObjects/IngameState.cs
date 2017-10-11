@@ -12,7 +12,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public ServerData ServerData => ReadObjectAt<ServerData>(0x178 + Offsets.IgsOffset);
         public IngameUIElements IngameUi => ReadObjectAt<IngameUIElements>(0x5D0 + Offsets.IgsOffset);
         public Element UIRoot => ReadObjectAt<Element>(0xC80 + Offsets.IgsOffset);
-        public Element UIHover => ReadObjectAt<Element>(0xCB8 + Offsets.IgsOffset);
+        public Element UIHover => ReadObjectAt<Element>(0xCA8 + Offsets.IgsOffset);
 
         public float CurentUIElementPosX => M.ReadFloat(Address + 0xCB0 + Offsets.IgsOffset);
         public float CurentUIElementPosY => M.ReadFloat(Address + 0xCB4 + Offsets.IgsOffset);

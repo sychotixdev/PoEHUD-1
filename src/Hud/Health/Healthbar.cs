@@ -15,14 +15,14 @@ namespace PoeHUD.Hud.Health
         private const int DPS_FAST_CHECK_TIME = 200;
         private const int DPS_POP_TIME = 2000;
 
-        private static string[] IgnoreEntities = {
+        private static List<string> IgnoreEntitiesList = new List<string>()
+        {
             "GoddessOfJustice",
             "MonsterFireTrap2",
             "MonsterBlastRainTrap",
             "Metadata/Monsters/Frog/FrogGod/SilverOrb",
             "Metadata/Monsters/Frog/FrogGod/SilverPool"
         };
-        private static List<string> IgnoreEntitiesList = new List<string>(IgnoreEntities);
         
         public HealthBar(EntityWrapper entity, HealthBarSettings settings)
         {
