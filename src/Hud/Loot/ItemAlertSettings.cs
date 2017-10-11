@@ -26,6 +26,8 @@ namespace PoeHUD.Hud.Loot
             MinLinks = new RangeNode<int>(5, 0, 6);
             MinSockets = new RangeNode<int>(6, 0, 6);
             LootIcon = new RangeNode<int>(7, 1, 14);
+            DimOtherByPercent = new RangeNode<int>(100, 1, 100);
+            DimOtherByPercentToggle = true;
             LootIconBorderColor = false;
             QualityItems = new QualityItemsSettings();
             BorderSettings = new BorderSettings();
@@ -38,6 +40,8 @@ namespace PoeHUD.Hud.Loot
         public ToggleNode ShowItemOnMap { get; set; }
         public ToggleNode Crafting { get; set; }
         public ToggleNode ShowText { get; set; }
+        public RangeNode<int> DimOtherByPercent { get; set; }
+        public ToggleNode DimOtherByPercentToggle { get; set; }
         public ToggleNode HideOthers { get; set; }
         public ToggleNode PlaySound { get; set; }
         public RangeNode<int> SoundVolume { get; set; }

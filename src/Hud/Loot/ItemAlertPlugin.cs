@@ -146,9 +146,45 @@ namespace PoeHUD.Hud.Loot
                     }
                     else
                     {
-                        if (Settings.ShowText && (!Settings.HideOthers || entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0))
+                        if (Settings.ShowText)
                         {
-                            position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                            if (Settings.HideOthers)
+                            {
+                                if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
+                                {
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                                }
+                            }
+                            else
+                            {
+                                if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
+                                {
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                                }
+                                else
+                                {
+                                    // get current values
+                                    Color TextColor = kv.Value.TextColor;
+                                    Color BorderColor = kv.Value.BorderColor;
+                                    Color BackgroundColor = kv.Value.BackgroundColor;
+
+                                    if (Settings.DimOtherByPercentToggle)
+                                    {
+                                        // edit values to new ones
+                                        double DimOthersByPercent = (double)Settings.DimOtherByPercent / 100;
+
+                                        TextColor.A = (byte)((double)TextColor.A - (((double)TextColor.A/2) * DimOthersByPercent));
+                                        BorderColor.A = (byte)((double)BorderColor.A - ((double)BorderColor.A * DimOthersByPercent));
+                                        BackgroundColor.A = (byte)((double)BackgroundColor.A - ((double)BackgroundColor.A * DimOthersByPercent));
+                                    }
+
+                                    // Complete new KeyValuePair with new stuff
+                                    AlertDrawStyle ModifiedDrawStyle = new AlertDrawStyle(text, TextColor, kv.Value.BorderWidth, BorderColor, BackgroundColor, kv.Value.IconIndex);
+                                    KeyValuePair<EntityWrapper, AlertDrawStyle> NewKV = new KeyValuePair<EntityWrapper, AlertDrawStyle>(kv.Key, ModifiedDrawStyle);
+
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, NewKV, text);
+                                }
+                            }
                         }
                     }
                 }
