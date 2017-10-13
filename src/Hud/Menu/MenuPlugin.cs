@@ -217,7 +217,7 @@ namespace PoeHUD.Hud.Menu
 
             // Item Alert
             MenuItem itemAlertMenu = AddChild(MenuRootButton, "Item alert", settingsHub.ItemAlertSettings.Enable);
-            var itemAlertStaticMenuList = new[] { "Alternative", "Item tooltips", "Play sound", "Show text", "Hide others", "Show border" };
+            var itemAlertStaticMenuList = new[] { "Alternative", "Item tooltips", "Play sound", "Show text", "Hide others", "Show border", "Dim Others" };
             MenuItem alternative = AddChild(itemAlertMenu, itemAlertStaticMenuList[0],
                 settingsHub.ItemAlertSettings.Alternative, null, y => itemAlertStaticMenuList.All(x => x != (y as ToggleButton)?.Name));
             AddChild(alternative, settingsHub.ItemAlertSettings.FilePath);
