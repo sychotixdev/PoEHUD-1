@@ -171,11 +171,15 @@ namespace PoeHUD.Hud.Loot
                                     if (Settings.DimOtherByPercentToggle)
                                     {
                                         // edit values to new ones
-                                        double DimOthersByPercent = (double)Settings.DimOtherByPercent / 100;
+                                        double ReduceByPercent = (double)Settings.DimOtherByPercent / 100;
 
-                                        TextColor.A = (byte)((double)TextColor.A - (((double)TextColor.A/2) * DimOthersByPercent));
-                                        BorderColor.A = (byte)((double)BorderColor.A - ((double)BorderColor.A * DimOthersByPercent));
-                                        BackgroundColor.A = (byte)((double)BackgroundColor.A - ((double)BackgroundColor.A * DimOthersByPercent));
+                                        TextColor = ReduceNumbers(TextColor, ReduceByPercent);
+                                        BorderColor = ReduceNumbers(BorderColor, ReduceByPercent);
+                                        BackgroundColor = ReduceNumbers(BackgroundColor, ReduceByPercent);
+
+                                        // backgrounds with low alpha start to look a little strange when dark so im adding an alpha threshold
+                                        if (BackgroundColor.A < 210)
+                                            BackgroundColor.A = 210;
                                     }
 
                                     // Complete new KeyValuePair with new stuff
@@ -196,6 +200,18 @@ namespace PoeHUD.Hud.Loot
                         .GroupBy(y => y.ItemOnGround.Address).ToDictionary(y => y.Key, y => y.First());
                 }
             }
+        }
+
+        private Color ReduceNumbers(Color oldColor, double percent)
+        {
+            Color newColor = oldColor;
+
+            newColor.R = (byte)((double)oldColor.R - ((double)oldColor.R * percent));
+            newColor.G = (byte)((double)oldColor.G - ((double)oldColor.G * percent));
+            newColor.B = (byte)((double)oldColor.B - ((double)oldColor.B * percent));
+            newColor.A = (byte)((double)oldColor.A - (((double)oldColor.A / 10) * percent));
+
+            return newColor;
         }
 
         private Vector2 DrawText(Vector2 playerPos, Vector2 position, int BOTTOM_MARGIN,
