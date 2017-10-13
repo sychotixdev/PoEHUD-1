@@ -252,6 +252,9 @@ namespace PoeHUD.Hud.Menu
             MenuItem alertTextMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[3], settingsHub.ItemAlertSettings.ShowText);
             AddChild(alertTextMenu, "Text size", settingsHub.ItemAlertSettings.TextSize);
             AddChild(itemAlertMenu, itemAlertStaticMenuList[4], settingsHub.ItemAlertSettings.HideOthers);
+            ItemAlertSettings dimOtherSettings = settingsHub.ItemAlertSettings;
+            MenuItem dimOtherMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[6], dimOtherSettings.DimOtherByPercentToggle);
+            AddChild(dimOtherMenu, "Dim Others By %", dimOtherSettings.DimOtherByPercent);
             BorderSettings borderSettings = settingsHub.ItemAlertSettings.BorderSettings;
             MenuItem showBorderMenu = AddChild(itemAlertMenu, itemAlertStaticMenuList[5], borderSettings.Enable);
             AddChild(showBorderMenu, "Border width", borderSettings.BorderWidth);
