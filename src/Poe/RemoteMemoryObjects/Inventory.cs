@@ -47,14 +47,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 case InventoryType.EssenceStash:
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
-                    //return this.AsObject<Element>().Children[1];// - throws an errors (out of range exception)
-                    var elmnt = this.AsObject<Element>();
-
-                    if (elmnt.ChildCount > 0)
-                        return elmnt.Children[1];
-                    else
-                        return elmnt;   //At least will not throw errors
-
+                    return GetObject<Element>(M.ReadLong(Address + Element.OffsetBuffers + 0x24, 0x08));
                 default:
                     return null;
             }
@@ -67,7 +60,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var InvRoot = InventoryUiElement;
-                if (InvRoot == null)
+                if (InvRoot == null || InvRoot.Address == 0x00 || InvRoot.ChildCount == 0x00)
                     return null;
                 else if (!InvRoot.IsVisible)
                     return null;
@@ -100,6 +93,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     case InventoryType.DivinationStash:
                         foreach (var item in InvRoot.Children)
                         {
+                            // Divination Stash tab isn't loaded.
+                            if (item.ChildCount < 2)
+                                return null;
+
                             if (item.Children[1].ChildCount > 0)
                                 list.Add(item.Children[1].Children[0].AsObject<DivinationInventoryItem>());
                         }
