@@ -163,8 +163,33 @@ namespace PoeHUD.Plugins
                                     RangeNode<float> option = property.GetValue(Settings) as RangeNode<float>;
                                     resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
                                 }
+                                else if (argType == typeof(double))
+                                {
+                                    RangeNode<double> option = property.GetValue(Settings) as RangeNode<double>;
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                                }
+                                else if (argType == typeof(byte))
+                                {
+                                    RangeNode<byte> option = property.GetValue(Settings) as RangeNode<byte>;
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                                }
+                                else if (argType == typeof(long))
+                                {
+                                    RangeNode<long> option = property.GetValue(Settings) as RangeNode<long>;
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                                }
+                                else if (argType == typeof(short))
+                                {
+                                    RangeNode<short> option = property.GetValue(Settings) as RangeNode<short>;
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                                }
+                                else if (argType == typeof(ushort))
+                                {
+                                    RangeNode<ushort> option = property.GetValue(Settings) as RangeNode<ushort>;
+                                    resultItem = MenuPlugin.AddChild(parentMenu, menuAttrib.MenuName, option);
+                                }
                                 else
-                                    LogError($"{PluginName}: Generic node argument '{argType.Name}' is not defined in code. Node type: " + propType.Name, 5);
+                                    LogError($"{PluginName}: Generic node argument for range node '{argType.Name}' is not defined in code. Range node type: " + propType.Name, 5);
                             }
                             else
                                 LogError($"{PluginName}: Can't get GenericTypeArguments from option type: " + propType.Name, 5);
