@@ -203,8 +203,7 @@ namespace PoeHUD.Hud.PluginExtension
                 }
 
                 result = FileSystem.DeleteAlternateDataStream(path, ZoneName);
-
-                result = FileSystem.AlternateDataStreamExists(path, ZoneName);//Check again
+                result = FileSystem.AlternateDataStreamExists(path, ZoneName);//Check
             }
 
             return result;

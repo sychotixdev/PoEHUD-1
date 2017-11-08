@@ -14,20 +14,11 @@ namespace PoeHUD.DebugPlug
     public class DebugPlugin : SizedPlugin<DebugPluginSettings>
     {
         private readonly SettingsHub settingsHub;
-        //private readonly GameController GameController;
         public DebugPlugin(GameController gameController, Graphics graphics, DebugPluginSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
             this.settingsHub = settingsHub;
-            //GameController = gameController;
         }
-
-        private EntityWrapper LastEntity;
-        protected override void OnEntityAdded(EntityWrapper entityWrapper)
-        {
-            LastEntity = entityWrapper;
-        }
-
 
         public override void Render()
         {
@@ -49,13 +40,18 @@ namespace PoeHUD.DebugPlug
             DebugDrawInfo.Clear();
             foreach (var msg in DebugLog.ToList())
             {
-                var size = Graphics.DrawText(msg.Message, 15, position, msg.Color, FontDrawFlags.Right);
+                string displayText = msg.Message;
+                if (msg.MessagesCount > 0)
+                    displayText = $"({msg.MessagesCount}) {displayText}";
+
+                var size = Graphics.DrawText(displayText, 15, position, msg.Color, FontDrawFlags.Right);
 
                 position.Y += size.Height;
                 maxWidth = Math.Max(size.Width, maxWidth);
-                if (msg.Exhaust)
+                if (msg.Exhausted)
                 {
                     DebugLog.Remove(msg);
+                    MessagesCache.Remove(msg.Message);
                 }
             }
 
@@ -73,6 +69,7 @@ namespace PoeHUD.DebugPlug
 
         private static List<string> DebugDrawInfo = new List<string>();
         private static List<DisplayMessage> DebugLog = new List<DisplayMessage>();
+        private static Dictionary<string, DisplayMessage> MessagesCache = new Dictionary<string, DisplayMessage>();
 
         private void ClearLog()
         {
@@ -84,45 +81,59 @@ namespace PoeHUD.DebugPlug
         public static void LogMsg(object o, float delay)
         {
             if (o == null)
-                DebugLog.Add(new DisplayMessage("Null", delay, Color.White));
+                AddNewMessage("Null", delay, Color.White);
             else
-                DebugLog.Add(new DisplayMessage(o.ToString(), delay, Color.White));
+                AddNewMessage(o.ToString(), delay, Color.White);
         }
         public static void LogMsg(object o, float delay, Color color)
         {
             if (o == null)
-                DebugLog.Add(new DisplayMessage("Null", delay, color));
+                AddNewMessage("Null", delay, color);
             else
-                DebugLog.Add(new DisplayMessage(o.ToString(), delay, color));
+                AddNewMessage(o.ToString(), delay, color);
         }
 
-        //Show the message without destroying
-        public static void LogInfoMsg(object o)
+        private static void AddNewMessage(string message, float delay, Color color)
         {
-            if (o == null)
-                DebugDrawInfo.Add("Null");
-            else
-                DebugDrawInfo.Add(o.ToString());
-        }
+            DisplayMessage rezult = null;
+            if (MessagesCache.TryGetValue(message, out rezult))
+            {
+                rezult.MessagesCount++;
+                rezult.UpdateTime();
+                return;
+            }
 
+            rezult = new DisplayMessage(message, delay, color);
+            MessagesCache.Add(message, rezult);
+            DebugLog.Add(rezult);
+        }
        
         public class DisplayMessage
         {
-            public DisplayMessage(string Message, float Delay, Color Color)
-            {
-                this.Message = Message;
-                this.Color = Color;
+            public string Message;
+            public Color Color;
+            private DateTime OffTime;
+            private float Delay;
+            public int MessagesCount;
 
+            public DisplayMessage(string message, float delay, Color color)
+            {
+                Delay = delay;
+                Message = message;
+                Color = color;
+
+                UpdateTime();
+            }
+           
+            public void UpdateTime()
+            {
                 if (Delay != -1)
                     OffTime = DateTime.Now.AddSeconds(Delay);
                 else
                     OffTime = DateTime.Now.AddDays(2);
             }
-            public string Message;
-            public Color Color;
 
-            private DateTime OffTime;
-            public bool Exhaust
+            public bool Exhausted
             {
                 get
                 {

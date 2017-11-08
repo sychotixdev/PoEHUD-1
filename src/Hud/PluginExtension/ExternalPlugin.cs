@@ -48,21 +48,6 @@ namespace PoeHUD.Hud.PluginExtension
         }
 
         
-        private MethodInfo CheckOverridedMethod(string overrMethodName, string invokeMethodName)
-        {
-            var overrMethod = PluginType.GetMethod(overrMethodName);
-
-            if (overrMethod != null && overrMethod.DeclaringType != typeof(BasePlugin))
-            {
-                var invokeMethod =  typeof(BasePlugin).GetMethod(invokeMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-
-                if (invokeMethod == null)
-                    API.LogError($"Can't find base method {invokeMethodName} in plugin: {PluginName} !", 5);
-                else
-                    return invokeMethod;
-            }
-            return null;
-        }
         
         //////////////////////////////////////////////////////    
     }
