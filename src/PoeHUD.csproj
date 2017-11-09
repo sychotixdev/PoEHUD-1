@@ -272,6 +272,7 @@
     <Compile Include="Poe\Elements\InventoryElements\NormalInventoryItem.cs" />
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
     <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
+    <Compile Include="Poe\Elements\PoeChatElement.cs" />
     <Compile Include="Poe\Elements\SkillBarElement.cs" />
     <Compile Include="Poe\Elements\SkillElement.cs" />
     <Compile Include="Poe\Elements\StashElement.cs" />
