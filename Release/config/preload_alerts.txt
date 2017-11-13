@@ -68,6 +68,9 @@ Metadata/Monsters/Daemon/ChestDaemonSummonColdWarband; Mutewind Cache; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonLightningWarband; Brinerot Cache; ffD2742D
 Metadata/Monsters/Daemon/ChestDaemonSummonChaosWarband; Renegades Cache; ffD2742D
 
+# PERANDUS LEAGUE
+
+Metadata/NPC/League/Cadiro; Cadiro; ffD2742D
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss3; Rhodion, Servant of Prospero; ffFFD700
