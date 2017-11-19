@@ -49,14 +49,6 @@ namespace PoeHUD.Models
             }
         }
 
-        public List<EntityWrapper> Minions
-        {
-            get
-            {
-                return GetComponent<Actor>().Minions.Select(current => gameController.EntityListWrapper.GetEntityById(current)).Where(byId => byId != null).ToList();
-            }
-        }
-
         public T GetComponent<T>() where T : Component, new()
         {
             string name = typeof(T).Name;

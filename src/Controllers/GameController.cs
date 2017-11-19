@@ -44,10 +44,5 @@ namespace PoeHUD.Controllers
                 Area.RefreshState();
             }
         }
-
-        public List<EntityWrapper> GetAllPlayerMinions()
-        {
-            return Entities.Where(x => x.HasComponent<Player>()).SelectMany(c => c.Minions).ToList();
-        }
     }
 }
