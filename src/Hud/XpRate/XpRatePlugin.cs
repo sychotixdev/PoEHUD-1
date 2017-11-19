@@ -9,6 +9,7 @@ using PoeHUD.Poe.Components;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -29,6 +30,24 @@ namespace PoeHUD.Hud.XpRate
             this.settingsHub = settingsHub;
             GameController.Area.OnAreaChange += area => AreaChange();
         }
+
+        Dictionary<int, float> ArenaEffectiveLevels = new Dictionary<int, float>()
+        {
+            {71, 70.94f},
+            {72, 71.82f},
+            {73, 72.64f},
+            {74, 73.4f},
+            {75, 74.1f},
+            {76, 74.74f},
+            {77, 75.32f},
+            {78, 75.84f},
+            {79, 76.3f},
+            {80, 76.7f},
+            {81, 77.04f},
+            {82, 77.32f},
+            {83, 77.54f},
+            {84, 77.7f}
+        };
 
         public override void Render()
         {
@@ -154,8 +173,9 @@ namespace PoeHUD.Hud.XpRate
         {
             int arenaLevel = GameController.Area.CurrentArea.RealLevel;
             int characterLevel = GameController.Player.GetComponent<Player>().Level;
+            float effectiveArenaLevel = arenaLevel < 71 ? arenaLevel : ArenaEffectiveLevels[arenaLevel];
             double safeZone = Math.Floor(Convert.ToDouble(characterLevel) / 16) + 3;
-            double effectiveDifference = Math.Max(Math.Abs(characterLevel - arenaLevel) - safeZone, 0);
+            double effectiveDifference = Math.Abs(characterLevel - effectiveArenaLevel) - safeZone;
             double xpMultiplier = Math.Max(Math.Pow((characterLevel + 5) / (characterLevel + 5 + Math.Pow(effectiveDifference, 2.5)), 1.5), 0.01);
             return xpMultiplier;
         }
