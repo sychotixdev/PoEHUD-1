@@ -58,7 +58,11 @@ namespace PoeHUD.Plugins
         }
         public void iEntityAdded(EntityWrapper entityWrapper)
         {
-            try { EntityAdded(entityWrapper); }
+            try {
+                if (!_initialized || !bAllowRender)
+                    return;
+                EntityAdded(entityWrapper);
+            }
             catch (Exception e)
             {
                 HandlePluginError("EntityAdded", e);
@@ -66,7 +70,11 @@ namespace PoeHUD.Plugins
         }
         public void iEntityRemoved(EntityWrapper entityWrapper)
         {
-            try { EntityRemoved(entityWrapper); }
+            try {
+                if (!_initialized || !bAllowRender)
+                    return;
+                EntityRemoved(entityWrapper);
+            }
             catch (Exception e)
             {
                 HandlePluginError("EntityRemoved", e);
@@ -74,7 +82,11 @@ namespace PoeHUD.Plugins
         }
         public void iOnClose()
         { 
-            try { OnClose(); }
+            try {
+                if (!_initialized)
+                    return;
+                OnClose();
+            }
             catch (Exception e)
             {
                 HandlePluginError("OnClose", e);
