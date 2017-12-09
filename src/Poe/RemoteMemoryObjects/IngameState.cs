@@ -39,7 +39,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public DiagnosticInfoType DiagnosticInfoType => (DiagnosticInfoType)M.ReadInt(Address + 0xDD0 + Offsets.IgsOffset);
         public DiagnosticElement LatencyRectangle =>_cache.Enable && _cache.LatencyRectangle!=null ?_cache.LatencyRectangle : _cache.Enable ? _cache.LatencyRectangle=LatencyRectangleReal: LatencyRectangleReal;
 
-        private DiagnosticElement LatencyRectangleReal => GetObjectAt<DiagnosticElement>(0xDE0 + Offsets.IgsOffset);
+        private DiagnosticElement LatencyRectangleReal => GetObjectAt<DiagnosticElement>(0x1000 + Offsets.IgsOffset);
         public DiagnosticElement FrameTimeRectangle => GetObjectAt<DiagnosticElement>(0x1490 + Offsets.IgsOffset);
         public DiagnosticElement FPSRectangle =>_cache.Enable && _cache.FPSRectangle!=null ?_cache.FPSRectangle : _cache.Enable? _cache.FPSRectangle=FPSRectangleReal: FPSRectangleReal;
         private DiagnosticElement FPSRectangleReal => GetObjectAt<DiagnosticElement>(0x16D8 + Offsets.IgsOffset);
