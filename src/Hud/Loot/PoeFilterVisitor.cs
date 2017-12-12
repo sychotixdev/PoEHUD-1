@@ -56,6 +56,7 @@ namespace PoeHUD.Hud.Loot
             var mods = entity.GetComponent<Mods>();
             var isSkillHGem = entity.HasComponent<SkillGem>();
             var isMap = entity.HasComponent<Map>();
+            var isShapedMap = itemBase.Name.Contains("Shaped") && isMap;
             var itemRarity = mods.ItemRarity;
             var quality = 0;
             if (entity.HasComponent<Quality>()) { quality = entity.GetComponent<Quality>().ItemQuality; }
@@ -92,6 +93,9 @@ namespace PoeHUD.Hud.Loot
                 var poeSocketGroupCondition = true;
                 var poeIdentifiedCondition = true;
                 var poeCorruptedCondition = true;
+                var poeElderCondition = true;
+                var poeShaperCondition = true;
+                var poeShapedMapCondition = true;
                 var backgroundColor = AlertDrawStyle.DefaultBackgroundColor;
                 var borderColor = Color.White;
                 var textColor = defaultTextColor;
@@ -198,15 +202,13 @@ namespace PoeHUD.Hud.Loot
                                                                     {
                                                                         borderColor = ToColor(poeBorderColorContext.color()); borderWidth = borderColor.A == 0 ? 0 : 1;
                                                                     }
-                                                                    else
-                                                                    {
+                                                                    else {
                                                                         var poeTextColorContext = statement.poeTextColor();
                                                                         if (poeTextColorContext != null)
                                                                         {
                                                                             textColor = ToColor(poeTextColorContext.color());
                                                                         }
-                                                                        else
-                                                                        {
+                                                                        else {
                                                                             var poeAlertSoundContext = statement.poeAlertSound();
                                                                             if (poeAlertSoundContext != null)
                                                                             {
@@ -219,8 +221,7 @@ namespace PoeHUD.Hud.Loot
                                                                                     sound = 1;
                                                                                 }
                                                                             }
-                                                                            else
-                                                                            {
+                                                                            else {
                                                                                 var poeIdentifiedContext = statement.poeIdentified();
                                                                                 if (poeIdentifiedContext != null)
                                                                                 {
@@ -229,12 +230,32 @@ namespace PoeHUD.Hud.Loot
                                                                                         valFromFilter == mods.Identified
                                                                                             : valFromFilter == false;
                                                                                 }
-                                                                                else
-                                                                                {
+                                                                                else {
                                                                                     var poeCorruptedContext = statement.poeCorrupted();
                                                                                     if (poeCorruptedContext != null)
                                                                                     {
                                                                                         poeCorruptedCondition &= itemBase.isCorrupted == Convert.ToBoolean(poeCorruptedContext.Boolean().GetText());
+                                                                                    }
+                                                                                    else {
+                                                                                        var poeElderContext = statement.poeElderItem();
+                                                                                        if(poeElderContext != null)
+                                                                                        {
+                                                                                            poeElderCondition &= itemBase.isElder == Convert.ToBoolean(poeElderContext.Boolean().GetText());
+                                                                                        }
+                                                                                        else {
+                                                                                            var poeShaperContext = statement.poeShaperItem();
+                                                                                            if(poeShaperContext != null)
+                                                                                            {
+                                                                                                poeShaperCondition &= itemBase.isShaper == Convert.ToBoolean(poeShaperContext.Boolean().GetText());
+                                                                                            }
+                                                                                            else {
+                                                                                                var poeShapedMapContext = statement.poeShapedMap();
+                                                                                                if(poeShapedMapContext != null)
+                                                                                                {
+                                                                                                    poeShapedMapCondition &= isShapedMap == Convert.ToBoolean(poeShapedMapContext.Boolean().GetText());
+                                                                                                }
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -256,7 +277,8 @@ namespace PoeHUD.Hud.Loot
 
                 if (itemLevelCondition && dropLevelCondition && poeClassCondition && poeBaseTypeCondition &&
                     poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition &&
-                    poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition && poeCorruptedCondition)
+                    poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition && poeCorruptedCondition
+                    && poeElderCondition && poeShaperCondition && poeShapedMapCondition)
                 {
                     if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
                         return null;

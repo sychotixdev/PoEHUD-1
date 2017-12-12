@@ -69,6 +69,9 @@ poeWidth: 'Width' compareOpNullable digitsParams;
 poeHeight: 'Height' compareOpNullable digitsParams;
 poeCorrupted: 'Corrupted' Boolean;
 poeIdentified: 'Identified' Boolean;
+poeElderItem: 'ElderItem' Boolean;
+poeShaperItem: 'ShaperItem' Boolean;
+poeShapedMap: 'ShapedMap' Boolean;
 
 statement:  poeClass
          |  poeFontSize 
@@ -87,8 +90,10 @@ statement:  poeClass
          |  poeHeight
          |  poeCorrupted 
          |  poeIdentified 
-         |  poeTextColor;
-
+         |  poeTextColor
+		 |  poeElderItem
+		 |  poeShaperItem 
+		 |  poeShapedMap;
 
 block: visibility statement*?;
 main: block+;
