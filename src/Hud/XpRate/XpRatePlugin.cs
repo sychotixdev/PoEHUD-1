@@ -52,6 +52,8 @@ namespace PoeHUD.Hud.XpRate
 
         public override void Render()
         {
+            if (GameController.Game.IngameState.IngameUi.InventoryPanel.IsVisible) return;
+
             try
             {
                 if (!holdKey && WinApi.IsKeyDown(Keys.F10))
