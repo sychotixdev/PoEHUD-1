@@ -8,6 +8,7 @@
         QuadStash,
         CurrencyStash,
         EssenceStash,
-        DivinationStash
+        DivinationStash,
+        MapStash
     }
 }

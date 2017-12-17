@@ -26,6 +26,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 case 0x36:
                     return InventoryType.CurrencyStash;
                 case 0x05:
+                    if (this.AsObject<Element>().Parent.Children[0].ChildCount == 9)
+                        return InventoryType.MapStash;
                     return InventoryType.DivinationStash;
                 case 0x01:
                     // Normal Stash and Quad Stash is same.
@@ -53,6 +55,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
                     return GetObject<Element>(M.ReadLong(Address + Element.OffsetBuffers + 0x24, 0x08));
+                case InventoryType.MapStash:
+                    return this.AsObject<Element>().Parent.Children[3];
                 default:
                     return null;
             }
@@ -104,6 +108,23 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                             if (item.Children[1].ChildCount > 0)
                                 list.Add(item.Children[1].Children[0].AsObject<DivinationInventoryItem>());
+                        }
+                        break;
+                    case InventoryType.MapStash:
+                        foreach (var subInventories in InvRoot.Children)
+                        {
+                            // VisibleInventoryItems would only be found in Visible Sub Inventory :p
+                            if (!subInventories.IsVisible)
+                                continue;
+
+                            // All empty sub Inventories have full ChildCount (72) but all childcount have 0 items.
+                            if (subInventories.ChildCount == 72 && subInventories.Children[0].AsObject<NormalInventoryItem>().Item.Address == 0x00)
+                                continue;
+
+                            foreach (var item in subInventories.Children)
+                            {
+                                list.Add(item.AsObject<NormalInventoryItem>());
+                            }
                         }
                         break;
                 }
