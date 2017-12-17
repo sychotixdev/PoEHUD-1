@@ -18,73 +18,82 @@ namespace PoeHUD.Hud.Dps
         private const double DPS_PERIOD = 0.2;
         private DateTime lastTime;
         private readonly Dictionary<long, int> lastMonsters = new Dictionary<long, int>();
-        private double[] damageMemory = new double[10];
+        private double MaxDps;
+        private double CurrentDps;
+        private double CurrentDmg;
+        private double[] damageMemory = new double[5];
         private int damageMemoryIndex;
-        private int maxDps;
 
         public DpsMeterPlugin(GameController gameController, Graphics graphics, DpsMeterSettings settings)
             : base(gameController, graphics, settings)
         {
+            Settings.ClearNode.OnPressed += Clear;
+
             lastTime = DateTime.Now;
             GameController.Area.OnAreaChange += area =>
             {
-                lastTime = DateTime.Now;
-                maxDps = 0;
-                damageMemory = new double[10];
-                lastMonsters.Clear();
+                Clear();
             };
         }
 
-        public override void Render()
+        private void Clear()
         {
-            try
-            {
-                base.Render();
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) ||
-                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
-                    !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
-                { return; }
-
-                DateTime nowTime = DateTime.Now;
-                TimeSpan elapsedTime = nowTime - lastTime;
-                if (elapsedTime.TotalSeconds > DPS_PERIOD)
-                {
-                    damageMemoryIndex++;
-                    if (damageMemoryIndex >= damageMemory.Length)
-                    {
-                        damageMemoryIndex = 0;
-                    }
-                    damageMemory[damageMemoryIndex] = CalculateDps();
-                    lastTime = nowTime;
-                }
-
-                Vector2 position = StartDrawPointFunc();
-                var dps = (int)damageMemory.Sum();
-                maxDps = Math.Max(dps, maxDps);
-
-                string dpsText = dps + " dps";
-                string peakText = maxDps + " top dps";
-                Size2 dpsSize = Graphics.DrawText(dpsText, Settings.DpsTextSize, position, Settings.DpsFontColor, FontDrawFlags.Right);
-                Size2 peakSize = Graphics.DrawText(peakText, Settings.PeakDpsTextSize, position.Translate(0, dpsSize.Height), Settings.PeakFontColor,
-                    FontDrawFlags.Right);
-
-                int width = Math.Max(peakSize.Width, dpsSize.Width);
-                int height = dpsSize.Height + peakSize.Height;
-                var bounds = new RectangleF(position.X - 5 - width - 41, position.Y - 5, width + 50, height + 10);
-
-                Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
-                Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
-
-                Size = bounds.Size;
-                Margin = new Vector2(0, 5);
-            }
-            catch
-            {
-                // do nothing
-            }
+            MaxDps = 0;
+            CurrentDps = 0;
+            CurrentDmg = 0;
+            lastMonsters.Clear();
+            lastTime = DateTime.Now;
+            damageMemory = new double[5];
+            lastMonsters.Clear();
         }
 
-        private double CalculateDps()
+
+        public override void Render()
+        {
+            if (!Settings.Enable ||
+                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
+                !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
+            { return; }
+
+            DateTime nowTime = DateTime.Now;
+            TimeSpan elapsedTime = nowTime - lastTime;
+            if (elapsedTime.TotalSeconds > DPS_PERIOD)
+            {
+                damageMemoryIndex++;
+                if (damageMemoryIndex >= damageMemory.Length)
+                {
+                    damageMemoryIndex = 0;
+                }
+                var curDmg = CalculateDps(Settings.CalcAOE);
+                damageMemory[damageMemoryIndex] = curDmg;
+
+                if (curDmg > 0)
+                {
+                    CurrentDmg = curDmg;
+                    CurrentDps = damageMemory.Sum();
+                    MaxDps = Math.Max(CurrentDps, MaxDps);
+                }
+
+                lastTime = nowTime;
+            }
+
+            Vector2 position = StartDrawPointFunc();
+
+            Size2 dpsSize = Graphics.DrawText(CurrentDmg + " dps", Settings.DpsTextSize, position, Settings.DpsFontColor, FontDrawFlags.Right);
+            Size2 peakSize = Graphics.DrawText(MaxDps + " top dps", Settings.PeakDpsTextSize, position.Translate(0, dpsSize.Height), Settings.PeakFontColor, FontDrawFlags.Right);
+
+            int width = Math.Max(peakSize.Width, dpsSize.Width);
+            int height = dpsSize.Height + peakSize.Height;
+            var bounds = new RectangleF(position.X - 5 - width - 41, position.Y - 5, width + 50, height + 10);
+
+            Graphics.DrawImage("preload-start.png", bounds, Settings.BackgroundColor);
+            Graphics.DrawImage("preload-end.png", bounds, Settings.BackgroundColor);
+
+            Size = bounds.Size;
+            Margin = new Vector2(0, 5);
+        }
+
+        private double CalculateDps(bool aoe)
         {
             int totalDamage = 0;
             foreach (EntityWrapper monster in GameController.Entities.Where(x => x.HasComponent<Monster>() && x.IsHostile))
@@ -98,7 +107,10 @@ namespace PoeHUD.Hud.Dps
                     {
                         if (lastHP != hp)
                         {
-                            totalDamage += lastHP - hp;
+                            if (aoe)
+                                totalDamage += lastHP - hp;
+                            else
+                                totalDamage = Math.Max(totalDamage, lastHP - hp);
                         }
                     }
                     lastMonsters[monster.Id] = hp;

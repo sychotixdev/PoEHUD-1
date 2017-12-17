@@ -425,6 +425,8 @@ namespace PoeHUD.Hud.Menu
             AddChild(showDpsMenu, "Background color", settingsHub.DpsMeterSettings.BackgroundColor);
             AddChild(showDpsMenu, "Dps font color", settingsHub.DpsMeterSettings.DpsFontColor);
             AddChild(showDpsMenu, "Top dps font color", settingsHub.DpsMeterSettings.PeakFontColor);
+            AddChild(showDpsMenu, "Show AOE", settingsHub.DpsMeterSettings.CalcAOE);
+            AddChild(showDpsMenu, "Clear", settingsHub.DpsMeterSettings.ClearNode);
 
             // Map icons
             MenuItem mapIconsMenu = AddChild(MenuRootButton, "Map icons", settingsHub.MapIconsSettings.Enable);
