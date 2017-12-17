@@ -54,36 +54,6 @@ namespace PoeHUD.Hud.Menu
                 AddChild(valueToggleButton);
                 SubMenuValues.Add(valueToggleButton);
             }
-            WrapChilds();
-        }
-
-
-        private void WrapChilds()
-        {
-            var windowRect = GameController.Instance.Window.GetWindowRectangle();
-
-            int WrapChildRowCount = (int)((windowRect.Height - Bounds.BottomLeft.Y) / DesiredHeight);
-            WrapChildRowCount--;
-
-            int childCount = Children.Count;
-            int column = 1;
-            int row = 0;
-            var listBounds = Bounds;
-
-            for (int i = 0; i < childCount; i++)
-            {
-                var child = Children[i];
-                var posX = listBounds.X + (DesiredWidth * column);
-                var posY = listBounds.Y + (DesiredHeight * row);
-
-                child.Bounds = new RectangleF(posX, posY, DesiredWidth, DesiredHeight);
-                row++;
-                if(row > WrapChildRowCount)
-                {
-                    row = 0;
-                    column++;
-                }
-            }
         }
 
         private void ChangedValue(string value, ToggleNode pressedNode)
@@ -136,6 +106,7 @@ namespace PoeHUD.Hud.Menu
 
         public override void SetHovered(bool hover)
         {
+            CheckHoverBounds(hover);
             if (hover) return;
             HideChildren();
         }

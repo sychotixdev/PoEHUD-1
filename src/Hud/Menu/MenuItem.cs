@@ -1,7 +1,8 @@
-using PoeHUD.Hud.UI;
+﻿using PoeHUD.Hud.UI;
 using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Controllers;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -26,8 +27,27 @@ namespace PoeHUD.Hud.Menu
         {
             float x = Bounds.X + Bounds.Width;
             float y = Bounds.Y + Children.Sum(current => current.Bounds.Height);
-            item.Bounds = new RectangleF(x, y, item.DesiredWidth, item.DesiredHeight);
+            item.Bounds = new RectangleF(x + 10, y, item.DesiredWidth, item.DesiredHeight);
             Children.Add(item);
+            WrapChilds();
+        }
+
+        private void WrapChilds()
+        {
+            var windowRect = GameController.Instance.Window.GetWindowRectangle();
+
+            var offsetY = (Bounds.Y + (DesiredHeight * Children.Count)) - (windowRect.Height - 20);
+            if (offsetY < 0)
+                return;
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                var child = Children[i];
+                var posY = Bounds.Y + (DesiredHeight * i) - offsetY;
+                var bounds = child.Bounds;
+                bounds.Y = posY;
+                child.Bounds = bounds;
+            }
         }
 
         public void OnEvent(MouseEventID id, Vector2 pos)
@@ -101,7 +121,15 @@ namespace PoeHUD.Hud.Menu
 
         public virtual void SetHovered(bool hover)
         {
+            CheckHoverBounds(hover);
             Children.ForEach(x => x.SetVisible(hover));
+        }
+
+        protected void CheckHoverBounds(bool hover)
+        {  
+            var bounds = Bounds;
+            bounds.Width = hover ? DesiredWidth + 10 : DesiredWidth;
+            Bounds = bounds;
         }
 
         public void SetVisible(bool visible)

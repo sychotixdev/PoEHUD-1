@@ -58,6 +58,7 @@ namespace PoeHUD.Hud.Menu
 
         public override void SetHovered(bool hover)
         {
+            CheckHoverBounds(hover);
             Children.ForEach(x =>
             {
                 x.SetVisible(hover);

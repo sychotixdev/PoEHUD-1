@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.PluginExtension
         private void InitMenuForPlugins()
         {
             RootButton mainMenu = MenuPlugin.MenuRootButton;
-            var pluginsMenu = MenuPlugin.AddChild(mainMenu, "Plugins", true);
+            var pluginsMenu = MenuPlugin.AddChild(mainMenu, "Plugins");
             eInitMenu(pluginsMenu);
         }
 
