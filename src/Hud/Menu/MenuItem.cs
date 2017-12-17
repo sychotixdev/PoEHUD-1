@@ -87,6 +87,7 @@ namespace PoeHUD.Hud.Menu
                 tooltipRect.X += tooltipRect.Width;
 
                 tooltipRect.Width = TooltipText.Length * 9 + 10;
+                tooltipRect.Height = (1 + TooltipText.Count(f => f.Equals('\n'))) * 22;
 
                 graphics.DrawBox(tooltipRect, new Color(0, 0, 0, 230));
 
