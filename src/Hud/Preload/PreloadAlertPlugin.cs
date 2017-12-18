@@ -274,7 +274,8 @@ namespace PoeHUD.Hud.Preload
 
         IEnumerator ParseCoroutine()
         {
-            yield return new WaitTime(100);
+            yield return new WaitFunction(() => { return GameController.Game.IsGameLoading; });
+            yield return new WaitTime(300);
             Parse();
         }
         private void Parse()
