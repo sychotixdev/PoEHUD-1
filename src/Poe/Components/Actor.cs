@@ -24,8 +24,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                long num = M.ReadLong(Address + 0x308);
-                long num2 = M.ReadLong(Address + 0x310);
+                long num = M.ReadLong(Address + 0x310);
+                long num2 = M.ReadLong(Address + 0x318);
                 for (long i = num; i < num2; i += 8)
                 {
                     // using int instead of long because first 4 bytes are id
