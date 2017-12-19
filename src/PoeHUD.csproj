@@ -276,6 +276,7 @@
     <Compile Include="Poe\Components\RenderItem.cs" />
     <Compile Include="Poe\Components\Shrine.cs" />
     <Compile Include="Poe\Components\Stack.cs" />
+    <Compile Include="Poe\Components\Stats.cs" />
     <Compile Include="Poe\Components\TriggerableBlockage.cs" />
     <Compile Include="Poe\Elements\InventoryElements\DivinationInventoryItem.cs" />
     <Compile Include="Poe\Elements\InventoryElements\EssenceInventoryItem.cs" />
