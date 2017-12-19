@@ -50,7 +50,8 @@ namespace PoeHUD.Plugins
                 Settings.Enable = false;
             if (!GameController.pluginsSettings.TryGetValue(SettingsFileName, out _))
             {
-                GameController.pluginsSettings.Add(Settings.ToString().Split('.')[0],Settings);
+                GameController.pluginsSettings.Add(SettingsFileName, Settings);
+                //GameController.pluginsSettings.Add(Settings.ToString().Split('.')[0],Settings);//Settings.ToString ? what the fuck?
             }
         }
 
