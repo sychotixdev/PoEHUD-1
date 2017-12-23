@@ -1,6 +1,4 @@
-﻿using PoeHUD.Models.Enums;
-
-namespace PoeHUD.Poe.Components
+﻿namespace PoeHUD.Poe.Components
 {
     public class Stats : Component
     {
