@@ -23,7 +23,7 @@ namespace PoeHUD.Models
         public ICollection<EntityWrapper> Entities => entityCache.Values;
 
         private EntityWrapper player;
-
+        public Dictionary<Enums.PlayerStats, int> PlayerStats { get; private set; } = new Dictionary<Enums.PlayerStats, int>();
         public EntityWrapper Player
         {
             get
@@ -103,6 +103,22 @@ namespace PoeHUD.Models
             {
                 player = new EntityWrapper(gameController, address);
             }
+            if (player.IsAlive && player.IsValid && player.HasComponent<Poe.Components.Stats>())
+            {
+                var stats = player.GetComponent<Poe.Components.Stats>();
+                int key = 0;
+                int value = 0;
+                for (long i = stats.statPtrStart; i < stats.statPtrEnd; i += 8)
+                {
+                    key = gameController.Memory.ReadInt(i);
+                    value = gameController.Memory.ReadInt(i + 0x04);
+                    if (value != 0)
+                        PlayerStats[(Enums.PlayerStats)key] = value;
+                    else if (PlayerStats.ContainsKey((Enums.PlayerStats)key))
+                        PlayerStats.Remove((Enums.PlayerStats)key);
+                }
+            }
+
         }
 
         public EntityWrapper GetEntityById(long id)
