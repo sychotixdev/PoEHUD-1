@@ -57,6 +57,9 @@ namespace PoeHUD.Models
         public void RefreshState()
         {
             UpdatePlayer();
+            if(player.IsAlive && player.IsValid && player.HasComponent<Poe.Components.Stats>())
+                UpdatePlayerStats();
+
             if (gameController.Area.CurrentArea == null)
                 return;
 
@@ -103,24 +106,23 @@ namespace PoeHUD.Models
             {
                 player = new EntityWrapper(gameController, address);
             }
-            if (player.IsAlive && player.IsValid && player.HasComponent<Poe.Components.Stats>())
-            {
-                var stats = player.GetComponent<Poe.Components.Stats>();
-                int key = 0;
-                int value = 0;
-                for (long i = stats.statPtrStart; i < stats.statPtrEnd; i += 8)
-                {
-                    key = gameController.Memory.ReadInt(i);
-                    value = gameController.Memory.ReadInt(i + 0x04);
-                    if (value != 0)
-                        PlayerStats[(Enums.PlayerStats)key] = value;
-                    else if (PlayerStats.ContainsKey((Enums.PlayerStats)key))
-                        PlayerStats.Remove((Enums.PlayerStats)key);
-                }
-            }
-
         }
-
+        private void UpdatePlayerStats()
+        {
+            var stats = player.GetComponent<Poe.Components.Stats>();
+            int key = 0;
+            int value = 0;
+            var bytes = gameController.Memory.ReadBytes(stats.statPtrStart, (int)(stats.statPtrEnd - stats.statPtrStart));
+            for (int i = 0; i < bytes.Length; i += 8)
+            {
+                key = BitConverter.ToInt32(bytes, i);
+                value = BitConverter.ToInt32(bytes, i + 0x04);
+                if (value != 0)
+                    PlayerStats[(Enums.PlayerStats)key] = value;
+                else if (PlayerStats.ContainsKey((Enums.PlayerStats)key))
+                    PlayerStats.Remove((Enums.PlayerStats)key);
+            }
+        }
         public EntityWrapper GetEntityById(long id)
         {
             EntityWrapper result;
