@@ -107,7 +107,7 @@ namespace PoeHUD.Hud.Menu
                 tooltipRect.X += tooltipRect.Width;
 
                 var textSize = graphics.MeasureText(TooltipText, 20);
-                tooltipRect.Width = textSize.Width;
+                tooltipRect.Width = textSize.Width + 5;
                 tooltipRect.Height = textSize.Height;
 
                 graphics.DrawBox(tooltipRect, new Color(0, 0, 0, 230));
