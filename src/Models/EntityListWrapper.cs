@@ -35,6 +35,7 @@ namespace PoeHUD.Models
         }
 
         public event Action<EntityWrapper> EntityAdded;
+        public event Action<EntityWrapper> EntityAddedAny = delegate { };
 
         public event Action<EntityWrapper> EntityRemoved;
 
@@ -82,6 +83,8 @@ namespace PoeHUD.Models
                 }
 
                 var entity = new EntityWrapper(gameController, keyEntity.Value);
+
+                EntityAddedAny(entity);
                 if (entity.Path.StartsWith("Metadata/Effects") || ((entityID & 0x80000000L) != 0L) ||
                     entity.Path.StartsWith("Metadata/Monsters/Daemon"))
                 {

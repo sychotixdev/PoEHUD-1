@@ -190,7 +190,6 @@ namespace PoeHUD.Plugins
 
         public void Destroy()
         {
-            throw new NotImplementedException();
         }
     }
 }

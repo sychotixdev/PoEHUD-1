@@ -213,7 +213,7 @@ namespace PoeHUD.Controllers
                         {
                             CoroutineRunner.Update();
                         }
-                        catch(Exception e){DebugPlugin.LogMsg($"{e.Message}",1);}
+                        catch(Exception e){DebugPlugin.LogMsg($"Coroutine error: {e.Message}",1);}
                     }
                 }
                

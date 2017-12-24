@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.Loot
         private readonly HashSet<CraftingBase> craftingBases;
         private readonly HashSet<string> currencyNames;
         private Dictionary<long, ItemsOnGroundLabelElement> currentLabels;
-        private PoeFilterVisitor visitor;
+        public static PoeFilterVisitor visitor;
         public static bool holdKey;
         private readonly SettingsHub settingsHub;
 

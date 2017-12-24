@@ -86,8 +86,12 @@ namespace PoeHUD.Framework
                     {
                         if (_coroutines[i].DoWork)
                         {
-                            if(_coroutines[i].MoveNext()) continue;
-                            _coroutines[i].Done();
+                            try
+                            {
+                                if (_coroutines[i].MoveNext()) continue;
+                                _coroutines[i].Done();
+                            }
+                            catch (Exception e) { DebugPlug.DebugPlugin.LogMsg($"Coroutine {_coroutines[i].Name} error: {e.Message}", 1); }
                         }
                             
                     }
