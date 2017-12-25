@@ -103,19 +103,17 @@ namespace PoeHUD.Hud.Menu
             if (Bounds.Contains(MousePos) && !string.IsNullOrEmpty(TooltipText))
             {
                 var tooltipRect = Bounds;
-                tooltipRect.Y -= tooltipRect.Height + 10;
-                tooltipRect.X += tooltipRect.Width;
+                var gameWindow = GameController.Instance.Window.GetWindowRectangle();
+                tooltipRect.Y = gameWindow.Top + 10;
+                tooltipRect.X = gameWindow.Width/2;
 
                 var textSize = graphics.MeasureText(TooltipText, 20);
                 tooltipRect.Width = textSize.Width + 5;
                 tooltipRect.Height = textSize.Height;
+                tooltipRect.X -= textSize.Width / 2;
 
                 graphics.DrawBox(tooltipRect, new Color(0, 0, 0, 230));
-
-                var buubleRect = new RectangleF(tooltipRect.X - 23, tooltipRect.Y, 23, 45);
-
-                graphics.DrawImage("tooltip.png", buubleRect);
-
+                graphics.DrawFrame(tooltipRect, 2, Color.Goldenrod);
                 graphics.DrawText(TooltipText, 20, tooltipRect.TopLeft + new Vector2(5, 0));
             }
         }
