@@ -32,29 +32,25 @@ namespace PoeHUD.Poe.Components
         }
 
         //public bool CorpseUsable => M.ReadBytes(Address + 0x238, 1)[0] == 1; // Total guess, didn't verify
-
+        private long BuffStart => M.ReadLong(Address + 0xE8);
+        private long BuffEnd => M.ReadLong(Address + 0xF0);
+        private long MaxBuffCount => 512; // Randomly bumping to 512 from 32 buffs... no idea what real value is.
         public List<Buff> Buffs
         {
             get
             {
                 var list = new List<Buff>();
-                long start = M.ReadLong(Address + 0xE8);
-                long end = M.ReadLong(Address + 0xF0);
-                int count = (int)(end - start) / 8;
-                // Randomly bumping to 256 from 32... no idea what real value is.
-                if (count <= 0 || count > 256)
-                {
+                long start = BuffStart;
+                long end = BuffEnd;
+                long length = BuffEnd - BuffStart;
+                if (length <= 0 || length >= MaxBuffCount * 8) // * 8 as we buff pointer takes 8 bytes.
                     return list;
-                }
-                for (int i = 0; i < count; i++)
+                byte[] buffPointers = M.ReadBytes(start, (int)length);
+                Buff tmp = null;
+                for (int i = 0; i < length; i += 8)
                 {
-                    long addr = M.ReadLong(start + i * 8);
-                    if (addr == 0)
-                        continue;
-                    /*long addr2 = M.ReadLong(addr + 8);
-                     if (addr2 == 0)
-                         continue;*/
-                    list.Add(ReadObject<Buff>(addr+8));
+                    tmp = ReadObject<Buff>(BitConverter.ToInt64(buffPointers, i) + 0x08);
+                    list.Add(tmp);
                 }
                 return list;
             }
@@ -62,7 +58,21 @@ namespace PoeHUD.Poe.Components
 
         public bool HasBuff(string buff)
         {
-            return Buffs.Exists(x => x.Name == buff);
+            long start = BuffStart;
+            long end = BuffEnd;
+            long length = BuffEnd - BuffStart;
+            if (length <= 0 || length >= MaxBuffCount * 8)
+                return false;
+            byte[] buffPointers = M.ReadBytes(start, (int)length);
+            Buff tmp = null;
+            for (int i = 0; i < length; i+=8)
+            {
+                tmp = ReadObject<Buff>(BitConverter.ToInt64(buffPointers, i) + 0x08);
+                if (tmp.Name == buff)
+                    return true;
+
+            }
+            return false;
         }
     }
 }
