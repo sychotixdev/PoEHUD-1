@@ -40,7 +40,9 @@ namespace PoeHUD.Hud.Settings
 
         public event Action OnValueChanged;
 
+        [JsonIgnore]
         public T Min { get; set; }
+        [JsonIgnore]
         public T Max { get; set; }
 
         public static implicit operator T(RangeNode<T> node)
