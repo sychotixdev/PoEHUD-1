@@ -405,3 +405,6 @@ Metadata/NPC/Info/ShaperGlyph4; Shaper's Memory of Dream (T11); 9400d8ff
 Metadata/NPC/Info/ShaperGlyph5; Shaper's Memory of Nightmare (T12); 9400d8ff
 Metadata/NPC/Info/ShaperGlyph6; Shaper's Memory of Grief (T13); 9400d8ff
 Metadata/NPC/Info/ShaperGlyph7; Shaper's Memory of Awakening (T14); 9400d8ff
+
+# Hillock Event
+Metadata/Monsters/ZombieBoss/ZombieBossHillockSpecialEvent_; Uber Hillock; ff00ff00
