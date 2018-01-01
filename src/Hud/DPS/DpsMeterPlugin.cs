@@ -79,7 +79,7 @@ namespace PoeHUD.Hud.Dps
 
             Vector2 position = StartDrawPointFunc();
 
-            Size2 dpsSize = Graphics.DrawText(CurrentDmg + " dps", Settings.DpsTextSize, position, Settings.DpsFontColor, FontDrawFlags.Right);
+            Size2 dpsSize = Graphics.DrawText(CurrentDps + " dps", Settings.DpsTextSize, position, Settings.DpsFontColor, FontDrawFlags.Right);
             Size2 peakSize = Graphics.DrawText(MaxDps + " top dps", Settings.PeakDpsTextSize, position.Translate(0, dpsSize.Height), Settings.PeakFontColor, FontDrawFlags.Right);
 
             int width = Math.Max(peakSize.Width, dpsSize.Width);
