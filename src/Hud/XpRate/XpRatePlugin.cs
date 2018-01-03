@@ -149,9 +149,16 @@ namespace PoeHUD.Hud.XpRate
             int arenaLevel = GameController.Area.CurrentArea.RealLevel;
             int characterLevel = GameController.Player.GetComponent<Player>().Level;
             double safeZone = Math.Floor(Convert.ToDouble(characterLevel) / 16) + 3;
-            double effectiveDifference = Math.Max(Math.Abs(characterLevel - arenaLevel) - safeZone, 0);
-            double xpMultiplier = Math.Max(Math.Pow((characterLevel + 5) / (characterLevel + 5 + Math.Pow(effectiveDifference, 2.5)), 1.5), 0.01);
-            return xpMultiplier;
+            double actualDifference = Math.Abs(characterLevel - arenaLevel);
+            if (actualDifference > safeZone)
+            {
+                double effectiveDifference = actualDifference - safeZone;
+                return Math.Max(Math.Pow((characterLevel + 5) / (characterLevel + 5 + Math.Pow(effectiveDifference, 2.5)), 1.5), 0.01);
+            }
+            else
+            {
+                return 1;
+            }
         }
 
         private double PartyXpPenalty()
