@@ -22,8 +22,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 0x278);
-                int num2 = M.ReadInt(Address + 0x27C);
+                int num = M.ReadInt(Address + 0x270);
+                int num2 = M.ReadInt(Address + 0x274);
                 for (int i = num; i < num2; i += 8)
                 {
                     int item = M.ReadInt(i);
@@ -39,8 +39,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            int num = M.ReadInt(Address + 0x278);
-            int num2 = M.ReadInt(Address + 0x27C);
+            int num = M.ReadInt(Address + 0x270);
+            int num2 = M.ReadInt(Address + 0x274);
             for (int i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);

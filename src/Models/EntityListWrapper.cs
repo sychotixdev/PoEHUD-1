@@ -129,7 +129,7 @@ namespace PoeHUD.Models
                     return null;
                 }
             }
-            return gameController.Game.ReadObject<EntityLabel>(num + 12);
+            return gameController.Game.ReadObject<EntityLabel>(num + 0xC);
         }
     }
 }
