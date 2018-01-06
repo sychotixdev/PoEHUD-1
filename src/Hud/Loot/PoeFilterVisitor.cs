@@ -56,7 +56,7 @@ namespace PoeHUD.Hud.Loot
             var mods = entity.GetComponent<Mods>();
             var isSkillHGem = entity.HasComponent<SkillGem>();
             var isMap = entity.HasComponent<Map>();
-            var isShapedMap = itemBase.Name.Contains("Shaped") && isMap;
+            var isShapedMap = itemBase.isShaped && isMap;
             var itemRarity = mods.ItemRarity;
             var quality = 0;
             if (entity.HasComponent<Quality>()) { quality = entity.GetComponent<Quality>().ItemQuality; }
