@@ -42,6 +42,7 @@ namespace PoeHUD.Models
         private void OnAreaChanged(AreaController area)
         {
             ignoredEntities.Clear();
+            PlayerStats.Clear();
             RemoveOldEntitiesFromCache();
         }
 
