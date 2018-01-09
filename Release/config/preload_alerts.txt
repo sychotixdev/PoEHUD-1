@@ -6,11 +6,6 @@ Metadata/MiscellaneousObjects/Abyss/AbyssSubAreaTransition; Abyssal Depths; ff36
 Metadata/Monsters/ReligiousTemplar/AbyssLichBoss1; Abyss Lich - Ulaman; ff00FF00
 Metadata/Monsters/ReligiousTemplar/AbyssLichBoss2; Abyss Lich - Amanamu; ff00FF00
 
-# ABYSS LEAGUE
-Metadata/MiscellaneousObjects/Abyss/AbyssSubAreaTransition; Abyssal Depths; ff36B400
-Metadata/Monsters/ReligiousTemplar/AbyssLichBoss1; Abyss Lich - Ulaman; ff00FF00
-Metadata/Monsters/ReligiousTemplar/AbyssLichBoss2; Abyss Lich - Amanamu; ff00FF00
-
 # LABYRINTH TRIALS
 Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffff9966
 
