@@ -80,18 +80,18 @@ namespace PoeHUD.Hud.Preload
                 { "Metadata/Monsters/Daemon/EssenceDaemonFirePulse", new PreloadConfigLine { Text = "Essence of Anger", FastColor = () => Settings.EssenceOfAnger}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonColdPulse", new PreloadConfigLine { Text = "Essence of Hatred", FastColor = () => Settings.EssenceOfHatred}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonLightningPulse", new PreloadConfigLine { Text = "Essence of Wrath", FastColor = () => Settings.EssenceOfWrath}},
-                { "Metadata/Monsters/Daemon/EssenceDaemonChaosDegenPulse", new PreloadConfigLine { Text = "Essence of Misery", FastColor = () => Settings.EssenceOfMisery}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonChaosDegenPulse", new PreloadConfigLine { Text = "Essence of Misery (Suggest: Corruption)", FastColor = () => Settings.EssenceOfMisery}},        //Suggest Corruption
                 { "Metadata/Monsters/Daemon/EssenceDaemonSummonOrbOfStormsDaemon", new PreloadConfigLine { Text = "Essence of Torment", FastColor = () => Settings.EssenceOfTorment}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonSummonGhost", new PreloadConfigLine { Text = "Essence of Fear", FastColor = () => Settings.EssenceOfFear}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonFrostBomb", new PreloadConfigLine { Text = "Essence of Suffering", FastColor = () => Settings.EssenceOfSuffering}},
-                { "Metadata/Monsters/Daemon/EssenceDaemonGrab", new PreloadConfigLine { Text = "Essence of Envy", FastColor = () => Settings.EssenceOfEnvy}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonGrab", new PreloadConfigLine { Text = "Essence of Envy (Suggest: Corruption)", FastColor = () => Settings.EssenceOfEnvy}},                      //Suggest Corruption
                 { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDodge", new PreloadConfigLine { Text = "Essence of Zeal", FastColor = () => Settings.EssenceOfZeal}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterDamageTaken", new PreloadConfigLine { Text = "Essence of Loathing", FastColor = () => Settings.EssenceOfLoathing}},
-                { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterCrit", new PreloadConfigLine { Text = "Essence of Scorn", FastColor = () => Settings.EssenceOfScorn}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonBuffToParentCasterCrit", new PreloadConfigLine { Text = "Essence of Scorn (Suggest: Corruption)", FastColor = () => Settings.EssenceOfScorn}}, //Suggest Corruption
                 { "Metadata/Monsters/Daemon/EssenceDaemonTotemGroundEffectVortex", new PreloadConfigLine { Text = "Essence of Sorrow", FastColor = () => Settings.EssenceOfSorrow}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonSummonKaruiSpirit", new PreloadConfigLine { Text = "Essence of Contempt", FastColor = () => Settings.EssenceOfContempt}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonFireRuneTrap", new PreloadConfigLine { Text = "Essence of Rage", FastColor = () => Settings.EssenceOfRage}},
-                { "Metadata/Monsters/Daemon/EssenceDaemonSummonChaosGolem", new PreloadConfigLine { Text = "Essence of Dread", FastColor = () => Settings.EssenceOfDread}},
+                { "Metadata/Monsters/Daemon/EssenceDaemonSummonChaosGolem", new PreloadConfigLine { Text = "Essence of Dread (Suggest: Corruption)", FastColor = () => Settings.EssenceOfDread}},       //Suggest Corruption
                 { "Metadata/Monsters/Daemon/EssenceDaemonBloodProjectileDaemon", new PreloadConfigLine { Text = "Essence of Greed", FastColor = () => Settings.EssenceOfGreed}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonSummonLivingCrystals", new PreloadConfigLine { Text = "Essence of Woe", FastColor = () => Settings.EssenceOfWoe}},
                 { "Metadata/Monsters/Daemon/EssenceDaemonSummonSpiders", new PreloadConfigLine { Text = "Essence of Doubt", FastColor = () => Settings.EssenceOfDoubt}},

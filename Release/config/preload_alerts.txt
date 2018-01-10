@@ -6,34 +6,46 @@ Metadata/MiscellaneousObjects/Abyss/AbyssSubAreaTransition; Abyssal Depths; ff36
 Metadata/Monsters/ReligiousTemplar/AbyssLichBoss1; Abyss Lich - Ulaman; ff00FF00
 Metadata/Monsters/ReligiousTemplar/AbyssLichBoss2; Abyss Lich - Amanamu; ff00FF00
 
-# LABYRINTH
-Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffFF9966
+# LABYRINTH TRIALS
+Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffff9966
 
-Metadata/Chests/Labyrinth/LabyrinthTreasureKey; Curious Lockbox; ff00ff00
-Metadata/Chests/Labyrinth/LabyrinthSpecificUnique; Intricate Locker; ffd2742d
+#LABYRINTH PROGRESSION CHEST - Dark shrines - Passage
+##Metadata/Terrain/Labyrinth/Objects/GoldenChest; Golden Key Chest; ffffD700
+##Metadata/Chests/Labyrinth/LabyrinthTrinketChest; Izaro Trinket; ffd2d2d2
+Metadata/Terrain/Labyrinth/Objects/LabyrinthDarkshrineHidden; Dark shrine; ff0080ff
+Metadata/Terrain/Labyrinth/Objects/SecretPassage; Secret Passage; ffffff00
+
+#lABYRINTH DANAGER CHEST
+Metadata/Chests/Labyrinth/LabyrinthTreasureKey; Curious Lock Box; ff00ff00
 Metadata/Chests/Labyrinth/LabyrinthReward0Currency; Low Currency Chest; ffff99ff
 Metadata/Chests/Labyrinth/LabyrinthReward0CurrencyQuality; High Currency Chest; ffff00ff
-
 Metadata/Chests/Labyrinth/LabyrinthRewardDangerCurrency; Danger Currency Chest; ffff99ff
 Metadata/Chests/Labyrinth/LabyrinthRewardDangerCurrencyQuality; Danger Quality Currency Chest; ffff00ff
 Metadata/Chests/Labyrinth/LabyrinthRewardDangerUnique; Danger Unique Chest; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardDangerDivination; Danger Divination Chest; ffff0000
+Metadata/Chests/Labyrinth/LabyrinthRewardDangerJewelry; Danger Jewelry; ffd2d2d2
+Metadata/Chests/Labyrinth/LabyrinthRewardDangerSockets; Danger Socketed; ffd2d2d2
+Metadata/Chests/Labyrinth/LabyrinthRewardDangerSkillGems; Danger Skill Gems; ff00ff00
+Metadata/Chests/Labyrinth/LabyrinthRewardDangerCorruptedVaal; Danger Vaal; ffd2d2d2
+Metadata/Chests/Labyrinth/LabyrinthRewardDangerGeneric; Danger Generic; ffd2d2d2
 
+#LABYRINTH SILVER CHEST
+##Metadata/Terrain/Labyrinth/Objects/SilverChest; Silver Key Lock Box; fff2f2f2
+Metadata/Chests/Labyrinth/LabyrinthSpecificUnique; Intricate Locker; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverCurrency; Silver Currency Chest; ffff00ff
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverCurrencyQuality; Silver Currency Quality Chest; ffff00ff
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverJewelryUnique; Silver Jewelry Unique Chest; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverDivination; Silver Divination Chest; ffff0000 
-
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique1; Silver Unique Chest 1; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique2; Silver Unique Chest 2; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique3; Silver Unique Chest 3; ffd2742d
-
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverSkillGems; Silver Skill Gems; ff00ff00
+Metadata/Chests/Labyrinth/LabyrinthRewardSilverCorruptedVaal; Silver Corrupted Chest; ffff0000 
 
 #Izaro Phases (Phase, How to get extra key)
 Metadata/Monsters/Labyrinth/IzaroPortalCold; Portals, Don't Kill; ff00ff00
 Metadata/Monsters/FireElemental/FireElementalIzaro; Essences, Don't Kill; ff00ff00
-Metadata/Terrain/Labyrinth/Objects/ChargeDisruptors/IzaroDisruptor; Charge Disrupters, Atleast 10 Charges; ff00ff00
+Metadata/Terrain/Labyrinth/Objects/ChargeDisruptors/IzaroDisruptor; Charge Disrupter's, Gain At Least 10 Charges; ff00ff00
 Metadata/Monsters/PopUpTrap/LabyrinthBossPylonReduceArmour; Fonts, Don't Kill; ff00ff00
 Metadata/Terrain/Labyrinth/Objects/ToggleStatues/EmpowerStatue1; Conduits, Don't Click; ff00ff00
 Metadata/Monsters/Statue/IzaroGargoyleCold; Gargoyles, Don't Kill; ff00ff00
