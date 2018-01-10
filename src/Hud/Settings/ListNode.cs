@@ -9,6 +9,8 @@ namespace PoeHUD.Hud.Settings
     {
         [JsonIgnore]
         public Action<string> OnValueSelected = delegate { };
+        [JsonIgnore]
+        public Action<string> OnValueSelectedPre = delegate { };
   
         private string value;
 
@@ -31,7 +33,17 @@ namespace PoeHUD.Hud.Settings
             {
                 if (this.value != value)
                 {
+                    try
+                    {
+                        OnValueSelectedPre(value);
+                    }
+                    catch
+                    {
+                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: ListNode.OnValueSelectedPre", 10, SharpDX.Color.Red);
+                    }
+
                     this.value = value;
+
                     try
                     {
                         OnValueSelected(value);
