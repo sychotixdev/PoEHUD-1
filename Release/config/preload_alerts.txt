@@ -15,7 +15,7 @@ Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffff9966
 Metadata/Terrain/Labyrinth/Objects/LabyrinthDarkshrineHidden; Dark shrine; ff0080ff
 Metadata/Terrain/Labyrinth/Objects/SecretPassage; Secret Passage; ffffff00
 
-#lABYRINTH DANAGER CHEST
+#LABYRINTH DANAGER CHEST
 Metadata/Chests/Labyrinth/LabyrinthTreasureKey; Curious Lock Box; ff00ff00
 Metadata/Chests/Labyrinth/LabyrinthReward0Currency; Low Currency Chest; ffff99ff
 Metadata/Chests/Labyrinth/LabyrinthReward0CurrencyQuality; High Currency Chest; ffff00ff
