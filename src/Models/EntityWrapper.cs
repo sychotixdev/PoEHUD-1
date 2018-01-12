@@ -52,8 +52,8 @@ namespace PoeHUD.Models
         {
             get
             {
-                var p = GetComponent<Positioned>();
-                return new Vector3(p.X, p.Y, GetComponent<Render>().Z);
+                var p = GetComponent<Render>();
+                return new Vector3(p.X, p.Y, p.Z);
             }
         }
     
