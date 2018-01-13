@@ -193,7 +193,7 @@ namespace PoeHUD.Hud.PluginExtension
 
             foreach (var type in asmTypes)
             {
-                if (type.IsSubclassOf(typeof(BasePlugin)))
+                if (type.IsSubclassOf(typeof(BasePlugin)) && !type.IsAbstract)
                 {
                     var extPlugin = new ExternalPlugin(type, this, dir);
                     Plugins.Add(extPlugin.BPlugin);
