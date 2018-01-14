@@ -24,7 +24,7 @@ namespace PoeHUD.Hud.XpRate
         private double levelXpPenalty, partyXpPenalty;
         private bool holdKey;
         private readonly SettingsHub settingsHub;
-        private bool autoHide;
+        private bool autoHide = false;
 
         public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
@@ -57,19 +57,17 @@ namespace PoeHUD.Hud.XpRate
 
             try
             {
-                if (Settings.Enable.Value &&
-                    GameController.Game.IngameState.UIHover.Address != 0x00 &&
-                    GameController.Game.IngameState.UIHover.Tooltip.Address != 0x00 &&
-                    GameController.Game.IngameState.UIHover.Tooltip.IsVisible
-                    && GameController.Game.IngameState.UIHover.Tooltip.GetClientRect().Intersects(
-                        GameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect()))
+                var UIHover = GameController.Game.IngameState.UIHover;
+                var miniMap = GameController.Game.IngameState.IngameUi.Map.SmallMinimap;
+
+                if (Settings.Enable.Value && UIHover.Address != 0x00 && UIHover.Tooltip.Address != 0x00 &&
+                    UIHover.Tooltip.IsVisible && UIHover.Tooltip.GetClientRect().Intersects(miniMap.GetClientRect()))
                 {
                     autoHide = true;
                     Settings.Enable.Value = false;
                 }
-                if(autoHide && (GameController.Game.IngameState.UIHover.Address == 0x00 &&
-                    GameController.Game.IngameState.UIHover.Tooltip.Address == 0x00 &&
-                    !GameController.Game.IngameState.UIHover.Tooltip.IsVisible))
+                if(autoHide && (UIHover.Address == 0x00 || UIHover.Tooltip.Address == 0x00 ||
+                    !UIHover.Tooltip.IsVisible))
                 {
                     autoHide = false;
                     Settings.Enable.Value = true;

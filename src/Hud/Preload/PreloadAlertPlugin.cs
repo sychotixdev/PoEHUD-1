@@ -23,6 +23,7 @@ namespace PoeHUD.Hud.Preload
         private bool foundSpecificPerandusChest = false;
         private bool essencefound = false;
         private bool holdKey = false;
+        private bool autoHide = false;
         private bool isAreaChanged = false;
         public static Color AreaNameColor = new Color();
         private readonly SettingsHub settingsHub;
@@ -208,8 +209,23 @@ namespace PoeHUD.Hud.Preload
                 ResetArea();
                 Parse();
             }
-            
-            
+
+            var UIHover = GameController.Game.IngameState.UIHover;
+            var miniMap = GameController.Game.IngameState.IngameUi.Map.SmallMinimap;
+
+            if (Settings.Enable.Value && UIHover.Address != 0x00 && UIHover.Tooltip.Address != 0x00 &&
+                UIHover.Tooltip.IsVisible && UIHover.Tooltip.GetClientRect().Intersects(miniMap.GetClientRect()))
+            {
+                autoHide = true;
+                Settings.Enable.Value = false;
+            }
+            if (autoHide && (UIHover.Address == 0x00 || UIHover.Tooltip.Address == 0x00 ||
+                !UIHover.Tooltip.IsVisible))
+            {
+                autoHide = false;
+                Settings.Enable.Value = true;
+            }
+
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
                 holdKey = true;
