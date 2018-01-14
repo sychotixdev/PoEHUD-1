@@ -19,6 +19,7 @@ namespace PoeHUD.Poe
         public Element Parent => ReadObject<Element>(Address + 0xCC + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0xD4 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0xD8 + OffsetBuffers);
+        public Element Tooltip => ReadObject<Element>(Address + 0x104 + OffsetBuffers); //0x7F0
         public float Scale => M.ReadFloat(Address + 0x1D0 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x20C + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x210 + OffsetBuffers);

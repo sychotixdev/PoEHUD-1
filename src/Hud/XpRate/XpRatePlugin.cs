@@ -24,6 +24,7 @@ namespace PoeHUD.Hud.XpRate
         private double levelXpPenalty, partyXpPenalty;
         private bool holdKey;
         private readonly SettingsHub settingsHub;
+        private bool autoHide;
 
         public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
@@ -56,6 +57,23 @@ namespace PoeHUD.Hud.XpRate
 
             try
             {
+                if (Settings.Enable.Value &&
+                    GameController.Game.IngameState.UIHover.Address != 0x00 &&
+                    GameController.Game.IngameState.UIHover.Tooltip.Address != 0x00 &&
+                    GameController.Game.IngameState.UIHover.Tooltip.IsVisible
+                    && GameController.Game.IngameState.UIHover.Tooltip.GetClientRect().Intersects(
+                        GameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect()))
+                {
+                    autoHide = true;
+                    Settings.Enable.Value = false;
+                }
+                if(autoHide && (GameController.Game.IngameState.UIHover.Address == 0x00 &&
+                    GameController.Game.IngameState.UIHover.Tooltip.Address == 0x00 &&
+                    !GameController.Game.IngameState.UIHover.Tooltip.IsVisible))
+                {
+                    autoHide = false;
+                    Settings.Enable.Value = true;
+                }
                 if (!holdKey && WinApi.IsKeyDown(Keys.F10))
                 {
                     holdKey = true;
