@@ -13,7 +13,7 @@ Metadata/QuestObjects/Labyrinth/LabyrinthTrialPortal; Labyrinth Trial; ffff9966
 ##Metadata/Terrain/Labyrinth/Objects/GoldenChest; Golden Key Chest; ffffD700
 ##Metadata/Chests/Labyrinth/LabyrinthTrinketChest; Izaro Trinket; ffd2d2d2
 Metadata/Terrain/Labyrinth/Objects/LabyrinthDarkshrineHidden; Dark shrine; ff0080ff
-Metadata/Terrain/Labyrinth/Objects/SecretPassage; Secret Passage; ffffff00
+##Metadata/Terrain/Labyrinth/Objects/SecretPassage; Secret Passage; ffffff00
 
 #LABYRINTH DANAGER CHEST
 Metadata/Chests/Labyrinth/LabyrinthTreasureKey; Curious Lock Box; ff00ff00
@@ -41,6 +41,7 @@ Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique2; Silver Unique Chest 2; f
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverUnique3; Silver Unique Chest 3; ffd2742d
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverSkillGems; Silver Skill Gems; ff00ff00
 Metadata/Chests/Labyrinth/LabyrinthRewardSilverCorruptedVaal; Silver Corrupted Chest; ffff0000 
+Metadata/Chests/Labyrinth/LabyrinthRewardSilverJewelryJewelry; Silver Jewelry Chest; ff00ff00
 
 #Izaro Phases (Phase, How to get extra key)
 Metadata/Monsters/Labyrinth/IzaroPortalCold; Portals, Don't Kill; ff00ff00
