@@ -14,24 +14,11 @@ namespace PoeHUD.Poe.Elements
         private Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xB90)) : null;
         public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xB98)) : null;
         public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xBA0, 0xB78)) : null; // going extra inside.
-
+        public int IndexVisibleStash => M.ReadInt(Address+0xAB0,0xBD8);
         public Inventory VisibleStash => GetVisibleStash();
         private Inventory GetVisibleStash()
         {
-            Inventory ret = null;
-            for (int i = 0; i < TotalStashes; i++)
-
-            {
-                if (StashInventoryPanel.Children[i].ChildCount == 0)
-                    continue;
-                ret = StashInventoryPanel.Children[i].Children[0].Children[0].AsObject<Inventory>();
-
-                if (ret.InventoryUiElement.IsVisible)
-                {
-                    return ret;
-                }
-            }
-            return null;
+            return GetStashInventoryByIndex(IndexVisibleStash);
         }
 
         public List<string> AllStashNames => GetAllStashNames();
