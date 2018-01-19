@@ -5,6 +5,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private int level;
         private string name;
         private string rawName;
+        private string displayName;
 
         public int Value1 => M.ReadInt(Address, 0);
         public int Value2 => M.ReadInt(Address, 4);
@@ -31,6 +32,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
         }
 
+        public string DisplayName
+        {
+            get
+            {
+                if (rawName == null)
+                    ParseName();
+                return displayName;
+            }
+        }
+
         public int Level
         {
             get
@@ -43,7 +54,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private void ParseName()
         {
-            rawName = M.ReadStringU(M.ReadLong(Address + 0x20, 0));
+            long addr = M.ReadLong(Address + 0x20, 0);
+            rawName = M.ReadStringU(addr);
+            displayName = M.ReadStringU(addr + ((rawName.Length + 2)*2));
             name = rawName.Replace("_", ""); // Master Crafted mod can have underscore on the end, need to ignore
             int ixDigits = name.IndexOfAny("0123456789".ToCharArray());
             if (ixDigits < 0 || !int.TryParse(name.Substring(ixDigits), out level))
