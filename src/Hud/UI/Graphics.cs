@@ -176,11 +176,11 @@ namespace PoeHUD.Hud.UI
             }
         }
 
-        public void DrawPluginImage(string fileName, Vertexes.TexturedVertex[] data, Color color, float repeatX = 1f)
+        public void DrawPluginImage(string fileName, Vertexes.TexturedVertex[] data)
         {
             try
             {
-                textureRenderer.DrawImage(fileName, data, color, repeatX);
+                textureRenderer.DrawImage(fileName, data);
             }
             catch (Exception e)
             {
@@ -207,11 +207,11 @@ namespace PoeHUD.Hud.UI
             }
         }
 
-        public void DrawImage(string fileName, Vertexes.TexturedVertex[] data, Color color, float repeatX = 1f)
+        public void DrawImage(string fileName, Vertexes.TexturedVertex[] data)
         {
             try
             {
-                textureRenderer.DrawImage("textures/" + fileName, data, color, repeatX);
+                textureRenderer.DrawImage("textures/" + fileName, data);
             }
             catch (Exception e)
             {
@@ -229,6 +229,20 @@ namespace PoeHUD.Hud.UI
             catch (Exception e)
             {
                 MessageBox.Show($"Failed to load texture {fileName}: {e.Message}");
+                Environment.Exit(0);
+            }
+        }
+
+        public void DrawImage(byte[] bytes, RectangleF rectangle, Color color, string name)
+        {
+
+            try
+            {
+                textureRenderer.DrawImage(bytes, rectangle, color, name);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load texture from memory: {e.Message}");
                 Environment.Exit(0);
             }
         }
