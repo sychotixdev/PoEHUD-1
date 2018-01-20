@@ -93,6 +93,8 @@ namespace PoeHUD.Poe.FilesInMemory
             public TagsDat.TagRecord[] Tags; // Game refers to Tags.dat line
             public long Unknown8;//Unknown pointer
             public string UserFriendlyName;
+            public bool IsEssence;
+            public string Tier;
             // more fields can be added (see in visualGGPK)
 
             public ModRecord(Memory m, StatsDat sDat, TagsDat tagsDat, long addr)
@@ -147,6 +149,8 @@ namespace PoeHUD.Poe.FilesInMemory
                 {
                     TagChances[Tags[i].Key] = m.ReadInt(tc + 4 * i);
                 }
+                IsEssence = m.ReadByte(addr + 0x1AC) == 0x01;
+                Tier = m.ReadStringU(m.ReadLong(addr + 0x1C5));
             }
 
             private class LevelComparer : IComparer<ModRecord>
