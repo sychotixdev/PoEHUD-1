@@ -1,4 +1,7 @@
 ﻿using ImGuiNET;
+using PoeHUD.Controllers;
+using PoeHUD.Framework.InputHooks;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Hud.UI.Vertexes;
 using SharpDX;
 using SharpDX.Direct3D9;
@@ -6,12 +9,14 @@ using SharpDX.Mathematics.Interop;
 using SharpDX.Windows;
 using System;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.UI.Renderers
 {
     class ImGuiRender
     {
         private readonly Device device;
+        private readonly Action<MouseInfo> onMouseDown, onMouseUp, onMouseMove;
 
         public ImGuiRender(Device dev, RenderForm form)
         {
@@ -20,7 +25,19 @@ namespace PoeHUD.Hud.UI.Renderers
             io.FontAtlas.AddDefaultFont();
             UpdateCanvasSize(form.ClientSize.Width, form.ClientSize.Height);
             PrepareTextureImGui();
+            MenuPlugin.ExternalMouseClick += OnMouseEvent;
+            MouseHook.MouseWheel += OnMouseHookOnMouseWheel;
+            KeyboardHook.KeyDown += OnKeyboardHookOnKeyDown;
+            KeyboardHook.KeyUp += OnKeyboardHookOnKeyUp;
         }
+        public void Dispose()
+        {
+            MenuPlugin.ExternalMouseClick -= OnMouseEvent;
+            MouseHook.MouseWheel -= OnMouseHookOnMouseWheel;
+            KeyboardHook.KeyDown -= OnKeyboardHookOnKeyDown;
+            KeyboardHook.KeyUp -= OnKeyboardHookOnKeyUp;
+        }
+
         private unsafe static void memcpy(void* dst, void* src, int count)
         {
             const int blockSize = 4096;
@@ -64,16 +81,21 @@ namespace PoeHUD.Hud.UI.Renderers
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 500), Condition.Appearing);
             ImGui.SetNextWindowPos(new System.Numerics.Vector2(960 + 250,540 + 250), Condition.Appearing, new System.Numerics.Vector2(1, 1));
             ImGui.BeginWindow("Sample UI", WindowFlags.Default);
+            byte[] buffer = new byte[100];
+            ImGui.InputText("Testing", buffer, 100, InputTextFlags.Default, null);
             ImGui.EndWindow();
         }
         public void GetNewFrame()
         {
             ImGui.NewFrame();
         }
-
         public unsafe void Draw()
         {
             SampleUI();
+            DebugPlug.DebugPlugin.LogMsg("Left Mouse Clicked: " + ImGui.IsMouseClicked(0), 1);
+            DebugPlug.DebugPlugin.LogMsg("Left Mouse Double Clicked: " + ImGui.IsMouseDoubleClicked(0), 1);
+            DebugPlug.DebugPlugin.LogMsg("Left Mouse Down: " + ImGui.IsMouseDown(0), 1);
+            DebugPlug.DebugPlugin.LogMsg("Left Mouse Dragging: " + ImGui.IsMouseDragging(0, 100), 1);
             ImGui.Render();
             DrawData* data = ImGui.GetDrawData();
             ImGuiRenderDraw(data);
@@ -176,5 +198,157 @@ namespace PoeHUD.Hud.UI.Renderers
             st.Apply();
             st.Dispose();
         }
+
+        void OnMouseHookOnMouseWheel(MouseInfo info)
+        {
+            var upOrDown = 0f;
+            if (info.WheelDelta == 120)
+            {
+                upOrDown = 1;
+            }
+            else if (info.WheelDelta == 65416)
+            {
+                upOrDown = -1;
+            }
+            var delta = upOrDown;
+            ImGui.GetIO().MouseWheel = delta;
+        }
+        void OnKeyboardHookOnKeyDown(KeyInfo info)
+        {
+            var io = ImGui.GetIO();
+            unsafe
+            {
+                if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1 )
+                {
+                    KeyboardHook.Block = true;
+                    io.KeysDown[(int)info.Keys] = true;
+                }
+                else
+                    KeyboardHook.Block = false;
+            }
+        }
+        void OnKeyboardHookOnKeyUp(KeyInfo info)
+        {
+            var io = ImGui.GetIO();
+            unsafe
+            {
+                if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1   )
+                {
+                    KeyboardHook.Block = true;
+                    io.KeysDown[(int)info.Keys] = false;
+                    ImGui.AddInputCharacter((char)info.Keys);
+                }
+                else
+                    KeyboardHook.Block = false;
+            }
+        }
+        private void UpdateModifiers()
+        {
+            var io = ImGui.GetIO();
+            io.AltPressed = Control.ModifierKeys == Keys.Alt;
+            io.CtrlPressed = Control.ModifierKeys == Keys.Control;
+            io.ShiftPressed = Control.ModifierKeys == Keys.Shift;
+        }
+        private bool OnMouseEvent(MouseEventID id, Vector2 mousePosition)
+        {
+            var io = ImGui.GetIO();
+            io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
+
+            if (ImGui.IsAnyWindowHovered())
+            {
+                UpdateModifiers();
+                switch (id)
+                {
+                    case MouseEventID.LeftButtonDown:
+                        io.MouseDown[0] = true;
+                        return true;
+                    case MouseEventID.LeftButtonUp:
+                        io.MouseDown[0] = false;
+                        return true;
+                }
+            }
+            return false;
+        }
+        /*
+        private void UpdateImGuiInput()
+        {
+            var io = ImGui.GetIO();
+
+            if (_form.Visible)
+            {
+                var point = Control.MousePosition;
+                var windowPoint = GameController.Instance.Window.ScreenToClient(point.X, point.Y);
+                io.MousePosition = new System.Numerics.Vector2(windowPoint.X,
+                    windowPoint.Y);
+            }
+            else
+            {
+                io.MousePosition = new System.Numerics.Vector2(-1f, -1f);
+            }
+
+
+
+            UpdateModifiers();
+            //Mouse button for work with HUD.
+            io.MouseDown[0] = Form.MouseButtons == MouseButtons.Middle;
+            io.MouseDown[1] = Form.MouseButtons == MouseButtons.Right;
+            // io.MouseDown[2] = Form.MouseButtons == MouseButtons.Middle;
+
+
+        }*/
+
+        /*private bool OnMouseEvent(MouseEventID id, Vector2 position)
+        {
+
+            if (!Settings.Enable) return false;
+            Mouse_Pos = position;
+
+            if (id == MouseEventID.LeftButtonDown)
+            {
+                if (DrawRect.Contains(Mouse_Pos))
+                {
+                    bMouse_Drag = true;
+                    Mouse_StartDragPos = position;
+                    StartDragWinPosX = Settings.WindowPosX;
+                    StartDragWinPosY = Settings.WindowPosY;
+                }
+            }
+            else if (id == MouseEventID.LeftButtonUp)
+            {
+                bMouse_Drag = false;
+            }
+            else if (bMouse_Drag && id == MouseEventID.MouseMove)
+            {
+                Mouse_DragDelta = position - Mouse_StartDragPos;
+
+                Settings.WindowPosX = StartDragWinPosX + Mouse_DragDelta.X;
+                Settings.WindowPosY = StartDragWinPosY + Mouse_DragDelta.Y;
+
+                if (Settings.WindowPosX < 0)
+                    Settings.WindowPosX = 0;
+
+                if (Settings.WindowPosY < 0)
+                    Settings.WindowPosY = 0;
+
+                var clientRect = GameController.Window.GetWindowRectangle();
+
+                if (Settings.WindowPosX + WindowWidth > clientRect.Width)
+                    Settings.WindowPosX = clientRect.Width - WindowWidth;
+
+                if (Settings.WindowPosY + WindowHeight > clientRect.Height)
+                    Settings.WindowPosY = clientRect.Height - WindowHeight;
+            }
+
+
+            if (id != MouseEventID.LeftButtonUp && id != MouseEventID.LeftButtonDown) return false;
+
+            var hitWindow = DrawRect.Contains(position);
+
+            bMouse_Click = hitWindow && id == MouseEventID.LeftButtonUp;
+            if (bMouse_Click)
+                Mouse_ClickPos = position;
+
+            return hitWindow;
+        }*/
     }
 }

@@ -106,6 +106,7 @@ namespace PoeHUD.Hud.UI
                 direct3D.Dispose();
                 fontRenderer.Dispose();
                 textureRenderer.Dispose();
+                imguiRenderer.Dispose();
             }
         }
 

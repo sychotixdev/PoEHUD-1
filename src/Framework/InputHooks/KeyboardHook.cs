@@ -17,6 +17,7 @@ namespace PoeHUD.Framework.InputHooks
         private static HookProc hookProc;
         private static int handle;
         private static bool control, alt, shift;
+        public static bool Block = false;
 
         private static KeyInfo GetKeys(Keys keyData, bool specialValue)
         {
@@ -62,10 +63,20 @@ namespace PoeHUD.Framework.InputHooks
                     keyUp.SafeInvoke(keyInfo);
                 }
 
+                if (Block)
+                {
+                    return -1;
+                }
+
                 if (keyInfo != null && keyInfo.Handled)
                 {
                     return -1;
                 }
+            }
+
+            if (Block)
+            {
+                return -1;
             }
 
             return WinApi.CallNextHookEx(handle, nCode, wParam, lParam);
