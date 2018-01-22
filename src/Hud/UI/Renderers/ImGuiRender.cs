@@ -25,6 +25,7 @@ namespace PoeHUD.Hud.UI.Renderers
             io.FontAtlas.AddDefaultFont();
             UpdateCanvasSize(form.ClientSize.Width, form.ClientSize.Height);
             PrepareTextureImGui();
+            SetupKeyMapping(io);
             MenuPlugin.ExternalMouseClick += OnMouseEvent;
             MouseHook.MouseWheel += OnMouseHookOnMouseWheel;
             KeyboardHook.KeyDown += OnKeyboardHookOnKeyDown;
@@ -68,6 +69,28 @@ namespace PoeHUD.Hud.UI.Renderers
             t.UnlockRectangle(0);
             io.FontAtlas.SetTexID(t.NativePointer);
             io.FontAtlas.ClearTexData();
+        }
+        private void SetupKeyMapping(IO io)
+        {
+            io.KeyMap[GuiKey.Tab] = (int)Keys.Tab;
+            io.KeyMap[GuiKey.LeftArrow] = (int)Keys.Left;
+            io.KeyMap[GuiKey.RightArrow] = (int)Keys.Right;
+            io.KeyMap[GuiKey.UpArrow] = (int)Keys.Up;
+            io.KeyMap[GuiKey.DownArrow] = (int)Keys.Down;
+            io.KeyMap[GuiKey.PageUp] = (int)Keys.PageUp;
+            io.KeyMap[GuiKey.PageDown] = (int)Keys.PageDown;
+            io.KeyMap[GuiKey.Home] = (int)Keys.Home;
+            io.KeyMap[GuiKey.End] = (int)Keys.End;
+            io.KeyMap[GuiKey.Delete] = (int)Keys.Delete;
+            io.KeyMap[GuiKey.Backspace] = (int)Keys.Back;
+            io.KeyMap[GuiKey.Enter] = (int)Keys.Enter;
+            io.KeyMap[GuiKey.Escape] = (int)Keys.Escape;
+            io.KeyMap[GuiKey.A] = (int)Keys.A;
+            io.KeyMap[GuiKey.C] = (int)Keys.C;
+            io.KeyMap[GuiKey.V] = (int)Keys.V;
+            io.KeyMap[GuiKey.X] = (int)Keys.X;
+            io.KeyMap[GuiKey.Y] = (int)Keys.Y;
+            io.KeyMap[GuiKey.Z] = (int)Keys.Z;
         }
 
         public void UpdateCanvasSize(float width, float height)
@@ -256,7 +279,6 @@ namespace PoeHUD.Hud.UI.Renderers
 
             if (ImGui.IsAnyWindowHovered())
             {
-                UpdateModifiers();
                 switch (id)
                 {
                     case MouseEventID.LeftButtonDown:
