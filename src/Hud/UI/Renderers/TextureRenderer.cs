@@ -193,7 +193,15 @@ namespace PoeHUD.Hud.UI.Renderers
             sprite.Dispose();
             Flush();
         }
-
+        
+        public void DisponseTexture(string name)
+        {
+            if(textures.TryGetValue(name,out var texture))
+            {
+                textures.Remove(name);
+                texture.Dispose();
+            }
+        }
         private void DrawColoredVertices(PrimitiveType type, int count, ColoredVertex[] data)
         {
             using (var declaration = new VertexDeclaration(device, ColoredVertex.VertexElements))

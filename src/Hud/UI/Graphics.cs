@@ -246,5 +246,10 @@ namespace PoeHUD.Hud.UI
                 Environment.Exit(0);
             }
         }
+        
+        public void DisponseTexture(string name)
+        {
+            textureRenderer.DisponseTexture(name);
+        }
     }
 }
