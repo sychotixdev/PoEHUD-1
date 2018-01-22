@@ -99,26 +99,12 @@ namespace PoeHUD.Hud.UI.Renderers
             io.DisplaySize = new System.Numerics.Vector2(width, height);
             io.DisplayFramebufferScale = new System.Numerics.Vector2(width / height);
         }
-        public void SampleUI()
-        {
-            ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 500), Condition.Appearing);
-            ImGui.SetNextWindowPos(new System.Numerics.Vector2(960 + 250,540 + 250), Condition.Appearing, new System.Numerics.Vector2(1, 1));
-            ImGui.BeginWindow("Sample UI", WindowFlags.Default);
-            byte[] buffer = new byte[100];
-            ImGui.InputText("Testing", buffer, 100, InputTextFlags.Default, null);
-            ImGui.EndWindow();
-        }
         public void GetNewFrame()
         {
             ImGui.NewFrame();
         }
         public unsafe void Draw()
         {
-            SampleUI();
-            DebugPlug.DebugPlugin.LogMsg("Left Mouse Clicked: " + ImGui.IsMouseClicked(0), 1);
-            DebugPlug.DebugPlugin.LogMsg("Left Mouse Double Clicked: " + ImGui.IsMouseDoubleClicked(0), 1);
-            DebugPlug.DebugPlugin.LogMsg("Left Mouse Down: " + ImGui.IsMouseDown(0), 1);
-            DebugPlug.DebugPlugin.LogMsg("Left Mouse Dragging: " + ImGui.IsMouseDragging(0, 100), 1);
             ImGui.Render();
             DrawData* data = ImGui.GetDrawData();
             ImGuiRenderDraw(data);
