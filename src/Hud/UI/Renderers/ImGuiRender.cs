@@ -22,7 +22,12 @@ namespace PoeHUD.Hud.UI.Renderers
         {
             device = dev;
             IO io = ImGui.GetIO();
-            io.FontAtlas.AddDefaultFont();
+            io.FontAtlas.AddFontFromFileTTF("fonts\\Cousine-Regular.ttf", 15f);
+            io.FontAtlas.AddFontFromFileTTF("fonts\\DroidSans.ttf", 15f);
+            io.FontAtlas.AddFontFromFileTTF("fonts\\Karla-Regular.ttf", 15f);
+            io.FontAtlas.AddFontFromFileTTF("fonts\\ProggyClean.ttf", 15f);
+            io.FontAtlas.AddFontFromFileTTF("fonts\\ProggyTiny.ttf", 15f);
+            io.FontAtlas.AddFontFromFileTTF("fonts\\Roboto-Medium.ttf", 15f);
             UpdateCanvasSize(form.ClientSize.Width, form.ClientSize.Height);
             PrepareTextureImGui();
             SetupKeyMapping(io);
@@ -272,8 +277,14 @@ namespace PoeHUD.Hud.UI.Renderers
                         return true;
                     case MouseEventID.LeftButtonUp:
                         io.MouseDown[0] = false;
-                        return true;
+                        return false;
                 }
+            }
+            switch (id)
+            {
+                case MouseEventID.LeftButtonUp:
+                    io.MouseDown[0] = false;
+                    break;
             }
             return false;
         }
