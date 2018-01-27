@@ -293,6 +293,7 @@
     <Compile Include="Poe\Elements\InventoryElements\EssenceInventoryItem.cs" />
     <Compile Include="Poe\Elements\HPbarElement.cs" />
     <Compile Include="Poe\Elements\InventoryElements\CurrencyInventoryItem.cs" />
+    <Compile Include="Poe\Elements\InventoryElements\FragmentInventoryItem.cs" />
     <Compile Include="Poe\Elements\InventoryElements\NormalInventoryItem.cs" />
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
     <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
