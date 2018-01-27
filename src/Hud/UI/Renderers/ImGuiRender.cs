@@ -230,11 +230,15 @@ namespace PoeHUD.Hud.UI.Renderers
         void OnKeyboardHookOnKeyDown(KeyInfo info)
         {
             var io = ImGui.GetIO();
+
             unsafe
             {
                 if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1 )
                 {
                     KeyboardHook.Block = true;
+                    io.CtrlPressed = info.Control;
+                    io.AltPressed = info.Alt;
+                    io.ShiftPressed = info.Shift;
                     io.KeysDown[(int)info.Keys] = true;
                 }
                 else
@@ -249,20 +253,16 @@ namespace PoeHUD.Hud.UI.Renderers
                 if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1   )
                 {
                     KeyboardHook.Block = true;
+                    io.CtrlPressed = info.Control;
+                    io.AltPressed = info.Alt;
+                    io.ShiftPressed = info.Shift;
                     io.KeysDown[(int)info.Keys] = false;
-                    ImGui.AddInputCharacter((char)info.Keys);
                 }
                 else
                     KeyboardHook.Block = false;
             }
         }
-        private void UpdateModifiers()
-        {
-            var io = ImGui.GetIO();
-            io.AltPressed = Control.ModifierKeys == Keys.Alt;
-            io.CtrlPressed = Control.ModifierKeys == Keys.Control;
-            io.ShiftPressed = Control.ModifierKeys == Keys.Shift;
-        }
+
         private bool OnMouseEvent(MouseEventID id, Vector2 mousePosition)
         {
             var io = ImGui.GetIO();
@@ -288,86 +288,5 @@ namespace PoeHUD.Hud.UI.Renderers
             }
             return false;
         }
-        /*
-        private void UpdateImGuiInput()
-        {
-            var io = ImGui.GetIO();
-
-            if (_form.Visible)
-            {
-                var point = Control.MousePosition;
-                var windowPoint = GameController.Instance.Window.ScreenToClient(point.X, point.Y);
-                io.MousePosition = new System.Numerics.Vector2(windowPoint.X,
-                    windowPoint.Y);
-            }
-            else
-            {
-                io.MousePosition = new System.Numerics.Vector2(-1f, -1f);
-            }
-
-
-
-            UpdateModifiers();
-            //Mouse button for work with HUD.
-            io.MouseDown[0] = Form.MouseButtons == MouseButtons.Middle;
-            io.MouseDown[1] = Form.MouseButtons == MouseButtons.Right;
-            // io.MouseDown[2] = Form.MouseButtons == MouseButtons.Middle;
-
-
-        }*/
-
-        /*private bool OnMouseEvent(MouseEventID id, Vector2 position)
-        {
-
-            if (!Settings.Enable) return false;
-            Mouse_Pos = position;
-
-            if (id == MouseEventID.LeftButtonDown)
-            {
-                if (DrawRect.Contains(Mouse_Pos))
-                {
-                    bMouse_Drag = true;
-                    Mouse_StartDragPos = position;
-                    StartDragWinPosX = Settings.WindowPosX;
-                    StartDragWinPosY = Settings.WindowPosY;
-                }
-            }
-            else if (id == MouseEventID.LeftButtonUp)
-            {
-                bMouse_Drag = false;
-            }
-            else if (bMouse_Drag && id == MouseEventID.MouseMove)
-            {
-                Mouse_DragDelta = position - Mouse_StartDragPos;
-
-                Settings.WindowPosX = StartDragWinPosX + Mouse_DragDelta.X;
-                Settings.WindowPosY = StartDragWinPosY + Mouse_DragDelta.Y;
-
-                if (Settings.WindowPosX < 0)
-                    Settings.WindowPosX = 0;
-
-                if (Settings.WindowPosY < 0)
-                    Settings.WindowPosY = 0;
-
-                var clientRect = GameController.Window.GetWindowRectangle();
-
-                if (Settings.WindowPosX + WindowWidth > clientRect.Width)
-                    Settings.WindowPosX = clientRect.Width - WindowWidth;
-
-                if (Settings.WindowPosY + WindowHeight > clientRect.Height)
-                    Settings.WindowPosY = clientRect.Height - WindowHeight;
-            }
-
-
-            if (id != MouseEventID.LeftButtonUp && id != MouseEventID.LeftButtonDown) return false;
-
-            var hitWindow = DrawRect.Contains(position);
-
-            bMouse_Click = hitWindow && id == MouseEventID.LeftButtonUp;
-            if (bMouse_Click)
-                Mouse_ClickPos = position;
-
-            return hitWindow;
-        }*/
     }
 }
