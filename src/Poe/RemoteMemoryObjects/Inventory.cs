@@ -25,6 +25,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return InventoryType.EssenceStash;
                 case 0x36:
                     return InventoryType.CurrencyStash;
+                case 0x1C:
+                    return InventoryType.FragmentStash;
                 case 0x05:
                     if (this.AsObject<Element>().Parent.Children[0].ChildCount == 9)
                         return InventoryType.MapStash;
@@ -52,6 +54,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return this.AsObject<Element>();
                 case InventoryType.CurrencyStash:
                 case InventoryType.EssenceStash:
+                case InventoryType.FragmentStash:
                     return this.AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
                     return GetObject<Element>(M.ReadLong(Address + Element.OffsetBuffers + 0x24, 0x08));
@@ -97,6 +100,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                         {
                             if (item.ChildCount > 0)
                                 list.Add(item.Children[0].AsObject<EssenceInventoryItem>());
+                        }
+                        break;
+                    case InventoryType.FragmentStash:
+                        foreach (var item in InvRoot.Children)
+                        {
+                            if (item.ChildCount > 0)
+                                list.Add(item.Children[0].AsObject<FragmentInventoryItem>());
                         }
                         break;
                     case InventoryType.DivinationStash:
