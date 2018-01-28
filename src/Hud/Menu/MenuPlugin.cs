@@ -105,9 +105,6 @@ namespace PoeHUD.Hud.Menu
         // For ImGui Only
         private void KeyboardMouseEvents_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
             var io = ImGui.GetIO();
             unsafe
             {
@@ -120,36 +117,34 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_KeyUp(object sender, KeyEventArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
-
             var io = ImGui.GetIO();
+            io.CtrlPressed = false;
+            io.AltPressed = false;
+            io.ShiftPressed = false;
             unsafe
             {
                 if (io.GetNativePointer()->WantTextInput == 1)
                 {
-                    io.CtrlPressed = e.Control;
-                    io.AltPressed = e.Alt;
-                    io.ShiftPressed = e.Shift;
                     io.KeysDown[e.KeyValue] = false;
                 }
             }
         }
         private void KeyboardMouseEvents_KeyDown1(object sender, KeyEventArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
             var io = ImGui.GetIO();
+            io.CtrlPressed = e.Control || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey;
+            io.AltPressed = e.Alt || e.KeyCode == Keys.Alt;
+            io.ShiftPressed = e.Shift || e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey;
             unsafe
             {
                 if (io.GetNativePointer()->WantTextInput == 1)
                 {
-                    io.CtrlPressed = e.Control;
-                    io.AltPressed = e.Alt;
-                    io.ShiftPressed = e.Shift;
                     io.KeysDown[e.KeyValue] = true;
+                    if(e.KeyCode != Keys.Capital &&
+                        e.KeyCode != Keys.LShiftKey && e.KeyCode != Keys.RShiftKey &&
+                        e.KeyCode != Keys.LControlKey && e.KeyCode != Keys.RControlKey &&
+                        e.KeyCode != Keys.Alt)
+                        e.Handled = true;
                 }
             }
         }
@@ -172,9 +167,6 @@ namespace PoeHUD.Hud.Menu
 
         private void KeyboardMouseEvents_MouseUpExt(object sender, MouseEventExtArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
             var io = ImGui.GetIO();
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
             io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
@@ -199,9 +191,6 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_MouseDownExt1(object sender, MouseEventExtArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
             var io = ImGui.GetIO();
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
             io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
@@ -235,9 +224,6 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!GameController.Window.IsForeground())
-                return;
-
             var io = ImGui.GetIO();
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
             io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
