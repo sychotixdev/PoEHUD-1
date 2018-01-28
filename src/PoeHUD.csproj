@@ -132,6 +132,9 @@
       <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PoeFilterParser, Version=1.0.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PoeFilterParser.1.0.18\lib\net46\PoeFilterParser.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>packages\SharpDX.4.0.1\lib\net45\SharpDX.dll</HintPath>
       <Private>True</Private>
@@ -419,13 +422,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="poehud.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="PoeFilterParser\PoeFilterParser.csproj">
-      <Project>{8f5d7d56-7a81-433a-b358-ab297a136183}</Project>
-      <Name>PoeFilterParser</Name>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
