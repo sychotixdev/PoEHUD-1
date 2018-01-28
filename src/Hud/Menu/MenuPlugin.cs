@@ -64,6 +64,11 @@ namespace PoeHUD.Hud.Menu
             {
                 if (Settings.Enable)
                     MenuRootButton.Render(Graphics, Settings);
+
+                bool tmp = Settings.ShowImGuiSample.Value;
+                if (Settings.ShowImGuiSample.Value)
+                    ImGuiNative.igShowDemoWindow(ref tmp);
+                Settings.ShowImGuiSample.Value = tmp;
             }
             catch (Exception e)
             {
@@ -624,6 +629,7 @@ namespace PoeHUD.Hud.Menu
 
             //Menu Settings
             MenuItem menuSettings = AddChild(CoreMenu, "Menu settings", settingsHub.MenuSettings.ShowMenu, "F12");
+            AddChild(menuSettings, "Show ImGui Sample", settingsHub.MenuSettings.ShowImGuiSample);
             AddChild(menuSettings, "Menu font color", settingsHub.MenuSettings.MenuFontColor);
             AddChild(menuSettings, "Title font color", settingsHub.MenuSettings.TitleFontColor);
             AddChild(menuSettings, "Enabled color", settingsHub.MenuSettings.EnabledBoxColor);
