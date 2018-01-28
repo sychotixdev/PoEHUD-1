@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PoeHUD.Framework;
 using System.Collections.Generic;
+using Gma.System.MouseKeyHook;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -70,11 +71,12 @@ namespace PoeHUD.Hud.Menu
         }
 
          
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
-            if (id == MouseEventID.LeftButtonDown)
+            if (e.Button == MouseButtons.Left)
             {
                 bKeysScan = true;
+                e.Handled = true;
             }
         }
 

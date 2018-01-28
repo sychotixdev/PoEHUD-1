@@ -1,9 +1,11 @@
-﻿using PoeHUD.Framework.Helpers;
+﻿using Gma.System.MouseKeyHook;
+using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -31,36 +33,31 @@ namespace PoeHUD.Hud.Menu
             item.Bounds = new RectangleF(x, y, item.Bounds.Width, item.Bounds.Height);
         }
 
-        public bool OnMouseEvent(MouseEventID id, Vector2 pos)
+        public bool OnMouseEvent(MouseEventExtArgs e, Vector2 mousePos)
         {
-            if (currentHover != null && currentHover.TestHit(pos))
+            if(currentHover != null && currentHover.TestHit(mousePos))
             {
-                currentHover.OnEvent(id, pos);
-                return id != MouseEventID.MouseMove;
+                currentHover.OnMouseEvent(e, mousePos);
+                return e.Button != MouseButtons.None;
             }
 
-            if (id == MouseEventID.MouseMove)
+            if(Bounds.Contains(mousePos) && e.Button == MouseButtons.Left)
             {
-                MenuItem button = Children.FirstOrDefault(b => b.TestHit(pos));
-                if (button != null)
-                {
-                    currentHover?.SetHovered(false);
-                    currentHover = button;
-                    button.SetHovered(true);
-                }
-                return false;
-            }
-
-            if (Bounds.Contains(pos) && id == MouseEventID.LeftButtonDown)
-            {
-                CloseRootMenu();
+                ToggleRootMenu();
                 return true;
             }
 
+            MenuItem button = Children.FirstOrDefault(b => b.TestHit(mousePos));
+            if(button != null)
+            {
+                currentHover?.SetHovered(false);
+                currentHover = button;
+                button.SetHovered(true);
+            }
             return false;
         }
 
-        public void CloseRootMenu()
+        public void ToggleRootMenu()
         {
             visible = !visible;
             if (!visible) eOnClose();
@@ -76,7 +73,7 @@ namespace PoeHUD.Hud.Menu
             Children.ForEach(x => x.Render(graphics, settings));
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
         }
     }

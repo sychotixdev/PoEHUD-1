@@ -1,5 +1,6 @@
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
+using PoeHUD.Framework.Tools;
 using PoeHUD.Hud;
 using PoeHUD.Poe;
 using System;
@@ -9,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PoeHUD.Framework.Tools;
 
 namespace PoeHUD
 {
@@ -28,7 +28,6 @@ namespace PoeHUD
             offs = null;
             return 0;
         }
-
         private static int chooseSingleProcess(List<Tuple<Process, Offsets>> clients)
         {
             String o1 = $"Yes - process #{clients[0].Item1.Id}, started at {clients[0].Item1.StartTime.ToLongTimeString()}";
@@ -38,7 +37,6 @@ namespace PoeHUD
                 "Choose a PoE instance to attach to", MessageBoxButtons.YesNoCancel);
             return answer == DialogResult.Cancel ? -1 : answer == DialogResult.Yes ? 0 : 1;
         }
-
 
         [STAThread]
         public static void Main(string[] args)
@@ -50,7 +48,7 @@ namespace PoeHUD
                 MessageBox.Show(errorText);
                 Environment.Exit(1);
             };
-
+            #region DEBUG
 #if !DEBUG
             MemoryControl.Start();
             if (Scrambler.Scramble(args.Length > 0 ? args[0] : null))
@@ -58,7 +56,7 @@ namespace PoeHUD
                 return;
             }
 #endif
-
+            #endregion
             Offsets offs;
             int pid = FindPoeProcess(out offs);
 
@@ -74,7 +72,7 @@ namespace PoeHUD
             {
                 offs.DoPatternScans(memory);
                 var gameController = new GameController(memory);
-
+                #region DEBUG
 #if DEBUG
                 StringBuilder sb = new StringBuilder();
 
@@ -125,9 +123,7 @@ namespace PoeHUD
 
                 File.WriteAllText("__BaseOffsets.txt", sb.ToString());
 #endif
-
-
-
+                #endregion
                 var overlay = new ExternalOverlay(gameController, memory.IsInvalid);
                 Application.Run(overlay);
             }

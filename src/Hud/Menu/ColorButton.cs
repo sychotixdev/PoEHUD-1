@@ -1,8 +1,10 @@
-﻿using PoeHUD.Hud.Settings;
+﻿using Gma.System.MouseKeyHook;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ColorGdi = System.Drawing.Color;
 
 namespace PoeHUD.Hud.Menu
@@ -34,9 +36,9 @@ namespace PoeHUD.Hud.Menu
             graphics.DrawImage("menu-colors.png", colorBox, node.Value);
         }
 
-        protected override async void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override async void HandleEvent(MouseEventExtArgs e)
         {
-            if (id == MouseEventID.LeftButtonDown)
+            if (e.Button == MouseButtons.Left)
             {
                 var colorDialog = new CustomColorDialog(GetColorGdi(node));
                 await Task.Run(() =>
