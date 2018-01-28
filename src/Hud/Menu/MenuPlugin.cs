@@ -71,6 +71,18 @@ namespace PoeHUD.Hud.Menu
             }
         }
 
+        private bool ImGuiWantCaptureMouse(IO io)
+        {
+            unsafe
+            {
+                return io.GetNativePointer()->WantCaptureMouse == 1;
+            }
+        }
+        private bool PoeIsHoveringItem()
+        {
+            return GameController.Game.IngameState.UIHover.Address != 0x00;
+        }
+
         #region KeyboardMouseHandler
         private void KeyboardMouseEvents_KeyDown(object sender, KeyEventArgs e)
         {
@@ -151,7 +163,8 @@ namespace PoeHUD.Hud.Menu
 
         private void KeyboardMouseEvents_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
-            if (ImGui.IsAnyWindowHovered())
+            var io = ImGui.GetIO();
+            if (ImGuiWantCaptureMouse(io))
             {
                 if (e.Delta == 120)
                 {
@@ -188,6 +201,13 @@ namespace PoeHUD.Hud.Menu
                     io.MouseDown[4] = false;
                     break;
             }
+            unsafe
+            {
+                if (ImGuiWantCaptureMouse(io) && PoeIsHoveringItem())
+                {
+                    e.Handled = true;
+                }
+            }
         }
         private void KeyboardMouseEvents_MouseDownExt1(object sender, MouseEventExtArgs e)
         {
@@ -195,7 +215,7 @@ namespace PoeHUD.Hud.Menu
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
             io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
 
-            if (ImGui.IsAnyWindowHovered())
+            if (ImGuiWantCaptureMouse(io))
             {
                 switch (e.Button)
                 {
