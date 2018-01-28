@@ -1,5 +1,4 @@
 ﻿using PoeHUD.Framework.Enums;
-using PoeHUD.Framework.InputHooks;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -92,12 +91,6 @@ namespace PoeHUD.Framework
 
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true)]
         public static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        public static extern int SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        public static extern int UnhookWindowsHookEx(int idHook);
 
         [DllImport("user32.dll")]
         private static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);

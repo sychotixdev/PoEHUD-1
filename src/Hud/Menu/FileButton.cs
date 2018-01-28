@@ -1,4 +1,5 @@
-﻿using PoeHUD.Hud.Settings;
+﻿using Gma.System.MouseKeyHook;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
@@ -41,9 +42,9 @@ namespace PoeHUD.Hud.Menu
             graphics.DrawImage(string.IsNullOrEmpty(path) ? "openFile.png" : "done.png", rectangle);
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
-            if (id == MouseEventID.LeftButtonDown)
+            if (e.Button == MouseButtons.Left)
             {
                 Thread thread = new Thread(() =>
                 {
