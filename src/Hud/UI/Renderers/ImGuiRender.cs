@@ -1,6 +1,6 @@
 ﻿using ImGuiNET;
 using PoeHUD.Controllers;
-using PoeHUD.Framework.InputHooks;
+using PoeHUD.Framework;
 using PoeHUD.Hud.Menu;
 using PoeHUD.Hud.UI.Vertexes;
 using SharpDX;
@@ -16,7 +16,6 @@ namespace PoeHUD.Hud.UI.Renderers
     class ImGuiRender
     {
         private readonly Device device;
-        private readonly Action<MouseInfo> onMouseDown, onMouseUp, onMouseMove;
 
         public ImGuiRender(Device dev, RenderForm form)
         {
@@ -31,17 +30,9 @@ namespace PoeHUD.Hud.UI.Renderers
             UpdateCanvasSize(form.ClientSize.Width, form.ClientSize.Height);
             PrepareTextureImGui();
             SetupKeyMapping(io);
-            MenuPlugin.ExternalMouseClick += OnMouseEvent;
-            MouseHook.MouseWheel += OnMouseHookOnMouseWheel;
-            KeyboardHook.KeyDown += OnKeyboardHookOnKeyDown;
-            KeyboardHook.KeyUp += OnKeyboardHookOnKeyUp;
         }
         public void Dispose()
         {
-            MenuPlugin.ExternalMouseClick -= OnMouseEvent;
-            MouseHook.MouseWheel -= OnMouseHookOnMouseWheel;
-            KeyboardHook.KeyDown -= OnKeyboardHookOnKeyDown;
-            KeyboardHook.KeyUp -= OnKeyboardHookOnKeyUp;
         }
 
         private unsafe static void memcpy(void* dst, void* src, int count)
@@ -211,82 +202,6 @@ namespace PoeHUD.Hud.UI.Renderers
             }
             st.Apply();
             st.Dispose();
-        }
-
-        void OnMouseHookOnMouseWheel(MouseInfo info)
-        {
-            var upOrDown = 0f;
-            if (info.WheelDelta == 120)
-            {
-                upOrDown = 1;
-            }
-            else if (info.WheelDelta == 65416)
-            {
-                upOrDown = -1;
-            }
-            var delta = upOrDown;
-            ImGui.GetIO().MouseWheel = delta;
-        }
-        void OnKeyboardHookOnKeyDown(KeyInfo info)
-        {
-            var io = ImGui.GetIO();
-
-            unsafe
-            {
-                if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1 )
-                {
-                    KeyboardHook.Block = true;
-                    io.CtrlPressed = info.Control;
-                    io.AltPressed = info.Alt;
-                    io.ShiftPressed = info.Shift;
-                    io.KeysDown[(int)info.Keys] = true;
-                }
-                else
-                    KeyboardHook.Block = false;
-            }
-        }
-        void OnKeyboardHookOnKeyUp(KeyInfo info)
-        {
-            var io = ImGui.GetIO();
-            unsafe
-            {
-                if (io.GetNativePointer()->WantTextInput == 1) //|| io.GetNativePointer()->WantCaptureKeyboard == 1   )
-                {
-                    KeyboardHook.Block = true;
-                    io.CtrlPressed = info.Control;
-                    io.AltPressed = info.Alt;
-                    io.ShiftPressed = info.Shift;
-                    io.KeysDown[(int)info.Keys] = false;
-                }
-                else
-                    KeyboardHook.Block = false;
-            }
-        }
-
-        private bool OnMouseEvent(MouseEventID id, Vector2 mousePosition)
-        {
-            var io = ImGui.GetIO();
-            io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
-
-            if (ImGui.IsAnyWindowHovered())
-            {
-                switch (id)
-                {
-                    case MouseEventID.LeftButtonDown:
-                        io.MouseDown[0] = true;
-                        return true;
-                    case MouseEventID.LeftButtonUp:
-                        io.MouseDown[0] = false;
-                        return false;
-                }
-            }
-            switch (id)
-            {
-                case MouseEventID.LeftButtonUp:
-                    io.MouseDown[0] = false;
-                    break;
-            }
-            return false;
         }
     }
 }

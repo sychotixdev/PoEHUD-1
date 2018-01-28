@@ -1,8 +1,10 @@
+using Gma.System.MouseKeyHook;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -10,7 +12,6 @@ namespace PoeHUD.Hud.Menu
     {
         private readonly string name;
         private readonly RangeNode<T> node;
-        private bool isHolding;
 
         public Picker(string name, RangeNode<T> node)
         {
@@ -34,31 +35,17 @@ namespace PoeHUD.Hud.Menu
             graphics.DrawImage("menu-picker.png", new RectangleF(Bounds.X + 5 + sliderPosition - 2, Bounds.Y + 3 * Bounds.Height / 4 + 2, 4, 4));
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
-            switch (id)
-            {
-                case MouseEventID.LeftButtonDown:
-                    isHolding = true;
-                    break;
+            if (e.Button != MouseButtons.Left)
+                return;
 
-                case MouseEventID.LeftButtonUp:
-                    CalcValue(pos.X);
-                    isHolding = false;
-                    break;
-
-                default:
-                    if (isHolding && id == MouseEventID.MouseMove)
-                    {
-                        CalcValue(pos.X);
-                    }
-                    break;
-            }
+            CalcValue(e.X);
         }
 
         protected override bool TestBounds(Vector2 pos)
         {
-            return isHolding || base.TestBounds(pos);
+            return base.TestBounds(pos);
         }
 
         private void CalcValue(float x)

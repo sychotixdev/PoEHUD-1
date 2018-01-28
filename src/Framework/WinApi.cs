@@ -1,5 +1,4 @@
 ﻿using PoeHUD.Framework.Enums;
-using PoeHUD.Framework.InputHooks;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -38,6 +37,11 @@ namespace PoeHUD.Framework
         public static bool IsKeyDown(Keys key)
         {
             return (GetAsyncKeyState(key) & 0x8000) != 0;
+        }
+
+        public static bool CapsLockStatus()
+        {
+            return GetKeyState(Keys.CapsLock) != 0;
         }
 
         public static IntPtr OpenProcess(Process process, ProcessAccessFlags flags)
@@ -93,12 +97,6 @@ namespace PoeHUD.Framework
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true)]
         public static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        public static extern int SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        public static extern int UnhookWindowsHookEx(int idHook);
-
         [DllImport("user32.dll")]
         private static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
 
@@ -107,6 +105,9 @@ namespace PoeHUD.Framework
 
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
+
+        [DllImport("user32.dll")]
+        private static extern short GetKeyState(Keys vKey);
 
         [DllImport("user32.dll")]
         private static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
