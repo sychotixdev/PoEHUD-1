@@ -1,14 +1,7 @@
-
-Branch Information
-======
-This branch serves as the transition platform to develoment and intergrate IMGUI (a more modern and widely use 2d rendering backbone) into the core of HUD.
-
-This branch should not be considered a stable/mainstream version of PoeHUD, and thus support will not be offered if users face issues while attempting to use it as such.
-
 PoeHud
 ======
 
-Though it has been a while, people still have gotten banned from using this program, as It is against the TOS of Path of Exile.  Use at your own risk!
+Though it has been a while (happened in [Talisman](https://pathofexile.gamepedia.com/Talisman_league) league), people still have gotten banned from using this program, as It is against the TOS of Path of Exile.  Use at your own risk!
 
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.

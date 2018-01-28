@@ -39,11 +39,6 @@ namespace PoeHUD.Framework
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
 
-        public static bool CapsLockStatus()
-        {
-            return GetKeyState(Keys.CapsLock) != 0;
-        }
-
         public static IntPtr OpenProcess(Process process, ProcessAccessFlags flags)
         {
             return OpenProcess(flags, false, process.Id);
@@ -105,9 +100,6 @@ namespace PoeHUD.Framework
 
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
-
-        [DllImport("user32.dll")]
-        private static extern short GetKeyState(Keys vKey);
 
         [DllImport("user32.dll")]
         private static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
