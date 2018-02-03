@@ -23,6 +23,7 @@ namespace PoeHUD.Hud.Menu
         private readonly SettingsHub settingsHub;
         private bool holdKey;
 
+        private bool isPoeGameVisible => (GameController.Window.IsForeground() || settingsHub.PerformanceSettings.AlwaysForeground);
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub) : base(gameController, graphics, settingsHub.MenuSettings)
         {
@@ -80,7 +81,7 @@ namespace PoeHUD.Hud.Menu
         {
             unsafe
             {
-                return io.GetNativePointer()->WantCaptureMouse == 1;
+                return io.GetNativePointer()->WantCaptureMouse == 1 && isPoeGameVisible;
             }
         }
         private bool PoeIsHoveringItem()
@@ -91,7 +92,7 @@ namespace PoeHUD.Hud.Menu
         #region KeyboardMouseHandler
         private void KeyboardMouseEvents_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!GameController.Window.IsForeground())
+            if (!isPoeGameVisible)
                 return;
 
             switch (e.KeyCode)
@@ -104,7 +105,7 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
         {
-            if (GameController.Window.IsForeground() && Settings.Enable.Value)
+            if (isPoeGameVisible && Settings.Enable.Value)
             {
                 Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
                 e.Handled = MenuRootButton.OnMouseEvent(e, mousePosition);
@@ -112,7 +113,7 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_MouseMoveExt(object sender, MouseEventExtArgs e)
         {
-            if (GameController.Window.IsForeground() && Settings.Enable.Value)
+            if (isPoeGameVisible && Settings.Enable.Value)
             {
                 Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
                 MenuRootButton.OnMouseEvent(e, mousePosition);
