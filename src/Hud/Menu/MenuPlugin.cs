@@ -84,6 +84,13 @@ namespace PoeHUD.Hud.Menu
                 return io.GetNativePointer()->WantCaptureMouse == 1 && isPoeGameVisible;
             }
         }
+        private bool ImGuiWantTextInput(IO io)
+        {
+            unsafe
+            {
+                return io.GetNativePointer()->WantTextInput == 1 && isPoeGameVisible;
+            }
+        }
         private bool PoeIsHoveringItem()
         {
             return GameController.Game.IngameState.UIHover.Address != 0x00;
@@ -124,9 +131,13 @@ namespace PoeHUD.Hud.Menu
         private void KeyboardMouseEvents_KeyPress(object sender, KeyPressEventArgs e)
         {
             var io = ImGui.GetIO();
+
+            if (io.AltPressed)
+                return;
+
             unsafe
             {
-                if (io.GetNativePointer()->WantTextInput == 1)
+                if (ImGuiWantTextInput(io))
                 {
                     ImGui.AddInputCharacter(e.KeyChar);
                     e.Handled = true;
@@ -139,29 +150,28 @@ namespace PoeHUD.Hud.Menu
             io.CtrlPressed = false;
             io.AltPressed = false;
             io.ShiftPressed = false;
-            unsafe
-            {
-                if (io.GetNativePointer()->WantTextInput == 1)
-                {
-                    io.KeysDown[e.KeyValue] = false;
-                }
-            }
+            io.KeysDown[e.KeyValue] = false;
         }
         private void KeyboardMouseEvents_KeyDown1(object sender, KeyEventArgs e)
         {
             var io = ImGui.GetIO();
             io.CtrlPressed = e.Control || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey;
-            io.AltPressed = e.Alt || e.KeyCode == Keys.Alt;
+            // Don't know why but Alt is LMenu/RMenu
+            io.AltPressed = e.Alt || e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu;
             io.ShiftPressed = e.Shift || e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey;
+
+            if (io.AltPressed)
+                return;
+
             unsafe
             {
-                if (io.GetNativePointer()->WantTextInput == 1)
+                if (ImGuiWantTextInput(io))
                 {
                     io.KeysDown[e.KeyValue] = true;
                     if(e.KeyCode != Keys.Capital &&
                         e.KeyCode != Keys.LShiftKey && e.KeyCode != Keys.RShiftKey &&
                         e.KeyCode != Keys.LControlKey && e.KeyCode != Keys.RControlKey &&
-                        e.KeyCode != Keys.Alt)
+                        e.KeyCode != Keys.LWin && e.KeyCode != Keys.Apps)
                         e.Handled = true;
                 }
             }
