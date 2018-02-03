@@ -136,13 +136,13 @@ namespace PoeHUD.Hud.Menu
             IsVisible = visible;
             if (!visible)
             {
-                Children.ForEach(x => x.SetVisible(false));
+                Children.ToList().ForEach(x => x.SetVisible(false));
             }
         }
 
         public bool TestHit(Vector2 pos)
         {
-            return IsVisible && (TestBounds(pos) || Children.Any(current => current.TestHit(pos)));
+            return IsVisible && (TestBounds(pos) || Children.ToList().Any(current => current.TestHit(pos)));//Children.ToList() - fixed bug "collection was changed during iteration"
         }
 
         protected abstract void HandleEvent(MouseEventID id, Vector2 pos);
