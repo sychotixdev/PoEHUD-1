@@ -1,6 +1,7 @@
 ﻿using PoeHUD.Hud.UI;
 using PoeHUD.Models.Enums;
 using SharpDX;
+using PoeHUD.Hud.UI.Vertexes;
 
 namespace PoeHUD.Hud
 {
@@ -46,6 +47,11 @@ namespace PoeHUD.Hud
         public void DrawPluginImage(Graphics graphics, RectangleF rectangle)
         {
             graphics.DrawPluginImage(fileName, rectangle, color);
+        }
+
+        public void DrawPluginImage(Graphics graphics, TexturedVertex[] data)
+        {
+            graphics.DrawPluginImage(fileName, data);
         }
 
         public string FileName
