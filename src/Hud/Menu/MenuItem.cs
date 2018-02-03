@@ -3,6 +3,7 @@ using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
 using PoeHUD.Controllers;
+using Gma.System.MouseKeyHook;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -50,52 +51,39 @@ namespace PoeHUD.Hud.Menu
             }
         }
 
-        public void OnEvent(MouseEventID id, Vector2 pos)
+        public void OnMouseEvent(MouseEventExtArgs e, Vector2 mousePos)
         {
-            MousePos = pos;
-            if (id == MouseEventID.MouseMove)
+            MousePos = mousePos;
+            if (TestBounds(mousePos))
             {
-                if (TestBounds(pos))
-                {
-                    HandleEvent(id, pos);
-                    if (currentHover != null)
-                    {
-                        currentHover.SetHovered(false);
-                        currentHover = null;
-                    }
-                
-                    return;
-                }
-
+                HandleEvent(e);
                 if (currentHover != null)
                 {
-                    if (currentHover.TestHit(pos))
-                    {
-                        currentHover.OnEvent(id, pos);
-                        return;
-                    }
                     currentHover.SetHovered(false);
+                    currentHover = null;
                 }
-                MenuItem childAt = Children.FirstOrDefault(current => current.TestHit(pos));
-                if (childAt != null)
+                return;
+            }
+
+            if (currentHover != null)
+            {
+                if (currentHover.TestHit(mousePos))
                 {
-                    childAt.SetHovered(true);
-                    currentHover = childAt;
+                    currentHover.OnMouseEvent(e, mousePos);
                     return;
                 }
-                currentHover = null;
+                currentHover.SetHovered(false);
             }
-            else
+
+            MenuItem childAt = Children.FirstOrDefault(current => current.TestHit(mousePos));
+            if (childAt != null)
             {
-                if (TestBounds(pos))
-                {
-                    HandleEvent(id, pos);
-                }
-                else
-                {
-                    currentHover?.OnEvent(id, pos);
-                }
+                childAt.SetHovered(true);
+                currentHover = childAt;
+                return;
             }
+            currentHover = null;
+
         }
 
         public virtual void Render(Graphics graphics, MenuSettings settings)
@@ -117,20 +105,17 @@ namespace PoeHUD.Hud.Menu
                 graphics.DrawText(TooltipText, 20, tooltipRect.TopLeft + new Vector2(5, 0));
             }
         }
-
         public virtual void SetHovered(bool hover)
         {
             CheckHoverBounds(hover);
             Children.ForEach(x => x.SetVisible(hover));
         }
-
         protected void CheckHoverBounds(bool hover)
         {  
             var bounds = Bounds;
             bounds.Width = hover ? DesiredWidth + 10 : DesiredWidth;
             Bounds = bounds;
         }
-
         public void SetVisible(bool visible)
         {
             IsVisible = visible;
@@ -139,14 +124,11 @@ namespace PoeHUD.Hud.Menu
                 Children.ToList().ForEach(x => x.SetVisible(false));
             }
         }
-
         public bool TestHit(Vector2 pos)
         {
             return IsVisible && (TestBounds(pos) || Children.ToList().Any(current => current.TestHit(pos)));//Children.ToList() - fixed bug "collection was changed during iteration"
         }
-
-        protected abstract void HandleEvent(MouseEventID id, Vector2 pos);
-
+        protected abstract void HandleEvent(MouseEventExtArgs e);
         protected virtual bool TestBounds(Vector2 pos)
         {
             return Bounds.Contains(pos);

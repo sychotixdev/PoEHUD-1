@@ -1,4 +1,5 @@
-﻿using PoeHUD.Hud.UI;
+﻿using Gma.System.MouseKeyHook;
+using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 using System;
@@ -45,7 +46,7 @@ namespace PoeHUD.Hud.Menu
             Children.ForEach(x => x.Render(graphics, settings));
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
 
         }

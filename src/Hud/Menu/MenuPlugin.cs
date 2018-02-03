@@ -1,9 +1,10 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using Gma.System.MouseKeyHook;
+using ImGuiNET;
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
-using PoeHUD.Framework.InputHooks;
 using PoeHUD.Hud.Health;
 using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Settings;
@@ -15,108 +16,298 @@ namespace PoeHUD.Hud.Menu
     public class MenuPlugin : Plugin<MenuSettings>
     {
         public static RootButton MenuRootButton;
+        //For spawning the menu in external plugins
+        public static event Action<RootButton> eInitMenu = delegate { };
 
-        // Use this event if you want your mouse clicks to be handled by poehud and does not passed to the game {Stridemann}
-        public static Func<MouseEventID, Vector2, bool> ExternalMouseClick = delegate { return false; };
-
-        // Use this event if you want your mouse clicks to be handled by poehud and passed to the game {Stridemann}
-        public static Action<MouseEventID, Vector2> eMouseEvent = delegate { };
-
-        private readonly Action<MouseInfo> onMouseDown,
-                                           onMouseUp,
-                                           onMouseMove;
-
+        public static IKeyboardMouseEvents KeyboardMouseEvents;
         private readonly SettingsHub settingsHub;
         private bool holdKey;
 
+        private bool isPoeGameVisible => (GameController.Window.IsForeground() || settingsHub.PerformanceSettings.AlwaysForeground);
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub) : base(gameController, graphics, settingsHub.MenuSettings)
         {
             this.settingsHub = settingsHub;
             CreateMenu();
-            MouseHook.MouseDown += onMouseDown = info => info.Handled = OnMouseEvent(MouseEventID.LeftButtonDown, info.Position);
-            MouseHook.MouseUp += onMouseUp = info => info.Handled = OnMouseEvent(MouseEventID.LeftButtonUp, info.Position);
-            MouseHook.MouseMove += onMouseMove = info => info.Handled = OnMouseEvent(MouseEventID.MouseMove, info.Position);
-        }
+            KeyboardMouseEvents = Hook.GlobalEvents();
+            KeyboardMouseEvents.KeyDown += KeyboardMouseEvents_KeyDown;
+            KeyboardMouseEvents.MouseMoveExt += KeyboardMouseEvents_MouseMoveExt;
+            KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt;
 
-        public static event Action<RootButton> eInitMenu = delegate { }; //For spawning the menu in external plugins
+            // For ImGui
+            KeyboardMouseEvents.MouseWheelExt += KeyboardMouseEvents_MouseWheelExt;
+            KeyboardMouseEvents.KeyDown += KeyboardMouseEvents_KeyDown1;
+            KeyboardMouseEvents.KeyUp += KeyboardMouseEvents_KeyUp;
+            KeyboardMouseEvents.KeyPress += KeyboardMouseEvents_KeyPress;
+            KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt1;
+            KeyboardMouseEvents.MouseUpExt += KeyboardMouseEvents_MouseUpExt;
+            KeyboardMouseEvents.MouseMove += KeyboardMouseEvents_MouseMove;
+        }
 
         public override void Dispose()
         {
-            MouseHook.MouseDown -= onMouseDown;
-            MouseHook.MouseUp -= onMouseUp;
-            MouseHook.MouseMove -= onMouseMove;
+            KeyboardMouseEvents.MouseWheelExt -= KeyboardMouseEvents_MouseWheelExt;
+            KeyboardMouseEvents.KeyDown -= KeyboardMouseEvents_KeyDown1;
+            KeyboardMouseEvents.KeyUp -= KeyboardMouseEvents_KeyUp;
+            KeyboardMouseEvents.KeyPress -= KeyboardMouseEvents_KeyPress;
+            KeyboardMouseEvents.MouseDownExt -= KeyboardMouseEvents_MouseDownExt1;
+            KeyboardMouseEvents.MouseUpExt -= KeyboardMouseEvents_MouseUpExt;
+
+            KeyboardMouseEvents.KeyDown -= KeyboardMouseEvents_KeyDown;
+            KeyboardMouseEvents.MouseMoveExt -= KeyboardMouseEvents_MouseMoveExt;
+            KeyboardMouseEvents.MouseDownExt -= KeyboardMouseEvents_MouseDownExt;
+            KeyboardMouseEvents.Dispose();
         }
 
         public override void Render()
         {
             try
             {
-                if (!holdKey && WinApi.IsKeyDown(Keys.F12))
-                {
-                    holdKey = true;
+                if (Settings.Enable)
+                    MenuRootButton.Render(Graphics, Settings);
+
+                bool tmp = Settings.ShowImGuiSample.Value;
+                if (Settings.ShowImGuiSample.Value)
+                    ImGuiNative.igShowDemoWindow(ref tmp);
+                Settings.ShowImGuiSample.Value = tmp;
+            }
+            catch (Exception e)
+            {
+                DebugPlug.DebugPlugin.LogMsg("Error Rendering Root Menu Button " + e.Message, 1);
+            }
+        }
+
+        private bool ImGuiWantCaptureMouse(IO io)
+        {
+            unsafe
+            {
+                return io.GetNativePointer()->WantCaptureMouse == 1 && isPoeGameVisible;
+            }
+        }
+        private bool ImGuiWantTextInput(IO io)
+        {
+            unsafe
+            {
+                return io.GetNativePointer()->WantTextInput == 1 && isPoeGameVisible;
+            }
+        }
+        private bool PoeIsHoveringItem()
+        {
+            return GameController.Game.IngameState.UIHover.Address != 0x00;
+        }
+
+        #region KeyboardMouseHandler
+        private void KeyboardMouseEvents_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!isPoeGameVisible)
+                return;
+
+            switch (e.KeyCode)
+            {
+                case Keys.F12:
                     Settings.Enable.Value = !Settings.Enable.Value;
                     SettingsHub.Save(settingsHub);
-                }
-                else if (holdKey && !WinApi.IsKeyDown(Keys.F12))
-                    holdKey = false;
-
-                if (Settings.Enable) MenuRootButton.Render(Graphics, Settings);
-            }
-            catch
-            {
-                // do nothing
+                    break;
             }
         }
-
-        public static MenuItem AddChild(MenuItem parent, string text, ToggleNode node, string key = null, Func<MenuItem, bool> hide = null)
+        private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
         {
-            ToggleButton item = new ToggleButton(parent, text, node, key, hide);
-            parent.AddChild(item);
-            return item;
+            if (isPoeGameVisible && Settings.Enable.Value)
+            {
+                Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+                e.Handled = MenuRootButton.OnMouseEvent(e, mousePosition);
+            }
+        }
+        private void KeyboardMouseEvents_MouseMoveExt(object sender, MouseEventExtArgs e)
+        {
+            if (isPoeGameVisible && Settings.Enable.Value)
+            {
+                Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+                MenuRootButton.OnMouseEvent(e, mousePosition);
+            }
         }
 
+        // For ImGui Only
+        private void KeyboardMouseEvents_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var io = ImGui.GetIO();
+
+            if (io.AltPressed)
+                return;
+
+            unsafe
+            {
+                if (ImGuiWantTextInput(io))
+                {
+                    ImGui.AddInputCharacter(e.KeyChar);
+                    e.Handled = true;
+                }
+            }
+        }
+        private void KeyboardMouseEvents_KeyUp(object sender, KeyEventArgs e)
+        {
+            var io = ImGui.GetIO();
+            io.CtrlPressed = false;
+            io.AltPressed = false;
+            io.ShiftPressed = false;
+            io.KeysDown[e.KeyValue] = false;
+        }
+        private void KeyboardMouseEvents_KeyDown1(object sender, KeyEventArgs e)
+        {
+            var io = ImGui.GetIO();
+            io.CtrlPressed = e.Control || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey;
+            // Don't know why but Alt is LMenu/RMenu
+            io.AltPressed = e.Alt || e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu;
+            io.ShiftPressed = e.Shift || e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey;
+
+            if (io.AltPressed)
+                return;
+
+            unsafe
+            {
+                if (ImGuiWantTextInput(io))
+                {
+                    io.KeysDown[e.KeyValue] = true;
+                    if(e.KeyCode != Keys.Capital &&
+                        e.KeyCode != Keys.LShiftKey && e.KeyCode != Keys.RShiftKey &&
+                        e.KeyCode != Keys.LControlKey && e.KeyCode != Keys.RControlKey &&
+                        e.KeyCode != Keys.LWin && e.KeyCode != Keys.Apps)
+                        e.Handled = true;
+                }
+            }
+        }
+
+        private void KeyboardMouseEvents_MouseWheelExt(object sender, MouseEventExtArgs e)
+        {
+            var io = ImGui.GetIO();
+            if (ImGuiWantCaptureMouse(io))
+            {
+                if (e.Delta == 120)
+                {
+                    ImGui.GetIO().MouseWheel = 1;
+                }
+                else if (e.Delta == -120)
+                {
+                    ImGui.GetIO().MouseWheel = -1;
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void KeyboardMouseEvents_MouseUpExt(object sender, MouseEventExtArgs e)
+        {
+            var io = ImGui.GetIO();
+            Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+            io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    io.MouseDown[0] = false;
+                    break;
+                case MouseButtons.Right:
+                    io.MouseDown[1] = false;
+                    break;
+                case MouseButtons.Middle:
+                    io.MouseDown[2] = false;
+                    break;
+                case MouseButtons.XButton1:
+                    io.MouseDown[3] = false;
+                    break;
+                case MouseButtons.XButton2:
+                    io.MouseDown[4] = false;
+                    break;
+            }
+            unsafe
+            {
+                if (ImGuiWantCaptureMouse(io) && PoeIsHoveringItem())
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+        private void KeyboardMouseEvents_MouseDownExt1(object sender, MouseEventExtArgs e)
+        {
+            var io = ImGui.GetIO();
+            Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+            io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
+
+            if (ImGuiWantCaptureMouse(io))
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        io.MouseDown[0] = true;
+                        e.Handled = true;
+                        break;
+                    case MouseButtons.Right:
+                        io.MouseDown[1] = true;
+                        e.Handled = true;
+                        break;
+                    case MouseButtons.Middle:
+                        io.MouseDown[2] = true;
+                        e.Handled = true;
+                        break;
+                    case MouseButtons.XButton1:
+                        io.MouseDown[3] = true;
+                        e.Handled = true;
+                        break;
+                    case MouseButtons.XButton2:
+                        io.MouseDown[4] = true;
+                        e.Handled = true;
+                        break;
+                }
+            }
+        }
+        private void KeyboardMouseEvents_MouseMove(object sender, MouseEventArgs e)
+        {
+            var io = ImGui.GetIO();
+            Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+            io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
+        }
+        #endregion
+
+        #region MenuHelperFunction
+        public static void AddChild(MenuItem parent, FileNode path)
+        {
+            FileButton item = new FileButton(path);
+            parent.AddChild(item);
+        }
         public static MenuItem AddChild(MenuItem parent, string text)
         {
             SimpleMenu item = new SimpleMenu(parent, text);
             parent.AddChild(item);
             return item;
         }
-
-        public static void AddChild(MenuItem parent, FileNode path)
-        {
-            FileButton item = new FileButton(path);
-            parent.AddChild(item);
-        }
-
         public static MenuItem AddChild(MenuItem parent, string text, ColorNode node)
         {
             ColorButton item = new ColorButton(text, node);
             parent.AddChild(item);
             return item;
         }
-
-        public static MenuItem AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
-        {
-            Picker<T> item = new Picker<T>(text, node);
-            parent.AddChild(item);
-            return item;
-        }
-
         public static MenuItem AddChild(MenuItem parent, string text, HotkeyNode node)
         {
             HotkeyButton item = new HotkeyButton(text, node);
             parent.AddChild(item);
             return item;
         }
-
         public static MenuItem AddChild(MenuItem parent, string text, ButtonNode node)
         {
             ButtonButton item = new ButtonButton(text, node);
             parent.AddChild(item);
             return item;
         }
-
+        public static MenuItem AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
+        {
+            Picker<T> item = new Picker<T>(text, node);
+            parent.AddChild(item);
+            return item;
+        }
+        public static MenuItem AddChild(MenuItem parent, string text, ToggleNode node, string key = null, Func<MenuItem, bool> hide = null)
+        {
+            ToggleButton item = new ToggleButton(parent, text, node, key, hide);
+            parent.AddChild(item);
+            return item;
+        }
         public static ListButton AddChild(MenuItem parent, string text, ListNode node)
         {
             ListButton item = new ListButton(text, node);
@@ -125,6 +316,7 @@ namespace PoeHUD.Hud.Menu
             node.SettingsListButton = item;
             return item;
         }
+        #endregion
 
         private void CreateMenu()
         {
@@ -448,6 +640,7 @@ namespace PoeHUD.Hud.Menu
 
             //Menu Settings
             MenuItem menuSettings = AddChild(CoreMenu, "Menu settings", settingsHub.MenuSettings.ShowMenu, "F12");
+            AddChild(menuSettings, "Show ImGui Sample", settingsHub.MenuSettings.ShowImGuiSample);
             AddChild(menuSettings, "Menu font color", settingsHub.MenuSettings.MenuFontColor);
             AddChild(menuSettings, "Title font color", settingsHub.MenuSettings.TitleFontColor);
             AddChild(menuSettings, "Enabled color", settingsHub.MenuSettings.EnabledBoxColor);
@@ -466,25 +659,6 @@ namespace PoeHUD.Hud.Menu
             AddChild(performanceSettings, "Update ingame state every N ms", settingsHub.PerformanceSettings.UpdateIngemeStateLimit);
             AddChild(performanceSettings, "Always Foreground", settingsHub.PerformanceSettings.AlwaysForeground);
             eInitMenu(MenuRootButton); //Spawning the menu in external plugins
-        }
-
-        private bool OnMouseEvent(MouseEventID id, Point position)
-        {
-            Vector2 mousePosition = Vector2.Zero;
-            bool result = false;
-            if (GameController.Window.IsForeground())
-            {
-                mousePosition = GameController.Window.ScreenToClient(position.X, position.Y);
-                eMouseEvent(id, mousePosition);
-                if (Settings.Enable)
-                {
-                    //I dunno how to handle this in plugins. Seems there is only this way {Stridemann}
-                    result = ExternalMouseClick(id, mousePosition);
-                    return MenuRootButton.OnMouseEvent(id, mousePosition) || result;
-                }
-            }
-
-            return result;
         }
     }
 }

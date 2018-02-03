@@ -9,6 +9,7 @@
         CurrencyStash,
         EssenceStash,
         DivinationStash,
-        MapStash
+        MapStash,
+        FragmentStash
     }
 }

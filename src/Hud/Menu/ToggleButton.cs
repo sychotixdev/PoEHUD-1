@@ -1,3 +1,4 @@
+using Gma.System.MouseKeyHook;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
@@ -5,6 +6,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -62,12 +64,10 @@ namespace PoeHUD.Hud.Menu
          
         }
 
-        protected override void HandleEvent(MouseEventID id, Vector2 pos)
+        protected override void HandleEvent(MouseEventExtArgs e)
         {
-            if (id == MouseEventID.LeftButtonDown)
-            {
+            if (e.Button == MouseButtons.Left)
                 node.Value = !node.Value;
-            }
         }
 
         public override void SetHovered(bool hover)

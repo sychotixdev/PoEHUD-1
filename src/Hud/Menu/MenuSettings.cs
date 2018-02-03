@@ -10,6 +10,7 @@ namespace PoeHUD.Hud.Menu
             Enable = true;
             X = 10; Y = 85;
             ShowMenu = true;
+            ShowImGuiSample = false;
             TitleName = "≡";
             TitleFontColor = new ColorBGRA(255, 0, 0, 255);
             EnabledBoxColor = new ColorBGRA(128, 128, 128, 255);
@@ -26,6 +27,7 @@ namespace PoeHUD.Hud.Menu
         public float X { get; set; }
         public float Y { get; set; }
         public ToggleNode ShowMenu { get; set; }
+        public ToggleNode ShowImGuiSample { get; set; }
         public ColorNode TitleFontColor { get; set; }
         public ColorNode EnabledBoxColor { get; set; }
         public ColorNode DisabledBoxColor { get; set; }
