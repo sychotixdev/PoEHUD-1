@@ -59,7 +59,7 @@ git submodule update --init --recursive
 ```
 
 ### Requirements
-
+* Require Microsoft C++ Redistributable
 * .NET framerwork v.4.6 or newer (you already have it on Windows 8+)
 * Windows Vista or newer (XP won't work)
 * Path of Exile should be running in Windowed or Windowed Fullscreen mode (the pure Fullscreen mode does not let PoeHUD draw anything over the game window)
