@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace PoeHUD.Poe.Components
 {
@@ -10,6 +11,8 @@ namespace PoeHUD.Poe.Components
         ///     Maybe Bit-field : Bit 7 set = running
         /// </summary>
         public int ActionId => Address != 0 ? M.ReadInt(Address + 0xD8) : 1;
+
+        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xD8) : ActionFlags.None;
 
         public bool isMoving => (ActionId & 128) > 0;
 
@@ -54,6 +57,18 @@ namespace PoeHUD.Poe.Components
                 }
             }
             return false;
+        }
+
+        [Flags]
+        public enum ActionFlags
+        {
+            None = 0,
+            UsingAbility = 2,
+            AbilityCooldownActive = 16,
+            Dead = 64,
+            Moving = 128,
+            WashedUpState = 256,
+            LocalPlayer = 2048
         }
     }
 }
