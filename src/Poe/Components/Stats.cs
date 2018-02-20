@@ -9,6 +9,8 @@ namespace PoeHUD.Poe.Components
         public long statPtrStart => M.ReadLong(Address + 0x50);
         public long statPtrEnd => M.ReadLong(Address + 0x58);
 
+        public Dictionary<PlayerStats, int> StatDictionary => GetStats();
+
         //Stats goes as sequence of 2 values, 4 byte each. First goes stat ID then goes stat value
         public Dictionary<PlayerStats, int> GetStats()
         {
