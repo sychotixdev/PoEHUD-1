@@ -20,7 +20,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
         public WorldArea Translate(string areaId)
         {
-            if(WorldAreaDictionary.Count == 0)
+            if (WorldAreaDictionary.Count == 0)
             {
                 ReloadCache();
                 DebugPlug.DebugPlugin.LogMsg("Debug (Temporary): Reloading WorldAreas.dat cache", 10);
@@ -36,7 +36,6 @@ namespace PoeHUD.Poe.FilesInMemory
         //If the game pointer got changed we can call this to update cache, just WorldAreas should be updated
         public void ReloadCache()
         {
-            int counter = 0;
             WorldAreaDictionary.Clear();
 
             foreach (long addr in RecordAddresses())
