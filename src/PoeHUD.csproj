@@ -303,6 +303,8 @@
     <Compile Include="Poe\Elements\StashElement.cs" />
     <Compile Include="Poe\FileInMemory.cs" />
     <Compile Include="Poe\FilesInMemory\ItemClasses.cs" />
+    <Compile Include="Poe\FilesInMemory\LabyrinthTrials.cs" />
+    <Compile Include="Poe\FilesInMemory\PassiveSkills.cs" />
     <Compile Include="Poe\FilesInMemory\StatsDat.cs" />
     <Compile Include="Poe\FilesInMemory\ModsDat.cs" />
     <Compile Include="Framework\ColorUtils.cs" />

@@ -14,6 +14,8 @@ namespace PoeHUD.Controllers
         public readonly StatsDat Stats;
         public readonly TagsDat Tags;
         public readonly WorldAreas WorldAreas;
+        public readonly PassiveSkills PassiveSkills;
+        public readonly LabyrinthTrials LabyrinthTrials;
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
         //private bool isLoaded;
@@ -28,6 +30,8 @@ namespace PoeHUD.Controllers
             Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
             Mods = new ModsDat(mem, FindFile("Data/Mods.dat"), Stats, Tags);
             WorldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat"));
+            PassiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat"));
+            LabyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
         }
             
         public Dictionary<string, long> GetAllFiles()
