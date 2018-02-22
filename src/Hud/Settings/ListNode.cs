@@ -48,9 +48,9 @@ namespace PoeHUD.Hud.Settings
                     {
                         OnValueSelected(value);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: ListNode.OnValueSelected", 10, SharpDX.Color.Red);
+                        DebugPlug.DebugPlugin.LogMsg($"Error in function that subscribed for: ListNode.OnValueSelected. Error: {ex.Message}", 10, SharpDX.Color.Red);
                     }
                 }
             }
