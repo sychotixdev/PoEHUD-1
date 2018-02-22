@@ -130,28 +130,31 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-        public List<SocketedGem> GetSocketedGems()
+        public List<SocketedGem> SocketedGems
         {
-            var rezult = new List<SocketedGem>();
-
-            var startAddress = Address + 0x30;
-
-            for (int i = 0; i < 6; i++)
+            get
             {
-                var objAddress = M.ReadLong(startAddress);
+                var rezult = new List<SocketedGem>();
 
-                if(objAddress != 0)
+                var startAddress = Address + 0x30;
+
+                for (int i = 0; i < 6; i++)
                 {
-                    rezult.Add(new SocketedGem()
-                    {
-                        SocketIndex = i,
-                        GemEntity = ReadObject<Entity>(startAddress)
-                    });
-                }
-                startAddress += 8;
-            }
+                    var objAddress = M.ReadLong(startAddress);
 
-            return rezult;
+                    if (objAddress != 0)
+                    {
+                        rezult.Add(new SocketedGem()
+                        {
+                            SocketIndex = i,
+                            GemEntity = ReadObject<Entity>(startAddress)
+                        });
+                    }
+                    startAddress += 8;
+                }
+
+                return rezult;
+            }
         }
 
         public class SocketedGem

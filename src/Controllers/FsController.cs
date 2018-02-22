@@ -13,6 +13,7 @@ namespace PoeHUD.Controllers
         public readonly ModsDat Mods;
         public readonly StatsDat Stats;
         public readonly TagsDat Tags;
+        public readonly WorldAreas WorldAreas;
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
         //private bool isLoaded;
@@ -26,6 +27,7 @@ namespace PoeHUD.Controllers
             Tags = new TagsDat(mem, FindFile("Data/Tags.dat"));
             Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
             Mods = new ModsDat(mem, FindFile("Data/Mods.dat"), Stats, Tags);
+            WorldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat"));
         }
             
         public Dictionary<string, long> GetAllFiles()

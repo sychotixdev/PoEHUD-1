@@ -341,6 +341,7 @@
     <Compile Include="Poe\Components\ObjectMagicProperties.cs" />
     <Compile Include="Poe\FilesInMemory\TagsDat.cs" />
     <Compile Include="Models\Interfaces\IEntity.cs" />
+    <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />
     <Compile Include="Poe\Offsets.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Poe\Components\Player.cs" />
