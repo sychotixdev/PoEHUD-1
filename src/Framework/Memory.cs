@@ -178,6 +178,23 @@ namespace PoeHUD.Framework
             return ReadBytes(addr, 1).FirstOrDefault();
         }
 
+        public byte ReadByte(long addr, params long[] offsets)
+        {
+            //Simple for better then LINQ for often operation
+            long num = ReadLong(addr);
+            long result = num;
+            for (var index = 0; index < offsets.Length; index++)
+            {
+                var offset = offsets[index];
+
+                if(index < offsets.Length - 1)
+                    result = ReadLong(result + offset);
+                else
+                    result = ReadByte(result + offset);
+            }
+            return (byte)result;
+        }
+
         public byte[] ReadBytes(long addr, int length)
         {
             return ReadMem(addr, length);
