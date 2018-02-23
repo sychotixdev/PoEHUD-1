@@ -73,9 +73,18 @@ namespace PoeHUD.Poe.FilesInMemory
             public int AreaLevel { get; private set; }
             public int WorldAreaId { get; private set; }
 
+            public bool IsAtlasMap { get; private set; }
+            public bool IsMapWorlds { get; private set; }
+            public bool IsCorruptedArea { get; private set; }
+            public bool IsMissionArea { get; private set; }
+            public bool IsDailyArea { get; private set; }
+            public bool IsMapTrialArea { get; private set; }
+            public bool IsLabyrinthArea { get; private set; }
+            public bool IsAbyssArea { get; private set; }
+
+
             private int ConnectionsCount;
             private long ConnectionsPointer;
-
             private int CorruptedAreasCount;
             private long CorruptedAreasPtr;
             
@@ -110,6 +119,19 @@ namespace PoeHUD.Poe.FilesInMemory
 
                 CorruptedAreasCount = m.ReadInt(Address + 0xfb);
                 CorruptedAreasPtr = m.ReadLong(Address + 0x103);
+
+                IsAtlasMap = Id.StartsWith("MapAtlas");
+                IsMapWorlds = Id.StartsWith("MapWorlds");
+                IsCorruptedArea = Id.Contains("SideArea");
+                IsMissionArea = Id.Contains("Mission");
+                IsDailyArea = Id.Contains("Daily");
+                IsMapTrialArea = Id.StartsWith("EndGame_Labyrinth_trials");
+                IsLabyrinthArea = !IsMapTrialArea && Id.Contains("Labyrinth");
+                IsAbyssArea =   Id.Equals("AbyssLeague") ||
+                                Id.Equals("AbyssLeague2") ||
+                                Id.Equals("AbyssLeagueBoss") ||
+                                Id.Equals("AbyssLeagueBoss2") ||
+                                Id.Equals("AbyssLeagueBoss3");
             }
 
             private List<WorldArea> connections;
