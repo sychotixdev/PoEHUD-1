@@ -18,13 +18,9 @@ namespace PoeHUD.Poe.FilesInMemory
         {
         }
 
-        public WorldArea Translate(string areaId)
+        public WorldArea GetAreaById(string areaId)
         {
-            if (WorldAreaDictionary.Count == 0)
-            {
-                ReloadCache();
-                DebugPlug.DebugPlugin.LogMsg("Debug (Temporary): Reloading WorldAreas.dat cache", 10);
-            }
+            CheckCache();
 
             WorldArea result;
             if (WorldAreaDictionary.TryGetValue(areaId, out result))
@@ -32,15 +28,33 @@ namespace PoeHUD.Poe.FilesInMemory
 
             return result;
         }
-
-        //If the game pointer got changed we can call this to update cache, just WorldAreas should be updated
-        public void ReloadCache()
+        public WorldArea GetAreaByIndex(int index)
         {
-            WorldAreaDictionary.Clear();
+            CheckCache();
 
+            var result = WorldAreaDictionary.Values.ToList().Find(x => x.Index == index);
+            result?.ReadData();
+            return result;
+        }
+
+        public WorldArea GetAreaByAddress(long address)
+        {
+            CheckCache();
+
+            var result = WorldAreaDictionary.Values.ToList().Find(x => x.Address == address);
+            result?.ReadData();
+            return result;
+        }
+        
+        public void CheckCache()
+        {
+            if (WorldAreaDictionary.Count != 0)
+                return;
+
+            var indexCounter = 0;
             foreach (long addr in RecordAddresses())
             {
-                var r = new WorldArea(M, addr);
+                var r = new WorldArea(M, addr, indexCounter++);
                 if (!WorldAreaDictionary.ContainsKey(r.Id))
                     WorldAreaDictionary.Add(r.Id, r);
             }
@@ -50,6 +64,7 @@ namespace PoeHUD.Poe.FilesInMemory
         public class WorldArea
         { 
             public readonly string Id;
+            public readonly int Index;
             public long Address { get; private set; }
             public string Name { get; private set; }
             public int Act { get; private set; }
@@ -64,14 +79,19 @@ namespace PoeHUD.Poe.FilesInMemory
             private int CorruptedAreasCount;
             private long CorruptedAreasPtr;
             
-            public WorldArea(Memory m, long addr)
+            public WorldArea(Memory m, long addr, int index)
             {
                 Address = addr;
+                Index = index;
                 Id = m.ReadStringU(m.ReadLong(Address), 255);
             }
 
+            private bool IsInitialized;
             internal void ReadData()
             {
+                if (IsInitialized) return;
+                IsInitialized = true;
+
                 var m = GameController.Instance.Memory;
 
                 Name = m.ReadStringU(m.ReadLong(Address + 8), 255);
@@ -105,9 +125,8 @@ namespace PoeHUD.Poe.FilesInMemory
                         var addr = ConnectionsPointer;
                         for (int i = 0; i < ConnectionsCount; i++)
                         {
-                            var newAres = new WorldArea(m, m.ReadLong(addr));
-                            newAres.ReadData();
-                            connections.Add(newAres);
+                            var newArea = GameController.Instance.Files.WorldAreas.GetAreaByAddress(m.ReadLong(addr));
+                            connections.Add(newArea);
                             addr += 8;
                         }
                     }
@@ -129,9 +148,8 @@ namespace PoeHUD.Poe.FilesInMemory
                         var addr = CorruptedAreasPtr;
                         for (int i = 0; i < CorruptedAreasCount; i++)
                         {
-                            var newAres = new WorldArea(m, m.ReadLong(addr));
-                            newAres.ReadData();
-                            corruptedAreas.Add(newAres);
+                            var newArea = GameController.Instance.Files.WorldAreas.GetAreaByAddress(m.ReadLong(addr));
+                            corruptedAreas.Add(newArea);
                             addr += 8;
                         }
                     }

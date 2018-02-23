@@ -26,7 +26,7 @@ namespace PoeHUD.Poe.FilesInMemory
             foreach (long addr in RecordAddresses())
             {
                 var r = new LabyrinthTrialWrapper(M, addr, idCounter);
-                LabyrinthTrialsDictionary.Add(r.Id, r);
+                LabyrinthTrialsDictionary.Add(r.Index, r);
                 idCounter++;
             }
         }
@@ -41,7 +41,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
         public class LabyrinthTrialWrapper
         {
-            public readonly int Id;
+            public readonly int Index;
             public long Address { get; private set; }
 
             public WorldAreas.WorldArea area;
@@ -51,9 +51,8 @@ namespace PoeHUD.Poe.FilesInMemory
                 {
                     if(area == null)
                     {
-                        var m = GameController.Instance.Memory;
-                        var areaPtr = m.ReadLong(Address + 0x8);
-                        area = new WorldAreas.WorldArea(m, areaPtr);
+                        var areaPtr = GameController.Instance.Memory.ReadLong(Address + 0x8);
+                        area = GameController.Instance.Files.WorldAreas.GetAreaByAddress(areaPtr);
                         area.ReadData();
                     }
                     return area;
@@ -63,7 +62,7 @@ namespace PoeHUD.Poe.FilesInMemory
             public LabyrinthTrialWrapper(Memory m, long addr, int id)
             {
                 Address = addr;
-                Id = id;
+                Index = id;
 
                 //Unknown shit
                 //int1 = m.ReadInt(Address + 0x10);
