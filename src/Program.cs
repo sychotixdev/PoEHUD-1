@@ -79,9 +79,6 @@ namespace PoeHUD
                 sb.Append("AddressOfProcess: " + memory.AddressOfProcess.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("GameController full: " + (offs.Base + memory.AddressOfProcess).ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
                 sb.Append("GameController: " + (offs.Base + memory.AddressOfProcess).ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
@@ -98,6 +95,9 @@ namespace PoeHUD
                 sb.Append("IngameUi: " + gameController.Game.IngameState.IngameUi.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
+                sb.Append("InventoryPanel: " + gameController.Game.IngameState.IngameUi.InventoryPanel.Address.ToString("X"));
+                sb.Append(System.Environment.NewLine);
+
                 sb.Append("UIRoot: " + gameController.Game.IngameState.UIRoot.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
@@ -105,18 +105,6 @@ namespace PoeHUD
                 sb.Append(System.Environment.NewLine);
 
 
-                sb.Append("GetInventoryZone: " + memory.ReadLong(gameController.Game.IngameState.IngameUi.InventoryPanel.Address + Poe.Element.OffsetBuffers + 0x42c).ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
-                sb.Append("Area Addr: " + gameController.Game.IngameState.Data.CurrentArea.Address.ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
-                sb.Append("Area Name: " + gameController.Game.IngameState.Data.CurrentArea.Name);
-                sb.Append(System.Environment.NewLine);
-
-
-                sb.Append("Area change: " + memory.ReadInt(offs.AreaChangeCount + memory.AddressOfProcess));
-                sb.Append(System.Environment.NewLine);
                 sb.Append(System.Environment.NewLine);
 
                 sb.Append(memory.DebugStr);
