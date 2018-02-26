@@ -59,6 +59,46 @@ namespace PoeHUD.Poe.Components
             return false;
         }
 
+
+        public float TimeSinseLastMove => M.ReadFloat(Address + 0x110);
+        public float TimeSinseLastAction => M.ReadFloat(Address + 0x114);
+
+
+        public bool HasCurrentAction => M.ReadLong(Address + 0x60) != 0;
+
+        public ActionWrapper CurrentAction => HasCurrentAction ? ReadObject<ActionWrapper>(Address + 0x60) : null;
+
+
+        public long SkillsStartPointer => M.ReadLong(Address + 0x2c0);
+        public long SkillsEndPointer => M.ReadLong(Address + 0x2c8);
+
+
+        public List<ActorSkill> ActorSkills
+        {
+            get
+            {
+                var result = new List<ActorSkill>();
+                for (var addr = SkillsStartPointer; addr < SkillsEndPointer; addr += 16)//16 because we are reading each second pointer (pointer vectors)
+                {
+                    result.Add(ReadObject<ActorSkill>(addr));
+                }
+                return result;
+            }
+        }
+
+        public class ActorSkill : RemoteMemoryObject
+        {
+            
+        }
+
+
+        public class ActionWrapper : RemoteMemoryObject
+        {
+            public float DestinationX => M.ReadFloat(Address + 0x84);
+            public float DestinationY => M.ReadFloat(Address + 0x88);
+        }
+
+
         [Flags]
         public enum ActionFlags
         {

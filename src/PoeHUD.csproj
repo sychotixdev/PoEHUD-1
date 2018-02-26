@@ -343,6 +343,7 @@
     <Compile Include="Poe\Components\ObjectMagicProperties.cs" />
     <Compile Include="Poe\FilesInMemory\TagsDat.cs" />
     <Compile Include="Models\Interfaces\IEntity.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\WorldArea.cs" />
     <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />
     <Compile Include="Poe\Offsets.cs" />
     <Compile Include="Controllers\GameController.cs" />
@@ -353,6 +354,8 @@
     <Compile Include="Poe\Entity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\DiagnosticElement.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\EntityList.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\NativeStringReader.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ServerStashTab.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\TheGame.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\IngameData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\IngameState.cs" />

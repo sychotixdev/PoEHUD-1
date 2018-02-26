@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Runtime.InteropServices;
 using PoeHUD.Controllers;
+using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
@@ -44,8 +45,8 @@ namespace PoeHUD.Poe.FilesInMemory
             public readonly int Index;
             public long Address { get; private set; }
 
-            public WorldAreas.WorldArea area;
-            public WorldAreas.WorldArea Area
+            public WorldArea area;
+            public WorldArea Area
             {
                 get
                 {
