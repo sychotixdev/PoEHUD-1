@@ -125,6 +125,11 @@ namespace PoeHUD.Framework
             return BitConverter.ToUInt32(ReadMem(addr, 4), 0);
         }
 
+        public ushort ReadUShort(long addr)
+        {
+            return BitConverter.ToUInt16(ReadMem(addr, 2), 0);
+        }
+
 
         /// <summary>
         /// Read string as ASCII
