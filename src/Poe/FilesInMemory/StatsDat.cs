@@ -1,5 +1,6 @@
 using PoeHUD.Framework;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace PoeHUD.Poe.FilesInMemory
@@ -23,6 +24,11 @@ namespace PoeHUD.Poe.FilesInMemory
             loadItems();
         }
 
+        public StatRecord GetStatByAddress(long address)
+        {
+            return records.Values.ToList().Find(x => x.Address == address);
+        }
+
         private void loadItems()
         {
             foreach (long addr in RecordAddresses())
@@ -36,6 +42,7 @@ namespace PoeHUD.Poe.FilesInMemory
         public class StatRecord
         {
             public readonly string Key;
+            public readonly long Address;
             public StatType Type;
             public bool Unknown4;
             public bool Unknown5;
@@ -46,6 +53,7 @@ namespace PoeHUD.Poe.FilesInMemory
 
             public StatRecord(Memory m, long addr)
             {
+                Address = addr;
                 Key = m.ReadStringU(m.ReadLong(addr + 0), 255);
                 Unknown4 = m.ReadByte(addr + 0x8) != 0;
                 Unknown5 = m.ReadByte(addr + 0x9) != 0;
