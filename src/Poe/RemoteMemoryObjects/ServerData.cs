@@ -26,7 +26,24 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4394);
         public int TotalAscendencyPoints => M.ReadInt(Address + 0x439c);
         public int SpentAscendencyPoints => M.ReadInt(Address + 0x43a0);
-        public string League => ReadObject<NativeStringReader>(Address + 0x43e0).Value;
+        public string League => GetObject<NativeStringReader>(Address + 0x43e0).Value;
+        public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x45a0);
+
+        public List<ushort> SkillBarIds
+        {
+            get
+            {
+                var result = new List<ushort>();
+
+                var readAddr = Address + 0x4610;
+                for (int i = 0; i < 8; i++)
+                {
+                    result.Add(M.ReadUShort(readAddr));
+                    readAddr += 2;
+                }
+                return result;
+            }
+        }
         #endregion
 
         public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x43c8);
@@ -88,12 +105,20 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             return result;
         }
 
-        public enum NetworkStateE
+        public enum NetworkStateE : byte
         {
             None,
             Disconnected,
             Connecting,
             Connected
+        }
+
+        public enum PartyAllocation : byte
+        {
+            FreeForAll,
+            ShortAllocation,
+            PermanentAllocation,
+            None
         }
     }
 }

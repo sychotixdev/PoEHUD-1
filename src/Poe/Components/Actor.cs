@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using System;
+using PoeHUD.Poe.RemoteMemoryObjects;
+using PoeHUD.Controllers;
+using PoeHUD.Models;
+using SharpDX;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Actor : Component
+    public partial class Actor : Component
     {
         /// <summary>
         ///     Standing still = 2048 =bit 11 set
@@ -63,22 +67,36 @@ namespace PoeHUD.Poe.Components
         public float TimeSinseLastMove => M.ReadFloat(Address + 0x110);
         public float TimeSinseLastAction => M.ReadFloat(Address + 0x114);
 
+        public ActionWrapper CurrentAction => Action == ActionFlags.UsingAbility ? ReadObject<ActionWrapper>(Address + 0x60) : null;
 
-        public bool HasCurrentAction => M.ReadLong(Address + 0x60) != 0;
+        public List<DeployedObject> DeployedObjects
+        {
+            get
+            {
+                var result = new List<DeployedObject>();
+                var start = M.ReadLong(Address + 0x310);
+                var end = M.ReadLong(Address + 0x318);
 
-        public ActionWrapper CurrentAction => HasCurrentAction ? ReadObject<ActionWrapper>(Address + 0x60) : null;
-
-
-        public long SkillsStartPointer => M.ReadLong(Address + 0x2c0);
-        public long SkillsEndPointer => M.ReadLong(Address + 0x2c8);
-
+                for (var addr = start; addr < end; addr += 8)
+                {
+                    var objectId = M.ReadInt(addr);
+                    var SkillId = M.ReadUShort(addr + 4);
+                    result.Add(new DeployedObject(objectId, SkillId));
+                }
+                return result;
+            }
+        }
 
         public List<ActorSkill> ActorSkills
         {
             get
             {
+                var skillsStartPointer = M.ReadLong(Address + 0x2c0);
+                var skillsEndPointer = M.ReadLong(Address + 0x2c8);
+                skillsStartPointer += 8;//Don't ask me why. Just skipping first one
+
                 var result = new List<ActorSkill>();
-                for (var addr = SkillsStartPointer; addr < SkillsEndPointer; addr += 16)//16 because we are reading each second pointer (pointer vectors)
+                for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += 16)//16 because we are reading each second pointer (pointer vectors)
                 {
                     result.Add(ReadObject<ActorSkill>(addr));
                 }
@@ -86,16 +104,16 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-        public class ActorSkill : RemoteMemoryObject
-        {
-            
-        }
-
 
         public class ActionWrapper : RemoteMemoryObject
         {
             public float DestinationX => M.ReadFloat(Address + 0x84);
             public float DestinationY => M.ReadFloat(Address + 0x88);
+
+            public Vector2 CastDestination => new Vector2(DestinationX, DestinationY);
+
+            public ActorSkill Skill => ReadObject<ActorSkill>(Address + 0x18);
+
         }
 
 
