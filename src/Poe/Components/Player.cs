@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using PoeHUD.Poe.FilesInMemory;
+using PoeHUD.Poe.RemoteMemoryObjects;
+using PoeHUD.Controllers;
+
 namespace PoeHUD.Poe.Components
 {
     public class Player : Component
@@ -26,11 +31,37 @@ namespace PoeHUD.Poe.Components
         public int Level => Address != 0 ? M.ReadByte(Address + 0x58) : 1;
 
 
-        public int HideoutLevel => Address != 0 ? M.ReadByte(Address + 0x220) : -1;
-        public int PropheciesCount => Address != 0 ? M.ReadByte(Address + 0x247) : -1;
+        public int HideoutLevel => M.ReadByte(Address + 0x246);
+        public byte PropheciesCount => M.ReadByte(Address + 0x247);
 
-        public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x62);
-        public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x61);
+        public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x220);
+
+
+        public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
+        public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
+
+
+        public List<PassiveSkill> AllocatedPassives
+        {
+            get
+            {
+                var result = new List<PassiveSkill>();
+                var passiveIds = GameController.Instance.Game.IngameState.ServerData.PassiveSkillIds;
+
+                foreach(var id in passiveIds)
+                {
+                    var passive = GameController.Instance.Files.PassiveSkills.GetPassiveSkillByPassiveId(id);
+                    if(passive == null)
+                    {
+                        DebugPlug.DebugPlugin.LogMsg($"Can't find passive with id: {id}", 10, SharpDX.Color.Red);
+                        continue;
+                    }
+                    result.Add(passive);
+                }
+                return result;
+            }
+        }
+
 
         public enum PantheonGod
         {
