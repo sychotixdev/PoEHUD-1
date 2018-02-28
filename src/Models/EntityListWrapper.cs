@@ -114,15 +114,7 @@ namespace PoeHUD.Models
         private void UpdatePlayerStats()
         {
             var stats = player.GetComponent<Poe.Components.Stats>();
-            int key = 0;
-            int value = 0;
-            var bytes = gameController.Memory.ReadBytes(stats.statPtrStart, (int)(stats.statPtrEnd - stats.statPtrStart));
-            for (int i = 0; i < bytes.Length; i += 8)
-            {
-                key = BitConverter.ToInt32(bytes, i);
-                value = BitConverter.ToInt32(bytes, i + 0x04);
-                PlayerStats[(Enums.PlayerStats)key] = value;
-            }
+            PlayerStats = stats.StatDictionary;
         }
         public EntityWrapper GetEntityById(int id)
         {

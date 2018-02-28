@@ -277,6 +277,7 @@
     <Compile Include="Plugins\BasePlugin.cs" />
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\DeployedObject.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ActiveSkillWrapper.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ActorSkill.cs" />
@@ -347,8 +348,8 @@
     <Compile Include="Poe\FilesInMemory\TagsDat.cs" />
     <Compile Include="Models\Interfaces\IEntity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GrantedEffectsPerLevel.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\HideoutWrapper.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\SkillGemWrapper.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\WorldArea.cs" />
     <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />
     <Compile Include="Poe\Offsets.cs" />
     <Compile Include="Controllers\GameController.cs" />

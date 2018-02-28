@@ -30,6 +30,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                 var statsCount = M.ReadInt(Address + 0x14);
                 var pointerToStats = M.ReadLong(Address + 0x1c);
+                pointerToStats += 8;
 
                 for (int i = 0; i < statsCount; i++)
                 {
@@ -56,6 +57,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                 var statsCount = M.ReadInt(Address + 0x84);
                 var pointerToStats = M.ReadLong(Address + 0x8c);
+                pointerToStats += 8;//Skip first
 
                 for (int i = 0; i < statsCount; i++)
                 {
@@ -81,6 +83,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                 var statsCount = M.ReadInt(Address + 0xbc);
                 var pointerToStats = M.ReadLong(Address + 0xc4);
+                pointerToStats += 8;//Skip first
 
                 for (int i = 0; i < statsCount; i++)
                 {
