@@ -29,6 +29,7 @@ namespace PoeHUD.Poe.Components
 		public int Dexterity => Address != 0 ? M.ReadInt(Address + 0x50) : 0;
 		public int Intelligence => Address != 0 ? M.ReadInt(Address + 0x54) : 0;
         public int Level => Address != 0 ? M.ReadByte(Address + 0x58) : 1;
+        public int AllocatedLootId => Address != 0 ? M.ReadByte(Address + 0x44) : 1;
 
 
         public int HideoutLevel => M.ReadByte(Address + 0x246);
@@ -61,7 +62,6 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
-
 
         public enum PantheonGod
         {

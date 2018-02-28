@@ -349,6 +349,8 @@
     <Compile Include="Models\Interfaces\IEntity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GrantedEffectsPerLevel.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\HideoutWrapper.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Inventory2.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\InventoryHolder.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\SkillGemWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />
     <Compile Include="Poe\Offsets.cs" />

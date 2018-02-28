@@ -17,7 +17,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public InventoryTabType TabType => (InventoryTabType)M.ReadUInt(Address + 0x38);
         public ushort DisplayIndex => M.ReadUShort(Address + 0x3c);
         //public ushort LinkedParentId => M.ReadUShort(Address + 0x26);
-        //public InventoryTabMapSeries MapSeries => (InventoryTabMapSeries)M.ReadByte(Address + 0x28);
         public InventoryTabFlags Flags => (InventoryTabFlags)M.ReadByte(Address + 0x41);
 
         [Flags]
@@ -55,16 +54,5 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Unknown2 = 2,
             Unknown3 = 8
         }
-
-        /*
-        public enum InventoryTabMapSeries : byte
-        {
-            Atlas_of_Worlds = 3,
-            None = 0,
-            Original = 1,
-            The_Awakening = 2,
-            War_for_the_Atlas = 4
-        }
-        */
     }
 }

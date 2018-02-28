@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PoeHUD.Controllers;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Framework
 {
@@ -220,6 +222,94 @@ namespace PoeHUD.Framework
             WinApi.ReadProcessMemory(procHandle, (IntPtr)addr, array);
             return array;
         }
+
+        public List<T> ReadStructsArray<T>(long startAddress, long endAddress, int structSize) where T : RemoteMemoryObject, new()
+        {
+            var result = new List<T>();
+            for (var address = startAddress; address < endAddress; address += structSize)
+                result.Add(GameController.Instance.Game.GetObject<T>(address));
+            return result;
+        }
+
+        public List<T> ReadClassesArray<T>(long startAddress, long endAddress, int structSize) where T : RemoteMemoryObject, new()
+        {
+            var result = new List<T>();
+            for (var address = startAddress; address < endAddress; address += structSize)
+                result.Add(GameController.Instance.Game.ReadObject<T>(address));
+            return result;
+        }
+
+
+        public T IntptrToStruct<T>(long pointer, int structSize) where T : struct
+        {
+            var bytes = ReadBytes(pointer, structSize);
+            return IntptrToStruct<T>(bytes);
+        }
+
+        public T IntptrToStruct<T>(byte[] data) where T : struct
+        {
+            GCHandle gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+            try
+            {
+                return (T)Marshal.PtrToStructure(gch.AddrOfPinnedObject(), typeof(T));
+            }
+            finally
+            {
+                gch.Free();
+            }
+        }
+
+        /*
+        public Dictionary<TKey, TValue> ReadHashMap<TKey, TValue>(long pointer) where TKey : struct where TValue : struct
+        {
+            var result = new Dictionary<TKey, TValue>();
+
+            Stack<HashNode<TKey, TValue>> stack = new Stack<HashNode<TKey, TValue>>();
+            var startNode = IntptrToStruct<HashNode<TKey, TValue>>(pointer, 0x30);
+            var item = IntptrToStruct<HashNode<TKey, TValue>>(startNode.Root, 0x30);
+            stack.Push(item);
+
+            while (stack.Count != 0)
+            {
+                HashNode<TKey, TValue> node3 = stack.Pop();
+                if (node3.IsNull == 0)
+                    result.Add(node3.Key, node3.Value);
+
+                HashNode<TKey, TValue> node4 = IntptrToStruct<HashNode<TKey, TValue>>(node3.Previous, 0x30);
+                if (node4.IsNull == 0)
+                    stack.Push(node4);
+
+                HashNode<TKey, TValue> node5 = IntptrToStruct<HashNode<TKey, TValue>>(node3.Next, 0x30);
+                if (node5.IsNull == 0)
+                    stack.Push(node5);
+            }
+            return result;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct HashNode<TNodeKey, TNodeValue> where TNodeKey : struct where TNodeValue : struct
+        {
+            public readonly long Previous;
+            public readonly long Root;
+            public readonly long Next;
+            public readonly byte Unknown;
+            public readonly byte IsNull;
+            private readonly byte byte_0;
+            private readonly byte byte_1;
+            public readonly TNodeKey Key;
+            public readonly TNodeValue Value;
+        }
+        */
+        /*
+        public unsafe T IntptrToStruct<T>(byte[] bytes) where T : struct
+        {
+            fixed (byte* ptr = bytes)
+            {
+                return *(T*)ptr;
+            }
+        }
+        */
+ 
 
         public string DebugStr = "";
         public long[] FindPatterns(params Pattern[] patterns)

@@ -4,6 +4,8 @@ using PoeHUD.Poe.Elements;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
 using PoeHUD.Poe.FilesInMemory;
+using PoeHUD.Models;
+using PoeHUD.Poe.Components;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -59,20 +61,76 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             var firstAddr = M.ReadLong(Address + offsetBegin);
             var lastAddr = M.ReadLong(Address + offsetEnd);
-            var pointersRange = firstAddr - lastAddr;
-            var pointersToRead = pointersRange / ServerStashTab.StructSize;
-
-            if (pointersToRead > 500)
-                throw new System.InvalidOperationException($"Can't read server stash tabs: amount is bigger than 500 ({pointersToRead})");
-
-            var result = new List<ServerStashTab>();
-
-            for (var address = firstAddr; address < lastAddr; address += ServerStashTab.StructSize)
-            {
-                result.Add(GetObject<ServerStashTab>(address));
-            }
-            return result;
+            return M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize);
         }
+        #endregion
+
+        #region Inventories
+        public List<InventoryHolder> PlayerInventories
+        {
+            get
+            {
+                var firstAddr = M.ReadLong(Address + 0x4728);
+                var lastAddr = M.ReadLong(Address + 0x4730);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+            }
+        }
+
+        public Inventory2 GetPlayerInventoryBySlot(InventorySlotE slot)
+        {
+            foreach (var inventory in PlayerInventories)
+            {
+                if (inventory.Inventory.InventSlot == slot)
+                {
+                    return inventory.Inventory;
+                }
+            }
+            return null;
+        }
+        public Inventory2 GetPlayerInventoryByType(InventoryTypeE type)
+        {
+            foreach (var inventory in PlayerInventories)
+            {
+                if (inventory.Inventory.InventType == type)
+                {
+                    return inventory.Inventory;
+                }
+            }
+            return null;
+        }
+
+        public Inventory2 GetPlayerInventoryBySlotAndType(InventoryTypeE type, InventorySlotE slot)
+        {
+            foreach (var inventory in PlayerInventories)
+            {
+                if (inventory.Inventory.InventType == type && inventory.Inventory.InventSlot == slot)
+                {
+                    return inventory.Inventory;
+                }
+            }
+            return null;
+        }
+
+        public List<InventoryHolder> NPCInventories
+        {
+            get
+            {
+                var firstAddr = M.ReadLong(Address + 0x47d0);
+                var lastAddr = M.ReadLong(Address + 0x47d8);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+            }
+        }
+
+        public List<InventoryHolder> GuildInventories
+        {
+            get
+            {
+                var firstAddr = M.ReadLong(Address + 0x4878);
+                var lastAddr = M.ReadLong(Address + 0x4880);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+            }
+        }
+
         #endregion
 
         public List<WorldArea> GetCompletedAreas() => GetAreas(0x4a10);
@@ -92,9 +150,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
             return result;
         }
-
-
-
         public List<ushort> PassiveSkillIds
         {
             get
@@ -113,6 +168,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     result.Add(id);
                 }
                 return result;
+            }
+        }
+
+
+        public List<Player> NearestPlayers
+        {
+            get
+            {
+                var startPtr = M.ReadLong(Address + 0x4658);
+                var endPtr = M.ReadLong(Address + 0x4660);
+                return M.ReadClassesArray<Player>(startPtr, endPtr, 0x68);
             }
         }
 
