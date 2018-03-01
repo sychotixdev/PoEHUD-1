@@ -46,7 +46,7 @@ namespace PoeHUD.Poe.FilesInMemory
             result?.ReadData();
             return result;
         }
-        
+
         public void CheckCache()
         {
             if (WorldAreaDictionary.Count != 0)
