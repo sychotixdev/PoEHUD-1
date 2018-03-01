@@ -1,3 +1,5 @@
+using System;
+
 namespace PoeHUD.Models
 {
     public static class Constants
@@ -105,5 +107,45 @@ namespace PoeHUD.Models
                 3932818530u,
                 4250334444u
             };
+
+        public static readonly uint[] ToraExperienceLevels = new uint[] { 0, 770, 0xa82, 0x245e, 0x7de6, 0x18810, 0x4b5d8, 0xe42b8 };
+        public static readonly uint[] CatarinaExperienceLevels = new uint[] { 0, 770, 0xa82, 0x245e, 0x7de6, 0x18810, 0x4b5d8, 0xe42b8 };
+        public static readonly uint[] HakuExperienceLevels = new uint[] { 0, 430, 0x668, 0x186a, 0x5cda, 0x13d88, 0x430a0, 0xdee87 };
+        public static readonly uint[] VaganExperienceLevels = new uint[] { 0, 0x41a, 0xd98, 0x2cec, 0x9448, 0x1b867, 0x50bd8, 0xe9243 };
+        public static readonly uint[] VoriciExperienceLevels = new uint[] { 0, 0x41a, 0xd98, 0x2cec, 0x9448, 0x1b867, 0x50bd8, 0xe9243 };
+        public static readonly uint[] ElreonExperienceLevels = new uint[] { 0, 430, 0x668, 0x186a, 0x5cda, 0x13d88, 0x430a0, 0xdee87 };
+        public static readonly uint[] ZanaExperienceLevels = new uint[] { 0, 0x125c, 0x3372, 0x9006, 0x1935c, 0x4696a, 0xc5a62, 0x2296ba };
+        public static readonly uint[] LeoExperienceLevels = new uint[] { 0, 0xa8c, 0x1b76, 0x475e, 0xb9a0, 0x1b264, 0x3ebf8, 0x8ec06 };
+
+        public static int GetLevel(uint[] expLevels, uint currExp)
+        {
+            for (int i = 1; i < expLevels.Length; i++)
+            {
+                if (currExp < expLevels[i])
+                {
+                    return i;
+                }
+            }
+            return 8;
+        }
+
+        public static uint GetFullCurrentLevel(uint[] expLevels, uint currExp)
+        {
+            uint fullLevel = 0;
+            for (int i = 1; i < expLevels.Length; i++)
+            {
+                var level = expLevels[i];
+                if (currExp < level)
+                {
+                    fullLevel += level;
+                    return fullLevel;
+                }
+                else
+                {
+                    fullLevel += level;
+                }
+            }
+            return 8;
+        }
     }
 }

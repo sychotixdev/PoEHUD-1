@@ -6,6 +6,8 @@ using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
 using PoeHUD.Poe.FilesInMemory;
+using PoeHUD.Models;
+using PoeHUD.Models.Attributes;
 
 namespace PoeHUD.Poe.Components
 {
@@ -41,10 +43,8 @@ namespace PoeHUD.Poe.Components
 
         public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x220);
 
-
         public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
         public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
-
 
         public List<PassiveSkill> AllocatedPassives
         {
@@ -67,7 +67,7 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-
+        #region Trials
         public bool IsTrialCompleted(string trialId)
         {
             var trialWrapper = GameController.Instance.Files.LabyrinthTrials.GetLabyrinthTrialByAreaId(trialId);
@@ -76,7 +76,6 @@ namespace PoeHUD.Poe.Components
 
             return TrialPassStates.Get(trialWrapper.Id);
         }
-
         public bool IsTrialCompleted(LabyrinthTrial trialWrapper)
         {
             if (trialWrapper == null)
@@ -84,8 +83,6 @@ namespace PoeHUD.Poe.Components
 
             return TrialPassStates.Get(trialWrapper.Id);
         }
-
-
         public bool IsTrialCompleted(WorldArea area)
         {
             if (area == null)
@@ -99,7 +96,7 @@ namespace PoeHUD.Poe.Components
             return TrialPassStates.Get(trialWrapper.Id);
         }
 
-
+        [HideInReflection]
         private BitArray TrialPassStates
         {
             get
@@ -114,6 +111,7 @@ namespace PoeHUD.Poe.Components
             }
         }
 
+        #region Debug things
         public List<TrialState> TrialStates
         {
             get
@@ -128,8 +126,6 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
-
-
         public class TrialState
         {
             public LabyrinthTrial TrialArea { get; internal set; }
@@ -142,7 +138,39 @@ namespace PoeHUD.Poe.Components
                 return $"Completed: {IsCompleted}, Trial {TrialArea.Area.Name}, AreaId: {TrialArea.Id}";//, TrialAreaId: {TrialAreaId}
             }
         }
+        #endregion
+        #endregion
 
+        /*//TODO fixme https://pathofexile.gamepedia.com/Master
+        #region Master Exp Levels
+        public uint CurrentExperienceTora => M.ReadUInt(Address + 0x198);
+        public uint CurrentExperienceVorici => M.ReadUInt(Address + 0x188);
+        public uint CurrentExperienceCatarina => M.ReadUInt(Address + 0x1a8);
+        public uint CurrentExperienceZana => M.ReadUInt(Address + 0x1b8);
+        public uint CurrentExperienceVagan => M.ReadUInt(Address + 0x1c8);
+        public uint CurrentExperienceElreon => M.ReadUInt(Address + 0x1d8);
+        public uint CurrentExperienceHaku => M.ReadUInt(Address + 0x1e8);
+        public uint CurrentExperienceLeo => M.ReadUInt(Address + 0x1f8);
+
+        public int CurrentLevelTora => Constants.GetLevel(Constants.ToraExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelVorici => Constants.GetLevel(Constants.VoriciExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelCatarina => Constants.GetLevel(Constants.CatarinaExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelZana => Constants.GetLevel(Constants.ZanaExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelVagan => Constants.GetLevel(Constants.VaganExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelElreon => Constants.GetLevel(Constants.ElreonExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelHaku => Constants.GetLevel(Constants.HakuExperienceLevels, CurrentExperienceVorici);
+        public int CurrentLevelLeo => Constants.GetLevel(Constants.LeoExperienceLevels, CurrentExperienceVorici);
+
+        public uint CurrentFullLevelTora => Constants.GetFullCurrentLevel(Constants.ToraExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelVorici => Constants.GetFullCurrentLevel(Constants.VoriciExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelCatarina => Constants.GetFullCurrentLevel(Constants.CatarinaExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelZana => Constants.GetFullCurrentLevel(Constants.ZanaExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelVagan => Constants.GetFullCurrentLevel(Constants.VaganExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelElreon => Constants.GetFullCurrentLevel(Constants.ElreonExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelHaku => Constants.GetFullCurrentLevel(Constants.HakuExperienceLevels, CurrentExperienceVorici);
+        public uint CurrentFullLevelLeo => Constants.GetFullCurrentLevel(Constants.LeoExperienceLevels, CurrentExperienceVorici);
+        #endregion
+        */
 
         public enum PantheonGod
         {
