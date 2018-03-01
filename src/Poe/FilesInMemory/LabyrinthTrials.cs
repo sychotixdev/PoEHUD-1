@@ -12,64 +12,97 @@ namespace PoeHUD.Poe.FilesInMemory
 {
     public class LabyrinthTrials : FileInMemory
     {
-        public Dictionary<int, LabyrinthTrialWrapper> LabyrinthTrialsDictionary = new Dictionary<int, LabyrinthTrialWrapper>();
+        public readonly Dictionary<int, LabyrinthTrial> LabyrinthTrialsDictionary = new Dictionary<int, LabyrinthTrial>();
+        public readonly List<LabyrinthTrial> LabyrinthTrialsList = new List<LabyrinthTrial>();
 
         public LabyrinthTrials(Memory m, long address)
             : base(m, address)
         {
         }
         
-        public void ReloadCache()
+        public LabyrinthTrial GetLabyrinthTrialByAreaId(string id)
         {
-            LabyrinthTrialsDictionary.Clear();
-
-            var idCounter = 0;
-            foreach (long addr in RecordAddresses())
-            {
-                var r = new LabyrinthTrialWrapper(M, addr, idCounter);
-                LabyrinthTrialsDictionary.Add(r.Index, r);
-                idCounter++;
-            }
+            return GetTrialAreas().First(x => x.Area.Id == id);
         }
 
-        public List<LabyrinthTrialWrapper> GetTrialAreas()
+        public LabyrinthTrial GetLabyrinthTrialById(int index)
+        {
+            return GetTrialAreas().First(x => x.Id == index);
+        }
+
+        public List<LabyrinthTrial> GetTrialAreas()
         {
             if (LabyrinthTrialsDictionary.Count == 0)
                 ReloadCache();
 
-            return LabyrinthTrialsDictionary.Values.ToList();
+            return LabyrinthTrialsList;
         }
 
-        public class LabyrinthTrialWrapper
+        public void ReloadCache()
         {
-            public readonly int Index;
-            public long Address { get; private set; }
-
-            public WorldArea area;
-            public WorldArea Area
+            LabyrinthTrialsDictionary.Clear();
+            LabyrinthTrialsList.Clear();
+            
+            foreach (long addr in RecordAddresses())
             {
-                get
+                var lw = new LabyrinthTrial(M, addr);
+                LabyrinthTrialsDictionary.Add(lw.Id, lw);
+                LabyrinthTrialsList.Add(lw);
+            }
+        }
+
+        public static string[] LabyrinthTrialAreaIds = new string[18]
+        {
+            "1_1_7_1",
+            "1_2_5_1",
+            "1_2_6_2",
+            "1_3_3_1",
+            "1_3_6",
+            "1_3_15",
+            "2_6_7_1",
+            "2_7_4",
+            "2_7_5_2",
+            "2_8_5",
+            "2_9_7",
+            "2_10_9",
+            "EndGame_Labyrinth_trials_spikes",
+            "EndGame_Labyrinth_trials_spinners",
+            "EndGame_Labyrinth_trials_sawblades_#",
+            "EndGame_Labyrinth_trials_lava_#",
+            "EndGame_Labyrinth_trials_roombas",
+            "EndGame_Labyrinth_trials_arrows"
+        };
+    }
+
+    public class LabyrinthTrial
+    {
+        public readonly int Id;
+        public long Address { get; private set; }
+
+        public WorldArea area;
+        public WorldArea Area
+        {
+            get
+            {
+                if (area == null)
                 {
-                    if(area == null)
-                    {
-                        var areaPtr = GameController.Instance.Memory.ReadLong(Address + 0x8);
-                        area = GameController.Instance.Files.WorldAreas.GetAreaByAddress(areaPtr);
-                        area.ReadData();
-                    }
-                    return area;
+                    var areaPtr = GameController.Instance.Memory.ReadLong(Address + 0x8);
+                    area = GameController.Instance.Files.WorldAreas.GetAreaByAddress(areaPtr);
+                    area.ReadData();
                 }
+                return area;
             }
+        }
 
-            public LabyrinthTrialWrapper(Memory m, long addr, int id)
-            {
-                Address = addr;
-                Index = id;
+        public LabyrinthTrial(Memory m, long addr)
+        {
+            Address = addr;
+            Id = m.ReadInt(Address + 0x10);
 
-                //Unknown shit
-                //int1 = m.ReadInt(Address + 0x10);
-                //int2 = m.ReadInt(Address + 0x14);
-                //int3 = m.ReadInt(Address + 0x18);
-            }
+            //Unknown shit
+            //int1 = m.ReadInt(Address + 0x10);
+            //int2 = m.ReadInt(Address + 0x14);
+            //int3 = m.ReadInt(Address + 0x18);
         }
     }
 }
