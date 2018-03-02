@@ -7,8 +7,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xBA0);
         public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0xB58);
-        public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0xBD0, 0xAB8, 0xC30));
-        public Element QuestTracker => ReadObjectAt<Element>(0xC00);
+        public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0xBD8, 0xAB8, 0xC30));
+        public Element QuestTracker => ReadObjectAt<Element>(0xC50);
         public Element OpenLeftPanel => ReadObjectAt<Element>(0xC90);
         public Element OpenRightPanel => ReadObjectAt<Element>(0xC98);
         public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0xCC8);
