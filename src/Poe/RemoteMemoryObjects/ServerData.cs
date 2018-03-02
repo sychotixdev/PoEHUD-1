@@ -14,13 +14,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         [Obsolete("Obsolete. Use StashTabs instead")]
         public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C0, 0xA0, 0x78)) : null;
 
-        public ushort GlobalChatChannel => M.ReadUShort(Address + 0x4950);
-        public byte MonsterLevel => M.ReadByte(Address + 0x4c2c);
+        public ushort GlobalChatChannel => M.ReadUShort(Address + 0x4E50);
+        public byte MonsterLevel => M.ReadByte(Address + 0x5A2C);
 
         //if 51 - more than 50 monsters remaining (no exact number)
         //if 255 - not supported for current map (town or scenary map)
-        public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4388) & 0xF);
-        public byte MonstersRemaining => M.ReadByte(Address + 0x4c2d);
+        public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4788) & 0xF);
+        public byte MonstersRemaining => M.ReadByte(Address + 0x5A2D);
 
         #region PlayerData
         public ushort LastActionId => M.ReadUShort(Address + 0x49ac);
@@ -51,8 +51,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         #endregion
 
         public bool IsInGame => NetworkState == NetworkStateE.Connected;
-        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x43c8);
-        public int Latency => M.ReadInt(Address + 0x4448);
+        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x47C8);
+        public int Latency => M.ReadInt(Address + 0x4848);
 
         #region Stash Tabs
         public List<ServerStashTab> StashTabs => GetStashTabs(0x4458, 0x4460);
