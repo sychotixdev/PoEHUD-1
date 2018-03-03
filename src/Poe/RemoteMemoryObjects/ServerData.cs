@@ -17,15 +17,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C0, 0xA0, 0x78)) : null;
 
         public ushort GlobalChatChannel => M.ReadUShort(Address + 0x4d48);
-        //public byte MonsterLevel => M.ReadByte(Address + 0x5A2C);
+        public byte MonsterLevel => M.ReadByte(Address + 0x589c);
 
         //if 51 - more than 50 monsters remaining (no exact number)
         //if 255 - not supported for current map (town or scenary map)
         public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4788) & 0xF);
-        //public byte MonstersRemaining => M.ReadByte(Address + 0x5A2D);
+        public byte MonstersRemaining => M.ReadByte(Address + 0x589d);
 
         #region PlayerData
-        //public ushort LastActionId => M.ReadUShort(Address + 0x49ac);
+        public ushort LastActionId => M.ReadUShort(Address + 0x4d98);
         public int CharacterLevel => M.ReadInt(Address + 0x478c);
         public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x4790);
         public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4798);
