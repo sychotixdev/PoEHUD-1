@@ -25,10 +25,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         //public byte MonstersRemaining => M.ReadByte(Address + 0x5A2D);
 
         #region PlayerData
-        public ushort LastActionId => M.ReadUShort(Address + 0x49ac);
-        public int CharacterLevel => M.ReadInt(Address + 0x438c);
+        //public ushort LastActionId => M.ReadUShort(Address + 0x49ac);
+        public int CharacterLevel => M.ReadInt(Address + 0x478c);
         public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x4790);
-        public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x478c);
+        public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4798);
         public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x4794);
         public int TotalAscendencyPoints => M.ReadInt(Address + 0x479c);
         public int SpentAscendencyPoints => M.ReadInt(Address + 0x47a0);
