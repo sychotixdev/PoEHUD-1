@@ -17,11 +17,10 @@ namespace PoeHUD.Poe.Components
         public int ActionId => Address != 0 ? M.ReadInt(Address + 0xD8) : 1;
 
         public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xD8) : ActionFlags.None;
+        public bool isMoving => Action == ActionFlags.Moving;
+        public bool isAttacking => Action == ActionFlags.UsingAbility;
 
-        public bool isMoving => (ActionId & 128) > 0;
-
-        public bool isAttacking => (ActionId & 2) > 0;
-
+        [Obsolete("Use DeployedObjects instead")]
         public List<int> Minions
         {
             get
