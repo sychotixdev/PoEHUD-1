@@ -10,11 +10,17 @@ namespace PoeHUD.Poe.Elements
         public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA90)) : null;
 
         // Nice struct starts at 0xB80 till 0xBD0 and all are 8 byte long pointers.
-        private Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xB80)) : null;
-        private Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xB90)) : null;
-        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xB98)) : null;
-        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB0, 0xBA0, 0xB78)) : null; // going extra inside.
-        public int IndexVisibleStash => M.ReadInt(Address+0xAB0,0xBD8);
+        private Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xB88)) : null;
+        private Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xB98)) : null;
+ 
+        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xBa0)) : null;
+        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xBA0, 0xBa8)) : null; // going extra inside.
+
+        public Element MoveStashTabLabelsLeft_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xBb0)) : null;
+        public Element MoveStashTabLabelsRight_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xBb8)) : null;
+
+
+        public int IndexVisibleStash => M.ReadInt(Address + 0xAB8, 0xBE0);
         public Inventory VisibleStash => GetVisibleStash();
         private Inventory GetVisibleStash()
         {
