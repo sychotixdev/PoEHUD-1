@@ -9,7 +9,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public const int StructSize = 0x48;
 
-        public NativeStringReader Name => GetObject<NativeStringReader>(Address + 0x8);
+        public string Name => GetObject<NativeStringReader>(Address + 0x8).Value;
         //public int InventoryId => M.ReadInt(Address + 0x12);
         public uint Color => M.ReadUInt(Address + 0x2c);
         public InventoryTabPermissions MemberFlags => (InventoryTabPermissions)M.ReadUInt(Address + 0x30);

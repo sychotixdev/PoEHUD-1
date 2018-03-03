@@ -68,7 +68,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 }
             }
         }
-
+ 
         public int SkillSlotIndex
         {
             get
@@ -85,7 +85,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return -1;
             }
         }
-
+        
         internal int SlotIdentifier => ((Id >> 8) & 0xff);
         public int SocketIndex => ((SlotIdentifier >> 2) & 15);
         public bool IsUserSkill => (SlotIdentifier & 0x80) > 0;

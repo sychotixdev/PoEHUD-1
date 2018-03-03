@@ -13,7 +13,8 @@ namespace PoeHUD.Poe.Components
 {
     public class Player : Component
     {
-        public string PlayerName
+        public string PlayerName => GetObject<NativeStringReader>(Address + 0x20).Value;
+        /*
         {
             get
             {
@@ -29,6 +30,7 @@ namespace PoeHUD.Poe.Components
                 return NameLength < 8 ? M.ReadStringU(Address + 0x20, NameLength * 2) : M.ReadStringU(M.ReadLong(Address + 0x20), NameLength * 2);
             }
         }
+*/
 
         public uint XP => Address != 0 ? M.ReadUInt(Address + 0x48) : 0;
 		public int Strength => Address != 0 ? M.ReadInt(Address + 0x4c) : 0;
@@ -38,14 +40,15 @@ namespace PoeHUD.Poe.Components
         public int AllocatedLootId => Address != 0 ? M.ReadByte(Address + 0x44) : 1;
 
 
-        public int HideoutLevel => M.ReadByte(Address + 0x246);
-        public byte PropheciesCount => M.ReadByte(Address + 0x247);
+        public int HideoutLevel => M.ReadByte(Address + 0x256);
+        public byte PropheciesCount => M.ReadByte(Address + 0x257);
 
-        public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x220);
+        public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x230);
 
         public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
         public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
 
+        
         public List<PassiveSkill> AllocatedPassives
         {
             get
@@ -66,7 +69,7 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
-
+        
         #region Trials
         public bool IsTrialCompleted(string trialId)
         {
@@ -102,7 +105,7 @@ namespace PoeHUD.Poe.Components
             get
             {
                 byte[] buffer = new byte[0x30];
-                var stateBuff = M.ReadBytes(Address + 0x154, 0x34);
+                var stateBuff = M.ReadBytes(Address + 0x15c, 0x34);
                 for (int i = 0; i < buffer.Length; i++)
                 {
                     buffer[i] = stateBuff[i];
@@ -112,6 +115,7 @@ namespace PoeHUD.Poe.Components
         }
 
         #region Debug things
+        
         public List<TrialState> TrialStates
         {
             get
@@ -126,6 +130,7 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
+        
         public class TrialState
         {
             public LabyrinthTrial TrialArea { get; internal set; }

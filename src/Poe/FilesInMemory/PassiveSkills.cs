@@ -110,5 +110,10 @@ namespace PoeHUD.Poe.FilesInMemory
         {
             return M.ReadInt(Address + 0x20 + index * 4);
         }
+
+        public override string ToString()
+        {
+            return $"{Name}, Id: {Id}, PassiveId: {PassiveId}";
+        }
     }
 }
