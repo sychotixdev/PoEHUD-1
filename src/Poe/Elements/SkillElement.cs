@@ -11,13 +11,13 @@
         public string SkillIconPath => M.ReadStringU(M.ReadLong(unknown1 + 0x10), 100).TrimEnd('0');
 
         // Number of time a skill is used ... reset on area change.
-        public int totalUses => M.ReadInt(unknown3 + 0x4C);
+        public int totalUses => M.ReadInt(unknown3 + 0x50);
 
         // Usefull for channeling skills only.
         public bool isUsing => M.ReadByte(unknown3 + 0x08) > 2;
 
         // A variable is unknown.
-        private long unknown1 => M.ReadLong( Address + OffsetBuffers + 0x234);
-        private long unknown3 => M.ReadLong(Address + OffsetBuffers + 0x31C);
+        private long unknown1 => M.ReadLong( Address + OffsetBuffers + 0x23C);
+        private long unknown3 => M.ReadLong(Address + OffsetBuffers + 0x324);
     }
 }

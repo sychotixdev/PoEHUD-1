@@ -32,8 +32,8 @@ namespace PoeHUD.Poe.Components
         }
 
         //public bool CorpseUsable => M.ReadBytes(Address + 0x238, 1)[0] == 1; // Total guess, didn't verify
-        private long BuffStart => M.ReadLong(Address + 0xE8);
-        private long BuffEnd => M.ReadLong(Address + 0xF0);
+        private long BuffStart => M.ReadLong(Address + 0xE0);
+        private long BuffEnd => M.ReadLong(Address + 0xE8);
         private long MaxBuffCount => 512; // Randomly bumping to 512 from 32 buffs... no idea what real value is.
         public List<Buff> Buffs
         {
