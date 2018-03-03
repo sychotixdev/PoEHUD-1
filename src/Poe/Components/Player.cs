@@ -88,7 +88,7 @@ namespace PoeHUD.Poe.Components
             if (area == null)
                 throw new ArgumentException($"Argument {nameof(area)} should not be null");
 
-            var trialWrapper = GameController.Instance.Files.LabyrinthTrials.LabyrinthTrialsList.Find(x => x.Area == area);
+            var trialWrapper = GameController.Instance.Files.LabyrinthTrials.GetLabyrinthTrialByArea(area);
 
             if (trialWrapper == null)
                 throw new ArgumentException($"Can't find trial wrapper for area '{area.Name}' (seems not a trial area).");

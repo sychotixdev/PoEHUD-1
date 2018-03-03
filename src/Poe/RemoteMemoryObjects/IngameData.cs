@@ -1,11 +1,16 @@
+using System;
+using System.Text;
 using PoeHUD.Controllers;
+using PoeHUD.Poe.FilesInMemory;
+
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameData : RemoteMemoryObject
     {
         public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x28);
+        public WorldArea CurrentWorldArea => GameController.Instance.Files.WorldAreas.GetAreaByAddress(M.ReadLong(Address + 0x28));
         public int CurrentAreaLevel => (int)M.ReadByte(Address + 0x40);
-        public int CurrentAreaHash => M.ReadInt(Address + 0x60);
+        public uint CurrentAreaHash => M.ReadUInt(Address + 0x60);
 
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer 

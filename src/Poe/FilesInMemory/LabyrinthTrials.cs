@@ -11,9 +11,10 @@ using PoeHUD.Poe.RemoteMemoryObjects;
 namespace PoeHUD.Poe.FilesInMemory
 {
     public class LabyrinthTrials : FileInMemory
-    {
-        public readonly Dictionary<int, LabyrinthTrial> LabyrinthTrialsDictionary = new Dictionary<int, LabyrinthTrial>();
-        public readonly List<LabyrinthTrial> LabyrinthTrialsList = new List<LabyrinthTrial>();
+    {        
+        //We mark this fields as private coz we don't allow to read them directly. Optimisation. Use methods instead
+        private readonly Dictionary<int, LabyrinthTrial> LabyrinthTrialsDictionary = new Dictionary<int, LabyrinthTrial>();
+        private readonly List<LabyrinthTrial> LabyrinthTrialsList = new List<LabyrinthTrial>();
 
         public LabyrinthTrials(Memory m, long address)
             : base(m, address)
@@ -30,6 +31,11 @@ namespace PoeHUD.Poe.FilesInMemory
             return GetTrialAreas().First(x => x.Id == index);
         }
 
+        public LabyrinthTrial GetLabyrinthTrialByArea(WorldArea area)
+        {
+            return GetTrialAreas().First(x => x.Area == area );
+        }
+
         public List<LabyrinthTrial> GetTrialAreas()
         {
             if (LabyrinthTrialsDictionary.Count == 0)
@@ -38,7 +44,7 @@ namespace PoeHUD.Poe.FilesInMemory
             return LabyrinthTrialsList;
         }
 
-        public void ReloadCache()
+        private void ReloadCache()
         {
             LabyrinthTrialsDictionary.Clear();
             LabyrinthTrialsList.Clear();
@@ -88,7 +94,6 @@ namespace PoeHUD.Poe.FilesInMemory
                 {
                     var areaPtr = GameController.Instance.Memory.ReadLong(Address + 0x8);
                     area = GameController.Instance.Files.WorldAreas.GetAreaByAddress(areaPtr);
-                    area.ReadData();
                 }
                 return area;
             }

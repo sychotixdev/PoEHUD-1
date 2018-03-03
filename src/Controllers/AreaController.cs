@@ -6,11 +6,11 @@ namespace PoeHUD.Controllers
 {
     public class AreaController
     {
-        private readonly GameController Root;
+        private readonly GameController GController;
 
         public AreaController(GameController gameController)
         {
-            Root = gameController;
+            GController = gameController;
         }
 
         public event Action<AreaController> OnAreaChange;
@@ -19,15 +19,15 @@ namespace PoeHUD.Controllers
 
         public void RefreshState()
         {
-            Root.Cache.UpdateCache();
-            var igsd = Root.Game.IngameState.Data;
-            AreaTemplate clientsArea = igsd.CurrentArea;
-            int curAreaHash = igsd.CurrentAreaHash;
+            GController.Cache.UpdateCache();
+            var ingameData = GController.Game.IngameState.Data;
+            AreaTemplate clientsArea = ingameData.CurrentArea;
+            var curAreaHash = ingameData.CurrentAreaHash;
 
             if (CurrentArea != null && curAreaHash == CurrentArea.Hash)
                 return;
-            
-            CurrentArea = new AreaInstance(clientsArea, curAreaHash, igsd.CurrentAreaLevel);
+
+            CurrentArea = new AreaInstance(clientsArea, curAreaHash, ingameData.CurrentAreaLevel);
             OnAreaChange?.Invoke(this);
         }
     }

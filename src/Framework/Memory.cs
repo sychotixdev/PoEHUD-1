@@ -339,7 +339,6 @@ namespace PoeHUD.Framework
 
                 if(!found)
                 {
-                    //System.Windows.Forms.MessageBox.Show("Pattern " + iPattern + " is not found!");
                     DebugStr += "Pattern " + iPattern + " is not found!" + Environment.NewLine;
                 }
             });

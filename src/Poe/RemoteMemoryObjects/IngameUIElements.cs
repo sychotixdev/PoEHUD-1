@@ -25,6 +25,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
         public Element GemLvlUpPanel => ReadObjectAt<Element>(0xF70);
         public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0xFD8);
+
+        public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
+        public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));
     }
 }
 

@@ -16,9 +16,9 @@ namespace PoeHUD.Controllers
         public readonly WorldAreas WorldAreas;
         public readonly PassiveSkills PassiveSkills;
         public readonly LabyrinthTrials LabyrinthTrials;
+        public readonly Quests Quests;
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
-        //private bool isLoaded;
 
         public FsController(Memory mem)
         {
@@ -32,8 +32,9 @@ namespace PoeHUD.Controllers
             WorldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat"));
             PassiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat"));
             LabyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
+            Quests = new Quests(mem, FindFile("Data/Quest.dat"));
         }
-            
+
         public Dictionary<string, long> GetAllFiles()
         {
             var fileList = new Dictionary<string, long>();

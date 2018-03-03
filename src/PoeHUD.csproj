@@ -279,6 +279,11 @@
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
+    <Compile Include="Poe\FilesInMemory\Quests.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Quest.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\QuestState.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\WorldArea.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\DeployedObject.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ActiveSkillWrapper.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ActorSkill.cs" />
@@ -357,7 +362,6 @@
     <Compile Include="Poe\Offsets.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Poe\Components\Player.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Buff.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Camera.cs" />
     <Compile Include="Poe\Entity.cs" />
