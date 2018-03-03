@@ -38,7 +38,7 @@ namespace PoeHUD.Poe.Elements
             return ret;
         }
 
-        public Inventory GetStashInventoryByIndex(int index)
+        public Inventory GetStashInventoryByIndex(int index)//This one is correct
         {
             if (index >= TotalStashes)
                 return null;

@@ -6,7 +6,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class Inventory : RemoteMemoryObject
     {
-        public long ItemCount => M.ReadLong(Address + 0x410, 0x638, 0x50);
+        public long ItemCount => M.ReadLong(Address + 0x410, 0x638, 0x50);//This one is correct
         public long TotalBoxesInInventoryRow => M.ReadInt(Address + 0x410, 0x638, 0x0C);
 
         private InventoryType GetInvType()
