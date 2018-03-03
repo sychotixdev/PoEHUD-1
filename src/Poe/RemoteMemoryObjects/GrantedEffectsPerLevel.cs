@@ -43,6 +43,27 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
         }
 
+        public List<string> Tags
+        {
+            get
+            {
+                var result = new List<string>();
+
+                var tagsCount = M.ReadInt(Address + 0x44);
+                var pointerToTags = M.ReadLong(Address + 0x4c);
+                pointerToTags += 8;
+
+                for (int i = 0; i < tagsCount; i++)
+                {
+                    var tagStringPtr = M.ReadLong(pointerToTags);
+                    tagStringPtr = M.ReadLong(tagStringPtr);
+                    result.Add(M.ReadStringU(tagStringPtr));
+                    pointerToTags += 16;//16 because we are reading each second pointer
+                }
+                return result;
+            }
+        }
+
         internal int ReadStatValue(int index)
         {
             return M.ReadInt(Address + 0x54 + index * 4);

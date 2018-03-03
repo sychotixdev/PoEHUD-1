@@ -14,15 +14,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public GrantedEffectsPerLevel EffectsPerLevel => ReadObject<GrantedEffectsPerLevel>(Address + 0x20);
 
         public bool CanBeUsedWithWeapon => M.ReadByte(Address + 0x46) > 0;
-        public bool CannotBeUsed => M.ReadByte(Address + 0x47) > 0;
+        public bool CanBeUsed => M.ReadByte(Address + 0x47) == 0;
         public int Cost => M.ReadByte(Address + 0x48);
         public int TotalUses => M.ReadInt(Address + 0x4c);
         public int MaxUses => M.ReadInt(Address + 0x50);
         public float Cooldown => M.ReadInt(Address + 0x54) / 100f; //Converted milliseconds to seconds
 
-        public int SoulsPerUse => M.ReadInt(Address + 0x64);
-        public int TotalVaalUses => M.ReadInt(Address + 0x68);
-        public int CurrentSouls => M.ReadInt(Address + 0x6c);
+        public int SoulsCap => M.ReadInt(Address + 0x64);
+        public int SoulsPerUse => M.ReadInt(Address + 0x68);
+        public int TotalVaalUses => M.ReadInt(Address + 0x6c);
+        public int CurrentSouls => M.ReadInt(Address + 0x70);
 
         public string Name
         {
@@ -90,7 +91,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int SocketIndex => ((SlotIdentifier >> 2) & 15);
         public bool IsUserSkill => (SlotIdentifier & 0x80) > 0;
 
-        public bool AllowedToCast => CanBeUsedWithWeapon && !CannotBeUsed;
+        public bool AllowedToCast => CanBeUsedWithWeapon && CanBeUsed;
 
         public byte SkillUseStage => M.ReadByte(Address + 0x8);
         public bool IsUsing => SkillUseStage > 2; //GetStat(PlayerStats.CastingSpell) > 0;
@@ -178,7 +179,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statsPtr = M.ReadLong(Address + 0x70);
+                var statsPtr = M.ReadLong(Address + 0x78);
                 var result = new Dictionary<PlayerStats, int>();
 
                 ReadStats(result, statsPtr);
@@ -217,6 +218,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return 0;
             }
             return num;
+        }
+
+        public override string ToString()
+        {
+            return $"IsUsing: {IsUsing}, {Name}, Id: {Id}, InternalName: {InternalName}, CanBeUsed: {CanBeUsed}";
         }
     }
 }

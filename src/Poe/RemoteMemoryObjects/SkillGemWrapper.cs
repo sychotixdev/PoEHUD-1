@@ -9,6 +9,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class SkillGemWrapper : RemoteMemoryObject
     {
         public string Name => M.ReadStringU(M.ReadLong(Address));
-        public ActiveSkillWrapper ActiveSkill => ReadObject<ActiveSkillWrapper>(Address + 0x16d);
+        public ActiveSkillWrapper ActiveSkill => ReadObject<ActiveSkillWrapper>(Address + 0x73);
     }
 }
