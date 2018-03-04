@@ -280,6 +280,7 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\FilesInMemory\Quests.cs" />
+    <Compile Include="Poe\FilesInMemory\QuestStates.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Quest.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\QuestState.cs" />

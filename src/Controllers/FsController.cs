@@ -17,6 +17,8 @@ namespace PoeHUD.Controllers
         public readonly PassiveSkills PassiveSkills;
         public readonly LabyrinthTrials LabyrinthTrials;
         public readonly Quests Quests;
+        public readonly QuestStates QuestStates;
+
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
 
@@ -33,6 +35,7 @@ namespace PoeHUD.Controllers
             PassiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat"));
             LabyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
             Quests = new Quests(mem, FindFile("Data/Quest.dat"));
+            QuestStates = new QuestStates(mem, FindFile("Data/QuestStates.dat"));
         }
 
         public Dictionary<string, long> GetAllFiles()

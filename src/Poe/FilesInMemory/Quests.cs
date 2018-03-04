@@ -41,11 +41,12 @@ namespace PoeHUD.Poe.FilesInMemory
             if (QuestsDictionary.Count != 0)
                 return;
 
-
+            var idCounter = 0;
             foreach (long addr in RecordAddresses())
             {
                 var r = GameController.Instance.Game.IngameState.GetObject<Quest>(addr);
                 r.Id = M.ReadStringU(M.ReadLong(addr), 255);
+                r.QuestId = idCounter++;
 
                 if (!QuestsDictionary.ContainsKey(r.Id))
                 {

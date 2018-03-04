@@ -1,5 +1,14 @@
 using PoeHUD.Poe.Elements;
+using System.Collections;
 using System.Collections.Generic;
+using PoeHUD.Poe.FilesInMemory;
+using PoeHUD.Controllers;
+using System;
+using System.Linq;
+using PoeHUD.Framework;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -28,6 +37,58 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
         public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));
+
+
+
+
+        public List<Tuple<Quest, int>> GetUncompletedQuests
+        {
+            get
+            {
+                var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
+                return stateListPres.Where(x => x.Item2 > 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+            }
+        }
+
+        public List<Tuple<Quest, int>> GetCompletedQuests
+        {
+            get
+            {
+                var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
+                return stateListPres.Where(x => x.Item2 == 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+            }
+        }
+
+        public Dictionary<string, KeyValuePair<Quest, QuestState>> GetQuestStates
+        {
+            get
+            {
+                Dictionary<string, KeyValuePair<Quest, QuestState>> dictionary = new Dictionary<string, KeyValuePair<Quest, QuestState>>();
+                foreach (var quest in GetQuests)
+                {
+                    if (quest == null) continue;
+                    if (quest.Item1 == null) continue;
+
+                    QuestState value = GameController.Instance.Files.QuestStates.GetQuestState(quest.Item1.Id, quest.Item2);
+
+                    if (value == null) continue;
+
+                    if(!dictionary.ContainsKey(quest.Item1.Id))
+                    dictionary.Add(quest.Item1.Id, new KeyValuePair<Quest, QuestState>(quest.Item1, value));
+                }
+                return dictionary.OrderBy(x => x.Key).ToDictionary(Key => Key.Key, Value => Value.Value);
+            }
+        }
+
+
+        private List<Tuple<Quest, int>> GetQuests
+        {
+            get
+            {
+                var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
+                return stateListPres.Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+            }
+        }
     }
 }
 

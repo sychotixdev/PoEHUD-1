@@ -2,6 +2,7 @@ using PoeHUD.Framework.Enums;
 using PoeHUD.Models;
 using PoeHUD.Poe;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -239,7 +240,6 @@ namespace PoeHUD.Framework
             return result;
         }
 
-
         public T IntptrToStruct<T>(long pointer, int structSize) where T : struct
         {
             var bytes = ReadBytes(pointer, structSize);
@@ -258,6 +258,56 @@ namespace PoeHUD.Framework
                 gch.Free();
             }
         }
+
+        #region Special Structs reading
+
+        //Temporary for reading QustStates
+        //Hope some day this will be replaced with GrayMagic dll to read generic structs https://github.com/Konctantin/GreyMagic
+        public List<Tuple<long, int>> ReadDoublePointerIntList(long address) 
+        {
+            var list = new List<Tuple<long, int>>();
+            var head = ReadLong(address + 0x8);
+            ListDoublePointerIntNode node = ReadDoublePointerIntListNode(head);
+            list.Add(new Tuple<long, int>(node.Ptr2_Key, node.Value));
+
+            for (var ptr2 = node.NextPtr; ptr2 != head; ptr2 = node.NextPtr)
+            {
+                node = ReadDoublePointerIntListNode(ptr2);
+
+                list.Add(new Tuple<long, int>(node.Ptr2_Key, node.Value));
+            }
+            if (list.Count > 0)
+                list.RemoveAt(list.Count - 1);//bug fix, useless reading last element
+            return list;
+        }
+        private unsafe ListDoublePointerIntNode ReadDoublePointerIntListNode(long pointer)
+        {
+            int objSize = Marshal.SizeOf(typeof(ListDoublePointerIntNode));
+            var bytes = ReadBytes(pointer, objSize);
+
+            ListDoublePointerIntNode str;
+            fixed (byte* fixedBytes = &bytes[0])
+            {
+                str = *(ListDoublePointerIntNode*)fixedBytes;
+            }
+            return str;
+        }
+
+        //DoublePointer as key + intValue as value
+        public struct ListDoublePointerIntNode
+        {
+            public long PreviousPtr;
+            public long NextPtr;
+
+            //Double vector struct:
+            public long Ptr1_Unused;
+            public long Ptr2_Key;
+
+            public int Value;
+        }
+
+
+
 
         /*
         public Dictionary<TKey, TValue> ReadHashMap<TKey, TValue>(long pointer) where TKey : struct where TValue : struct
@@ -309,7 +359,7 @@ namespace PoeHUD.Framework
             }
         }
         */
- 
+        #endregion
 
         public string DebugStr = "";
         public long[] FindPatterns(params Pattern[] patterns)
