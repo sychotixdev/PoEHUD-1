@@ -278,6 +278,7 @@
     <Compile Include="Plugins\BasePlugin.cs" />
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\FilesInMemory\Quests.cs" />
     <Compile Include="Poe\FilesInMemory\QuestStates.cs" />

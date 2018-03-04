@@ -240,6 +240,14 @@ namespace PoeHUD.Framework
             return result;
         }
 
+        public List<long> ReadPointersArray(long startAddress, long endAddress)
+        {
+            var result = new List<long>();
+            for (var address = startAddress; address < endAddress; address += 8)
+                result.Add(ReadLong(address));
+            return result;
+        }
+
         public T IntptrToStruct<T>(long pointer, int structSize) where T : struct
         {
             var bytes = ReadBytes(pointer, structSize);
