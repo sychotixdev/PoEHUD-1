@@ -224,6 +224,7 @@ namespace PoeHUD.Framework
             return array;
         }
 
+        //I hope in future all of this next shit will be replaced with GrayMagic:
         public List<T> ReadStructsArray<T>(long startAddress, long endAddress, int structSize) where T : RemoteMemoryObject, new()
         {
             var result = new List<T>();
@@ -245,6 +246,19 @@ namespace PoeHUD.Framework
             var result = new List<long>();
             for (var address = startAddress; address < endAddress; address += 8)
                 result.Add(ReadLong(address));
+            return result;
+        }
+
+        public List<long> ReadSecondPointerArray_Count(long startAddress, int count)
+        {
+            var result = new List<long>();
+            startAddress += 8;//Skip first
+
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(ReadLong(startAddress));
+                startAddress += 16;
+            }
             return result;
         }
 

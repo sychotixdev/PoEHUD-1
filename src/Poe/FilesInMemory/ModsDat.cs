@@ -43,12 +43,22 @@ namespace PoeHUD.Poe.FilesInMemory
         public Dictionary<string, ModRecord> records =
             new Dictionary<string, ModRecord>(StringComparer.OrdinalIgnoreCase);
 
+        public Dictionary<long, ModRecord> DictionaryRecords =
+         new Dictionary<long, ModRecord>();
+
         public Dictionary<Tuple<string, ModType>, List<ModRecord>> recordsByTier =
             new Dictionary<Tuple<string, ModType>, List<ModRecord>>();
 
         public ModsDat(Memory m, long address, StatsDat sDat, TagsDat tagsDat) : base(m, address)
         {
             loadItems(sDat, tagsDat);
+        }
+
+        public ModRecord GetModByAddress(long address)
+        {
+            ModRecord result;
+            DictionaryRecords.TryGetValue(address, out result);
+            return result;
         }
 
         private void loadItems(StatsDat sDat, TagsDat tagsDat)
@@ -58,7 +68,7 @@ namespace PoeHUD.Poe.FilesInMemory
                 var r = new ModRecord(M, sDat, tagsDat, addr);
                 if (records.ContainsKey(r.Key))
                     continue;
-
+                DictionaryRecords.Add(addr, r);
                 records.Add(r.Key, r);
                 bool addToItemIiers = r.Domain != ModDomain.Monster;
                 if (!addToItemIiers) continue;
@@ -151,6 +161,12 @@ namespace PoeHUD.Poe.FilesInMemory
                 }
                 IsEssence = m.ReadByte(addr + 0x1AC) == 0x01;
                 Tier = m.ReadStringU(m.ReadLong(addr + 0x1C5));
+            }
+
+
+            public override string ToString()
+            {
+                return $"Name: {UserFriendlyName}, Key: {Key}, MinLevel: {MinLevel}";
             }
 
             private class LevelComparer : IComparer<ModRecord>
