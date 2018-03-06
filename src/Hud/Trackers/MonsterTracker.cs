@@ -23,7 +23,7 @@ namespace PoeHUD.Hud.Trackers
         private readonly Dictionary<string, MonsterConfigLine> modAlerts, typeAlerts;
         private const string MOD_ALERTS = "config/monster_mod_alerts.txt";
         private const string MOD_ALERTS_PERSONAL = "config/monster_mod_alerts_personal.txt";
-        private const string TYPE_ALERTS = "config/monster_name_alertsl.txt";
+        private const string TYPE_ALERTS = "config/monster_name_alerts.txt";
         private const string TYPE_ALERTS_PERSONAL = "config/monster_name_alerts_personal.txt";
 
         public MonsterTracker(GameController gameController, Graphics graphics, MonsterTrackerSettings settings)
