@@ -8,15 +8,14 @@ namespace PoeHUD.Poe.Components
 {
     public class DeployedObject
     {
-        internal DeployedObject(int objId, ushort skillId)
+        internal DeployedObject(uint objId, ushort objectKey)
         {
             ObjectId = objId;
-            SkillId = skillId;
-            Entity = GameController.Instance.EntityListWrapper.GetEntityById(objId);
+            ObjectKey = objectKey;
         }
-        public int ObjectId { get; private set; }
-        public ushort SkillId { get; private set; }
-        public EntityWrapper Entity { get; private set; }
-        public ActorSkill Skill => GameController.Instance.Player.GetComponent<Actor>().ActorSkills.Find(x => x.Id == SkillId);
+        public uint ObjectId { get; private set; }
+        public ushort ObjectKey { get; private set; }
+        public EntityWrapper Entity => GameController.Instance.EntityListWrapper.GetEntityById(ObjectKey);
+        //public ActorSkill Skill => GameController.Instance.Player.GetComponent<Actor>().ActorSkills.Find(x => x.Id == ObjectKey);
     }
 }

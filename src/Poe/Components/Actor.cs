@@ -78,9 +78,9 @@ namespace PoeHUD.Poe.Components
 
                 for (var addr = start; addr < end; addr += 8)
                 {
-                    var objectId = M.ReadInt(addr);
-                    var SkillId = M.ReadUShort(addr + 4);
-                    result.Add(new DeployedObject(objectId, SkillId));
+                    var objectId = M.ReadUInt(addr);
+                    var objectKey = M.ReadUShort(addr + 4);//in list of entities
+                    result.Add(new DeployedObject(objectId, objectKey));
                 }
                 return result;
             }

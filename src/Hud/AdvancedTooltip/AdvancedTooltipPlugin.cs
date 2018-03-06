@@ -275,13 +275,19 @@ namespace PoeHUD.Hud.AdvancedTooltip
 
             var textPosition = new Vector2(clientRect.Right - 2, clientRect.Y + 1);
             Size2 pDpsSize = pDps > 0
-                ? Graphics.DrawText(pDps.ToString("#.#"), settings.DpsTextSize, textPosition, FontDrawFlags.Right)
+                ? Graphics.DrawText(pDps.ToString("#.#") + " pDps", settings.DpsTextSize, textPosition, FontDrawFlags.Right)
                 : new Size2();
             Size2 eDpsSize = eDps > 0
-                ? Graphics.DrawText(eDps.ToString("#.#"), settings.DpsTextSize,
+                ? Graphics.DrawText(eDps.ToString("#.#") + " eDps", settings.DpsTextSize,
                     textPosition.Translate(0, pDpsSize.Height), DpsColor, FontDrawFlags.Right)
                 : new Size2();
-            Vector2 dpsTextPosition = textPosition.Translate(0, pDpsSize.Height + eDpsSize.Height);
+
+            var dps = pDps + eDps;
+            Size2 dpsSize = dps > 0
+              ? Graphics.DrawText(dps.ToString("#.#") + " Dps", settings.DpsTextSize,
+                  textPosition.Translate(0, pDpsSize.Height + eDpsSize.Height), Color.White, FontDrawFlags.Right)
+              : new Size2();
+            Vector2 dpsTextPosition = textPosition.Translate(0, pDpsSize.Height + eDpsSize.Height + dpsSize.Height);
             Graphics.DrawText("dps", settings.DpsNameTextSize, dpsTextPosition, settings.TextColor, FontDrawFlags.Right);
             Graphics.DrawImage("preload-end.png", new RectangleF(textPosition.X - 86, textPosition.Y - 6, 90, 65), settings.BackgroundColor);
         }

@@ -6,17 +6,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public IEnumerable<Entity> Entities => EntitiesAsDictionary.Values;
 
-        public Dictionary<int, Entity> EntitiesAsDictionary
+        public Dictionary<uint, Entity> EntitiesAsDictionary
         {
             get
             {
-                var dictionary = new Dictionary<int, Entity>();
+                var dictionary = new Dictionary<uint, Entity>();
                 CollectEntities(M.ReadLong(Address), dictionary);
                 return dictionary;
             }
         }
 
-        private void CollectEntities(long addr, Dictionary<int, Entity> list)
+        private void CollectEntities(long addr, Dictionary<uint, Entity> list)
         {
             long num = addr;
             addr = M.ReadLong(addr + 0x8);
@@ -34,7 +34,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 hashSet.Add(nextAddr);
                 if (nextAddr != num && nextAddr != 0)
                 {
-                    int EntityID = M.ReadInt(nextAddr + 0x28, 0x40);
+                    var EntityID = M.ReadUInt(M.ReadLong(nextAddr + 0x28) + 0x40);
                     if (!list.ContainsKey(EntityID))
                     {
                         long address = M.ReadLong(nextAddr + 0x28);

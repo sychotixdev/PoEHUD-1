@@ -69,7 +69,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 }
             }
         }
- 
+
         public int SkillSlotIndex
         {
             get
@@ -86,7 +86,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return -1;
             }
         }
-        
+
         internal int SlotIdentifier => ((Id >> 8) & 0xff);
         public int SocketIndex => ((SlotIdentifier >> 2) & 15);
         public bool IsUserSkill => (SlotIdentifier & 0x80) > 0;
@@ -104,27 +104,30 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public bool IsVaalSkill => (SoulsPerUse >= 1) && (TotalVaalUses >= 1);
 
         private bool IsMine => true;//TODO
-
+        /*
         public int UsesAvailable
         {
             get
             {
-                if (MaxUses == 0)
+
+            if (MaxUses == 0)
+            {
+                if (IsTotem)
                 {
-                    if (IsTotem)
-                    {
-                        return GetStat(PlayerStats.SkillDisplayNumberOfTotemsAllowed);
-                    }
-                    return 1;
+                    return GetStat(PlayerStats.SkillDisplayNumberOfTotemsAllowed);
                 }
-                if (IsMine)
-                {
-                    return (GetStat(PlayerStats.SkillDisplayNumberOfRemoteMinesAllowed) - NumberDeployed);
-                }
-                return (MaxUses - NumberDeployed);
+                return 1;
+            }
+            return -1;
+
+            if (IsMine)
+            {
+                return (GetStat(PlayerStats.SkillDisplayNumberOfRemoteMinesAllowed) - NumberDeployed);
+            }
+            return (MaxUses - NumberDeployed);                         
             }
         }
-
+  
 
         public int NumberDeployed
         {
@@ -133,14 +136,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return DeployedObjects.Count;
             }
         }
+          */
 
-        public List<DeployedObject> DeployedObjects
-        {
-            get
-            {
-                return GameController.Instance.Player.GetComponent<Actor>().DeployedObjects.Where(x => x.SkillId == Id).ToList();
-            }
-        }
+        //Doesn't work after patch or what
+        //public List<DeployedObject> DeployedObjects => GameController.Instance.Player.GetComponent<Actor>().DeployedObjects.Where(x => x.ObjectKey == Id).ToList();
+
 
         public string InternalName
         {
