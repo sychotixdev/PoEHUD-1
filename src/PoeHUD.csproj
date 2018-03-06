@@ -296,6 +296,7 @@
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipe.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipeComponent.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryGenus.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Labyrinth\LabyrinthData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\MonsterVariety.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Quest.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\QuestState.cs" />

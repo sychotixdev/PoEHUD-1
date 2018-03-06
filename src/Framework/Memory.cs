@@ -241,10 +241,10 @@ namespace PoeHUD.Framework
             return result;
         }
 
-        public List<long> ReadPointersArray(long startAddress, long endAddress)
+        public List<long> ReadPointersArray(long startAddress, long endAddress, int offset = 8)
         {
             var result = new List<long>();
-            for (var address = startAddress; address < endAddress; address += 8)
+            for (var address = startAddress; address < endAddress; address += offset)
                 result.Add(ReadLong(address));
             return result;
         }
