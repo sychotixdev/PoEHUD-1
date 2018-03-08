@@ -280,14 +280,8 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryFamilies.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryGenuses.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryGroups.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryRecipeComponents.cs" />
-    <Compile Include="Poe\FilesInMemory\BestiaryRecipes.cs" />
+    <Compile Include="Poe\FilesInMemory\Base\UniversalFileWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
-    <Compile Include="Poe\FilesInMemory\Quests.cs" />
     <Compile Include="Poe\FilesInMemory\QuestStates.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryCapturableMonster.cs" />

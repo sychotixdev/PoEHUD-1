@@ -46,7 +46,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
-                return stateListPres.Where(x => x.Item2 > 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+                return stateListPres.Where(x => x.Item2 > 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
             }
         }
 
@@ -55,7 +55,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
-                return stateListPres.Where(x => x.Item2 == 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+                return stateListPres.Where(x => x.Item2 == 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
             }
         }
 
@@ -86,7 +86,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9e0));
-                return stateListPres.Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetQuestByAddress(x.Item1), x.Item2)).ToList();
+                return stateListPres.Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
             }
         }
     }

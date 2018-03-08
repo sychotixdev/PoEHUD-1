@@ -3,6 +3,7 @@ using PoeHUD.Poe.FilesInMemory;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Controllers
 {
@@ -16,27 +17,27 @@ namespace PoeHUD.Controllers
         public readonly WorldAreas WorldAreas;
         public readonly PassiveSkills PassiveSkills;
         public readonly LabyrinthTrials LabyrinthTrials;
-        public readonly Quests Quests;
+        public readonly UniversalFileWrapper<Quest> Quests;
         public readonly QuestStates QuestStates;
-        public readonly BestiaryCapturableMonsters BestiaryCapturableMonsters;
-        public readonly BestiaryRecipes BestiaryRecipes;
-        public readonly BestiaryRecipeComponents BestiaryRecipeComponents;
-        public readonly BestiaryGroups BestiaryGroups;
-        public readonly BestiaryFamilies BestiaryFamilies;
-        public readonly BestiaryGenuses BestiaryGenuses;
+        public readonly UniversalFileWrapper<BestiaryCapturableMonster> BestiaryCapturableMonsters;
+        public readonly UniversalFileWrapper<BestiaryRecipe> BestiaryRecipes;
+        public readonly UniversalFileWrapper<BestiaryRecipeComponent> BestiaryRecipeComponents;
+        public readonly UniversalFileWrapper<BestiaryGroup> BestiaryGroups;
+        public readonly UniversalFileWrapper<BestiaryFamily> BestiaryFamilies;
+        public readonly UniversalFileWrapper<BestiaryGenus> BestiaryGenuses;
         public readonly MonsterVarieties MonsterVarieties;
 
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
 
         //Debug for DeveloperTool
-        private BestiaryCapturableMonsters BestiaryCapturableMonsters_Debug => BestiaryCapturableMonsters;
-        private BestiaryRecipes BestiaryRecipes_Debug => BestiaryRecipes;
-        private BestiaryRecipeComponents BestiaryRecipeComponents_Debug => BestiaryRecipeComponents;
-        private BestiaryGroups BestiaryGroups_Debug => BestiaryGroups;
-        private BestiaryFamilies BestiaryFamilies_Debug => BestiaryFamilies;
-        private BestiaryGenuses BestiaryGenuses_Debug => BestiaryGenuses;
-        private MonsterVarieties MonsterVarieties_Debug => MonsterVarieties;
+        private UniversalFileWrapper<BestiaryCapturableMonster> _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
+        private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes => BestiaryRecipes;
+        private UniversalFileWrapper<BestiaryRecipeComponent> _BestiaryRecipeComponents => BestiaryRecipeComponents;
+        private UniversalFileWrapper<BestiaryGroup> _BestiaryGroups => BestiaryGroups;
+        private UniversalFileWrapper<BestiaryFamily> _BestiaryFamilies => BestiaryFamilies;
+        private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses => BestiaryGenuses;
+        private MonsterVarieties _MonsterVarieties => MonsterVarieties;
 
 
         public FsController(Memory mem)
@@ -51,14 +52,14 @@ namespace PoeHUD.Controllers
             WorldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat"));
             PassiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat"));
             LabyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
-            Quests = new Quests(mem, FindFile("Data/Quest.dat"));
+            Quests = new UniversalFileWrapper<Quest>(mem, FindFile("Data/Quest.dat"));
             QuestStates = new QuestStates(mem, FindFile("Data/QuestStates.dat"));
-            BestiaryCapturableMonsters = new BestiaryCapturableMonsters(mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
-            BestiaryRecipes = new BestiaryRecipes(mem, FindFile("Data/BestiaryRecipes.dat"));
-            BestiaryRecipeComponents = new BestiaryRecipeComponents(mem, FindFile("Data/BestiaryRecipeComponent.dat"));
-            BestiaryGroups = new BestiaryGroups(mem, FindFile("Data/BestiaryGroups.dat"));
-            BestiaryFamilies = new BestiaryFamilies(mem, FindFile("Data/BestiaryFamilies.dat"));
-            BestiaryGenuses = new BestiaryGenuses(mem, FindFile("Data/BestiaryGenus.dat"));
+            BestiaryCapturableMonsters = new UniversalFileWrapper<BestiaryCapturableMonster>(mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
+            BestiaryRecipes = new UniversalFileWrapper<BestiaryRecipe>(mem, FindFile("Data/BestiaryRecipes.dat"));
+            BestiaryRecipeComponents = new UniversalFileWrapper<BestiaryRecipeComponent>(mem, FindFile("Data/BestiaryRecipeComponent.dat"));
+            BestiaryGroups = new UniversalFileWrapper<BestiaryGroup>(mem, FindFile("Data/BestiaryGroups.dat"));
+            BestiaryFamilies = new UniversalFileWrapper<BestiaryFamily>(mem, FindFile("Data/BestiaryFamilies.dat"));
+            BestiaryGenuses = new UniversalFileWrapper<BestiaryGenus>(mem, FindFile("Data/BestiaryGenus.dat"));
             MonsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat"));
         }
 

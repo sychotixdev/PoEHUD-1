@@ -19,11 +19,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private MonsterVariety monsterVariety;
         public MonsterVariety MonsterVariety => monsterVariety != null ? monsterVariety :
-            monsterVariety = GameController.Instance.Files.MonsterVarieties.GetMonsterVarietyByAddress(M.ReadLong(Address + 0x8));
+            monsterVariety = GameController.Instance.Files.MonsterVarieties.GetByAddress(M.ReadLong(Address + 0x8));
 
         private BestiaryGroup bestiaryGroup;
         public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup :
-            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetBestiaryGroupByAddress(M.ReadLong(Address + 0x18));
+            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetByAddress(M.ReadLong(Address + 0x18));
 
         public override string ToString()
         {

@@ -14,7 +14,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         public int Id { get; internal set; }
 
-        public string VarietyId { get; internal set; }//=> M.ReadStringU(M.ReadLong(Address));
+        private string varietyId;
+        public string VarietyId => varietyId != null ? varietyId : varietyId = M.ReadStringU(M.ReadLong(Address));
 
         //public long MonsterTypePtr => M.ReadLong(Address + 0x10);//TODO
 

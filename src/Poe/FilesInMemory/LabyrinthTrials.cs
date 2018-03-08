@@ -10,51 +10,26 @@ using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
-    public class LabyrinthTrials : FileInMemory
-    {        
-        //We mark this fields as private coz we don't allow to read them directly. Optimisation. Use methods instead
-        private readonly Dictionary<int, LabyrinthTrial> LabyrinthTrialsDictionary = new Dictionary<int, LabyrinthTrial>();
-        private readonly List<LabyrinthTrial> LabyrinthTrialsList = new List<LabyrinthTrial>();
-
+    public class LabyrinthTrials : UniversalFileWrapper<LabyrinthTrial>
+    {
         public LabyrinthTrials(Memory m, long address)
             : base(m, address)
         {
         }
-        
+
         public LabyrinthTrial GetLabyrinthTrialByAreaId(string id)
         {
-            return GetTrialAreas().First(x => x.Area.Id == id);
+            return EntriesList.FirstOrDefault(x => x.Area.Id == id);
         }
 
         public LabyrinthTrial GetLabyrinthTrialById(int index)
         {
-            return GetTrialAreas().First(x => x.Id == index);
+            return EntriesList.FirstOrDefault(x => x.Id == index);
         }
 
         public LabyrinthTrial GetLabyrinthTrialByArea(WorldArea area)
         {
-            return GetTrialAreas().First(x => x.Area == area );
-        }
-
-        public List<LabyrinthTrial> GetTrialAreas()
-        {
-            if (LabyrinthTrialsDictionary.Count == 0)
-                ReloadCache();
-
-            return LabyrinthTrialsList;
-        }
-
-        private void ReloadCache()
-        {
-            LabyrinthTrialsDictionary.Clear();
-            LabyrinthTrialsList.Clear();
-            
-            foreach (long addr in RecordAddresses())
-            {
-                var lw = new LabyrinthTrial(M, addr);
-                LabyrinthTrialsDictionary.Add(lw.Id, lw);
-                LabyrinthTrialsList.Add(lw);
-            }
+            return EntriesList.FirstOrDefault(x => x.Area == area);
         }
 
         public static string[] LabyrinthTrialAreaIds = new string[18]
@@ -80,10 +55,10 @@ namespace PoeHUD.Poe.FilesInMemory
         };
     }
 
-    public class LabyrinthTrial
+    public class LabyrinthTrial : RemoteMemoryObject
     {
-        public readonly int Id;
-        public long Address { get; private set; }
+        private int id = -1;
+        public int Id => id != -1 ? id : id = M.ReadInt(Address + 0x10);
 
         public WorldArea area;
         public WorldArea Area
@@ -93,21 +68,10 @@ namespace PoeHUD.Poe.FilesInMemory
                 if (area == null)
                 {
                     var areaPtr = GameController.Instance.Memory.ReadLong(Address + 0x8);
-                    area = GameController.Instance.Files.WorldAreas.GetAreaByAddress(areaPtr);
+                    area = GameController.Instance.Files.WorldAreas.GetByAddress(areaPtr);
                 }
                 return area;
             }
-        }
-
-        public LabyrinthTrial(Memory m, long addr)
-        {
-            Address = addr;
-            Id = m.ReadInt(Address + 0x10);
-
-            //Unknown shit
-            //int1 = m.ReadInt(Address + 0x10);
-            //int2 = m.ReadInt(Address + 0x14);
-            //int3 = m.ReadInt(Address + 0x18);
         }
     }
 }

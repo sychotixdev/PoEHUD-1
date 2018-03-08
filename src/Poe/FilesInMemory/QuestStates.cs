@@ -10,27 +10,12 @@ using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
-    public class QuestStates : FileInMemory
+    public class QuestStates : UniversalFileWrapper<QuestState>
     {
-        private readonly List<QuestState> QuestStatesList = new List<QuestState>();
-
         public QuestStates(Memory m, long address)
             : base(m, address)
         {
         }
-
-        public void CheckCache()
-        {
-            if (QuestStatesList.Count != 0)
-                return;
-
-            foreach (long addr in RecordAddresses())
-            {
-                var r = GameController.Instance.Game.IngameState.GetObject<QuestState>(addr);
-                QuestStatesList.Add(r);
-            }
-        }
-
 
         private Dictionary<string, Dictionary<int, QuestState>> QuestStatesDictionary;
         public QuestState GetQuestState(string questId, int stateId)
@@ -39,7 +24,7 @@ namespace PoeHUD.Poe.FilesInMemory
             if (QuestStatesDictionary == null)
             {
                 CheckCache();
-                var qStates = QuestStatesList;
+                var qStates = EntriesList;
                 QuestStatesDictionary = new Dictionary<string, Dictionary<int, QuestState>>();
                 try
                 {

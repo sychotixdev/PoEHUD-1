@@ -190,7 +190,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 get
                 {
                     if (normalAreas == null)
-                        normalAreas = NormalAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetAreaByAddress(x)).ToList();
+                        normalAreas = NormalAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
                     return normalAreas;
                 }
             }
@@ -201,7 +201,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 get
                 {
                     if (cruelAreas == null)
-                        cruelAreas = CruelAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetAreaByAddress(x)).ToList();
+                        cruelAreas = CruelAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
                     return cruelAreas;
                 }
             }
@@ -212,7 +212,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 get
                 {
                     if (mercilesAreas == null)
-                        mercilesAreas = MercilesAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetAreaByAddress(x)).ToList();
+                        mercilesAreas = MercilesAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
                     return mercilesAreas;
                 }
             }
@@ -223,7 +223,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 get
                 {
                     if (endgameAreas == null)
-                        endgameAreas = EndgameAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetAreaByAddress(x)).ToList();
+                        endgameAreas = EndgameAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
                     return endgameAreas;
                 }
             }

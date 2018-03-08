@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     {
         //public string Id { get; internal set; }
         public long QuestPtr => M.ReadLong(Address + 0x8);
-        public Quest Quest => GameController.Instance.Files.Quests.GetQuestByAddress(QuestPtr);
+        public Quest Quest => GameController.Instance.Files.Quests.GetByAddress(QuestPtr);
 
         public int QuestStateId => M.ReadInt(Address + 0x10);
         public int TestOffset => M.ReadInt(Address + 0x14);

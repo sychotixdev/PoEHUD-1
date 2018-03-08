@@ -45,7 +45,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 {
                     var count = M.ReadInt(Address + 0x10);
                     var pointers = M.ReadSecondPointerArray_Count(M.ReadLong(Address + 0x18), count);
-                    components = pointers.Select(x => GameController.Instance.Files.BestiaryRecipeComponents.GetRecipeComponentByAddress(x)).ToList();
+                    components = pointers.Select(x => GameController.Instance.Files.BestiaryRecipeComponents.GetByAddress(x)).ToList();
                 }
                 return components;
             }

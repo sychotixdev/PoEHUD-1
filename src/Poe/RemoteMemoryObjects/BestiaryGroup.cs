@@ -29,7 +29,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private BestiaryFamily family;
         public BestiaryFamily Family => family != null ? family :
-            family = GameController.Instance.Files.BestiaryFamilies.GetFamilyByAddress(M.ReadLong(Address + 0x38));
+            family = GameController.Instance.Files.BestiaryFamilies.GetByAddress(M.ReadLong(Address + 0x38));
 
         public override string ToString()
         {

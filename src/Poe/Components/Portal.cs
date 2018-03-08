@@ -10,6 +10,6 @@ namespace PoeHUD.Poe.Components
 {
     public class Portal : Component
     {
-        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetAreaByAddress(M.ReadLong(Address + 0x28));
+        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x28));
     }
 }

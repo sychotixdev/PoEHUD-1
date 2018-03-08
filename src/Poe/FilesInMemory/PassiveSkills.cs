@@ -11,14 +11,13 @@ using StatRecord = PoeHUD.Poe.FilesInMemory.StatsDat.StatRecord;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
-    public class PassiveSkills : FileInMemory
+    public class PassiveSkills : UniversalFileWrapper<PassiveSkill>
     {
         public Dictionary<int, PassiveSkill> PassiveSkillsDictionary = new Dictionary<int, PassiveSkill>();
 
         public PassiveSkills(Memory m, long address)
             : base(m, address)
         {
-            CheckCache(); //temporary
         }
 
         public PassiveSkill GetPassiveSkillByPassiveId(int index)
@@ -26,83 +25,60 @@ namespace PoeHUD.Poe.FilesInMemory
             CheckCache();
 
             PassiveSkill result;
-            if (PassiveSkillsDictionary.TryGetValue(index, out result))
-                result.ReadData();
-
+            PassiveSkillsDictionary.TryGetValue(index, out result);
             return result;
         }
+
         public PassiveSkill GetPassiveSkillById(string id)
         {
-            CheckCache();
-
-            var result = PassiveSkillsDictionary.Values.ToList().Find(x => x.Id == id);
-            result?.ReadData();
-            return result;
+            return EntriesList.FirstOrDefault(x => x.Id == id);
         }
 
-        public PassiveSkill GetAreaByAddress(long address)
+        protected override void EntryAdded(long addr, PassiveSkill entry)
         {
-            CheckCache();
-
-            var result = PassiveSkillsDictionary.Values.ToList().Find(x => x.Address == address);
-            result?.ReadData();
-            return result;
-        }
-
-        public void CheckCache()
-        {
-            if (PassiveSkillsDictionary.Count != 0)
-                return;
-            
-            foreach (long addr in RecordAddresses())
-            {
-                var r = new PassiveSkill(M, addr);
-                if (!PassiveSkillsDictionary.ContainsKey(r.PassiveId))
-                    PassiveSkillsDictionary.Add(r.PassiveId, r);
-            }
+            PassiveSkillsDictionary.Add(entry.PassiveId, entry);
         }
     }
 
-    public class PassiveSkill
+    public class PassiveSkill : RemoteMemoryObject
     {
-        public readonly long Address;
-        public readonly int PassiveId;
-        public string Id { get; internal set; }
-        public string Name { get; internal set; }
+        private int passiveId = -1;
+        public int PassiveId => passiveId != -1 ? passiveId :
+            passiveId = M.ReadInt(Address + 0x30);
+
+        private string id;
+        public string Id => id != null ? id :
+            id = M.ReadStringU(M.ReadLong(Address), 255);
+
+        private string name;
+        public string Name => name != null ? name :
+            name = M.ReadStringU(M.ReadLong(Address + 0x34), 255);
+
         public string Icon => M.ReadStringU(M.ReadLong(Address + 0x8), 255);//Read on request
         private Memory M;
 
-        public PassiveSkill(Memory m, long address)
-        {
-            M = m;
-            Address = address;
-            PassiveId = m.ReadInt(Address + 0x30);
-        }
 
-        internal void ReadData()
-        {
-            Id = M.ReadStringU(M.ReadLong(Address), 255);
-            Name = M.ReadStringU(M.ReadLong(Address + 0x34), 255);
-        }
-
+        private List<Tuple<StatRecord, int>> stats;
         public List<Tuple<StatRecord, int>> Stats
         {
             get
             {
-                var result = new List<Tuple<StatRecord, int>>();
-
-                var statsCount = M.ReadInt(Address + 0x10);
-                var pointerToStats = M.ReadLong(Address + 0x18);
-                pointerToStats += 8;//Skip first
-
-                for (int i = 0; i < statsCount; i++)
+                if (stats == null)
                 {
-                    var datPtr = M.ReadLong(pointerToStats);
-                    var stat = GameController.Instance.Files.Stats.GetStatByAddress(datPtr);
-                    result.Add(new Tuple<StatRecord, int>(stat, ReadStatValue(i)));
-                    pointerToStats += 16;//16 because we are reading each second pointer
+                    stats = new List<Tuple<StatRecord, int>>();
+
+                    var statsCount = M.ReadInt(Address + 0x10);
+                    var pointerToStats = M.ReadLong(Address + 0x18);
+                    var statsPointers = M.ReadSecondPointerArray_Count(pointerToStats, statsCount);
+
+                    stats = statsPointers.Select((x, i) =>
+                    new Tuple<StatRecord, int>
+                    (
+                        GameController.Instance.Files.Stats.GetStatByAddress(x),
+                        ReadStatValue(i)
+                    )).ToList();
                 }
-                return result;
+                return stats;
             }
         }
 

@@ -48,7 +48,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                     for (int i = 0; i < connectionsCount; i++)
                     {
-                        var newArea = GameController.Instance.Files.WorldAreas.GetAreaByAddress(m.ReadLong(connectionsPtr));
+                        var newArea = GameController.Instance.Files.WorldAreas.GetByAddress(m.ReadLong(connectionsPtr));
                         connections.Add(newArea);
                         connectionsPtr += 8;
                     }
@@ -72,7 +72,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                     for (int i = 0; i < corruptedAreasCount; i++)
                     {
-                        var newArea = GameController.Instance.Files.WorldAreas.GetAreaByAddress(m.ReadLong(corruptedAreasPtr));
+                        var newArea = GameController.Instance.Files.WorldAreas.GetByAddress(m.ReadLong(corruptedAreasPtr));
                         corruptedAreas.Add(newArea);
                         corruptedAreasPtr += 8;
                     }

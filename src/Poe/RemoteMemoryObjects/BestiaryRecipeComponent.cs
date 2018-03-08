@@ -25,15 +25,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private BestiaryFamily bestiaryFamily;
         public BestiaryFamily BestiaryFamily => bestiaryFamily != null ? bestiaryFamily :
-            bestiaryFamily = GameController.Instance.Files.BestiaryFamilies.GetFamilyByAddress(M.ReadLong(Address + 0x14));
+            bestiaryFamily = GameController.Instance.Files.BestiaryFamilies.GetByAddress(M.ReadLong(Address + 0x14));
 
         private BestiaryGroup bestiaryGroup;
         public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup :
-            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetBestiaryGroupByAddress(M.ReadLong(Address + 0x24));
+            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetByAddress(M.ReadLong(Address + 0x24));
 
         private BestiaryGenus bestiaryGenus;
         public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? bestiaryGenus :
-            bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetGenusByAddress(M.ReadLong(Address + 0x58));
+            bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetByAddress(M.ReadLong(Address + 0x58));
 
         //Can be null, not all have mods
         private ModsDat.ModRecord mod;
@@ -42,7 +42,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private BestiaryCapturableMonster bestiaryCapturableMonster;
         public BestiaryCapturableMonster BestiaryCapturableMonster => bestiaryCapturableMonster != null ? bestiaryCapturableMonster :
-            bestiaryCapturableMonster = GameController.Instance.Files.BestiaryCapturableMonsters.GetMonsterByAddress(M.ReadLong(Address + 0x44));
+            bestiaryCapturableMonster = GameController.Instance.Files.BestiaryCapturableMonsters.GetByAddress(M.ReadLong(Address + 0x44));
 
         public override string ToString()
         {

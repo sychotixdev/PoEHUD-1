@@ -23,7 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private BestiaryGroup bestiaryGroup;
         public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup :
-            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetBestiaryGroupByAddress(M.ReadLong(Address + 0x18));
+            bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetByAddress(M.ReadLong(Address + 0x18));
 
         private string name2;
         public string Name2 => name2 != null ? name2 :

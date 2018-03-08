@@ -186,7 +186,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
           
             for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
             {
-                result.Add(GameController.Instance.Files.WorldAreas.GetAreaByAddress(M.ReadLong(addr + 0x18)));
+                result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(addr + 0x18)));
                 if (--size < 0) break;
             }
             return result;
