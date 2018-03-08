@@ -9,7 +9,9 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using PoeHUD.Hud.Preload;
 
 namespace PoeHUD.Hud.Trackers
 {
@@ -19,14 +21,36 @@ namespace PoeHUD.Hud.Trackers
         private readonly Dictionary<EntityWrapper, MonsterConfigLine> alertTexts;
         private readonly Dictionary<MonsterRarity, Func<EntityWrapper, Func<string, string>, CreatureMapIcon>> iconCreators;
         private readonly Dictionary<string, MonsterConfigLine> modAlerts, typeAlerts;
+        private const string MOD_ALERTS = "config/monster_mod_alerts.txt";
+        private const string MOD_ALERTS_PERSONAL = "config/monster_mod_alerts_personal.txt";
+        private const string TYPE_ALERTS = "config/monster_name_alerts.txt";
+        private const string TYPE_ALERTS_PERSONAL = "config/monster_name_alerts_personal.txt";
 
         public MonsterTracker(GameController gameController, Graphics graphics, MonsterTrackerSettings settings)
             : base(gameController, graphics, settings)
         {
             alreadyAlertedOf = new HashSet<long>();
             alertTexts = new Dictionary<EntityWrapper, MonsterConfigLine>();
-            modAlerts = LoadConfig("config/monster_mod_alerts.txt");
-            typeAlerts = LoadConfig("config/monster_name_alerts.txt");
+            modAlerts = LoadConfig(MOD_ALERTS);
+            typeAlerts = LoadConfig(TYPE_ALERTS);
+
+            if (File.Exists(MOD_ALERTS_PERSONAL))
+            {
+                modAlerts = modAlerts.MergeLeft(LoadConfig(MOD_ALERTS_PERSONAL));
+            }
+            else
+            {
+                File.Create(MOD_ALERTS_PERSONAL);
+            }
+
+            if (File.Exists(TYPE_ALERTS_PERSONAL))
+            {
+                typeAlerts = typeAlerts.MergeLeft(LoadConfig(TYPE_ALERTS_PERSONAL));
+            }
+            else
+            {
+                File.Create(TYPE_ALERTS_PERSONAL);
+            }
             Func<bool> monsterSettings = () => Settings.Monsters;
             iconCreators = new Dictionary<MonsterRarity, Func<EntityWrapper, Func<string, string>, CreatureMapIcon>>
             {
@@ -45,18 +69,18 @@ namespace PoeHUD.Hud.Trackers
         public Dictionary<string, MonsterConfigLine> LoadConfig(string path)
         {
             return LoadConfigBase(path, 5).ToDictionary(line => line[0], line =>
-             {
-                 var monsterConfigLine = new MonsterConfigLine
-                 {
-                     Text = line[1],
-                     SoundFile = line.ConfigValueExtractor(2),
-                     Color = line.ConfigColorValueExtractor(3),
-                     MinimapIcon = line.ConfigValueExtractor(4)
-                 };
-                 if (monsterConfigLine.SoundFile != null)
-                     Sounds.AddSound(monsterConfigLine.SoundFile);
-                 return monsterConfigLine;
-             });
+            {
+                var monsterConfigLine = new MonsterConfigLine
+                {
+                    Text = line[1],
+                    SoundFile = line.ConfigValueExtractor(2),
+                    Color = line.ConfigColorValueExtractor(3),
+                    MinimapIcon = line.ConfigValueExtractor(4)
+                };
+                if (monsterConfigLine.SoundFile != null)
+                    Sounds.AddSound(monsterConfigLine.SoundFile);
+                return monsterConfigLine;
+            });
         }
 
         public override void Render()
