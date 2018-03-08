@@ -18,8 +18,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             recipeId = M.ReadStringU(M.ReadLong(Address));
 
         private string description = null;
-        public string Description => description != null ? description : 
+        public string Description => description != null ? description :
             description = M.ReadStringU(M.ReadLong(Address + 0x8));
+
+        private string notes = null;
+        public string Notes => notes != null ? notes :
+            notes = M.ReadStringU(M.ReadLong(Address + 0x20));
+
+        private string hint = null;
+        public string HintText => hint != null ? hint :
+            hint = M.ReadStringU(M.ReadLong(Address + 0x28));
 
         public bool RequireSpecialMonster => Components.Count == 4;
 
@@ -53,7 +61,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public override string ToString()
         {
-            return Description + " : " + RecipeId;
+            return HintText + ": " + Description;
         }
     }
 }
