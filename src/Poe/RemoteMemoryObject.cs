@@ -5,7 +5,6 @@ namespace PoeHUD.Poe
 {
     public abstract class RemoteMemoryObject
     {
-        internal RemoteMemoryObject() { }//Don't allow to create class instance using constructor
         public long Address { get; protected set; }
         protected TheGame Game { get; set; }
         protected Memory M { get; set; }
