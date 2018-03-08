@@ -30,10 +30,10 @@ namespace PoeHUD.Hud.Menu
             float y = Bounds.Y + Children.Sum(current => current.Bounds.Height);
             item.Bounds = new RectangleF(x + 10, y, item.DesiredWidth, item.DesiredHeight);
             Children.Add(item);
-            WrapChilds();
+            //WrapChilds();
         }
 
-        private void WrapChilds()
+        /*private void WrapChilds()
         {
             var windowRect = GameController.Instance.Window.GetWindowRectangle();
 
@@ -49,7 +49,7 @@ namespace PoeHUD.Hud.Menu
                 bounds.Y = posY;
                 child.Bounds = bounds;
             }
-        }
+        }*/
 
         public void OnMouseEvent(MouseEventExtArgs e, Vector2 mousePos)
         {
