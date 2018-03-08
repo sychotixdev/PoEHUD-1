@@ -22,7 +22,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public override string ToString()
         {
-            return $"Id: {QuestStateId}, QuestId: {Quest.QuestId}, ProgressText {QuestProgressText}, QuestName: {Quest.Name}";
+            return $"Id: {QuestStateId}, Quest.Id: {Quest.Id}, ProgressText {QuestProgressText}, QuestName: {Quest.Name}";
         }
     }
 }

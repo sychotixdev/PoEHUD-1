@@ -11,15 +11,21 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class Quest : RemoteMemoryObject
     {
-        public int QuestId { get; internal set; }
-        public string Id { get; internal set; }
+        private string id;
+        public string Id => id != null ? id :
+            id = M.ReadStringU(M.ReadLong(Address), 255);
+
         public int Act => M.ReadInt(Address + 0x8);
-        public string Name => M.ReadStringU(M.ReadLong(Address + 0xc));
+
+        private string name;
+        public string Name => name != null ? name :
+            name = M.ReadStringU(M.ReadLong(Address + 0xc));
+
         public string Icon => M.ReadStringU(M.ReadLong(Address + 0x18));
 
         public override string ToString()
         {
-            return $"QuestId: {QuestId}, Id: {Id}, Name: {Name}";
+            return $"Id: {Id}, Name: {Name}";
         }
     }
 }
