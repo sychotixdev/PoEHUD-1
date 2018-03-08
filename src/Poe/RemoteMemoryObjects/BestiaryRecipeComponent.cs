@@ -16,23 +16,23 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int Id { get; internal set; }
 
         private string recipeId = null;
-        public string RecipeId => recipeId != null ? recipeId : 
+        public string RecipeId => recipeId != null ? recipeId :
             recipeId = M.ReadStringU(M.ReadLong(Address));
 
         private int minLevel = -1;
-        public int MinLevel => minLevel != -1 ? minLevel : 
+        public int MinLevel => minLevel != -1 ? minLevel :
             minLevel = M.ReadInt(Address + 0x8);
 
         private BestiaryFamily bestiaryFamily;
-        public BestiaryFamily BestiaryFamily => bestiaryFamily != null ? bestiaryFamily : 
+        public BestiaryFamily BestiaryFamily => bestiaryFamily != null ? bestiaryFamily :
             bestiaryFamily = GameController.Instance.Files.BestiaryFamilies.GetFamilyByAddress(M.ReadLong(Address + 0x14));
 
         private BestiaryGroup bestiaryGroup;
-        public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup : 
+        public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup :
             bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetBestiaryGroupByAddress(M.ReadLong(Address + 0x24));
 
         private BestiaryGenus bestiaryGenus;
-        public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? BestiaryGenus :
+        public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? bestiaryGenus :
             bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetGenusByAddress(M.ReadLong(Address + 0x58));
 
         //Can be null, not all have mods
@@ -48,6 +48,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             var debugStr = new StringBuilder();
             debugStr.Append($"Id: {Id}, ");
+
 
             if (MinLevel > 0)
                 debugStr.Append($"MinLevel: {MinLevel}, ");
