@@ -461,7 +461,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>IF "$(ConfigurationName)"=="Debug" (
+mkdir .\config
+mkdir .\sounds
+mkdir .\textures
+
+copy /Y $(ProjectDir)..\Release\config .\config
+copy /Y $(ProjectDir)..\Release\sounds .\sounds
+copy /Y $(ProjectDir)..\Release\textures .\textures
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>
