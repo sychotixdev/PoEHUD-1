@@ -11,9 +11,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class WorldArea : RemoteMemoryObject
     {
-        public string Id { get; internal set; }
+        private string id;
+        public string Id => id != null ? id :
+            id = M.ReadStringU(M.ReadLong(Address));
+
         public int Index { get; internal set; }
-        public string Name => M.ReadStringU(M.ReadLong(Address + 8), 255);
+
+        private string name;
+        public string Name => name != null ? name :
+            name = M.ReadStringU(M.ReadLong(Address + 8), 255);
+
+
         public int Act => M.ReadInt(Address + 0x10);
         public bool IsTown => M.ReadByte(Address + 0x14) == 1;
         public bool HasWaypoint => M.ReadByte(Address + 0x15) == 1;
@@ -79,6 +87,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 }
                 return corruptedAreas;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}";//, Connections: {string.Join(", ", Connections.Select(x => x.Name).ToArray())}
         }
     }
 }

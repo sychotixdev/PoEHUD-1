@@ -12,6 +12,8 @@ namespace PoeHUD.Poe.FilesInMemory
 {
     public partial class WorldAreas : UniversalFileWrapper<WorldArea>
     {
+        private Dictionary<int, WorldArea> AreasIndexDictionary = new Dictionary<int, WorldArea>();
+
         public WorldAreas(Memory m, long address)
             : base(m, address)
         {
@@ -19,7 +21,18 @@ namespace PoeHUD.Poe.FilesInMemory
 
         public WorldArea GetAreaByAreaId(int index)
         {
-            return EntriesList.Find(x => x.Index == index);
+            CheckCache();
+
+            WorldArea area;
+            AreasIndexDictionary.TryGetValue(index, out area);
+            return area;
+        }
+
+        private int IndexCounter;
+        protected override void EntryAdded(long addr, WorldArea entry)
+        {
+            entry.Index = IndexCounter++;
+            AreasIndexDictionary.Add(entry.Index, entry);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PoeHUD.Poe.Components
     {
         public int WorldAreaId => M.ReadInt(Address + 0x22);
         public WorldArea WorldArea => GameController.Instance.Files.WorldAreas.GetAreaByAreaId(WorldAreaId);
-        public AreaTransitionType TransitionType => (AreaTransitionType)M.ReadInt(Address + 0x28);
+        public AreaTransitionType TransitionType => (AreaTransitionType)M.ReadByte(Address + 0x28);
 
         public enum AreaTransitionType
         {

@@ -31,6 +31,7 @@ namespace PoeHUD.Controllers
         private readonly Memory mem;
 
         //Debug for DeveloperTool
+        private WorldAreas _WorldAreas => WorldAreas;
         private UniversalFileWrapper<BestiaryCapturableMonster> _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
         private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes => BestiaryRecipes;
         private UniversalFileWrapper<BestiaryRecipeComponent> _BestiaryRecipeComponents => BestiaryRecipeComponents;
@@ -38,6 +39,7 @@ namespace PoeHUD.Controllers
         private UniversalFileWrapper<BestiaryFamily> _BestiaryFamilies => BestiaryFamilies;
         private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses => BestiaryGenuses;
         private MonsterVarieties _MonsterVarieties => MonsterVarieties;
+       
 
 
         public FsController(Memory mem)
