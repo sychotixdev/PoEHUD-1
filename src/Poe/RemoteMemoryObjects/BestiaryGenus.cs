@@ -37,7 +37,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name}, MaxInStorage: {MaxInStorage}";
         }
     }
 }

@@ -35,10 +35,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? bestiaryGenus :
             bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetByAddress(M.ReadLong(Address + 0x61));
 
+        public int AmountCaptured => GameController.Instance.Game.IngameState.ServerData.GetBeastCapturedAmount(this);
+
         public override string ToString()
         {
-            return $"Nane: {MonsterName}, Group: {BestiaryGroup.Name}, Family: {BestiaryGroup.Family.Name}, MonsterVariety.Name: {MonsterVariety.MonsterName}," +
-                $" MonsterVariety.Id: {MonsterVariety.VarietyId}, MonsterVariety.TypeIndex: {MonsterVariety.BaseMonsterTypeIndex}";
+            return $"Nane: {MonsterName}, Group: {BestiaryGroup.Name}, Family: {BestiaryGroup.Family.Name}, Captured: {AmountCaptured}";
         }
     }
 }

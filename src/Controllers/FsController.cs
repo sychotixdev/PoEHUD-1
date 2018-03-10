@@ -19,7 +19,7 @@ namespace PoeHUD.Controllers
         public readonly LabyrinthTrials LabyrinthTrials;
         public readonly UniversalFileWrapper<Quest> Quests;
         public readonly QuestStates QuestStates;
-        public readonly UniversalFileWrapper<BestiaryCapturableMonster> BestiaryCapturableMonsters;
+        public readonly BestiaryCapturableMonsters BestiaryCapturableMonsters;
         public readonly UniversalFileWrapper<BestiaryRecipe> BestiaryRecipes;
         public readonly UniversalFileWrapper<BestiaryRecipeComponent> BestiaryRecipeComponents;
         public readonly UniversalFileWrapper<BestiaryGroup> BestiaryGroups;
@@ -32,7 +32,7 @@ namespace PoeHUD.Controllers
 
         //Debug for DeveloperTool
         private WorldAreas _WorldAreas => WorldAreas;
-        private UniversalFileWrapper<BestiaryCapturableMonster> _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
+        private BestiaryCapturableMonsters _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
         private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes => BestiaryRecipes;
         private UniversalFileWrapper<BestiaryRecipeComponent> _BestiaryRecipeComponents => BestiaryRecipeComponents;
         private UniversalFileWrapper<BestiaryGroup> _BestiaryGroups => BestiaryGroups;
@@ -56,7 +56,7 @@ namespace PoeHUD.Controllers
             LabyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
             Quests = new UniversalFileWrapper<Quest>(mem, FindFile("Data/Quest.dat"));
             QuestStates = new QuestStates(mem, FindFile("Data/QuestStates.dat"));
-            BestiaryCapturableMonsters = new UniversalFileWrapper<BestiaryCapturableMonster>(mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
+            BestiaryCapturableMonsters = new BestiaryCapturableMonsters(mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
             BestiaryRecipes = new UniversalFileWrapper<BestiaryRecipe>(mem, FindFile("Data/BestiaryRecipes.dat"));
             BestiaryRecipeComponents = new UniversalFileWrapper<BestiaryRecipeComponent>(mem, FindFile("Data/BestiaryRecipeComponent.dat"));
             BestiaryGroups = new UniversalFileWrapper<BestiaryGroup>(mem, FindFile("Data/BestiaryGroups.dat"));
