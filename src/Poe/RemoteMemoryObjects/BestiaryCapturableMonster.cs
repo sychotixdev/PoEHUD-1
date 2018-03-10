@@ -25,6 +25,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public BestiaryGroup BestiaryGroup => bestiaryGroup != null ? bestiaryGroup :
             bestiaryGroup = GameController.Instance.Files.BestiaryGroups.GetByAddress(M.ReadLong(Address + 0x18));
 
+        public long BestiaryEncountersPtr => M.ReadLong(Address + 0x30);
+
+        private BestiaryCapturableMonster bestiaryCapturableMonsterKey;
+        public BestiaryCapturableMonster BestiaryCapturableMonsterKey => bestiaryCapturableMonsterKey != null ? bestiaryCapturableMonsterKey :
+            bestiaryCapturableMonsterKey = GameController.Instance.Files.BestiaryCapturableMonsters.GetByAddress(M.ReadLong(Address + 0x6a));
+
+        private BestiaryGenus bestiaryGenus;
+        public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? bestiaryGenus :
+            bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetByAddress(M.ReadLong(Address + 0x61));
+
         public override string ToString()
         {
             return $"Nane: {MonsterName}, Group: {BestiaryGroup.Name}, Family: {BestiaryGroup.Family.Name}, MonsterVariety.Name: {MonsterVariety.MonsterName}," +

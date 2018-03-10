@@ -17,6 +17,7 @@ namespace PoeHUD.Hud.Preload
 {
     public class PreloadAlertPlugin : SizedPlugin<PreloadAlertSettings>
     {
+        public static event Action<List<string>> OnPreloadReceived = delegate { };
         private readonly HashSet<PreloadConfigLine> alerts;
         private readonly Dictionary<string, PreloadConfigLine> alertStrings;
         private readonly Dictionary<string, PreloadConfigLine> personalAlertStrings;
@@ -329,6 +330,8 @@ namespace PoeHUD.Hud.Preload
             }
 
             preloadStrings.Sort();
+
+            OnPreloadReceived(preloadStrings);
 
             foreach (var strings in preloadStrings)
             {
