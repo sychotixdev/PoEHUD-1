@@ -33,7 +33,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public string Icon => icon != null ? icon :
             icon = M.ReadStringU(M.ReadLong(Address + 0x28));
 
-        public int Unknown6 => M.ReadInt(Address + 0x30);
+        public int MaxInStorage => M.ReadInt(Address + 0x30);
 
         public override string ToString()
         {
