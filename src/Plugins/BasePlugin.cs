@@ -93,14 +93,6 @@ namespace PoeHUD.Plugins
             }
             eSaveSettings();
         }
-        public void iInitialiseMenu(MenuItem menu)
-        {
-            try { InitialiseMenu(menu); }
-            catch (Exception e)
-            {
-                HandlePluginError("InitialiseMenu", e);
-            }
-        }
 
         public void iLoadSettings()
         {
@@ -117,7 +109,6 @@ namespace PoeHUD.Plugins
         public virtual void EntityAdded(EntityWrapper entityWrapper) { }
         public virtual void EntityRemoved(EntityWrapper entityWrapper) { }
         public virtual void OnClose() { }
-        public virtual void InitialiseMenu(MenuItem menu) { }
 
         public float PluginErrorDisplayTime = 3;
         private string LogFileName = "ErrorLog.txt";

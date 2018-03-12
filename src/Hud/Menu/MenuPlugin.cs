@@ -15,68 +15,55 @@ namespace PoeHUD.Hud.Menu
 {
     public class MenuPlugin : Plugin<MenuSettings>
     {
-        public static RootButton MenuRootButton;
         //For spawning the menu in external plugins
-        public static event Action<RootButton> eInitMenu = delegate { };
+        public static event Action<int> eInitMenu = delegate { };
 
         public static IKeyboardMouseEvents KeyboardMouseEvents;
         private readonly SettingsHub settingsHub;
-        private bool holdKey;
-
         private bool isPoeGameVisible => (GameController.Window.IsForeground() || settingsHub.PerformanceSettings.AlwaysForeground);
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub) : base(gameController, graphics, settingsHub.MenuSettings)
         {
             this.settingsHub = settingsHub;
-            CreateMenu();
             KeyboardMouseEvents = Hook.GlobalEvents();
-            KeyboardMouseEvents.KeyDown += KeyboardMouseEvents_KeyDown;
-            KeyboardMouseEvents.MouseMoveExt += KeyboardMouseEvents_MouseMoveExt;
-            KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt;
-
-            // For ImGui
             KeyboardMouseEvents.MouseWheelExt += KeyboardMouseEvents_MouseWheelExt;
-            KeyboardMouseEvents.KeyDown += KeyboardMouseEvents_KeyDown1;
+            KeyboardMouseEvents.KeyDown += KeyboardMouseEvents_KeyDown;
             KeyboardMouseEvents.KeyUp += KeyboardMouseEvents_KeyUp;
             KeyboardMouseEvents.KeyPress += KeyboardMouseEvents_KeyPress;
-            KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt1;
+            KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt;
             KeyboardMouseEvents.MouseUpExt += KeyboardMouseEvents_MouseUpExt;
             KeyboardMouseEvents.MouseMove += KeyboardMouseEvents_MouseMove;
         }
-
         public override void Dispose()
         {
+            SettingsHub.Save(settingsHub);
             KeyboardMouseEvents.MouseWheelExt -= KeyboardMouseEvents_MouseWheelExt;
-            KeyboardMouseEvents.KeyDown -= KeyboardMouseEvents_KeyDown1;
+            KeyboardMouseEvents.KeyDown -= KeyboardMouseEvents_KeyDown;
             KeyboardMouseEvents.KeyUp -= KeyboardMouseEvents_KeyUp;
             KeyboardMouseEvents.KeyPress -= KeyboardMouseEvents_KeyPress;
-            KeyboardMouseEvents.MouseDownExt -= KeyboardMouseEvents_MouseDownExt1;
-            KeyboardMouseEvents.MouseUpExt -= KeyboardMouseEvents_MouseUpExt;
-
-            KeyboardMouseEvents.KeyDown -= KeyboardMouseEvents_KeyDown;
-            KeyboardMouseEvents.MouseMoveExt -= KeyboardMouseEvents_MouseMoveExt;
             KeyboardMouseEvents.MouseDownExt -= KeyboardMouseEvents_MouseDownExt;
+            KeyboardMouseEvents.MouseUpExt -= KeyboardMouseEvents_MouseUpExt;
             KeyboardMouseEvents.Dispose();
         }
-
         public override void Render()
         {
             try
             {
                 if (Settings.Enable)
-                    MenuRootButton.Render(Graphics, Settings);
-
-                bool tmp = Settings.ShowImGuiSample.Value;
-                if (Settings.ShowImGuiSample.Value)
-                    ImGuiNative.igShowDemoWindow(ref tmp);
-                Settings.ShowImGuiSample.Value = tmp;
+                    CreateImGuiMenu();
             }
             catch (Exception e)
             {
-                DebugPlug.DebugPlugin.LogMsg("Error Rendering Root Menu Button " + e.Message, 1);
+                DebugPlug.DebugPlugin.LogMsg("Error Rendering PoeHUD Menu." + e.Message, 1);
             }
         }
 
+        private void CreateImGuiMenu()
+        {
+            bool tmp = Settings.Enable.Value;
+            ImGuiNative.igShowDemoWindow(ref tmp);
+            Settings.Enable.Value = tmp;
+        }
         private bool ImGuiWantCaptureMouse(IO io)
         {
             unsafe
@@ -97,37 +84,6 @@ namespace PoeHUD.Hud.Menu
         }
 
         #region KeyboardMouseHandler
-        private void KeyboardMouseEvents_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!isPoeGameVisible)
-                return;
-
-            switch (e.KeyCode)
-            {
-                case Keys.F12:
-                    Settings.Enable.Value = !Settings.Enable.Value;
-                    SettingsHub.Save(settingsHub);
-                    break;
-            }
-        }
-        private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
-        {
-            if (isPoeGameVisible && Settings.Enable.Value)
-            {
-                Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
-                e.Handled = MenuRootButton.OnMouseEvent(e, mousePosition);
-            }
-        }
-        private void KeyboardMouseEvents_MouseMoveExt(object sender, MouseEventExtArgs e)
-        {
-            if (isPoeGameVisible && Settings.Enable.Value)
-            {
-                Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
-                MenuRootButton.OnMouseEvent(e, mousePosition);
-            }
-        }
-
-        // For ImGui Only
         private void KeyboardMouseEvents_KeyPress(object sender, KeyPressEventArgs e)
         {
             var io = ImGui.GetIO();
@@ -152,8 +108,18 @@ namespace PoeHUD.Hud.Menu
             io.ShiftPressed = false;
             io.KeysDown[e.KeyValue] = false;
         }
-        private void KeyboardMouseEvents_KeyDown1(object sender, KeyEventArgs e)
+        private void KeyboardMouseEvents_KeyDown(object sender, KeyEventArgs e)
         {
+            if (isPoeGameVisible)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.F12:
+                        Settings.Enable.Value = !Settings.Enable.Value;
+                        SettingsHub.Save(settingsHub);
+                        break;
+                }
+            }
             var io = ImGui.GetIO();
             io.CtrlPressed = e.Control || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey;
             // Don't know why but Alt is LMenu/RMenu
@@ -225,7 +191,7 @@ namespace PoeHUD.Hud.Menu
                 }
             }
         }
-        private void KeyboardMouseEvents_MouseDownExt1(object sender, MouseEventExtArgs e)
+        private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
         {
             var io = ImGui.GetIO();
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
@@ -266,59 +232,7 @@ namespace PoeHUD.Hud.Menu
         }
         #endregion
 
-        #region MenuHelperFunction
-        public static void AddChild(MenuItem parent, FileNode path)
-        {
-            FileButton item = new FileButton(path);
-            parent.AddChild(item);
-        }
-        public static MenuItem AddChild(MenuItem parent, string text)
-        {
-            SimpleMenu item = new SimpleMenu(parent, text);
-            parent.AddChild(item);
-            return item;
-        }
-        public static MenuItem AddChild(MenuItem parent, string text, ColorNode node)
-        {
-            ColorButton item = new ColorButton(text, node);
-            parent.AddChild(item);
-            return item;
-        }
-        public static MenuItem AddChild(MenuItem parent, string text, HotkeyNode node)
-        {
-            HotkeyButton item = new HotkeyButton(text, node);
-            parent.AddChild(item);
-            return item;
-        }
-        public static MenuItem AddChild(MenuItem parent, string text, ButtonNode node)
-        {
-            ButtonButton item = new ButtonButton(text, node);
-            parent.AddChild(item);
-            return item;
-        }
-        public static MenuItem AddChild<T>(MenuItem parent, string text, RangeNode<T> node) where T : struct
-        {
-            Picker<T> item = new Picker<T>(text, node);
-            parent.AddChild(item);
-            return item;
-        }
-        public static MenuItem AddChild(MenuItem parent, string text, ToggleNode node, string key = null, Func<MenuItem, bool> hide = null)
-        {
-            ToggleButton item = new ToggleButton(parent, text, node, key, hide);
-            parent.AddChild(item);
-            return item;
-        }
-        public static ListButton AddChild(MenuItem parent, string text, ListNode node)
-        {
-            ListButton item = new ListButton(text, node);
-            parent.AddChild(item);
-            //item.StartInitItems();//Can't be in ListButton.ctor coz first of all ListButton menu should be added to childs to initialise it's own bounds.
-            node.SettingsListButton = item;
-            return item;
-        }
-        #endregion
-
-        private void CreateMenu()
+/*        private void CreateMenu()
         {
             MenuRootButton = new RootButton(new Vector2(Settings.X, Settings.Y));
             MenuRootButton.eOnClose += delegate { SettingsHub.Save(settingsHub); };
@@ -659,6 +573,6 @@ namespace PoeHUD.Hud.Menu
             AddChild(performanceSettings, "Update ingame state every N ms", settingsHub.PerformanceSettings.UpdateIngemeStateLimit);
             AddChild(performanceSettings, "Always Foreground", settingsHub.PerformanceSettings.AlwaysForeground);
             eInitMenu(MenuRootButton); //Spawning the menu in external plugins
-        }
+        }*/
     }
 }

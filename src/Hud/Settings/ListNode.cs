@@ -18,14 +18,6 @@ namespace PoeHUD.Hud.Settings
         {
         }
         
-        [JsonIgnore]
-        public ListButton SettingsListButton;
-
-        public void SetListValues(List<string> values)
-        {
-            SettingsListButton.SetValues(values);
-        }
-
         public string Value
         {
             get { return value; }

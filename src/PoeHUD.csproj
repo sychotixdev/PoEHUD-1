@@ -212,14 +212,7 @@
     <Compile Include="Hud\Loot\QualityItemSettings.cs" />
     <Compile Include="Hud\Loot\QualityItemsSettings.cs" />
     <Compile Include="Hud\AdvancedTooltip\ItemModsSettings.cs" />
-    <Compile Include="Hud\Menu\ButtonButton.cs" />
-    <Compile Include="Hud\Menu\FileButton.cs" />
-    <Compile Include="Hud\Menu\ColorButton.cs" />
-    <Compile Include="Hud\Menu\HotkeyButton.cs" />
-    <Compile Include="Hud\Menu\ListButton.cs" />
     <Compile Include="Hud\Menu\MenuSettings.cs" />
-    <Compile Include="Hud\Menu\RootButton.cs" />
-    <Compile Include="Hud\Menu\SimpleMenu.cs" />
     <Compile Include="Hud\Performance.cs" />
     <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
     <Compile Include="Hud\PluginExtension\FileOperationAPIWrapper.cs" />
@@ -235,6 +228,7 @@
     <Compile Include="Hud\Settings\ListNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
+    <Compile Include="Hud\UI\ImGuiExtension.cs" />
     <Compile Include="Hud\UI\Renderers\ImGuiRender.cs" />
     <Compile Include="Hud\UI\Vertexes\GuiVertex.cs" />
     <Compile Include="Models\Attributes\HideInReflectionAttibute.cs" />
@@ -407,13 +401,10 @@
     <Compile Include="Poe\Components\Targetable.cs" />
     <Compile Include="Poe\Components\Weapon.cs" />
     <Compile Include="Poe\Components\WorldItem.cs" />
-    <Compile Include="Hud\Menu\ToggleButton.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Hud\Trackers\MonsterTracker.cs" />
-    <Compile Include="Hud\Menu\Picker.cs" />
     <Compile Include="Hud\Loot\ItemAlertPlugin.cs" />
     <Compile Include="Hud\Menu\MenuPlugin.cs" />
-    <Compile Include="Hud\Menu\MenuItem.cs" />
     <Compile Include="Hud\MapIcon.cs" />
     <Compile Include="Hud\Icons\LargeMapPlugin.cs" />
     <Compile Include="Hud\Preload\PreloadAlertPlugin.cs" />

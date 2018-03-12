@@ -43,7 +43,6 @@ namespace PoeHUD.Hud.PluginExtension
             API.eEntityRemoved += BPlugin.iEntityRemoved;
             API.eClose += BPlugin.iOnClose;
             API.eInitialise += BPlugin.iInitialise;
-            API.eInitMenu += BPlugin.iInitialiseMenu;
             API.eLoadSettings += BPlugin.iLoadSettings;
         }
 

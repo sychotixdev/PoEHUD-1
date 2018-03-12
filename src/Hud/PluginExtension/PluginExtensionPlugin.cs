@@ -21,25 +21,16 @@ namespace PoeHUD.Hud.PluginExtension
             GameController = gameController;
             Graphics = graphics;
             SearchPlugins();
-            LoadSettings();  
-            InitMenuForPlugins(); 
+            LoadSettings();
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
-        }
-        
-        private void InitMenuForPlugins()
-        {
-            RootButton mainMenu = MenuPlugin.MenuRootButton;
-            var pluginsMenu = MenuPlugin.AddChild(mainMenu, "Plugins");
-            eInitMenu(pluginsMenu);
         }
 
         public event Action eInitialise = delegate { };
         public event Action eRender = delegate { };
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
-        public event Action<MenuItem> eInitMenu = delegate { };
         public event Action eLoadSettings = delegate { };
         public event Action eClose = delegate { };
         public static List<BasePlugin> Plugins = new List<BasePlugin>();
