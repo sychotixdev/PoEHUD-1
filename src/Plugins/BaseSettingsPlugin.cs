@@ -4,26 +4,29 @@ using PoeHUD.Hud.Settings;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using SharpDX;
+using PoeHUD.Controllers;
+using PoeHUD.Framework;
+using PoeHUD.Hud.Menu;
+using PoeHUD.Hud.PluginExtension;
+using PoeHUD.Models;
+using System;
+using System.IO;
+using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Plugins
 {
     public class BaseSettingsPlugin<TSettings> : BasePlugin where TSettings : SettingsBase, new()
     {
+        internal override bool _allowRender => Settings.Enable.Value;
+
+        #region Settings
         public TSettings Settings { get; private set; }
         private string SettingsFileName = "config.ini";
 
-        public BaseSettingsPlugin()
-        {
-            eSaveSettings += SaveSettings;
-            eLoadSettings += LoadSettings;
-        }
+        private string SettingsFullPath => PluginDirectory + "\\" + SettingsFileName;
 
-        private string SettingsFullPath
-        {
-            get { return PluginDirectory + "\\" + SettingsFileName; }
-        }
-
-        private void LoadSettings()
+        internal override void _LoadSettings()
         {
             try
             {
@@ -35,7 +38,7 @@ namespace PoeHUD.Plugins
                     Settings = JsonConvert.DeserializeObject<TSettings>(json, SettingsHub.jsonSettings);
                 }
 
-                if (Settings == null)//...also sometimes config contains only "null" word, so that will be a fix for that
+                if (Settings == null)
                     Settings = new TSettings();
             }
             catch
@@ -44,16 +47,19 @@ namespace PoeHUD.Plugins
                 Settings = new TSettings();
             }
 
-            if (Settings.Enable == null)
+            if (Settings.Enable == null)//...also sometimes config Enable contains only "null" word, so that will be a fix for that
                 Settings.Enable = false;
-            if (!GameController.pluginsSettings.TryGetValue(SettingsFileName, out _))
+
+
+            if (GameController.pluginsSettings.ContainsKey(SettingsFullPath))//For hot reload
             {
-                //GameController.pluginsSettings.Add(Settings.ToString().Split('.')[0],Settings);
-                GameController.pluginsSettings.Add(Settings.GetType().Assembly.GetName().Name, Settings);
+                GameController.pluginsSettings.Remove(SettingsFullPath);
             }
+
+            GameController.pluginsSettings.Add(SettingsFullPath, Settings);
         }
 
-        private void SaveSettings()
+        internal override void SaveSettings()
         {
             try
             {
@@ -72,13 +78,6 @@ namespace PoeHUD.Plugins
                 LogError($"Plugin {PluginName} error save settings!", 3);
             }
         }
-
-        public override bool bAllowRender
-        {
-            get
-            {
-                return Settings.Enable;
-            }
-        }
+        #endregion
     }
 }

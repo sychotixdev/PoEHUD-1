@@ -20,6 +20,7 @@ namespace PoeHUD.Hud.Menu
 
         public static IKeyboardMouseEvents KeyboardMouseEvents;
         private readonly SettingsHub settingsHub;
+        private readonly MainMenuWindow MenuWindow;
         private bool isPoeGameVisible => (GameController.Window.IsForeground() || settingsHub.PerformanceSettings.AlwaysForeground);
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub) : base(gameController, graphics, settingsHub.MenuSettings)
@@ -33,6 +34,8 @@ namespace PoeHUD.Hud.Menu
             KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt;
             KeyboardMouseEvents.MouseUpExt += KeyboardMouseEvents_MouseUpExt;
             KeyboardMouseEvents.MouseMove += KeyboardMouseEvents_MouseMove;
+
+            MenuWindow = new MainMenuWindow();
         }
         public override void Dispose()
         {
@@ -47,6 +50,8 @@ namespace PoeHUD.Hud.Menu
         }
         public override void Render()
         {
+            MenuWindow.Render();
+            return;
             try
             {
                 if (Settings.Enable)
