@@ -51,7 +51,7 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
-        public static List<BasePlugin> Plugins = new List<BasePlugin>();
+        public static List<ExternalPlugin> Plugins = new List<ExternalPlugin>();
         private List<string> PluginUpdateLog;
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
         public const string UpdateBackupDir = "%Backup%";
@@ -96,7 +96,6 @@ namespace PoeHUD.Hud.PluginExtension
                     TryLoadDll(dll.FullName, pluginDirectoryInfo.FullName);
             }
         }
-
         private bool MoveDirectoryFiles(string origDirectory, string sourceDirectory, string targetDirectory)
         {
             bool noErrors = true;
@@ -170,6 +169,12 @@ namespace PoeHUD.Hud.PluginExtension
         }
 
 
+        private void LoadDefaultPlugins()
+        {
+
+        }
+
+        #region Plugins Events
         private Dictionary<string, Action<object[]>> PluginEvents = new Dictionary<string, Action<object[]>>();
         public void SubscribePluginEvent(string uniqEventName, Action<object[]> func)
         {
@@ -178,12 +183,12 @@ namespace PoeHUD.Hud.PluginExtension
             else
                 LogMessage("Event '" + uniqEventName + "' is already exist!", 10);
         }
-
         public void CallPluginEvent(string uniqEventName, object[] args)
         {
             if (PluginEvents.ContainsKey(uniqEventName))
                 PluginEvents[uniqEventName](args);
         }
+        #endregion
 
         private void TryLoadDll(string path, string dir)
         {
@@ -196,7 +201,19 @@ namespace PoeHUD.Hud.PluginExtension
             var myAsm = Assembly.Load(File.ReadAllBytes(path));
             if (myAsm == null) return;
 
-            var asmTypes = myAsm.GetTypes();
+            Type[] asmTypes = null;
+
+            try
+            {
+                asmTypes = myAsm.GetTypes();
+            }
+            catch (Exception ex)
+            {
+                LogError($"Can't load plugin dll: {Path.GetFileNameWithoutExtension(path)}, Error: " + ex.Message, 10);
+                return;
+            }
+
+
             if (asmTypes.Length == 0) return;
 
             foreach (var type in asmTypes)
@@ -204,11 +221,10 @@ namespace PoeHUD.Hud.PluginExtension
                 if (type.IsSubclassOf(typeof(BasePlugin)) && !type.IsAbstract)
                 {
                     var extPlugin = new ExternalPlugin(this, path, type.FullName);
-                    Plugins.Add(extPlugin.BPlugin);
+                    Plugins.Add(extPlugin);
                 }
             }
         }
-
         private const string ZoneName = "Zone.Identifier";
         static bool ProcessFile_Real(string path)
         {
@@ -253,9 +269,7 @@ namespace PoeHUD.Hud.PluginExtension
             eClose();
         }
         #endregion
-
-
-
+        #region Logging
         public void LogError(object message, float displayTime)
         {
             DebugPlug.DebugPlugin.LogMsg(message, displayTime, SharpDX.Color.Red);
@@ -264,5 +278,6 @@ namespace PoeHUD.Hud.PluginExtension
         {
             DebugPlug.DebugPlugin.LogMsg(message, displayTime);
         }
+        #endregion
     }
 }

@@ -28,6 +28,16 @@ namespace PoeHUD.Hud.UI
             return ImGui.BeginWindow(title, ref isOpened, autoResize ? WindowFlags.AlwaysAutoResize : WindowFlags.Default);
         }
 
+        public static bool Button(string label)
+        {
+            return ImGui.Button(label == null ? "" : label);
+        }
+        public static void Label(string label)
+        {
+            ImGui.Text(label == null ? "" : label);
+        }
+
+
         // Int Sliders
         public static int IntSlider(string labelString, int value, int minValue, int maxValue)
         {

@@ -11,13 +11,13 @@ namespace PoeHUD.Hud.Settings
         public Action<string> OnValueSelected = delegate { };
         [JsonIgnore]
         public Action<string> OnValueSelectedPre = delegate { };
-  
+
         private string value;
 
         public ListNode()
         {
         }
-        
+
         public string Value
         {
             get { return value; }
@@ -51,6 +51,13 @@ namespace PoeHUD.Hud.Settings
         public static implicit operator string(ListNode node)
         {
             return node.Value;
+        }
+
+        public List<string> Values = new List<string>();
+
+        public void SetListValues(List<string> values)
+        {
+            Values = values;
         }
     }
 }

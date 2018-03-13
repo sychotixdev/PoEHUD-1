@@ -23,48 +23,160 @@ using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
 using Vector2 = System.Numerics.Vector2;
 using PoeHUD.Hud.PluginExtension;
+using PoeHUD.Controllers;
+using PoeHUD.Hud.UI;
 
 namespace PoeHUD.Hud
 {
     public class MainMenuWindow
     {
-        //To setings ini:
-        private bool IsOpened = true;
-        private ImGuiVector2 LastSettingPos;
-        private ImGuiVector2 LastSettingSize;
-
         private string CurrentSelected = "";
         private int CurrentSelectedInt = 0;
         private ImGuiVector2 newcontentRegionArea;
+        private ExternalPlugin SelectedPlugin;
+        private float PluginNameWidth = 100;
+
+        private Dictionary<string, List<ExternalPlugin>> InbuildPlugins = new Dictionary<string, List<ExternalPlugin>>();
+
+
+        private readonly MenuSettings Settings;
+        private readonly SettingsHub SettingsHub;
+
+        public MainMenuWindow(MenuSettings settings, SettingsHub settingsHub)
+        {
+            Settings = settings;
+            SettingsHub = settingsHub;
+
+            if (Settings.MenuWindowSize == ImGuiVector2.Zero)
+            {
+                Settings.MenuWindowSize = new ImGuiVector2(500, 800);
+                Settings.MenuWindowPos.X = GameController.Instance.Window.GetWindowRectangle().X - Settings.MenuWindowSize.X / 2;
+            }
+
+            InbuildPlugins.Add("Health bars", new List<ExternalPlugin>() {
+                new ExternalPlugin("Main", settingsHub.HealthBarSettings),
+                new ExternalPlugin("Players", settingsHub.HealthBarSettings.Players),
+                new ExternalPlugin("Minions", settingsHub.HealthBarSettings.Minions),
+                new ExternalPlugin("NormalEnemy", settingsHub.HealthBarSettings.NormalEnemy),
+                new ExternalPlugin("MagicEnemy", settingsHub.HealthBarSettings.MagicEnemy),
+                new ExternalPlugin("RareEnemy", settingsHub.HealthBarSettings.RareEnemy),
+                new ExternalPlugin("UniqueEnemy", settingsHub.HealthBarSettings.UniqueEnemy),
+            });
+
+
+ 
+            InbuildPlugins.Add("Advanced Tooltip", new List<ExternalPlugin>() {
+                new ExternalPlugin("-", settingsHub.AdvancedTooltipSettings),
+                new ExternalPlugin("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel),
+                new ExternalPlugin("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods),
+                new ExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps),
+                new ExternalPlugin("Border Settings", settingsHub.ItemAlertSettings.BorderSettings),
+                new ExternalPlugin("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour),
+                new ExternalPlugin("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask),
+                new ExternalPlugin("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem),
+                new ExternalPlugin("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon),
+            });
+
+
+            InbuildPlugins.Add("Xph & area", new List<ExternalPlugin>() { new ExternalPlugin("Xph & area", settingsHub.XpRateSettings) });
+            InbuildPlugins.Add("Item alert", new List<ExternalPlugin>() { new ExternalPlugin("Item alert", settingsHub.ItemAlertSettings) });
+            InbuildPlugins.Add("Preload alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.PreloadAlertSettings), });
+            InbuildPlugins.Add("Monster alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.MonsterTrackerSettings), });
+            InbuildPlugins.Add("Monster kills", new List<ExternalPlugin>() { new ExternalPlugin("Monster kills", settingsHub.KillCounterSettings), });
+            InbuildPlugins.Add("Show dps", new List<ExternalPlugin>() { new ExternalPlugin("Monster kills", settingsHub.DpsMeterSettings), });
+            InbuildPlugins.Add("Map Icons", new List<ExternalPlugin>() { new ExternalPlugin("Map Icons", settingsHub.MapIconsSettings), });
+        }
 
         public void Render()
         {
-            if (!DrawInfoWindow("PoeHUD", ref IsOpened, 800, 400, 500, 500, WindowFlags.Default, Condition.Appearing))
+            if (DrawInfoWindow("PoeHUD", ref Settings.IsOpened, Settings.MenuWindowPos.X, Settings.MenuWindowPos.Y, Settings.MenuWindowSize.X, Settings.MenuWindowSize.Y, WindowFlags.Default, Condition.Appearing))
             {
                 ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
-                if (ImGui.BeginChild("PluginsList", new Vector2(newcontentRegionArea.X * 0.25f, newcontentRegionArea.Y), true, WindowFlags.Default))
+                if (ImGui.BeginChild("PluginsList", new Vector2(PluginNameWidth + 60, newcontentRegionArea.Y), true, WindowFlags.Default))
                 {
-                    for (var i = 0; i < PluginExtensionPlugin.Plugins.Count; i++)
-                        if (ImGui.Selectable(PluginExtensionPlugin.Plugins[i].PluginName, CurrentSelectedInt == i))
-                            CurrentSelectedInt = i;
-                }
-                ImGui.EndChild();
+                    PluginNameWidth = 120;
+  
+                    if (ImGui.TreeNodeEx("Core Plugins", Settings.CorePluginsTreeState))
+                    {
+                        foreach (var defPlugin in InbuildPlugins)
+                        {
+                            if (defPlugin.Value.Count == 1)
+                            {
+                                DrawPlugin(defPlugin.Value[0], 20);
+                            }
+                            else if (ImGui.TreeNode($"{defPlugin.Key}"))
+                            {
+                                ImGuiNative.igIndent();
+                                DrawPluginList(defPlugin.Value, 70);
+                                ImGuiNative.igUnindent();
+                                ImGui.TreePop();
+                            }
+                        }
+                        ImGui.TreePop();
+                        Settings.CorePluginsTreeState = TreeNodeFlags.DefaultOpen;
 
+                        ImGui.Text("");
+                    }
+                    else
+                    {
+                        Settings.CorePluginsTreeState = (TreeNodeFlags)0;
+                    }             
+                 
+                    if (ImGui.TreeNodeEx("Installed Plugins", Settings.InstalledPluginsTreeNode))
+                    {
+                        DrawPluginList(PluginExtensionPlugin.Plugins, 20);
+
+                        ImGui.TreePop();
+                        Settings.InstalledPluginsTreeNode = TreeNodeFlags.DefaultOpen;
+                    }
+                    else
+                    {
+                        Settings.InstalledPluginsTreeNode = (TreeNodeFlags)0;
+                    }
+                }
+
+                ImGui.EndChild();
                 ImGui.SameLine();
 
-
-                ImGui.PushStyleVar(StyleVar.ChildRounding, 5.0f);
                 ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                 if (ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default))
                 {
-
+                    if(SelectedPlugin != null)
+                    {
+                        SelectedPlugin.DrawSettingsMenu();
+                    }
                 }
                 ImGui.EndChild();
+
+                Settings.MenuWindowSize = ImGui.GetWindowSize();
             }
 
-            LastSettingPos = ImGui.GetWindowPosition();
-            LastSettingSize = ImGui.GetWindowSize();
+            Settings.MenuWindowPos = ImGui.GetWindowPosition();
+       
             ImGui.EndWindow();
+
+        }
+
+        private void DrawPluginList(List<ExternalPlugin> plugins, float offsetX)
+        {
+            foreach (var plugin in plugins)
+            {
+                DrawPlugin(plugin, offsetX);
+            }
+        }
+
+        private void DrawPlugin(ExternalPlugin plugin, float offsetX)
+        {
+            plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
+
+            ImGui.SameLine();
+
+            var labelSize = ImGui.GetTextSize(plugin.PluginName).X + offsetX;
+            if (PluginNameWidth < labelSize)
+                PluginNameWidth = labelSize;
+
+            if (ImGui.Selectable(plugin.PluginName, SelectedPlugin == plugin))
+                SelectedPlugin = plugin;
         }
 
         public static string ComboBox(string sideLabel, string currentSelectedItem, List<string> objectList, ComboFlags comboFlags = ComboFlags.HeightRegular)

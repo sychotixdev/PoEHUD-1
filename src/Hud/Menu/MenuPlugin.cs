@@ -35,7 +35,7 @@ namespace PoeHUD.Hud.Menu
             KeyboardMouseEvents.MouseUpExt += KeyboardMouseEvents_MouseUpExt;
             KeyboardMouseEvents.MouseMove += KeyboardMouseEvents_MouseMove;
 
-            MenuWindow = new MainMenuWindow();
+            MenuWindow = new MainMenuWindow(Settings, settingsHub);
         }
         public override void Dispose()
         {
@@ -50,8 +50,9 @@ namespace PoeHUD.Hud.Menu
         }
         public override void Render()
         {
-            MenuWindow.Render();
+             MenuWindow.Render();
             return;
+            CreateImGuiMenu();
             try
             {
                 if (Settings.Enable)

@@ -59,7 +59,7 @@ namespace PoeHUD.Plugins
             GameController.pluginsSettings.Add(SettingsFullPath, Settings);
         }
 
-        internal override void SaveSettings()
+        internal override void _SaveSettings()
         {
             try
             {
@@ -79,5 +79,11 @@ namespace PoeHUD.Plugins
             }
         }
         #endregion
+
+
+        public override void InitializeSettingsMenu()
+        {
+            _ExternalPluginData.InitializeSettingsMenu(Settings);
+        }
     }
 }

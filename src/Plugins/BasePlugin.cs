@@ -13,6 +13,7 @@ using PoeHUD.Models;
 using System;
 using System.IO;
 using Graphics = PoeHUD.Hud.UI.Graphics;
+using PoeHUD.Hud.Menu.SettingsDrawers;
 
 namespace PoeHUD.Plugins
 {
@@ -26,10 +27,18 @@ namespace PoeHUD.Plugins
         public string LocalPluginDirectory { get; private set; }
         public string PluginName;
 
+        internal ExternalPlugin _ExternalPluginData;
         internal void InitPlugin(ExternalPlugin pluginData)
         {
+            _ExternalPluginData = pluginData;
             PluginDirectory = pluginData.PluginDir;
             LocalPluginDirectory = PluginDirectory.Substring(PluginDirectory.IndexOf($@"\{PluginExtensionPlugin.PluginsDirectory}\") + 1);
+        }
+
+        //For modification of default rendering of settings
+        public List<BaseSettingsDrawer> GetSettingsDrawers()
+        {
+            return _ExternalPluginData.PluginInstance.SettingPropertyDrawers;
         }
 
         public static PluginExtensionPlugin API;
@@ -95,14 +104,14 @@ namespace PoeHUD.Plugins
             try { OnClose(); }
             catch (Exception e) { HandlePluginError("OnClose", e); }
 
-            try { SaveSettings(); }
+            try { _SaveSettings(); }
             catch (Exception e) { HandlePluginError("SaveSettings", e); }
         }
 
         #endregion
 
         internal virtual void _LoadSettings() { }
-        internal virtual void SaveSettings() { }
+        internal virtual void _SaveSettings() { }
 
         #region Error Logging
         public float PluginErrorDisplayTime = 2;
@@ -131,12 +140,8 @@ namespace PoeHUD.Plugins
         #endregion
 
         #region Logging
-
-
         public static void LogError(string message, float displayTime) => LogError((object)message, displayTime);
         public static void LogMessage(string message, float displayTime) => LogMessage((object)message, displayTime);
-
-
         public static void LogError(object message, float displayTime)
         {
             if (message == null)
@@ -144,7 +149,6 @@ namespace PoeHUD.Plugins
             else
                 LogMessage(message.ToString(), displayTime, Color.Red);
         }
-
         public static void LogMessage(object message, float displayTime)
         {
             if (message == null)
@@ -152,7 +156,6 @@ namespace PoeHUD.Plugins
             else
                 LogMessage(message.ToString(), displayTime, Color.White);
         }
-
         public static void LogWarning(object message, float displayTime)
         {
             if (message == null)
@@ -160,7 +163,6 @@ namespace PoeHUD.Plugins
             else
                 LogMessage(message.ToString(), displayTime, Color.Yellow);
         }
-
         public static void LogMessage(object message, float displayTime, Color color)
         {
             if (message == null)
@@ -169,5 +171,12 @@ namespace PoeHUD.Plugins
                 DebugPlug.DebugPlugin.LogMsg(message.ToString(), displayTime, color);
         }
         #endregion
+
+
+        public virtual void DrawSettingsMenu()
+        {
+            _ExternalPluginData.DrawGeneratedSettingsMenu();
+        }
+        public virtual void InitializeSettingsMenu() { }
     }
 }
