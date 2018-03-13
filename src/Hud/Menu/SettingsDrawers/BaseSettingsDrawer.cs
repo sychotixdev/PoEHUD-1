@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using PoeHUD.Hud.UI;
 using PoeHUD.Hud.Settings;
 using ImGuiNET;
+using System.IO;
+using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.Menu.SettingsDrawers
 {
@@ -103,13 +105,84 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     }
 
 
-    public class BaseSettingsCustomDrawer: BaseSettingsDrawer
+    public class BaseSettingsCustomDrawer : BaseSettingsDrawer
     {
         public Action DrawDelegate = delegate { ImGuiExtension.Label($"Not implemented in code"); };
 
         public override void Draw()
         {
             DrawDelegate();
+        }
+    }
+
+    public class FilePickerDrawer : BaseSettingsDrawer
+    {
+        public FileNode FNode;
+        public FilePickerDrawer(FileNode fNode)
+        {
+            FNode = fNode;
+            var documentsPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            CurrentFolder = Path.Combine(documentsPath, @"My Games\Path of Exile");
+            SelectedFile = FNode.Value;
+        }
+        
+        public override void Draw()
+        {
+            if(ImGui.TreeNode(ImguiUniqLabel))
+            {
+                var selected = FNode.Value;
+                if(DrawFolder(ref selected))
+                {
+                    FNode.Value = selected;
+                }
+            }
+        }
+
+        public string CurrentFolder { get; set; }
+        public string SelectedFile { get; set; }
+        private bool DrawFolder(ref string selected)
+        {
+            bool result = false;
+            ImGui.Text("Current Folder: " + CurrentFolder);
+            if (ImGui.BeginChildFrame(1, new Vector2(0, 300), WindowFlags.Default))
+            {
+                DirectoryInfo di = new DirectoryInfo(CurrentFolder);
+                if (di.Exists)
+                {
+                    if (di.Parent != null)
+                    {
+                        ImGui.PushStyleColor(ColorTarget.Text, new System.Numerics.Vector4(1, 1, 0, 1));
+                        if (ImGui.Selectable("../", false, SelectableFlags.DontClosePopups))
+                        {
+                            CurrentFolder = di.Parent.FullName;
+                        }
+                        ImGui.PopStyleColor();
+                    }
+
+                    foreach(var dict in di.GetDirectories())
+                    {
+                        ImGui.PushStyleColor(ColorTarget.Text, new System.Numerics.Vector4(1, 1, 0, 1));
+                        if (ImGui.Selectable(dict.Name + "/", false, SelectableFlags.DontClosePopups))
+                        {
+                            CurrentFolder = dict.FullName;
+                        }
+                        ImGui.PopStyleColor();
+                    }
+
+                    foreach (var file in di.GetFiles("*.filter"))
+                    {
+                        bool isSelected = SelectedFile == file.FullName;
+                        if (ImGui.Selectable(file.Name, isSelected, SelectableFlags.DontClosePopups))
+                        {
+                            selected = SelectedFile;
+                            SelectedFile = file.FullName;
+                            result = true;
+                        }
+                    }
+                }
+            }
+            ImGui.EndChildFrame();
+            return result;
         }
     }
 }

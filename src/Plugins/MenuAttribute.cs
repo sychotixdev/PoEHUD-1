@@ -41,4 +41,10 @@ namespace PoeHUD.Plugins
             Tooltip = tooltip;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class IgnoreMenuAttribute : Attribute
+    {
+
+    }
 }

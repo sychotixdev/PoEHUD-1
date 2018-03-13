@@ -66,10 +66,15 @@ namespace PoeHUD.Hud
 
  
             InbuildPlugins.Add("Advanced Tooltip", new List<ExternalPlugin>() {
-                new ExternalPlugin("-", settingsHub.AdvancedTooltipSettings),
+                //new ExternalPlugin("-", settingsHub.AdvancedTooltipSettings),
                 new ExternalPlugin("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel),
                 new ExternalPlugin("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods),
-                new ExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps),
+                new ExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps)
+            });
+
+            InbuildPlugins.Add("Item alert", new List<ExternalPlugin>()
+            {
+                new ExternalPlugin("Item alert", settingsHub.ItemAlertSettings),
                 new ExternalPlugin("Border Settings", settingsHub.ItemAlertSettings.BorderSettings),
                 new ExternalPlugin("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour),
                 new ExternalPlugin("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask),
@@ -77,9 +82,7 @@ namespace PoeHUD.Hud
                 new ExternalPlugin("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon),
             });
 
-
             InbuildPlugins.Add("Xph & area", new List<ExternalPlugin>() { new ExternalPlugin("Xph & area", settingsHub.XpRateSettings) });
-            InbuildPlugins.Add("Item alert", new List<ExternalPlugin>() { new ExternalPlugin("Item alert", settingsHub.ItemAlertSettings) });
             InbuildPlugins.Add("Preload alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.PreloadAlertSettings), });
             InbuildPlugins.Add("Monster alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.MonsterTrackerSettings), });
             InbuildPlugins.Add("Monster kills", new List<ExternalPlugin>() { new ExternalPlugin("Monster kills", settingsHub.KillCounterSettings), });

@@ -25,11 +25,18 @@ namespace PoeHUD.Hud.Health
         public ToggleNode ShowES { get; set; }
         public ToggleNode ShowIncrements { get; set; }
         public ToggleNode ShowEnemies { get; set; }
+
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings Players { get; set; }
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings Minions { get; set; }
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings NormalEnemy { get; set; }
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings MagicEnemy { get; set; }
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings RareEnemy { get; set; }
+        [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings UniqueEnemy { get; set; }
         public ToggleNode ShowDebuffPanel { get; set; }
         public RangeNode<int> DebuffPanelIconSize { get; set; }

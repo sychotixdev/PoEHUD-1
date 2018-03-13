@@ -218,6 +218,8 @@ namespace PoeHUD.Hud.PluginExtension
             {
                 if (property.Name == "Enable") continue;
 
+                if (property.GetCustomAttribute<IgnoreMenuAttribute>() != null) continue;
+
                 var menuAttrib = property.GetCustomAttribute<MenuAttribute>();
                 if(ignoreAttribute && menuAttrib == null)
                     menuAttrib = new MenuAttribute(System.Text.RegularExpressions.Regex.Replace(property.Name, "(\\B[A-Z])", " $1"));//fix camel case
@@ -250,6 +252,10 @@ namespace PoeHUD.Hud.PluginExtension
                     else if (propType == typeof(ListNode) || propType.IsSubclassOf(typeof(ListNode)))
                     {
                         drawer = new StringListSettingDrawer(property.GetValue(settings) as ListNode);
+                    }
+                    else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
+                    {
+                        drawer = new FilePickerDrawer(property.GetValue(settings) as FileNode);
                     }
                     else if (propType.IsGenericType)
                     {
