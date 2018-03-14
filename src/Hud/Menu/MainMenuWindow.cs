@@ -206,9 +206,15 @@ namespace PoeHUD.Hud
         
         public void Render()
         {
-            if (DrawInfoWindow("PoeHUD", ref Settings.IsOpened, 
-                Settings.MenuWindowPos.X, Settings.MenuWindowPos.Y, Settings.MenuWindowSize.X, Settings.MenuWindowSize.Y, 
-                WindowFlags.Default, Condition.Appearing))
+            if (!Settings.Enable.Value) return;
+
+            var opened = Settings.Enable.Value;
+            Settings.IsCollapsed = !DrawInfoWindow("PoeHUD", ref opened,
+                Settings.MenuWindowPos.X, Settings.MenuWindowPos.Y, Settings.MenuWindowSize.X, Settings.MenuWindowSize.Y,
+                 WindowFlags.Default, Condition.Appearing);
+            Settings.Enable.Value = opened;
+
+            if (!Settings.IsCollapsed)
             {
                 ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                 if (ImGui.BeginChild("PluginsList", new Vector2(PluginNameWidth + 60, newcontentRegionArea.Y), true, WindowFlags.Default))
@@ -234,7 +240,7 @@ namespace PoeHUD.Hud
                                     ImGuiExtension.Checkbox($"##{defPlugin.Plugin.PluginName}Enabled", defPlugin.Plugin.Settings.Enable.Value);
 
                                 ImGui.SameLine();
-                                var opened = ImGui.TreeNodeEx($"##{defPlugin.Plugin.PluginName}", TreeNodeFlags.OpenOnArrow);
+                                var pluginOpened = ImGui.TreeNodeEx($"##{defPlugin.Plugin.PluginName}", TreeNodeFlags.OpenOnArrow);
                                 ImGui.SameLine();
 
                                 var labelSize = ImGui.GetTextSize(defPlugin.Plugin.PluginName).X + 30;
@@ -244,7 +250,7 @@ namespace PoeHUD.Hud
                                 if (ImGui.Selectable(defPlugin.Plugin.PluginName, SelectedPlugin == defPlugin.Plugin))
                                     SelectedPlugin = defPlugin.Plugin;
 
-                                if (opened)
+                                if (pluginOpened)
                                 {
                                     foreach (var plugin in defPlugin.Childs)
                                         DrawPlugin(plugin.Plugin, 30);
@@ -332,6 +338,7 @@ namespace PoeHUD.Hud
         {
             ImGui.SetNextWindowPos(new ImGuiVector2(width + x, height + y), conditions, new ImGuiVector2(1, 1));
             ImGui.SetNextWindowSize(new ImGuiVector2(width, height), conditions);
+            ImGuiNative.igSetNextWindowCollapsed(Settings.IsCollapsed, Condition.Appearing);
             return ImGui.BeginWindow(windowLabel, ref isOpened, flags);
         }
     }

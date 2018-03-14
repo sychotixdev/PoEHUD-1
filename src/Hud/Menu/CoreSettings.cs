@@ -16,7 +16,7 @@ namespace PoeHUD.Hud.Menu
 
         public ImGuiVector2 MenuWindowPos;
         public ImGuiVector2 MenuWindowSize;
-        public bool IsOpened = true;
+        public bool IsCollapsed = false;
         public TreeNodeFlags CorePluginsTreeState;
         public TreeNodeFlags InstalledPluginsTreeNode;
 
