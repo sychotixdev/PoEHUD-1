@@ -38,7 +38,11 @@ namespace PoeHUD.Hud.Health
         public UnitSettings RareEnemy { get; set; }
         [PoeHUD.Plugins.IgnoreMenu]
         public UnitSettings UniqueEnemy { get; set; }
+
+        [PoeHUD.Plugins.Menu("Show Debuffs", 0)]
         public ToggleNode ShowDebuffPanel { get; set; }
+
+        [PoeHUD.Plugins.Menu("Icon size", 1, 0)]
         public RangeNode<int> DebuffPanelIconSize { get; set; }
     }
 }
