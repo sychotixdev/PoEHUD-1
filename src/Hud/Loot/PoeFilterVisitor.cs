@@ -56,8 +56,16 @@ namespace PoeHUD.Hud.Loot
             var mods = entity.GetComponent<Mods>();
             var isSkillHGem = entity.HasComponent<SkillGem>();
             var isMap = entity.HasComponent<Map>();
-            var isShapedMap = false; //itemBase.isShaped && isMap;
-            var isElderMap = false;  // offset missing.
+
+            var isShapedMap = false;
+            var isElderMap = false;
+            if (isMap)
+                foreach (var mod in mods.ItemMods)
+                    if (mod.Name == "MapElder")
+                        isElderMap = (mod.Value1 == 1);
+                    else if (mod.Name == "MapShaped")
+                        isShapedMap = (mod.Value1 == 1);
+
             var itemRarity = mods.ItemRarity;
             var quality = 0;
             if (entity.HasComponent<Quality>()) { quality = entity.GetComponent<Quality>().ItemQuality; }
