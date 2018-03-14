@@ -17,9 +17,6 @@
         public bool isShaper => M.ReadByte(Address + 0xD9) == 1;
         public bool isElder => M.ReadByte(Address + 0xDA) == 1;
 
-        // They moved this to somewhere else....
-        public bool isShaped => false;
-        public bool isElderMap => false;
         // 0x8 - link to base item
         // +0x10 - Name
         // +0x30 - Use hint
