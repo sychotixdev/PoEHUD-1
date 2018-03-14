@@ -30,13 +30,12 @@ namespace PoeHUD.Hud.UI
 
         public static bool Button(string label)
         {
-            return ImGui.Button(label == null ? "" : label);
+            return ImGui.Button(label ?? "");
         }
         public static void Label(string label)
         {
-            ImGui.Text(label == null ? "" : label);
+            ImGui.Text(label ?? "");
         }
-
 
         // Int Sliders
         public static int IntSlider(string labelString, int value, int minValue, int maxValue)
@@ -143,6 +142,9 @@ namespace PoeHUD.Hud.UI
 
         public static Keys HotkeySelector(string buttonName, Keys currentKey)
         {
+            if (buttonName.Contains("##"))
+                buttonName = buttonName.Substring(0, buttonName.LastIndexOf("##"));
+            ImGui.PushID(buttonName);
             if (ImGui.Button($"{buttonName}: {currentKey} ")) ImGui.OpenPopup(buttonName);
             if (ImGui.BeginPopupModal(buttonName, (WindowFlags)35))
             {
@@ -154,6 +156,7 @@ namespace PoeHUD.Hud.UI
                     {
                         ImGui.CloseCurrentPopup();
                         ImGui.EndPopup();
+                        ImGui.PopID();
                         return key;
                     }
 
@@ -163,11 +166,15 @@ namespace PoeHUD.Hud.UI
                 ImGui.EndPopup();
             }
 
+            ImGui.PopID();
             return currentKey;
         }
 
         public static Keys HotkeySelector(string buttonName, string popupTitle, Keys currentKey)
         {
+            if (buttonName.Contains("##"))
+                buttonName = buttonName.Substring(0, buttonName.LastIndexOf("##"));
+            ImGui.PushID(buttonName);
             if (ImGui.Button($"{buttonName}: {currentKey} ")) ImGui.OpenPopup(popupTitle);
             if (ImGui.BeginPopupModal(popupTitle, (WindowFlags)35))
             {
@@ -179,6 +186,7 @@ namespace PoeHUD.Hud.UI
                     {
                         ImGui.CloseCurrentPopup();
                         ImGui.EndPopup();
+                        ImGui.PopID();
                         return key;
                     }
 
@@ -188,6 +196,7 @@ namespace PoeHUD.Hud.UI
                 ImGui.EndPopup();
             }
 
+            ImGui.PopID();
             return currentKey;
         }
 
@@ -199,7 +208,14 @@ namespace PoeHUD.Hud.UI
             if (ImGui.ColorEdit4(labelName, ref colorToVect4, ColorEditFlags.NoInputs))
                 return new Color(colorToVect4.X, colorToVect4.Y, colorToVect4.Z, colorToVect4.W);
 
-            
+
+            return inputColor;
+        }
+        public static Color ColorPickerLarge(string labelName, Color inputColor)
+        {
+            var color = inputColor.ToVector4();
+            var colorToVect4 = new ImGuiVector4(color.X, color.Y, color.Z, color.W);
+            if (ImGui.ColorEdit4(labelName, ref colorToVect4, ColorEditFlags.AlphaBar)) return new Color(colorToVect4.X, colorToVect4.Y, colorToVect4.Z, colorToVect4.W);
             return inputColor;
         }
 
