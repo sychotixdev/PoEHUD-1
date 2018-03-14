@@ -287,12 +287,17 @@ namespace PoeHUD.Hud
                     ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                     ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default);
 
-                    if (Settings.DeveloperMode.Value && ImGuiExtension.Button("Reload Plugin"))
-                        (SelectedPlugin as ExternalPlugin).ReloadPlugin();
-
+                    var extPlugin = SelectedPlugin as ExternalPlugin;
+                    if (Settings.DeveloperMode.Value && extPlugin != null)
+                    {
+                        if (ImGuiExtension.Button("Reload Plugin"))
+                            extPlugin.ReloadPlugin();
+                    }
                     SelectedPlugin.DrawSettingsMenu();
+
                     ImGui.EndChild();
                 }
+
                 Settings.MenuWindowSize = ImGui.GetWindowSize();
             }
 

@@ -212,7 +212,7 @@
     <Compile Include="Hud\Loot\QualityItemSettings.cs" />
     <Compile Include="Hud\Loot\QualityItemsSettings.cs" />
     <Compile Include="Hud\AdvancedTooltip\ItemModsSettings.cs" />
-    <Compile Include="Hud\Menu\MenuSettings.cs" />
+    <Compile Include="Hud\Menu\CoreSettings.cs" />
     <Compile Include="Hud\Menu\SettingsDrawers\BaseSettingsDrawer.cs" />
     <Compile Include="Hud\Performance.cs" />
     <Compile Include="Hud\PluginExtension\BaseExternalPlugin.cs" />
