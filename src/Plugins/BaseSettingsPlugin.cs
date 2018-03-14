@@ -80,7 +80,7 @@ namespace PoeHUD.Plugins
         }
         #endregion
 
-
+        //if you going to draw menu fully on ur side- override this and clear code in it (remove base.InitializeSettingsMenu();).
         public override void InitializeSettingsMenu()
         {
             _ExternalPluginData.InitializeSettingsMenu(Settings);

@@ -13,7 +13,7 @@ using SharpDX;
 
 namespace PoeHUD.Hud.Menu
 {
-    public class MenuPlugin : Plugin<MenuSettings>
+    public class MenuPlugin : Plugin<CoreSettings>
     {
         //For spawning the menu in external plugins
         public static event Action<int> eInitMenu = delegate { };

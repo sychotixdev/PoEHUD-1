@@ -196,8 +196,10 @@ namespace PoeHUD.Hud.UI
         {
             var color = inputColor.ToVector4();
             var colorToVect4 = new ImGuiVector4(color.X, color.Y, color.Z, color.W);
-            if (ImGui.ColorEdit4(labelName, ref colorToVect4, ColorEditFlags.AlphaBar))
+            if (ImGui.ColorEdit4(labelName, ref colorToVect4, ColorEditFlags.NoInputs))
                 return new Color(colorToVect4.X, colorToVect4.Y, colorToVect4.Z, colorToVect4.W);
+
+            
             return inputColor;
         }
 

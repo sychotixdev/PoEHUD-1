@@ -19,7 +19,7 @@ namespace PoeHUD.Hud.PluginExtension
         public readonly Graphics Graphics;
         public const string PluginsDirectory = "plugins";
 
-        public event Action eCheckPluginsDllReload = delegate { };
+        //public event Action eCheckPluginsDllReload = delegate { };
 
         public PluginExtensionPlugin(GameController gameController, Graphics graphics)
         {
@@ -31,9 +31,10 @@ namespace PoeHUD.Hud.PluginExtension
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
 
-            GameController.eIsForegroundChanged += GameController_eIsForegroundChanged;
+            //GameController.eIsForegroundChanged += GameController_eIsForegroundChanged;
         }
         
+        /*
         private bool SkipFirstIsForegroundChanged;
         private void GameController_eIsForegroundChanged(bool state)
         {
@@ -45,13 +46,13 @@ namespace PoeHUD.Hud.PluginExtension
 
             eCheckPluginsDllReload();
         }
-
+        */
         public event Action eInitialise = delegate { };
         public event Action eRender = delegate { };
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
-        public static List<ExternalPlugin> Plugins = new List<ExternalPlugin>();
+        public static List<BaseExternalPlugin> Plugins = new List<BaseExternalPlugin>();
         private List<string> PluginUpdateLog;
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
         public const string UpdateBackupDir = "%Backup%";

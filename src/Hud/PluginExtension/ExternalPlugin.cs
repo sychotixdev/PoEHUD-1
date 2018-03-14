@@ -15,151 +15,47 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.PluginExtension
 {
-    public sealed class ExternalPlugin
+    public class BaseExternalPlugin
     {
-        public readonly string PluginDir; //Will be used for loading resources (images, sounds, etc.) from plugin floder
-        private PluginExtensionPlugin API;
+        //Saving all references to plugin. Will be destroyed on plugin reload
+        internal BasePlugin BPlugin;
+        internal readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
 
-        private readonly string FullTypeName;
-        private readonly string DllPath;
-        internal PluginDataInstance PluginInstance = new PluginDataInstance();  //Saving all references to plugin. Will be destroyed on plugin reload.
-        private DateTime DllTimeVersion;
+        internal string PluginDir; //Will be used for loading resources (images, sounds, etc.) from plugin floder
+        protected PluginExtensionPlugin API;
         internal SettingsBase Settings;
-        private bool IsCorePlugin;
 
-        public List<BaseSettingsDrawer> GetSettingsDrawers()
-        {
-            return PluginInstance.SettingPropertyDrawers;
-        }
+        public List<BaseSettingsDrawer> SettingsDrawers => SettingPropertyDrawers;
 
         public string PluginName { get; internal set; } = "NoName";
 
-        public PluginState State { get; private set; }//Will be used by poehud main menu to display why plugin is not loaded/reloaded
-
-        public ExternalPlugin(PluginExtensionPlugin api, string dllPath, string fullTypeName)
+        public BaseExternalPlugin(string pluginName)
         {
-            API = api;
-            DllPath = dllPath;
-            FullTypeName = fullTypeName;
-
-            PluginDir = Path.GetDirectoryName(dllPath);
-
-            var dllInfo = new FileInfo(DllPath);
-            DllTimeVersion = dllInfo.LastWriteTime;
-
-            PluginName = Path.GetFileNameWithoutExtension(DllPath);
-
-            ReloadPlugin();
-            API.eCheckPluginsDllReload += API_eCheckPluginsDllReload;
+            PluginName = pluginName;
         }
 
-        public ExternalPlugin(string pluginName, SettingsBase settings)//for buildin plugins
+        public BaseExternalPlugin(string pluginName, SettingsBase settings) : this(pluginName)//for buildin plugins
         {
-            IsCorePlugin = true;
             Settings = settings;
-            PluginName = pluginName;
             InitializeSettingsMenu(settings, true);
         }
 
-        private void API_eCheckPluginsDllReload()
+
+        //Called by main menu to draw plugin settings in right part of window
+        internal virtual void DrawSettingsMenu()
         {
-            var dllInfo = new FileInfo(DllPath);
-            if ((dllInfo.LastWriteTime - DllTimeVersion).Seconds > 2)
-            {
-                DllTimeVersion = dllInfo.LastWriteTime;
-                BasePlugin.LogMessage("Reloading dll: " + DllPath, 3);
-                ReloadPlugin();
-            }
+            DrawGeneratedSettingsMenu();
         }
 
-        public void ReloadPlugin()
-        {
-            if (PluginInstance.BPlugin != null)
-            {
-                PluginInstance.BPlugin._OnClose();//saving settings, closing opened threads (on plugin side)
-
-                API.eRender -= PluginInstance.BPlugin._Render;
-                API.eEntityAdded -= PluginInstance.BPlugin._EntityAdded;
-                API.eEntityRemoved -= PluginInstance.BPlugin._EntityRemoved;
-                API.eClose -= PluginInstance.BPlugin._OnClose;
-                API.eInitialise -= PluginInstance.BPlugin._Initialise;
-                PluginInstance = null;
-
-                GC.Collect();
-            }
-
-            var myAsm = Assembly.Load(File.ReadAllBytes(DllPath));
-            if (myAsm == null)
-            {
-                State = PluginState.Reload_DllNotFound;
-                return;
-            }
-
-            var pluginType = myAsm.GetType(FullTypeName);
-            if (pluginType == null)
-            {
-                State = PluginState.Reload_ClassNotFound;
-                return;
-            }
-
-            //Spawning a new plugin class instance   
-            var pluginClassObj = Activator.CreateInstance(pluginType);
-
-            PluginInstance = new PluginDataInstance();
-            PluginInstance.BPlugin = pluginClassObj as BasePlugin;
-            PluginInstance.BPlugin.InitPlugin(this);
-            PluginInstance.BPlugin._LoadSettings();
-
-            if (!string.IsNullOrEmpty(PluginInstance.BPlugin.PluginName))
-                PluginName = PluginInstance.BPlugin.PluginName;
-
-            PluginInstance.BPlugin.InitializeSettingsMenu();
-
-            API.eRender += PluginInstance.BPlugin._Render;
-            API.eEntityAdded += PluginInstance.BPlugin._EntityAdded;
-            API.eEntityRemoved += PluginInstance.BPlugin._EntityRemoved;
-            API.eClose += PluginInstance.BPlugin._OnClose;
-            API.eInitialise += PluginInstance.BPlugin._Initialise;
-        }
-
-        public enum PluginState
-        {
-            Unknown,
-            Loaded,
-            Reload_CantUnload,
-            Reload_DllNotFound,
-            Reload_ClassNotFound
-        }
-
-        //Saving all references to plugin. Will be destroyed on plugin reload
-        //Actualy works even without this)
-        public class PluginDataInstance
-        {
-            public BasePlugin BPlugin;
-            public readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
-        }
-
-        internal void DrawSettingsMenu()
-        {
-            if(IsCorePlugin)
-            {
-                DrawGeneratedSettingsMenu();
-            }
-            else
-            {
-                if (PluginInstance.BPlugin == null) return;
-                PluginInstance.BPlugin.DrawSettingsMenu();
-            }
-        }
-
+        //Draw generated menu
         internal void DrawGeneratedSettingsMenu()
         {
-            DrawDrawers(PluginInstance.SettingPropertyDrawers, null);
+            DrawSettingsRecursively(SettingPropertyDrawers, null);
             ChildUniqId = 0;
         }
 
         private int ChildUniqId;
-        private void DrawDrawers(List<BaseSettingsDrawer> drawers, BaseSettingsDrawer owner)
+        private void DrawSettingsRecursively(List<BaseSettingsDrawer> drawers, BaseSettingsDrawer owner)
         {
             float childSize = 20;
             foreach (var drawer in drawers)
@@ -169,22 +65,19 @@ namespace PoeHUD.Hud.PluginExtension
                 if(drawer.Children.Count > 0)
                 {
                     ImGuiNative.igGetContentRegionAvail(out var newcontentRegionArea);
-
                     //We are not going to make IF on this childs coz we don't want inteface jumping while scrollings
-                    ImGui.BeginChild($"##{ChildUniqId++}", new Vector2(newcontentRegionArea.X, drawer.ChildHeight + 20), true, WindowFlags.NoScrollWithMouse);
+                    ImGui.BeginChild($"##{ChildUniqId++}", new Vector2(newcontentRegionArea.X, drawer.ChildHeight + 40), true, WindowFlags.NoScrollWithMouse);
 
                     drawer.Draw();
-                    childSize += 20;
-
-                    ImGui.SameLine();
-                    ImGui.Text("");
+                    childSize += 30;
+                    ImGui.Text("    ");
                     ImGui.SameLine();
 
-                    ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
-                    ImGui.BeginChild($"##{ChildUniqId++}", new Vector2(newcontentRegionArea.X, drawer.ChildHeight), false, WindowFlags.NoScrollWithMouse);
+                    ImGuiNative.igGetContentRegionAvail(out var newcontentRegionArea2);
+                    ImGui.BeginChild($"##{ChildUniqId++}", new Vector2(newcontentRegionArea2.X, drawer.ChildHeight), false, WindowFlags.NoScrollWithMouse);
 
-                    DrawDrawers(drawer.Children, drawer);
-                    childSize += drawer.ChildHeight;
+                    DrawSettingsRecursively(drawer.Children, drawer);
+                    childSize += drawer.ChildHeight + 10;
                     ImGui.EndChild();
                     ImGui.EndChild();
                 }
@@ -200,16 +93,13 @@ namespace PoeHUD.Hud.PluginExtension
         }
 
         
-        public int GetUniqDrawerId()
-        {
-            return Enumerable.Range(100000, 1000).Except(Drawers.Keys).FirstOrDefault();
-        }
+        public int GetUniqDrawerId() => Enumerable.Range(100000, 1000).Except(DrawersDict.Keys).FirstOrDefault();
 
-        private Dictionary<int, BaseSettingsDrawer> Drawers = new Dictionary<int, BaseSettingsDrawer>();
+        private Dictionary<int, BaseSettingsDrawer> DrawersDict = new Dictionary<int, BaseSettingsDrawer>();
         internal void InitializeSettingsMenu(SettingsBase settings, bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
         {
-            PluginInstance.SettingPropertyDrawers.Clear();
-            Drawers.Clear();
+            SettingPropertyDrawers.Clear();
+            DrawersDict.Clear();
 
             Settings = settings;
             var settingsProps = settings.GetType().GetProperties();
@@ -350,23 +240,23 @@ namespace PoeHUD.Hud.PluginExtension
                         else
                             drawer.SettingId = menuAttrib.index;
 
-                        if(Drawers.ContainsKey(drawer.SettingId))
+                        if(DrawersDict.ContainsKey(drawer.SettingId))
                         {
                             BasePlugin.LogError($"{PluginName}: Already contain child with id {menuAttrib.parentIndex}. Trying to fix... Property " + property.Name, 5);
                             drawer.SettingId = GetUniqDrawerId();
                         }
-                        Drawers.Add(drawer.SettingId, drawer);
+                        DrawersDict.Add(drawer.SettingId, drawer);
 
                         if (menuAttrib.parentIndex != -1)
                         {
-                            if(Drawers.TryGetValue(menuAttrib.parentIndex, out var parent))
+                            if(DrawersDict.TryGetValue(menuAttrib.parentIndex, out var parent))
                             {
                                 parent.Children.Add(drawer);
                                 continue;
                             }
                             BasePlugin.LogError($"{PluginName}: Can't find child with id {menuAttrib.parentIndex} to parent node. Property " + property.Name, 5);
                         }
-                        PluginInstance.SettingPropertyDrawers.Add(drawer);
+                        SettingPropertyDrawers.Add(drawer);
                     }
                     else
                     {

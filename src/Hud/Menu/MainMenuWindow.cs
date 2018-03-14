@@ -33,16 +33,14 @@ namespace PoeHUD.Hud
         private string CurrentSelected = "";
         private int CurrentSelectedInt = 0;
         private ImGuiVector2 newcontentRegionArea;
-        private ExternalPlugin SelectedPlugin;
+        private BaseExternalPlugin SelectedPlugin;
         private float PluginNameWidth = 100;
 
-        private Dictionary<string, List<ExternalPlugin>> InbuildPlugins = new Dictionary<string, List<ExternalPlugin>>();
-
-
-        private readonly MenuSettings Settings;
+        private InbuildPluginMenu CoreMenu;
+        public static CoreSettings Settings;
         private readonly SettingsHub SettingsHub;
 
-        public MainMenuWindow(MenuSettings settings, SettingsHub settingsHub)
+        public MainMenuWindow(CoreSettings settings, SettingsHub settingsHub)
         {
             Settings = settings;
             SettingsHub = settingsHub;
@@ -53,81 +51,223 @@ namespace PoeHUD.Hud
                 Settings.MenuWindowPos.X = GameController.Instance.Window.GetWindowRectangle().X - Settings.MenuWindowSize.X / 2;
             }
 
-            InbuildPlugins.Add("Health bars", new List<ExternalPlugin>() {
-                new ExternalPlugin("Main", settingsHub.HealthBarSettings),
-                new ExternalPlugin("Players", settingsHub.HealthBarSettings.Players),
-                new ExternalPlugin("Minions", settingsHub.HealthBarSettings.Minions),
-                new ExternalPlugin("NormalEnemy", settingsHub.HealthBarSettings.NormalEnemy),
-                new ExternalPlugin("MagicEnemy", settingsHub.HealthBarSettings.MagicEnemy),
-                new ExternalPlugin("RareEnemy", settingsHub.HealthBarSettings.RareEnemy),
-                new ExternalPlugin("UniqueEnemy", settingsHub.HealthBarSettings.UniqueEnemy),
-            });
-
-
- 
-            InbuildPlugins.Add("Advanced Tooltip", new List<ExternalPlugin>() {
-                //new ExternalPlugin("-", settingsHub.AdvancedTooltipSettings),
-                new ExternalPlugin("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel),
-                new ExternalPlugin("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods),
-                new ExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps)
-            });
-
-            InbuildPlugins.Add("Item alert", new List<ExternalPlugin>()
+            CoreMenu = new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Core", settingsHub.MenuSettings) };
+            CoreMenu.Childs.Add(new InbuildPluginMenu()
             {
-                new ExternalPlugin("Item alert", settingsHub.ItemAlertSettings),
-                new ExternalPlugin("Border Settings", settingsHub.ItemAlertSettings.BorderSettings),
-                new ExternalPlugin("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour),
-                new ExternalPlugin("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask),
-                new ExternalPlugin("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem),
-                new ExternalPlugin("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon),
+                Plugin = new BaseExternalPlugin("Health bars", settingsHub.HealthBarSettings),
+                Childs = new List<InbuildPluginMenu>()
+                {
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Players", settingsHub.HealthBarSettings.Players) },
+                    new InbuildPluginMenu(){ Plugin =  new BaseExternalPlugin("Minions", settingsHub.HealthBarSettings.Minions) },
+                    new InbuildPluginMenu(){ Plugin =  new BaseExternalPlugin("NormalEnemy", settingsHub.HealthBarSettings.NormalEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("MagicEnemy", settingsHub.HealthBarSettings.MagicEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("RareEnemy", settingsHub.HealthBarSettings.RareEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("UniqueEnemy", settingsHub.HealthBarSettings.UniqueEnemy) },
+                }
             });
 
-            InbuildPlugins.Add("Xph & area", new List<ExternalPlugin>() { new ExternalPlugin("Xph & area", settingsHub.XpRateSettings) });
-            InbuildPlugins.Add("Preload alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.PreloadAlertSettings), });
-            InbuildPlugins.Add("Monster alert", new List<ExternalPlugin>() { new ExternalPlugin("Preload alert", settingsHub.MonsterTrackerSettings), });
-            InbuildPlugins.Add("Monster kills", new List<ExternalPlugin>() { new ExternalPlugin("Monster kills", settingsHub.KillCounterSettings), });
-            InbuildPlugins.Add("Show dps", new List<ExternalPlugin>() { new ExternalPlugin("Monster kills", settingsHub.DpsMeterSettings), });
-            InbuildPlugins.Add("Map Icons", new List<ExternalPlugin>() { new ExternalPlugin("Map Icons", settingsHub.MapIconsSettings), });
+            CoreMenu.Childs.Add(new InbuildPluginMenu()
+            {
+                Plugin = new BaseExternalPlugin("Advanced Tooltip", settingsHub.AdvancedTooltipSettings),
+                Childs = new List<InbuildPluginMenu>()
+                {
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps) },
+                }
+            });
+
+            CoreMenu.Childs.Add(new InbuildPluginMenu()
+            {
+                Plugin = new BaseExternalPlugin("Item alert", settingsHub.ItemAlertSettings),
+                Childs = new List<InbuildPluginMenu>()
+                {
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Border Settings", settingsHub.ItemAlertSettings.BorderSettings) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour)},
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem) },
+                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon) }
+                }
+            });
+
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Xph & area", settingsHub.XpRateSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Preload alert", settingsHub.PreloadAlertSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Monster alert", settingsHub.MonsterTrackerSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Monster kills", settingsHub.KillCounterSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Show dps", settingsHub.DpsMeterSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Map Icons", settingsHub.MapIconsSettings) });
+
+            InitTheme();
         }
 
+        private static void InitTheme()
+        {
+
+            /*
+            var colors = ImGui.GetStyle();
+            colors.SetColor(ColorTarget.Text, new ImGuiVector4(0.90f, 0.90f, 0.90f, 1.00f));
+            colors.SetColor(ColorTarget.TextDisabled, new ImGuiVector4(0.60f, 0.60f, 0.60f, 1.00f));
+            colors.SetColor(ColorTarget.WindowBg, new ImGuiVector4(0.16f, 0.16f, 0.16f, 1.00f));
+            colors.SetColor(ColorTarget.ChildBg, new ImGuiVector4(0.12f, 0.12f, 0.12f, 1.00f));
+            colors.SetColor(ColorTarget.PopupBg, new ImGuiVector4(0.11f, 0.11f, 0.14f, 0.92f));
+            colors.SetColor(ColorTarget.Border, new ImGuiVector4(0.61f, 0.30f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.BorderShadow, new ImGuiVector4(0.00f, 0.00f, 0.00f, 0.00f));
+            colors.SetColor(ColorTarget.FrameBg, new ImGuiVector4(0.77f, 0.43f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.FrameBgHovered, new ImGuiVector4(0.98f, 0.61f, 0.26f, 1.00f));
+            colors.SetColor(ColorTarget.FrameBgActive, new ImGuiVector4(0.74f, 0.36f, 0.02f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBg, new ImGuiVector4(0.40f, 0.19f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBgActive, new ImGuiVector4(0.75f, 0.37f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBgCollapsed, new ImGuiVector4(0.74f, 0.36f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.MenuBarBg, new ImGuiVector4(0.29f, 0.29f, 0.30f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarBg, new ImGuiVector4(0.28f, 0.28f, 0.28f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrab, new ImGuiVector4(0.74f, 0.41f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrabHovered, new ImGuiVector4(0.86f, 0.41f, 0.06f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrabActive, new ImGuiVector4(0.64f, 0.29f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.CheckMark, new ImGuiVector4(0.00f, 0.00f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.SliderGrab, new ImGuiVector4(1.00f, 0.80f, 0.54f, 1.00f));
+            colors.SetColor(ColorTarget.SliderGrabActive, new ImGuiVector4(0.52f, 0.31f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.Button, new ImGuiVector4(0.73f, 0.37f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ButtonHovered, new ImGuiVector4(0.97f, 0.57f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ButtonActive, new ImGuiVector4(0.62f, 0.29f, 0.01f, 1.00f));
+            colors.SetColor(ColorTarget.Header, new ImGuiVector4(0.59f, 0.28f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.HeaderHovered, new ImGuiVector4(0.74f, 0.35f, 0.02f, 1.00f));
+            colors.SetColor(ColorTarget.HeaderActive, new ImGuiVector4(0.88f, 0.45f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.Separator, new ImGuiVector4(0.50f, 0.50f, 0.50f, 1.00f));
+            colors.SetColor(ColorTarget.SeparatorHovered, new ImGuiVector4(0.60f, 0.60f, 0.70f, 1.00f));
+            colors.SetColor(ColorTarget.SeparatorActive, new ImGuiVector4(0.70f, 0.70f, 0.90f, 1.00f));
+            colors.SetColor(ColorTarget.ResizeGrip, new ImGuiVector4(1.00f, 1.00f, 1.00f, 0.16f));
+            colors.SetColor(ColorTarget.ResizeGripHovered, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.60f));
+            colors.SetColor(ColorTarget.ResizeGripActive, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.90f));
+            colors.SetColor(ColorTarget.CloseButton, new ImGuiVector4(0.50f, 0.50f, 0.90f, 0.50f));
+            colors.SetColor(ColorTarget.CloseButtonHovered, new ImGuiVector4(0.70f, 0.70f, 0.90f, 0.60f));
+            colors.SetColor(ColorTarget.CloseButtonActive, new ImGuiVector4(0.70f, 0.70f, 0.70f, 1.00f));
+            colors.SetColor(ColorTarget.PlotLines, new ImGuiVector4(1.00f, 1.00f, 1.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotLinesHovered, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotHistogram, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotHistogramHovered, new ImGuiVector4(1.00f, 0.60f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TextSelectedBg, new ImGuiVector4(1.00f, 0.03f, 0.03f, 0.35f));
+            colors.SetColor(ColorTarget.ModalWindowDarkening, new ImGuiVector4(0.20f, 0.20f, 0.20f, 0.35f));
+            colors.SetColor(ColorTarget.DragDropTarget, new ImGuiVector4(1.00f, 1.00f, 0.00f, 0.90f));
+            */
+
+            var colors = ImGui.GetStyle();
+            colors.SetColor(ColorTarget.Text, new ImGuiVector4(0.90f, 0.90f, 0.90f, 1.00f));
+            colors.SetColor(ColorTarget.TextDisabled, new ImGuiVector4(0.60f, 0.60f, 0.60f, 1.00f));
+            colors.SetColor(ColorTarget.WindowBg, new ImGuiVector4(0.16f, 0.16f, 0.16f, 1.00f));
+            colors.SetColor(ColorTarget.ChildBg, new ImGuiVector4(0.12f, 0.12f, 0.12f, 1.00f));
+            colors.SetColor(ColorTarget.PopupBg, new ImGuiVector4(0.11f, 0.11f, 0.14f, 0.92f));
+            colors.SetColor(ColorTarget.Border, new ImGuiVector4(0.44f, 0.44f, 0.44f, 1.00f));
+            colors.SetColor(ColorTarget.BorderShadow, new ImGuiVector4(0.00f, 0.00f, 0.00f, 0.00f));
+            colors.SetColor(ColorTarget.FrameBg, new ImGuiVector4(0.20f, 0.20f, 0.20f, 1.00f));
+            colors.SetColor(ColorTarget.FrameBgHovered, new ImGuiVector4(0.98f, 0.61f, 0.26f, 1.00f));
+            colors.SetColor(ColorTarget.FrameBgActive, new ImGuiVector4(0.74f, 0.36f, 0.02f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBg, new ImGuiVector4(0.40f, 0.19f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBgActive, new ImGuiVector4(0.74f, 0.36f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TitleBgCollapsed, new ImGuiVector4(0.75f, 0.37f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.MenuBarBg, new ImGuiVector4(0.29f, 0.29f, 0.30f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarBg, new ImGuiVector4(0.28f, 0.28f, 0.28f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrab, new ImGuiVector4(0.71f, 0.37f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrabHovered, new ImGuiVector4(0.86f, 0.41f, 0.06f, 1.00f));
+            colors.SetColor(ColorTarget.ScrollbarGrabActive, new ImGuiVector4(0.64f, 0.29f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.CheckMark, new ImGuiVector4(0.96f, 0.45f, 0.01f, 1.00f));
+            colors.SetColor(ColorTarget.SliderGrab, new ImGuiVector4(0.86f, 0.48f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.SliderGrabActive, new ImGuiVector4(0.52f, 0.31f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.Button, new ImGuiVector4(0.73f, 0.37f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ButtonHovered, new ImGuiVector4(0.97f, 0.57f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.ButtonActive, new ImGuiVector4(0.62f, 0.29f, 0.01f, 1.00f));
+            colors.SetColor(ColorTarget.Header, new ImGuiVector4(0.59f, 0.28f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.HeaderHovered, new ImGuiVector4(0.74f, 0.35f, 0.02f, 1.00f));
+            colors.SetColor(ColorTarget.HeaderActive, new ImGuiVector4(0.88f, 0.45f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.Separator, new ImGuiVector4(0.50f, 0.50f, 0.50f, 1.00f));
+            colors.SetColor(ColorTarget.SeparatorHovered, new ImGuiVector4(0.60f, 0.60f, 0.70f, 1.00f));
+            colors.SetColor(ColorTarget.SeparatorActive, new ImGuiVector4(0.70f, 0.70f, 0.90f, 1.00f));
+            colors.SetColor(ColorTarget.ResizeGrip, new ImGuiVector4(1.00f, 1.00f, 1.00f, 0.16f));
+            colors.SetColor(ColorTarget.ResizeGripHovered, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.60f));
+            colors.SetColor(ColorTarget.ResizeGripActive, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.90f));
+            colors.SetColor(ColorTarget.CloseButton, new ImGuiVector4(0.50f, 0.50f, 0.90f, 0.50f));
+            colors.SetColor(ColorTarget.CloseButtonHovered, new ImGuiVector4(0.70f, 0.70f, 0.90f, 0.60f));
+            colors.SetColor(ColorTarget.CloseButtonActive, new ImGuiVector4(0.70f, 0.70f, 0.70f, 1.00f));
+            colors.SetColor(ColorTarget.PlotLines, new ImGuiVector4(1.00f, 1.00f, 1.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotLinesHovered, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotHistogram, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.PlotHistogramHovered, new ImGuiVector4(1.00f, 0.60f, 0.00f, 1.00f));
+            colors.SetColor(ColorTarget.TextSelectedBg, new ImGuiVector4(1.00f, 0.03f, 0.03f, 0.35f));
+            colors.SetColor(ColorTarget.ModalWindowDarkening, new ImGuiVector4(0.20f, 0.20f, 0.20f, 0.35f));
+            colors.SetColor(ColorTarget.DragDropTarget, new ImGuiVector4(1.00f, 1.00f, 0.00f, 0.90f));
+        }
+
+        private class InbuildPluginMenu
+        {
+            public BaseExternalPlugin Plugin;
+            public List<InbuildPluginMenu> Childs = new List<InbuildPluginMenu>();
+        }
+
+        
         public void Render()
         {
-            if (DrawInfoWindow("PoeHUD", ref Settings.IsOpened, Settings.MenuWindowPos.X, Settings.MenuWindowPos.Y, Settings.MenuWindowSize.X, Settings.MenuWindowSize.Y, WindowFlags.Default, Condition.Appearing))
+            if (DrawInfoWindow("PoeHUD", ref Settings.IsOpened, 
+                Settings.MenuWindowPos.X, Settings.MenuWindowPos.Y, Settings.MenuWindowSize.X, Settings.MenuWindowSize.Y, 
+                WindowFlags.Default, Condition.Appearing))
             {
                 ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                 if (ImGui.BeginChild("PluginsList", new Vector2(PluginNameWidth + 60, newcontentRegionArea.Y), true, WindowFlags.Default))
                 {
                     PluginNameWidth = 120;
-  
-                    if (ImGui.TreeNodeEx("Core Plugins", Settings.CorePluginsTreeState))
+                    var coreOpened = ImGui.TreeNodeEx("", Settings.CorePluginsTreeState);
+
+                    ImGui.SameLine();
+                    if (ImGui.Selectable(CoreMenu.Plugin.PluginName, SelectedPlugin == CoreMenu.Plugin))
+                        SelectedPlugin = CoreMenu.Plugin;
+
+                    if (coreOpened)
                     {
-                        foreach (var defPlugin in InbuildPlugins)
+                        foreach (var defPlugin in CoreMenu.Childs)
                         {
-                            if (defPlugin.Value.Count == 1)
+                            if (defPlugin.Childs.Count == 0)
                             {
-                                DrawPlugin(defPlugin.Value[0], 20);
+                                DrawPlugin(defPlugin.Plugin, 20);
                             }
-                            else if (ImGui.TreeNode($"{defPlugin.Key}"))
+                            else 
                             {
-                                ImGuiNative.igIndent();
-                                DrawPluginList(defPlugin.Value, 70);
-                                ImGuiNative.igUnindent();
-                                ImGui.TreePop();
+                                defPlugin.Plugin.Settings.Enable = 
+                                    ImGuiExtension.Checkbox($"##{defPlugin.Plugin.PluginName}Enabled", defPlugin.Plugin.Settings.Enable.Value);
+
+                                ImGui.SameLine();
+                                var opened = ImGui.TreeNodeEx($"##{defPlugin.Plugin.PluginName}", TreeNodeFlags.OpenOnArrow);
+                                ImGui.SameLine();
+
+                                var labelSize = ImGui.GetTextSize(defPlugin.Plugin.PluginName).X + 30;
+                                if (PluginNameWidth < labelSize)
+                                    PluginNameWidth = labelSize;
+
+                                if (ImGui.Selectable(defPlugin.Plugin.PluginName, SelectedPlugin == defPlugin.Plugin))
+                                    SelectedPlugin = defPlugin.Plugin;
+
+                                if (opened)
+                                {
+                                    foreach (var plugin in defPlugin.Childs)
+                                        DrawPlugin(plugin.Plugin, 30);
+
+                                    ImGuiNative.igUnindent();
+                                }
                             }
                         }
                         ImGui.TreePop();
-                        Settings.CorePluginsTreeState = TreeNodeFlags.DefaultOpen;
+                        Settings.CorePluginsTreeState = TreeNodeFlags.DefaultOpen | TreeNodeFlags.OpenOnArrow;
 
                         ImGui.Text("");
                     }
                     else
                     {
-                        Settings.CorePluginsTreeState = (TreeNodeFlags)0;
+                        Settings.CorePluginsTreeState = TreeNodeFlags.OpenOnArrow;
                     }             
                  
                     if (ImGui.TreeNodeEx("Installed Plugins", Settings.InstalledPluginsTreeNode))
                     {
-                        DrawPluginList(PluginExtensionPlugin.Plugins, 20);
+                        foreach (var plugin in PluginExtensionPlugin.Plugins)
+                        {
+                            DrawPlugin(plugin, 20);
+                        }
 
                         ImGui.TreePop();
                         Settings.InstalledPluginsTreeNode = TreeNodeFlags.DefaultOpen;
@@ -141,34 +281,34 @@ namespace PoeHUD.Hud
                 ImGui.EndChild();
                 ImGui.SameLine();
 
-                ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
-                if (ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default))
-                {
-                    if(SelectedPlugin != null)
-                    {
-                        SelectedPlugin.DrawSettingsMenu();
-                    }
-                }
-                ImGui.EndChild();
 
+                if (SelectedPlugin != null)
+                {
+                    ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
+                    ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default);
+
+                    if (Settings.DeveloperMode.Value && ImGuiExtension.Button("Reload Plugin"))
+                        (SelectedPlugin as ExternalPlugin).ReloadPlugin();
+
+                    SelectedPlugin.DrawSettingsMenu();
+                    ImGui.EndChild();
+                }
                 Settings.MenuWindowSize = ImGui.GetWindowSize();
             }
 
-            Settings.MenuWindowPos = ImGui.GetWindowPosition();
-       
+            Settings.MenuWindowPos = ImGui.GetWindowPosition(); 
             ImGui.EndWindow();
 
-        }
-
-        private void DrawPluginList(List<ExternalPlugin> plugins, float offsetX)
-        {
-            foreach (var plugin in plugins)
+            if (Settings.ShowImguiDemo.Value)
             {
-                DrawPlugin(plugin, offsetX);
+                bool tmp = Settings.Enable.Value;
+                ImGuiNative.igShowDemoWindow(ref tmp);
+                Settings.Enable.Value = tmp;
             }
+
         }
 
-        private void DrawPlugin(ExternalPlugin plugin, float offsetX)
+        private void DrawPlugin(BaseExternalPlugin plugin, float offsetX)
         {
             plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
 
@@ -180,29 +320,6 @@ namespace PoeHUD.Hud
 
             if (ImGui.Selectable(plugin.PluginName, SelectedPlugin == plugin))
                 SelectedPlugin = plugin;
-        }
-
-        public static string ComboBox(string sideLabel, string currentSelectedItem, List<string> objectList, ComboFlags comboFlags = ComboFlags.HeightRegular)
-        {
-            if (ImGui.BeginCombo(sideLabel, currentSelectedItem, comboFlags))
-            {
-                var refObject = currentSelectedItem;
-                for (var n = 0; n < objectList.Count; n++)
-                {
-                    var isSelected = refObject == objectList[n];
-                    if (ImGui.Selectable(objectList[n], isSelected))
-                    {
-                        ImGui.EndCombo();
-                        return objectList[n];
-                    }
-
-                    if (isSelected) ImGui.SetItemDefaultFocus();
-                }
-
-                ImGui.EndCombo();
-            }
-
-            return currentSelectedItem;
         }
 
         public bool DrawInfoWindow(string windowLabel, ref bool isOpened, float x, float y, float width, float height, WindowFlags flags, Condition conditions)

@@ -23,12 +23,12 @@ namespace PoeHUD.Plugins
         {
             PluginName = GetType().Name;
         }
-        public string PluginDirectory { get; private set; }
+        public string PluginDirectory { get; internal set; }
         public string LocalPluginDirectory { get; private set; }
         public string PluginName;
 
-        internal ExternalPlugin _ExternalPluginData;
-        internal void InitPlugin(ExternalPlugin pluginData)
+        internal BaseExternalPlugin _ExternalPluginData;
+        internal void InitPlugin(BaseExternalPlugin pluginData)
         {
             _ExternalPluginData = pluginData;
             PluginDirectory = pluginData.PluginDir;
@@ -38,7 +38,7 @@ namespace PoeHUD.Plugins
         //For modification of default rendering of settings
         public List<BaseSettingsDrawer> GetSettingsDrawers()
         {
-            return _ExternalPluginData.PluginInstance.SettingPropertyDrawers;
+            return _ExternalPluginData.SettingPropertyDrawers;
         }
 
         public static PluginExtensionPlugin API;
@@ -173,6 +173,8 @@ namespace PoeHUD.Plugins
         #endregion
 
 
+        //Can be overrided by plugin to draw own menu.
+        //Also if you going to draw menu fully on ur side also override InitializeSettingsMenu and clear code in it (remove base.InitializeSettingsMenu();).
         public virtual void DrawSettingsMenu()
         {
             _ExternalPluginData.DrawGeneratedSettingsMenu();
