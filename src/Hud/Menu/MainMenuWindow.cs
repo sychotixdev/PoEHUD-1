@@ -96,6 +96,7 @@ namespace PoeHUD.Hud
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Monster kills", settingsHub.KillCounterSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Show dps", settingsHub.DpsMeterSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Map Icons", settingsHub.MapIconsSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Perfomance", settingsHub.PerformanceSettings) });
 
             InitTheme();
         }
