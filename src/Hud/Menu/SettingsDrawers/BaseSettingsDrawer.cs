@@ -33,6 +33,11 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         public override void Draw() => ImGuiExtension.Label(SettingName);
     }
 
+    public class SameLineSettingDrawer : BaseSettingsDrawer
+    {
+        public override void Draw() => ImGui.SameLine();
+    }
+
     //Button
     public class ButtonSettingDrawer : BaseSettingsDrawer
     {

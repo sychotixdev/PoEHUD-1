@@ -230,6 +230,8 @@
     <Compile Include="Hud\Settings\ListNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
+    <Compile Include="Hud\Themes\ThemeConfig.cs" />
+    <Compile Include="Hud\Themes\ThemeEditor.cs" />
     <Compile Include="Hud\UI\ImGuiExtension.cs" />
     <Compile Include="Hud\UI\Renderers\ImGuiRender.cs" />
     <Compile Include="Hud\UI\Vertexes\GuiVertex.cs" />

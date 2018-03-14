@@ -16,14 +16,13 @@ using Vector2 = System.Numerics.Vector2;
 namespace PoeHUD.Hud.PluginExtension
 {
     public class BaseExternalPlugin
-    {
-        //Saving all references to plugin. Will be destroyed on plugin reload
-        internal BasePlugin BPlugin;
+    {        
         internal readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
 
         internal string PluginDir; //Will be used for loading resources (images, sounds, etc.) from plugin floder
         protected PluginExtensionPlugin API;
         internal SettingsBase Settings;
+        internal bool CanBeDisabled = true;//For theme plugin
 
         public List<BaseSettingsDrawer> SettingsDrawers => SettingPropertyDrawers;
 
@@ -58,7 +57,7 @@ namespace PoeHUD.Hud.PluginExtension
         private void DrawSettingsRecursively(List<BaseSettingsDrawer> drawers, BaseSettingsDrawer owner)
         {
             float childSize = 20;
-            foreach (var drawer in drawers)
+            foreach (var drawer in drawers.ToList())
             {
                 if (!drawer.IsVisible()) continue;
            
@@ -103,7 +102,6 @@ namespace PoeHUD.Hud.PluginExtension
 
             Settings = settings;
             var settingsProps = settings.GetType().GetProperties();
-
             foreach (var property in settingsProps)
             {
                 if (property.Name == "Enable") continue;
@@ -214,6 +212,16 @@ namespace PoeHUD.Hud.PluginExtension
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = (ushort)ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
+                                    };
+                                }
+                                else if (argType == typeof(Vector2))
+                                {
+                                    var vect = property.GetValue(settings) as RangeNode<Vector2>;
+                                    valueDrawer.DrawDelegate = delegate
+                                    {               
+                                        var val = vect.Value;
+                                        ImGui.SliderVector2(valueDrawer.ImguiUniqLabel, ref val, vect.Min.X, vect.Max.X, "%.0f", 1);
+                                        vect.Value = val;
                                     };
                                 }
                                 else

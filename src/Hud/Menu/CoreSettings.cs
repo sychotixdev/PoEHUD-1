@@ -4,6 +4,7 @@ using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiNET;
 using Newtonsoft.Json;
 using PoeHUD.Plugins;
+using PoeHUD.Hud.Themes;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -28,5 +29,8 @@ namespace PoeHUD.Hud.Menu
 
         [Menu("Reload plugin DLL on change")]
         public ToggleNode AutoReloadDllOnChanges { get; set; } = true;
+
+        [Menu("Current Menu Theme")]
+        public ListNode Theme { get; set; } = new ListNode() { Value = ThemeEditor.DefaultThemeName };
     }
 }

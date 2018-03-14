@@ -1,5 +1,4 @@
 using System;
-//using SharpDX;
 using SharpDX.Direct3D9;
 using System.Linq;
 using System.Text;
@@ -25,6 +24,7 @@ using Vector2 = System.Numerics.Vector2;
 using PoeHUD.Hud.PluginExtension;
 using PoeHUD.Controllers;
 using PoeHUD.Hud.UI;
+using PoeHUD.Hud.Themes;
 
 namespace PoeHUD.Hud
 {
@@ -98,105 +98,14 @@ namespace PoeHUD.Hud
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Map Icons", settingsHub.MapIconsSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Perfomance", settingsHub.PerformanceSettings) });
 
-            InitTheme();
+
+        
+            var themeEditorDraw = new ThemeEditor();
+            themeEditorDraw.CanBeDisabled = false;
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = themeEditorDraw });
         }
 
-        private static void InitTheme()
-        {
-
-            /*
-            var colors = ImGui.GetStyle();
-            colors.SetColor(ColorTarget.Text, new ImGuiVector4(0.90f, 0.90f, 0.90f, 1.00f));
-            colors.SetColor(ColorTarget.TextDisabled, new ImGuiVector4(0.60f, 0.60f, 0.60f, 1.00f));
-            colors.SetColor(ColorTarget.WindowBg, new ImGuiVector4(0.16f, 0.16f, 0.16f, 1.00f));
-            colors.SetColor(ColorTarget.ChildBg, new ImGuiVector4(0.12f, 0.12f, 0.12f, 1.00f));
-            colors.SetColor(ColorTarget.PopupBg, new ImGuiVector4(0.11f, 0.11f, 0.14f, 0.92f));
-            colors.SetColor(ColorTarget.Border, new ImGuiVector4(0.61f, 0.30f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.BorderShadow, new ImGuiVector4(0.00f, 0.00f, 0.00f, 0.00f));
-            colors.SetColor(ColorTarget.FrameBg, new ImGuiVector4(0.77f, 0.43f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.FrameBgHovered, new ImGuiVector4(0.98f, 0.61f, 0.26f, 1.00f));
-            colors.SetColor(ColorTarget.FrameBgActive, new ImGuiVector4(0.74f, 0.36f, 0.02f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBg, new ImGuiVector4(0.40f, 0.19f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBgActive, new ImGuiVector4(0.75f, 0.37f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBgCollapsed, new ImGuiVector4(0.74f, 0.36f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.MenuBarBg, new ImGuiVector4(0.29f, 0.29f, 0.30f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarBg, new ImGuiVector4(0.28f, 0.28f, 0.28f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrab, new ImGuiVector4(0.74f, 0.41f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrabHovered, new ImGuiVector4(0.86f, 0.41f, 0.06f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrabActive, new ImGuiVector4(0.64f, 0.29f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.CheckMark, new ImGuiVector4(0.00f, 0.00f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.SliderGrab, new ImGuiVector4(1.00f, 0.80f, 0.54f, 1.00f));
-            colors.SetColor(ColorTarget.SliderGrabActive, new ImGuiVector4(0.52f, 0.31f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.Button, new ImGuiVector4(0.73f, 0.37f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ButtonHovered, new ImGuiVector4(0.97f, 0.57f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ButtonActive, new ImGuiVector4(0.62f, 0.29f, 0.01f, 1.00f));
-            colors.SetColor(ColorTarget.Header, new ImGuiVector4(0.59f, 0.28f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.HeaderHovered, new ImGuiVector4(0.74f, 0.35f, 0.02f, 1.00f));
-            colors.SetColor(ColorTarget.HeaderActive, new ImGuiVector4(0.88f, 0.45f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.Separator, new ImGuiVector4(0.50f, 0.50f, 0.50f, 1.00f));
-            colors.SetColor(ColorTarget.SeparatorHovered, new ImGuiVector4(0.60f, 0.60f, 0.70f, 1.00f));
-            colors.SetColor(ColorTarget.SeparatorActive, new ImGuiVector4(0.70f, 0.70f, 0.90f, 1.00f));
-            colors.SetColor(ColorTarget.ResizeGrip, new ImGuiVector4(1.00f, 1.00f, 1.00f, 0.16f));
-            colors.SetColor(ColorTarget.ResizeGripHovered, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.60f));
-            colors.SetColor(ColorTarget.ResizeGripActive, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.90f));
-            colors.SetColor(ColorTarget.CloseButton, new ImGuiVector4(0.50f, 0.50f, 0.90f, 0.50f));
-            colors.SetColor(ColorTarget.CloseButtonHovered, new ImGuiVector4(0.70f, 0.70f, 0.90f, 0.60f));
-            colors.SetColor(ColorTarget.CloseButtonActive, new ImGuiVector4(0.70f, 0.70f, 0.70f, 1.00f));
-            colors.SetColor(ColorTarget.PlotLines, new ImGuiVector4(1.00f, 1.00f, 1.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotLinesHovered, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotHistogram, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotHistogramHovered, new ImGuiVector4(1.00f, 0.60f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TextSelectedBg, new ImGuiVector4(1.00f, 0.03f, 0.03f, 0.35f));
-            colors.SetColor(ColorTarget.ModalWindowDarkening, new ImGuiVector4(0.20f, 0.20f, 0.20f, 0.35f));
-            colors.SetColor(ColorTarget.DragDropTarget, new ImGuiVector4(1.00f, 1.00f, 0.00f, 0.90f));
-            */
-
-            var colors = ImGui.GetStyle();
-            colors.SetColor(ColorTarget.Text, new ImGuiVector4(0.90f, 0.90f, 0.90f, 1.00f));
-            colors.SetColor(ColorTarget.TextDisabled, new ImGuiVector4(0.60f, 0.60f, 0.60f, 1.00f));
-            colors.SetColor(ColorTarget.WindowBg, new ImGuiVector4(0.16f, 0.16f, 0.16f, 1.00f));
-            colors.SetColor(ColorTarget.ChildBg, new ImGuiVector4(0.12f, 0.12f, 0.12f, 1.00f));
-            colors.SetColor(ColorTarget.PopupBg, new ImGuiVector4(0.11f, 0.11f, 0.14f, 0.92f));
-            colors.SetColor(ColorTarget.Border, new ImGuiVector4(0.44f, 0.44f, 0.44f, 1.00f));
-            colors.SetColor(ColorTarget.BorderShadow, new ImGuiVector4(0.00f, 0.00f, 0.00f, 0.00f));
-            colors.SetColor(ColorTarget.FrameBg, new ImGuiVector4(0.20f, 0.20f, 0.20f, 1.00f));
-            colors.SetColor(ColorTarget.FrameBgHovered, new ImGuiVector4(0.98f, 0.61f, 0.26f, 1.00f));
-            colors.SetColor(ColorTarget.FrameBgActive, new ImGuiVector4(0.74f, 0.36f, 0.02f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBg, new ImGuiVector4(0.40f, 0.19f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBgActive, new ImGuiVector4(0.74f, 0.36f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TitleBgCollapsed, new ImGuiVector4(0.75f, 0.37f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.MenuBarBg, new ImGuiVector4(0.29f, 0.29f, 0.30f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarBg, new ImGuiVector4(0.28f, 0.28f, 0.28f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrab, new ImGuiVector4(0.71f, 0.37f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrabHovered, new ImGuiVector4(0.86f, 0.41f, 0.06f, 1.00f));
-            colors.SetColor(ColorTarget.ScrollbarGrabActive, new ImGuiVector4(0.64f, 0.29f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.CheckMark, new ImGuiVector4(0.96f, 0.45f, 0.01f, 1.00f));
-            colors.SetColor(ColorTarget.SliderGrab, new ImGuiVector4(0.86f, 0.48f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.SliderGrabActive, new ImGuiVector4(0.52f, 0.31f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.Button, new ImGuiVector4(0.73f, 0.37f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ButtonHovered, new ImGuiVector4(0.97f, 0.57f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.ButtonActive, new ImGuiVector4(0.62f, 0.29f, 0.01f, 1.00f));
-            colors.SetColor(ColorTarget.Header, new ImGuiVector4(0.59f, 0.28f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.HeaderHovered, new ImGuiVector4(0.74f, 0.35f, 0.02f, 1.00f));
-            colors.SetColor(ColorTarget.HeaderActive, new ImGuiVector4(0.88f, 0.45f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.Separator, new ImGuiVector4(0.50f, 0.50f, 0.50f, 1.00f));
-            colors.SetColor(ColorTarget.SeparatorHovered, new ImGuiVector4(0.60f, 0.60f, 0.70f, 1.00f));
-            colors.SetColor(ColorTarget.SeparatorActive, new ImGuiVector4(0.70f, 0.70f, 0.90f, 1.00f));
-            colors.SetColor(ColorTarget.ResizeGrip, new ImGuiVector4(1.00f, 1.00f, 1.00f, 0.16f));
-            colors.SetColor(ColorTarget.ResizeGripHovered, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.60f));
-            colors.SetColor(ColorTarget.ResizeGripActive, new ImGuiVector4(0.78f, 0.82f, 1.00f, 0.90f));
-            colors.SetColor(ColorTarget.CloseButton, new ImGuiVector4(0.50f, 0.50f, 0.90f, 0.50f));
-            colors.SetColor(ColorTarget.CloseButtonHovered, new ImGuiVector4(0.70f, 0.70f, 0.90f, 0.60f));
-            colors.SetColor(ColorTarget.CloseButtonActive, new ImGuiVector4(0.70f, 0.70f, 0.70f, 1.00f));
-            colors.SetColor(ColorTarget.PlotLines, new ImGuiVector4(1.00f, 1.00f, 1.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotLinesHovered, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotHistogram, new ImGuiVector4(0.90f, 0.70f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.PlotHistogramHovered, new ImGuiVector4(1.00f, 0.60f, 0.00f, 1.00f));
-            colors.SetColor(ColorTarget.TextSelectedBg, new ImGuiVector4(1.00f, 0.03f, 0.03f, 0.35f));
-            colors.SetColor(ColorTarget.ModalWindowDarkening, new ImGuiVector4(0.20f, 0.20f, 0.20f, 0.35f));
-            colors.SetColor(ColorTarget.DragDropTarget, new ImGuiVector4(1.00f, 1.00f, 0.00f, 0.90f));
-        }
-
+ 
         private class InbuildPluginMenu
         {
             public BaseExternalPlugin Plugin;
@@ -313,18 +222,20 @@ namespace PoeHUD.Hud
 
             if (Settings.ShowImguiDemo.Value)
             {
-                bool tmp = Settings.Enable.Value;
+                bool tmp = Settings.ShowImguiDemo.Value;
                 ImGuiNative.igShowDemoWindow(ref tmp);
-                Settings.Enable.Value = tmp;
+                Settings.ShowImguiDemo.Value = tmp;
             }
 
         }
 
         private void DrawPlugin(BaseExternalPlugin plugin, float offsetX)
         {
-            plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
-
-            ImGui.SameLine();
+            if (plugin.CanBeDisabled)//for theme plugin
+            {
+                plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
+                ImGui.SameLine();
+            }
 
             var labelSize = ImGui.GetTextSize(plugin.PluginName).X + offsetX;
             if (PluginNameWidth < labelSize)

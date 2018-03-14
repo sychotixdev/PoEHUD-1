@@ -36,10 +36,7 @@ namespace PoeHUD.Plugins
         }
 
         //For modification of default rendering of settings
-        public List<BaseSettingsDrawer> GetSettingsDrawers()
-        {
-            return _ExternalPluginData.SettingPropertyDrawers;
-        }
+        public List<BaseSettingsDrawer> SettingsDrawers => _ExternalPluginData.SettingPropertyDrawers;
 
         public static PluginExtensionPlugin API;
         public GameController GameController => API.GameController;

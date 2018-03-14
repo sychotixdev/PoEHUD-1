@@ -17,6 +17,8 @@ namespace PoeHUD.Hud.PluginExtension
 {
     public class ExternalPlugin : BaseExternalPlugin
     {
+        //Saving all references to plugin. Will be destroyed on plugin reload
+        internal BasePlugin BPlugin;
         private readonly string FullTypeName;
         private readonly string DllPath;
         //private DateTime DllTimeVersion;
