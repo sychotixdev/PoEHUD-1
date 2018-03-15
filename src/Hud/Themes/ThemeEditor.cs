@@ -163,7 +163,7 @@ namespace PoeHUD.Hud.Themes
                 var nameFixed = Regex.Replace(type.ToString(), "(\\B[A-Z])", " $1");
                 var colorValue = style.GetColor(type);
 
-                if (ImGui.ColorEdit4(nameFixed, ref colorValue, ColorEditFlags.NoInputs))
+                if (ImGui.ColorEdit4(nameFixed, ref colorValue, ColorEditFlags.AlphaBar | ColorEditFlags.NoInputs | ColorEditFlags.AlphaPreviewHalf))
                     style.SetColor(type, colorValue);
 
                 if (count-- == -1)
@@ -171,47 +171,6 @@ namespace PoeHUD.Hud.Themes
             }
             #endregion
         }
-
-        /*
-var styleProps = style.GetType().GetProperties();
-foreach (var prop in styleProps)
-{
-    var settingProp = typeof(ThemeConfig).GetProperty(prop.Name);
-    if (settingProp == null)
-    {
-        BasePlugin.LogWarning($"{PluginName}: Can't find property {prop.Name} in ThemeConfig", 0);
-        continue;
-    }
-
-    bool changed = false;
-    object value = prop.GetValue(style);
-
-    if (prop.PropertyType == typeof(bool))
-    {
-        var boolValue = (bool)value;
-        var newValue = ImGuiExtension.Checkbox(prop.Name, boolValue);
-        if (newValue != boolValue)
-        {
-            value = newValue;
-            changed = true;
-        }
-    }
-    else if (prop.PropertyType == typeof(Vector2))
-    {
-        var vectVal = (Vector2)value;
-        if (ImGui.SliderVector2(prop.Name, ref vectVal, 20, 20, "", 1))
-        {
-            value = vectVal;
-           // changed = true;
-        }
-    }
-
-    if (changed)
-    {
-        settingProp.SetValue(style, value);
-    }
-}
-*/
 
         private bool DrawBoolSetting(string name, bool result)
         {

@@ -182,6 +182,14 @@ namespace PoeHUD.Hud
                     {
                         foreach (var plugin in PluginExtensionPlugin.Plugins)
                         {
+                            /*
+                            if (Settings.DeveloperMode.Value)
+                            {
+                                var extPlugin = (plugin as ExternalPluginHolder).BPlugin;
+                                ImGuiExtension.Label(extPlugin.DiagnosticTimer.Elapsed.ToString("ffff"));
+                                ImGui.SameLine();
+                            }
+                            */
                             DrawPlugin(plugin, 20);
                         }
 
@@ -208,6 +216,16 @@ namespace PoeHUD.Hud
                     {
                         if (ImGuiExtension.Button("Reload Plugin"))
                             extPlugin.ReloadPlugin();
+
+                        if (extPlugin.BPlugin != null)
+                        {
+                            ImGui.SameLine();
+                            ImGuiExtension.Label("CurrentMS: " + extPlugin.BPlugin.CurrentMs);
+                            ImGui.SameLine();
+                            ImGuiExtension.Label("AwerageMS: " + extPlugin.BPlugin.AwerageMs);
+                            ImGui.SameLine();
+                            ImGuiExtension.Label("TopMS: " + extPlugin.BPlugin.TopMs);
+                        }
                     }
                     SelectedPlugin.DrawSettingsMenu();
 
@@ -233,6 +251,8 @@ namespace PoeHUD.Hud
         {
             if (plugin.CanBeDisabled)//for theme plugin
             {
+                if (plugin.Settings.Enable == null)//If developer forget to init it
+                    plugin.Settings.Enable = false;
                 plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
                 ImGui.SameLine();
             }
