@@ -33,7 +33,7 @@ namespace PoeHUD.Hud
         private string CurrentSelected = "";
         private int CurrentSelectedInt = 0;
         private ImGuiVector2 newcontentRegionArea;
-        private BaseExternalPlugin SelectedPlugin;
+        private PluginHolder SelectedPlugin;
         private float PluginNameWidth = 100;
 
         private InbuildPluginMenu CoreMenu;
@@ -51,52 +51,52 @@ namespace PoeHUD.Hud
                 Settings.MenuWindowPos.X = GameController.Instance.Window.GetWindowRectangle().X - Settings.MenuWindowSize.X / 2;
             }
 
-            CoreMenu = new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Core", settingsHub.MenuSettings) };
+            CoreMenu = new InbuildPluginMenu() { Plugin = new PluginHolder("Core", settingsHub.MenuSettings) };
             CoreMenu.Childs.Add(new InbuildPluginMenu()
             {
-                Plugin = new BaseExternalPlugin("Health bars", settingsHub.HealthBarSettings),
+                Plugin = new PluginHolder("Health bars", settingsHub.HealthBarSettings),
                 Childs = new List<InbuildPluginMenu>()
                 {
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Players", settingsHub.HealthBarSettings.Players) },
-                    new InbuildPluginMenu(){ Plugin =  new BaseExternalPlugin("Minions", settingsHub.HealthBarSettings.Minions) },
-                    new InbuildPluginMenu(){ Plugin =  new BaseExternalPlugin("NormalEnemy", settingsHub.HealthBarSettings.NormalEnemy) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("MagicEnemy", settingsHub.HealthBarSettings.MagicEnemy) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("RareEnemy", settingsHub.HealthBarSettings.RareEnemy) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("UniqueEnemy", settingsHub.HealthBarSettings.UniqueEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Players", settingsHub.HealthBarSettings.Players) },
+                    new InbuildPluginMenu(){ Plugin =  new PluginHolder("Minions", settingsHub.HealthBarSettings.Minions) },
+                    new InbuildPluginMenu(){ Plugin =  new PluginHolder("NormalEnemy", settingsHub.HealthBarSettings.NormalEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("MagicEnemy", settingsHub.HealthBarSettings.MagicEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("RareEnemy", settingsHub.HealthBarSettings.RareEnemy) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("UniqueEnemy", settingsHub.HealthBarSettings.UniqueEnemy) },
                 }
             });
 
             CoreMenu.Childs.Add(new InbuildPluginMenu()
             {
-                Plugin = new BaseExternalPlugin("Advanced Tooltip", settingsHub.AdvancedTooltipSettings),
+                Plugin = new PluginHolder("Advanced Tooltip", settingsHub.AdvancedTooltipSettings),
                 Childs = new List<InbuildPluginMenu>()
                 {
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps) },
                 }
             });
 
             CoreMenu.Childs.Add(new InbuildPluginMenu()
             {
-                Plugin = new BaseExternalPlugin("Item alert", settingsHub.ItemAlertSettings),
+                Plugin = new PluginHolder("Item alert", settingsHub.ItemAlertSettings),
                 Childs = new List<InbuildPluginMenu>()
                 {
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Border Settings", settingsHub.ItemAlertSettings.BorderSettings) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour)},
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem) },
-                    new InbuildPluginMenu(){ Plugin = new BaseExternalPlugin("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon) }
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Border Settings", settingsHub.ItemAlertSettings.BorderSettings) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour)},
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem) },
+                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon) }
                 }
             });
 
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Xph & area", settingsHub.XpRateSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Preload alert", settingsHub.PreloadAlertSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Monster alert", settingsHub.MonsterTrackerSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Monster kills", settingsHub.KillCounterSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Show dps", settingsHub.DpsMeterSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Map Icons", settingsHub.MapIconsSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new BaseExternalPlugin("Perfomance", settingsHub.PerformanceSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Xph & area", settingsHub.XpRateSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Preload alert", settingsHub.PreloadAlertSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster alert", settingsHub.MonsterTrackerSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster kills", settingsHub.KillCounterSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Show dps", settingsHub.DpsMeterSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons", settingsHub.MapIconsSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Perfomance", settingsHub.PerformanceSettings) });
 
 
         
@@ -108,7 +108,7 @@ namespace PoeHUD.Hud
  
         private class InbuildPluginMenu
         {
-            public BaseExternalPlugin Plugin;
+            public PluginHolder Plugin;
             public List<InbuildPluginMenu> Childs = new List<InbuildPluginMenu>();
         }
 
@@ -203,7 +203,7 @@ namespace PoeHUD.Hud
                     ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                     ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default);
 
-                    var extPlugin = SelectedPlugin as ExternalPlugin;
+                    var extPlugin = SelectedPlugin as ExternalPluginHolder;
                     if (Settings.DeveloperMode.Value && extPlugin != null)
                     {
                         if (ImGuiExtension.Button("Reload Plugin"))
@@ -229,7 +229,7 @@ namespace PoeHUD.Hud
 
         }
 
-        private void DrawPlugin(BaseExternalPlugin plugin, float offsetX)
+        private void DrawPlugin(PluginHolder plugin, float offsetX)
         {
             if (plugin.CanBeDisabled)//for theme plugin
             {

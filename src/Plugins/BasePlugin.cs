@@ -27,8 +27,8 @@ namespace PoeHUD.Plugins
         public string LocalPluginDirectory { get; private set; }
         public string PluginName;
 
-        internal BaseExternalPlugin _ExternalPluginData;
-        internal void InitPlugin(BaseExternalPlugin pluginData)
+        internal PluginHolder _ExternalPluginData;
+        internal void InitPlugin(PluginHolder pluginData)
         {
             _ExternalPluginData = pluginData;
             PluginDirectory = pluginData.PluginDirectory;
@@ -107,7 +107,7 @@ namespace PoeHUD.Plugins
 
         #endregion
 
-        internal virtual void _LoadSettings() { }
+        internal virtual SettingsBase _LoadSettings() { return null; }
         internal virtual void _SaveSettings() { }
 
         #region Error Logging

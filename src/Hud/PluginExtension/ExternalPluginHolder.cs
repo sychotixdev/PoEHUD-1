@@ -15,7 +15,7 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.PluginExtension
 {
-    public class ExternalPlugin : BaseExternalPlugin
+    public class ExternalPluginHolder : PluginHolder
     {
         //Saving all references to plugin. Will be destroyed on plugin reload
         internal BasePlugin BPlugin;
@@ -26,7 +26,7 @@ namespace PoeHUD.Hud.PluginExtension
 
         public PluginState State { get; private set; }//Will be used by poehud main menu to display why plugin is not loaded/reloaded
 
-        public ExternalPlugin(PluginExtensionPlugin api, string dllPath, string fullTypeName) : base(Path.GetFileNameWithoutExtension(dllPath))
+        public ExternalPluginHolder(PluginExtensionPlugin api, string dllPath, string fullTypeName) : base(Path.GetFileNameWithoutExtension(dllPath))
         {
             API = api;
             DllPath = dllPath;
@@ -99,7 +99,7 @@ namespace PoeHUD.Hud.PluginExtension
             
             BPlugin = pluginClassObj as BasePlugin;
             BPlugin.InitPlugin(this);
-            BPlugin._LoadSettings();
+            Settings = BPlugin._LoadSettings();
 
             if (!string.IsNullOrEmpty(BPlugin.PluginName))
                 PluginName = BPlugin.PluginName;

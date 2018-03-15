@@ -26,7 +26,7 @@ namespace PoeHUD.Plugins
 
         private string SettingsFullPath => PluginDirectory + "\\" + SettingsFileName;
 
-        internal override void _LoadSettings()
+        internal override SettingsBase _LoadSettings()
         {
             try
             {
@@ -57,6 +57,7 @@ namespace PoeHUD.Plugins
             }
 
             GameController.pluginsSettings.Add(SettingsFullPath, Settings);
+            return Settings;
         }
 
         internal override void _SaveSettings()
@@ -83,7 +84,7 @@ namespace PoeHUD.Plugins
         //if you going to draw menu fully on ur side- override this
         public override void DrawSettingsMenu()
         {
-            InitializeMenuOnce();
+            GenerateDefaultSettingsMenuOnce();
             DrawGeneratedSettingsMenu();
         }
 
@@ -94,12 +95,12 @@ namespace PoeHUD.Plugins
         }
 
         private bool _initializeMenuOnce = false;
-        protected void InitializeMenuOnce()
+        protected void GenerateDefaultSettingsMenuOnce()
         {
             if (!_initializeMenuOnce)
             {
                 _initializeMenuOnce = true;
-                _ExternalPluginData.InitializeSettingsMenu(Settings);
+                _ExternalPluginData.InitializeSettingsMenu();
             }
         }
     }

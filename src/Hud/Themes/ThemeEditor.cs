@@ -46,7 +46,7 @@ using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Hud.Themes
 {
-    public class ThemeEditor : BaseExternalPlugin
+    public class ThemeEditor : PluginHolder
     {
         public const string ThemeExtension = ".hudtheme";
         public const string DefaultThemeName = "Default";

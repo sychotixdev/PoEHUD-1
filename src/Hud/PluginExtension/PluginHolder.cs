@@ -15,28 +15,28 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.PluginExtension
 {
-    public class BaseExternalPlugin
+    public class PluginHolder
     {        
         internal readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
 
         public string PluginDirectory { get; internal set; } //Will be used for loading resources (images, sounds, etc.) from plugin floder
         protected PluginExtensionPlugin API;
-        internal SettingsBase Settings;
+        internal SettingsBase Settings { get; set; }
         internal bool CanBeDisabled = true;//For theme plugin
 
         public List<BaseSettingsDrawer> SettingsDrawers => SettingPropertyDrawers;
 
         public string PluginName { get; internal set; } = "NoName";
 
-        public BaseExternalPlugin(string pluginName)
+        public PluginHolder(string pluginName)
         {
             PluginName = pluginName;
         }
 
-        public BaseExternalPlugin(string pluginName, SettingsBase settings) : this(pluginName)//for buildin plugins
+        public PluginHolder(string pluginName, SettingsBase settings) : this(pluginName)//for buildin plugins
         {
             Settings = settings;
-            InitializeSettingsMenu(settings, true);
+            InitializeSettingsMenu(true);
         }
 
 
@@ -95,13 +95,12 @@ namespace PoeHUD.Hud.PluginExtension
         public int GetUniqDrawerId() => Enumerable.Range(100000, 1000).Except(DrawersDict.Keys).FirstOrDefault();
 
         private Dictionary<int, BaseSettingsDrawer> DrawersDict = new Dictionary<int, BaseSettingsDrawer>();
-        internal void InitializeSettingsMenu(SettingsBase settings, bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
+        internal void InitializeSettingsMenu(bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
         {
             SettingPropertyDrawers.Clear();
             DrawersDict.Clear();
-
-            Settings = settings;
-            var settingsProps = settings.GetType().GetProperties();
+            
+            var settingsProps = Settings.GetType().GetProperties();
             foreach (var property in settingsProps)
             {
                 if (property.Name == "Enable") continue;
@@ -119,7 +118,7 @@ namespace PoeHUD.Hud.PluginExtension
 
                     if (propType == typeof(ButtonNode) || propType.IsSubclassOf(typeof(ButtonNode)))
                     {
-                        drawer = new ButtonSettingDrawer(property.GetValue(settings) as ButtonNode);
+                        drawer = new ButtonSettingDrawer(property.GetValue(Settings) as ButtonNode);
                     }
                     else if (propType == typeof(EmptyNode) || propType.IsSubclassOf(typeof(EmptyNode)))
                     {
@@ -127,23 +126,23 @@ namespace PoeHUD.Hud.PluginExtension
                     }
                     else if (propType == typeof(HotkeyNode) || propType.IsSubclassOf(typeof(HotkeyNode)))
                     {
-                        drawer = new HotkeySettingDrawer(property.GetValue(settings) as HotkeyNode);
+                        drawer = new HotkeySettingDrawer(property.GetValue(Settings) as HotkeyNode);
                     }
                     else if (propType == typeof(ToggleNode) || propType.IsSubclassOf(typeof(ToggleNode)))
                     {
-                        drawer = new CheckboxSettingDrawer(property.GetValue(settings) as ToggleNode);
+                        drawer = new CheckboxSettingDrawer(property.GetValue(Settings) as ToggleNode);
                     }
                     else if (propType == typeof(ColorNode) || propType.IsSubclassOf(typeof(ColorNode)))
                     {
-                        drawer = new ColorSettingDrawer(property.GetValue(settings) as ColorNode);
+                        drawer = new ColorSettingDrawer(property.GetValue(Settings) as ColorNode);
                     }
                     else if (propType == typeof(ListNode) || propType.IsSubclassOf(typeof(ListNode)))
                     {
-                        drawer = new StringListSettingDrawer(property.GetValue(settings) as ListNode);
+                        drawer = new StringListSettingDrawer(property.GetValue(Settings) as ListNode);
                     }
                     else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
                     {
-                        drawer = new FilePickerDrawer(property.GetValue(settings) as FileNode);
+                        drawer = new FilePickerDrawer(property.GetValue(Settings) as FileNode);
                     }
                     else if (propType.IsGenericType)
                     {
@@ -160,7 +159,7 @@ namespace PoeHUD.Hud.PluginExtension
 
                                 if (argType == typeof(int))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<int>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<int>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
@@ -168,7 +167,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(float))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<float>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<float>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = ImGuiExtension.FloatSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
@@ -176,7 +175,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(double))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<double>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<double>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = ImGuiExtension.FloatSlider(valueDrawer.ImguiUniqLabel, (float)rangeInt.Value, (float)rangeInt.Min, (float)rangeInt.Max);
@@ -184,7 +183,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(byte))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<byte>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<byte>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = (byte)ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
@@ -192,7 +191,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(long))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<long>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<long>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, (int)rangeInt.Value, (int)rangeInt.Min, (int)rangeInt.Max);
@@ -200,7 +199,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(short))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<short>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<short>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = (short)ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
@@ -208,7 +207,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(ushort))
                                 {
-                                    var rangeInt = property.GetValue(settings) as RangeNode<ushort>;
+                                    var rangeInt = property.GetValue(Settings) as RangeNode<ushort>;
                                     valueDrawer.DrawDelegate = delegate
                                     {
                                         rangeInt.Value = (ushort)ImGuiExtension.IntSlider(valueDrawer.ImguiUniqLabel, rangeInt.Value, rangeInt.Min, rangeInt.Max);
@@ -216,7 +215,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else if (argType == typeof(Vector2))
                                 {
-                                    var vect = property.GetValue(settings) as RangeNode<Vector2>;
+                                    var vect = property.GetValue(Settings) as RangeNode<Vector2>;
                                     valueDrawer.DrawDelegate = delegate
                                     {               
                                         var val = vect.Value;

@@ -215,8 +215,8 @@
     <Compile Include="Hud\Menu\CoreSettings.cs" />
     <Compile Include="Hud\Menu\SettingsDrawers\BaseSettingsDrawer.cs" />
     <Compile Include="Hud\Performance.cs" />
-    <Compile Include="Hud\PluginExtension\BaseExternalPlugin.cs" />
-    <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
+    <Compile Include="Hud\PluginExtension\ExternalPluginHolder.cs" />
+    <Compile Include="Hud\PluginExtension\PluginHolder.cs" />
     <Compile Include="Hud\PluginExtension\FileOperationAPIWrapper.cs" />
     <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
