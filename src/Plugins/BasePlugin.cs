@@ -14,6 +14,8 @@ using System;
 using System.IO;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using PoeHUD.Hud.Menu.SettingsDrawers;
+using System.Diagnostics;
+using PoeHUD.Hud;
 
 namespace PoeHUD.Plugins
 {
@@ -28,11 +30,19 @@ namespace PoeHUD.Plugins
         public string PluginName;
 
         internal PluginHolder _ExternalPluginData;
+
+        //Diagnostics
+        internal Stopwatch DiagnosticTimer;
+        internal long AwerageMs;
+        internal long TopMs;
+        internal long CurrentMs;
+
         internal void InitPlugin(PluginHolder pluginData)
         {
             _ExternalPluginData = pluginData;
             PluginDirectory = pluginData.PluginDirectory;
             LocalPluginDirectory = PluginDirectory.Substring(PluginDirectory.IndexOf($@"\{PluginExtensionPlugin.PluginsDirectory}\") + 1);
+            DiagnosticTimer = new Stopwatch();
         }
 
         //For modification of default rendering of settings
@@ -73,8 +83,18 @@ namespace PoeHUD.Plugins
 
             if (!_allowRender) return;
 
+            if(MainMenuWindow.Settings.DeveloperMode.Value)
+                DiagnosticTimer.Restart();
             try { Render(); }
             catch (Exception e) { HandlePluginError("Render", e); }
+
+            if (MainMenuWindow.Settings.DeveloperMode.Value)
+            {
+                DiagnosticTimer.Stop();
+                CurrentMs = DiagnosticTimer.ElapsedMilliseconds;
+                AwerageMs += (CurrentMs - AwerageMs) / 10;
+                TopMs = Math.Max(TopMs, CurrentMs);
+            }
         }
 
         internal void _EntityAdded(EntityWrapper entityWrapper)

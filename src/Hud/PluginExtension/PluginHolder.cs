@@ -26,7 +26,7 @@ namespace PoeHUD.Hud.PluginExtension
 
         public List<BaseSettingsDrawer> SettingsDrawers => SettingPropertyDrawers;
 
-        public string PluginName { get; internal set; } = "NoName";
+        public string PluginName { get; internal set; } = "%PluginName%";
 
         public PluginHolder(string pluginName)
         {
