@@ -31,13 +31,13 @@ namespace PoeHUD.Hud.PluginExtension
             API = api;
             DllPath = dllPath;
             FullTypeName = fullTypeName;
-            PluginDir = Path.GetDirectoryName(dllPath);
+            PluginDirectory = Path.GetDirectoryName(dllPath);
 
             ReloadPlugin();
 
             DllChangeWatcher = new FileSystemWatcher();
             DllChangeWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime;// | NotifyFilters.Size | NotifyFilters.FileName;
-            DllChangeWatcher.Path = PluginDir;
+            DllChangeWatcher.Path = PluginDirectory;
             DllChangeWatcher.Changed += DllChanged;
             DllChangeWatcher.EnableRaisingEvents = true;
         }
@@ -104,7 +104,7 @@ namespace PoeHUD.Hud.PluginExtension
             if (!string.IsNullOrEmpty(BPlugin.PluginName))
                 PluginName = BPlugin.PluginName;
 
-            BPlugin.InitializeSettingsMenu();
+            //BPlugin.InitializeSettingsMenu();
 
             API.eRender += BPlugin._Render;
             API.eEntityAdded += BPlugin._EntityAdded;

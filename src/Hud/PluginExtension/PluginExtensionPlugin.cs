@@ -93,6 +93,8 @@ namespace PoeHUD.Hud.PluginExtension
 
                 var directoryDlls = pluginDirectoryInfo.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
 
+           
+
                 foreach (var dll in directoryDlls)
                     TryLoadDll(dll.FullName, pluginDirectoryInfo.FullName);
             }
@@ -169,12 +171,6 @@ namespace PoeHUD.Hud.PluginExtension
             return noErrors;
         }
 
-
-        private void LoadDefaultPlugins()
-        {
-
-        }
-
         #region Plugins Events
         private Dictionary<string, Action<object[]>> PluginEvents = new Dictionary<string, Action<object[]>>();
         public void SubscribePluginEvent(string uniqEventName, Action<object[]> func)
@@ -199,14 +195,30 @@ namespace PoeHUD.Hud.PluginExtension
                 return;
             }
 
+            AppDomain.CurrentDomain.AppendPrivatePath(dir);
             var myAsm = Assembly.Load(File.ReadAllBytes(path));
             if (myAsm == null) return;
 
             Type[] asmTypes = null;
-
             try
             {
                 asmTypes = myAsm.GetTypes();
+            }
+            catch (System.Reflection.ReflectionTypeLoadException reflEx)
+            {
+                if (reflEx is System.Reflection.ReflectionTypeLoadException)
+                {
+                    var typeLoadException = reflEx as ReflectionTypeLoadException;
+                    var loaderExceptions = typeLoadException.LoaderExceptions;
+
+                    LogError($"Can't load plugin dll. LoaderExceptions:", 10);
+                    foreach (Exception e in loaderExceptions)
+                    {
+                        LogError(e.Message, 10);
+                    }
+
+                }
+                return;
             }
             catch (Exception ex)
             {

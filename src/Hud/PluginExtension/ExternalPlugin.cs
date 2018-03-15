@@ -19,7 +19,7 @@ namespace PoeHUD.Hud.PluginExtension
     {        
         internal readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
 
-        internal string PluginDir; //Will be used for loading resources (images, sounds, etc.) from plugin floder
+        public string PluginDirectory { get; internal set; } //Will be used for loading resources (images, sounds, etc.) from plugin floder
         protected PluginExtensionPlugin API;
         internal SettingsBase Settings;
         internal bool CanBeDisabled = true;//For theme plugin
