@@ -272,5 +272,11 @@ namespace PoeHUD.Hud.PluginExtension
                 }
             }
         }
+
+
+        public override string ToString()
+        {
+            return PluginName;
+        }
     }
 }
