@@ -278,6 +278,7 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
+    <Compile Include="Poe\Extensions.cs" />
     <Compile Include="Poe\FilesInMemory\Base\UniversalFileWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />

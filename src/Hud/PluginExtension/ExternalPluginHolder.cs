@@ -12,6 +12,7 @@ using ImGuiNET;
 using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
 using Vector2 = System.Numerics.Vector2;
+using PoeHUD.Controllers;
 
 namespace PoeHUD.Hud.PluginExtension
 {
@@ -104,13 +105,21 @@ namespace PoeHUD.Hud.PluginExtension
             if (!string.IsNullOrEmpty(BPlugin.PluginName))
                 PluginName = BPlugin.PluginName;
 
-            //BPlugin.InitializeSettingsMenu();
+         
 
             API.eRender += BPlugin._Render;
             API.eEntityAdded += BPlugin._EntityAdded;
             API.eEntityRemoved += BPlugin._EntityRemoved;
             API.eClose += BPlugin._OnClose;
             API.eInitialise += BPlugin._Initialise;
+
+            BPlugin._Initialise();
+            BPlugin.InitializeSettingsMenu();
+
+            foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())
+            {
+                BPlugin._EntityAdded(entity);
+            }
         }
 
 

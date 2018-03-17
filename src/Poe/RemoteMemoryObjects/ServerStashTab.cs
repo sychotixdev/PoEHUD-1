@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public const int StructSize = 0x48;
 
         public string Name => GetObject<NativeStringReader>(Address + 0x8).Value;
-        //public int InventoryId => M.ReadInt(Address + 0x12);
+        //public int InventoryId => M.ReadInt(Address + 0x20);
         public uint Color => M.ReadUInt(Address + 0x2c);
         public InventoryTabPermissions MemberFlags => (InventoryTabPermissions)M.ReadUInt(Address + 0x30);
         public InventoryTabPermissions OfficerFlags => (InventoryTabPermissions)M.ReadUInt(Address + 0x34);
@@ -18,6 +18,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public ushort DisplayIndex => M.ReadUShort(Address + 0x3c);
         //public ushort LinkedParentId => M.ReadUShort(Address + 0x26);
         public InventoryTabFlags Flags => (InventoryTabFlags)M.ReadByte(Address + 0x41);
+
+        public override string ToString()
+        {
+            return $"{Name}, {TabType}, {Flags}";
+        }
 
         [Flags]
         public enum InventoryTabPermissions : uint

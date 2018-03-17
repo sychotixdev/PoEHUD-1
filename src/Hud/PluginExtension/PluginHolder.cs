@@ -59,7 +59,7 @@ namespace PoeHUD.Hud.PluginExtension
             float childSize = 20;
             foreach (var drawer in drawers.ToList())
             {
-                if (!drawer.IsVisible()) continue;
+                if (!drawer.IsVisibleFunc()) continue;
            
                 if(drawer.Children.Count > 0)
                 {
@@ -138,7 +138,7 @@ namespace PoeHUD.Hud.PluginExtension
                     }
                     else if (propType == typeof(ListNode) || propType.IsSubclassOf(typeof(ListNode)))
                     {
-                        drawer = new StringListSettingDrawer(property.GetValue(Settings) as ListNode);
+                        drawer = new ComboBoxSettingDrawer(property.GetValue(Settings) as ListNode);
                     }
                     else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
                     {
@@ -155,7 +155,7 @@ namespace PoeHUD.Hud.PluginExtension
                             if (genericParameter.Length > 0)
                             {
                                 var argType = genericParameter[0];
-                                var valueDrawer = new BaseSettingsCustomDrawer();
+                                var valueDrawer = new CustomSettingsDrawer();
 
                                 if (argType == typeof(int))
                                 {
@@ -271,6 +271,12 @@ namespace PoeHUD.Hud.PluginExtension
                     }
                 }
             }
+        }
+
+
+        public override string ToString()
+        {
+            return PluginName;
         }
     }
 }

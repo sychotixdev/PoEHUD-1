@@ -63,8 +63,8 @@ namespace PoeHUD.Poe.Components
         }
 
 
-        public float TimeSinseLastMove => M.ReadFloat(Address + 0x110);
-        public float TimeSinseLastAction => M.ReadFloat(Address + 0x114);
+        public float TimeSinseLastMove => -M.ReadFloat(Address + 0x110);
+        public float TimeSinseLastAction => -M.ReadFloat(Address + 0x114);
 
         public ActionWrapper CurrentAction => Action == ActionFlags.UsingAbility ? ReadObject<ActionWrapper>(Address + 0x60) : null;
 

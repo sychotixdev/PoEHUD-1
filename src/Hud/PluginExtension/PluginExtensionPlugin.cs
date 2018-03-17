@@ -52,10 +52,13 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
-        public static List<PluginHolder> Plugins = new List<PluginHolder>();
+        public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
         private List<string> PluginUpdateLog;
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
         public const string UpdateBackupDir = "%Backup%";
+
+        //For imgui tool
+        public List<PluginHolder> PluginsDebug => Plugins;
 
         private void SearchPlugins()
         {
