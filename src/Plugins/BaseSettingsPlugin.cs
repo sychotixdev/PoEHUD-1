@@ -81,25 +81,15 @@ namespace PoeHUD.Plugins
         }
         #endregion
 
-        //if you going to draw menu fully on ur side- override this
-        private bool _initializeMenuOnce = false;
+        //if you going to draw menu fully on ur side- override this and do ur stuff there
         public override void DrawSettingsMenu()
-        {
-            if (!_initializeMenuOnce)
-            {
-                _initializeMenuOnce = true;
-                GenerateDefaultSettingsMenu();
-            }
-            DrawGeneratedSettingsMenu();
-        }
-
-        protected void DrawGeneratedSettingsMenu()
         {
             _ExternalPluginData.DrawGeneratedSettingsMenu();
         }
 
         //I still need this to add own settings drawers to menu
-        protected virtual void GenerateDefaultSettingsMenu()
+        //if you going to draw menu fully on ur side- override this and clear the base call code
+        public override void InitializeSettingsMenu()
         {
             _ExternalPluginData.InitializeSettingsMenu();
         }

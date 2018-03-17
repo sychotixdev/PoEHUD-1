@@ -105,7 +105,7 @@ namespace PoeHUD.Hud.PluginExtension
             if (!string.IsNullOrEmpty(BPlugin.PluginName))
                 PluginName = BPlugin.PluginName;
 
-            //BPlugin.InitializeSettingsMenu();
+         
 
             API.eRender += BPlugin._Render;
             API.eEntityAdded += BPlugin._EntityAdded;
@@ -114,6 +114,7 @@ namespace PoeHUD.Hud.PluginExtension
             API.eInitialise += BPlugin._Initialise;
 
             BPlugin._Initialise();
+            BPlugin.InitializeSettingsMenu();
 
             foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())
             {

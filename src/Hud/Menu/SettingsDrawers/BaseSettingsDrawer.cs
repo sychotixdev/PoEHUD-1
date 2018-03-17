@@ -11,16 +11,16 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.Menu.SettingsDrawers
 {
-    public abstract class BaseSettingsDrawer
+    public class BaseSettingsDrawer
     {
-        internal int SettingId { get; set; }
-        public string SettingName { get; set; }
+        public int SettingId { get; set; } = -1;
+        public string SettingName { get; set; } = "%NoName%";
 
-        public Func<bool> IsVisible = delegate { return true; };
+        public Func<bool> IsVisibleFunc = delegate { return true; };
 
         internal string ImguiUniqLabel => $"{SettingName}##{SettingId}";
 
-        public virtual void Draw() { }
+        public virtual void Draw() => ImGuiExtension.Label(SettingName);
 
         public readonly List<BaseSettingsDrawer> Children = new List<BaseSettingsDrawer>();
         internal float ChildHeight;
@@ -98,10 +98,10 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     }
 
 
-    public class StringListSettingDrawer : BaseSettingsDrawer
+    public class ComboBoxSettingDrawer : BaseSettingsDrawer
     {
         public ListNode List;
-        public StringListSettingDrawer(ListNode list) => List = list;
+        public ComboBoxSettingDrawer(ListNode list) => List = list;
 
         public override void Draw()
         {
@@ -110,13 +110,24 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     }
 
 
-    public class BaseSettingsCustomDrawer : BaseSettingsDrawer
+    public class CustomSettingsDrawer : BaseSettingsDrawer
     {
         public Action DrawDelegate = delegate { ImGuiExtension.Label($"Not implemented in code"); };
 
         public override void Draw()
         {
             DrawDelegate();
+        }
+    }
+
+    public class IntegerSettingsDrawer : BaseSettingsDrawer
+    {
+        public RangeNode<int> IntegerNode;
+        public IntegerSettingsDrawer(RangeNode<int> node) => IntegerNode = node;
+
+        public override void Draw()
+        {
+            IntegerNode.Value = ImGuiExtension.IntSlider(ImguiUniqLabel, IntegerNode.Value, IntegerNode.Min, IntegerNode.Max);
         }
     }
 
