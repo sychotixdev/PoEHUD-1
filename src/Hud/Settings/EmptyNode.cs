@@ -1,6 +1,6 @@
 ﻿namespace PoeHUD.Hud.Settings
 {
-    public sealed class EmptyNode
+    public class EmptyNode
     {
         public EmptyNode()
         {

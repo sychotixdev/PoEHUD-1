@@ -7,21 +7,19 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ServerStashTab : RemoteMemoryObject
     {
-        public const int StructSize = 0x48;
-
+        internal const int StructSize = 0x48;
         public string Name => GetObject<NativeStringReader>(Address + 0x8).Value;
-        //public int InventoryId => M.ReadInt(Address + 0x20);
         public uint Color => M.ReadUInt(Address + 0x2c);
         public InventoryTabPermissions MemberFlags => (InventoryTabPermissions)M.ReadUInt(Address + 0x30);
         public InventoryTabPermissions OfficerFlags => (InventoryTabPermissions)M.ReadUInt(Address + 0x34);
         public InventoryTabType TabType => (InventoryTabType)M.ReadUInt(Address + 0x38);
-        public ushort DisplayIndex => M.ReadUShort(Address + 0x3c);
+        public ushort VisibleIndex => M.ReadUShort(Address + 0x3c);
         //public ushort LinkedParentId => M.ReadUShort(Address + 0x26);
         public InventoryTabFlags Flags => (InventoryTabFlags)M.ReadByte(Address + 0x41);
 
         public override string ToString()
         {
-            return $"{Name}, {TabType}, {Flags}";
+            return $"{Name}, DisplayIndex: {VisibleIndex}, {TabType}";
         }
 
         [Flags]

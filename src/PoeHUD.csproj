@@ -228,8 +228,10 @@
     <Compile Include="Hud\Settings\FileNode.cs" />
     <Compile Include="Hud\Settings\HotkeyNode.cs" />
     <Compile Include="Hud\Settings\ListNode.cs" />
+    <Compile Include="Hud\Settings\StashTabNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
+    <Compile Include="Controllers\StashTabController.cs" />
     <Compile Include="Hud\Themes\ThemeConfig.cs" />
     <Compile Include="Hud\Themes\ThemeEditor.cs" />
     <Compile Include="Hud\UI\ImGuiExtension.cs" />
@@ -366,7 +368,7 @@
     <Compile Include="Models\Interfaces\IEntity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GrantedEffectsPerLevel.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\HideoutWrapper.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\Inventory2.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ServerInventory.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\InventoryHolder.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\SkillGemWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />

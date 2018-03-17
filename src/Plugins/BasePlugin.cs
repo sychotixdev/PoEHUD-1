@@ -66,24 +66,34 @@ namespace PoeHUD.Plugins
 
         internal void _Initialise()
         {
-            if (_initialized) return;
-
             //If plugin disabled dont init when start
             if (!_allowRender) return;
+
+            _ForceInitialize();
+        }
+
+        //This will be also called when plugin is disabled, 
+        //but selected in main menu for settings rendering. We should initialize before generating the menu
+        internal void _ForceInitialize()
+        {
+            if (_initialized) return;
+            _initialized = true;
 
             try { Initialise(); }
             catch (Exception e) { HandlePluginError("Initialise", e); }
 
-            _initialized = true;
+            try { InitializeSettingsMenu(); }
+            catch (Exception e) { HandlePluginError("InitializeSettingsMenu", e); }
         }
+
 
         internal void _Render()
         {
-            if (!_initialized) _Initialise();//init if load disabled plugin
-
             if (!_allowRender) return;
 
-            if(MainMenuWindow.Settings.DeveloperMode.Value)
+            if (!_initialized) _Initialise();//init if load disabled plugin
+
+            if (MainMenuWindow.Settings.DeveloperMode.Value)
                 DiagnosticTimer.Restart();
             try { Render(); }
             catch (Exception e) { HandlePluginError("Render", e); }

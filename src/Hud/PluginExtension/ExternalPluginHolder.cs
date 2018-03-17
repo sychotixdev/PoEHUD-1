@@ -114,7 +114,6 @@ namespace PoeHUD.Hud.PluginExtension
             API.eInitialise += BPlugin._Initialise;
 
             BPlugin._Initialise();
-            BPlugin.InitializeSettingsMenu();
 
             foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())
             {
@@ -126,7 +125,11 @@ namespace PoeHUD.Hud.PluginExtension
         internal override void DrawSettingsMenu()
         {
             if (BPlugin == null) return;
-            BPlugin.DrawSettingsMenu();
+
+            BPlugin._ForceInitialize();//Added because if plugin is not enabled in options - menu will not be initialized, also possible errors cuz _Initialise was not called
+
+            try { BPlugin.DrawSettingsMenu(); }
+            catch (Exception e) { BPlugin.HandlePluginError("DrawSettingsMenu", e); }
         }
 
         public enum PluginState

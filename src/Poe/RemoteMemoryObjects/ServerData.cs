@@ -12,6 +12,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ServerData : RemoteMemoryObject
     {
+
+
         [Obsolete("Obsolete. Use StashTabs instead")]
         public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C0, 0xA0, 0x78)) : null;
 
@@ -90,14 +92,21 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
         #region Stash Tabs
-        public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x4858, 0x4860);
-      public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x4870, 0x4878);
-      private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
-      {
-          var firstAddr = M.ReadLong(Address + offsetBegin);
-          var lastAddr = M.ReadLong(Address + offsetEnd);
-          return M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize);
-      }
+        private const int PlayerStashTabsStartOffset = 0x4858;
+        private const int PlayerStashTabsEndOffset = 0x4860;
+
+
+        public List<ServerStashTab> PlayerStashTabs => GetStashTabs(PlayerStashTabsStartOffset, PlayerStashTabsEndOffset);
+        public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x4870, 0x4878);
+        private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
+        {
+            var firstAddr = M.ReadLong(Address + offsetBegin);
+            var lastAddr = M.ReadLong(Address + offsetEnd);
+
+            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize);
+            tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
+            return tabs;
+        }
         #endregion
         #region Inventories
         public List<InventoryHolder> PlayerInventories
@@ -134,7 +143,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
         #region Utils functions
-        public Inventory2 GetPlayerInventoryBySlot(InventorySlotE slot)
+        public ServerInventory GetPlayerInventoryBySlot(InventorySlotE slot)
         {
             foreach (var inventory in PlayerInventories)
             {
@@ -145,7 +154,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
             return null;
         }
-        public Inventory2 GetPlayerInventoryByType(InventoryTypeE type)
+        public ServerInventory GetPlayerInventoryByType(InventoryTypeE type)
         {
             foreach (var inventory in PlayerInventories)
             {
@@ -157,7 +166,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             return null;
         }
 
-        public Inventory2 GetPlayerInventoryBySlotAndType(InventoryTypeE type, InventorySlotE slot)
+        public ServerInventory GetPlayerInventoryBySlotAndType(InventoryTypeE type, InventorySlotE slot)
         {
             foreach (var inventory in PlayerInventories)
             {
@@ -183,7 +192,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var result = new List<WorldArea>();
             var size = M.ReadInt(Address + offset - 0x8);
             var listStart = M.ReadLong(Address + offset);
-          
+
             for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
             {
                 result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(addr + 0x18)));

@@ -92,6 +92,10 @@ namespace PoeHUD.Hud.Settings
             try
             {
                 string json = File.ReadAllText(SETTINGS_FILE_NAME);
+
+                if (string.IsNullOrEmpty(json.Trim()))//Sometimes settings is empty
+                    throw new Exception();
+
                 return JsonConvert.DeserializeObject<SettingsHub>(json, jsonSettings);
             }
             catch
