@@ -198,6 +198,13 @@ namespace PoeHUD.Controllers
                 foundNode = searchResults2[0];
                 goto Found;
             }
+
+            searchResults2 = searchResults.Where(x => x.Id == node.Id).ToList();//will work on same league/account
+            if (searchResults2.Count == 1)
+            {
+                foundNode = searchResults2[0];
+                goto Found;
+            }
             else
                 goto NotFound;
 
