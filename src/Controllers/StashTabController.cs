@@ -49,12 +49,39 @@ namespace PoeHUD.Controllers
         {
             CachedStashTabs.Clear();
             StashTabNames = new string[playerStashTabs.Count];
+
+            bool upgradeStashTabFix = false;
+            string upgradeStashTabFixName = "???";
+
             for (int i = 0; i < playerStashTabs.Count; i++)
-            {
+            {      
                 var serverTab = playerStashTabs[i];
                 var serverTabVisibleIndex = serverTab.VisibleIndex;
-                StashTabNames[serverTabVisibleIndex] = serverTab.Name;
+                string serverTabName = serverTab.Name;
+
+                //After upgrading stash tab the VisibleIndex of new tab will be out of range (poe added one more tab (premium) and deleted the old one but not fix the index)
+                upgradeStashTabFix = serverTabVisibleIndex >= playerStashTabs.Count;
+                if (upgradeStashTabFix)
+                {
+                    upgradeStashTabFixName = serverTabName;
+                    DebugPlug.DebugPlugin.LogMsg($"StashTabController: You just purcased a stash tab {serverTabName}. Move this tab once to fix poe bug with stash tab or restart poe.", 20, Color.Red);
+                }
+                else
+                {
+                    StashTabNames[serverTabVisibleIndex] = serverTabName;
+                }
+
                 CachedStashTabs.Add(new StashTabNode(serverTab, i));
+            }
+
+            if(upgradeStashTabFix)
+            {
+                //imgui can throw error if some item in list is null (not tested, but happen)
+                for (int i = 0; i < StashTabNames.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(StashTabNames[i]))
+                        StashTabNames[i] = upgradeStashTabFixName;
+                }
             }
         }
 

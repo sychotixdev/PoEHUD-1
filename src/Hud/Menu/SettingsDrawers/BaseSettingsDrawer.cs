@@ -155,8 +155,6 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
             if (ImGui.Combo(ImguiUniqLabel, ref selectedIndex, StashTabController.StashTabNames, StashTabController.StashTabNames.Length * 20))
             {
                 var node = StashTabController.GetStashTabNodeByVisibleIndex(selectedIndex);
-                DebugPlug.DebugPlugin.LogMsg($"Selected new!", 2);
-
                 StashNode.Name = node.Name;
                 StashNode.VisibleIndex = node.VisibleIndex;
                 StashNode.Id = node.Id;
