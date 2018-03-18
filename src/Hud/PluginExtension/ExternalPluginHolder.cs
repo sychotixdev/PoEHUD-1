@@ -43,6 +43,8 @@ namespace PoeHUD.Hud.PluginExtension
             DllChangeWatcher.EnableRaisingEvents = true;
         }
 
+        internal override bool CanBeEnabledInOptions { get => BPlugin != null && BPlugin.CanPluginBeEnabledInOptions;  }
+
         DateTime lastChangedEvent = DateTime.MinValue;
         private void DllChanged(object sender, FileSystemEventArgs e)
         {
@@ -117,8 +119,6 @@ namespace PoeHUD.Hud.PluginExtension
             if (!string.IsNullOrEmpty(BPlugin.PluginName))
                 PluginName = BPlugin.PluginName;
 
-         
-
             API.eRender += BPlugin._Render;
             API.eEntityAdded += BPlugin._EntityAdded;
             API.eEntityRemoved += BPlugin._EntityRemoved;
@@ -133,12 +133,16 @@ namespace PoeHUD.Hud.PluginExtension
             }
         }
 
+        internal override void OnPluginSelectedInMenu()
+        {
+            if (BPlugin == null) return;
+            BPlugin._ForceInitialize();//Added because if plugin is not enabled in options - menu will not be initialized, also possible errors cuz _Initialise was not called
+            BPlugin._OnPluginSelectedInMenu();
+        }
 
         internal override void DrawSettingsMenu()
         {
             if (BPlugin == null) return;
-
-            BPlugin._ForceInitialize();//Added because if plugin is not enabled in options - menu will not be initialized, also possible errors cuz _Initialise was not called
 
             try { BPlugin.DrawSettingsMenu(); }
             catch (Exception e) { BPlugin.HandlePluginError("DrawSettingsMenu", e); }

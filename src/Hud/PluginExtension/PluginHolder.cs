@@ -23,7 +23,7 @@ namespace PoeHUD.Hud.PluginExtension
         public string PluginDirectory { get; internal set; } //Will be used for loading resources (images, sounds, etc.) from plugin floder
         protected PluginExtensionPlugin API;
         internal SettingsBase Settings { get; set; }
-        internal bool CanBeDisabled = true;//For theme plugin
+        internal virtual bool CanBeEnabledInOptions { get; set; } = true;//For theme plugin
 
         public List<BaseSettingsDrawer> SettingsDrawers => SettingPropertyDrawers;
 
@@ -46,13 +46,13 @@ namespace PoeHUD.Hud.PluginExtension
         {
             DrawGeneratedSettingsMenu();
         }
-
         //Draw generated menu
         internal void DrawGeneratedSettingsMenu()
         {
             DrawSettingsRecursively(SettingPropertyDrawers, null);
             ChildUniqId = 0;
         }
+        internal virtual void OnPluginSelectedInMenu() { }
 
         private int ChildUniqId;
         private void DrawSettingsRecursively(List<BaseSettingsDrawer> drawers, BaseSettingsDrawer owner)

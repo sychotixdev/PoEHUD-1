@@ -101,7 +101,7 @@ namespace PoeHUD.Hud
 
         
             var themeEditorDraw = new ThemeEditor();
-            themeEditorDraw.CanBeDisabled = false;
+            themeEditorDraw.CanBeEnabledInOptions = false;
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = themeEditorDraw });
         }
 
@@ -249,11 +249,16 @@ namespace PoeHUD.Hud
 
         private void DrawPlugin(PluginHolder plugin, float offsetX)
         {
-            if (plugin.CanBeDisabled)//for theme plugin
+            if (plugin.CanBeEnabledInOptions)//for theme plugin
             {
                 if (plugin.Settings.Enable == null)//If developer forget to init it
                     plugin.Settings.Enable = false;
                 plugin.Settings.Enable = ImGuiExtension.Checkbox($"##{plugin.PluginName}Enabled", plugin.Settings.Enable.Value);
+                ImGui.SameLine();
+            }
+            else
+            {
+                ImGui.Bullet();
                 ImGui.SameLine();
             }
 
@@ -262,7 +267,13 @@ namespace PoeHUD.Hud
                 PluginNameWidth = labelSize;
 
             if (ImGui.Selectable(plugin.PluginName, SelectedPlugin == plugin))
-                SelectedPlugin = plugin;
+            {
+                if(SelectedPlugin != plugin)
+                {
+                    SelectedPlugin = plugin;
+                    SelectedPlugin.OnPluginSelectedInMenu();
+                }   
+            }
         }
 
         public bool DrawInfoWindow(string windowLabel, ref bool isOpened, float x, float y, float width, float height, WindowFlags flags, Condition conditions)

@@ -58,7 +58,9 @@ namespace PoeHUD.Plugins
         public virtual void EntityAdded(EntityWrapper entityWrapper) { }
         public virtual void EntityRemoved(EntityWrapper entityWrapper) { }
         public virtual void OnClose() { }
+        public virtual void OnPluginSelectedInMenu() { }
 
+        public virtual bool CanPluginBeEnabledInOptions { get; protected set; } = true;
 
         #region PluginMethods
         internal virtual bool _allowRender => true;
@@ -133,6 +135,14 @@ namespace PoeHUD.Plugins
 
             try { _SaveSettings(); }
             catch (Exception e) { HandlePluginError("SaveSettings", e); }
+        }
+
+        internal virtual void _OnPluginSelectedInMenu()
+        {
+            if (!_initialized || !_allowRender) return;
+
+            try { OnPluginSelectedInMenu(); }
+            catch (Exception e) { HandlePluginError("OnPluginSelectedInMenu", e); }
         }
 
         #endregion
