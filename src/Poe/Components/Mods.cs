@@ -20,8 +20,8 @@ namespace PoeHUD.Poe.Components
                 return implicitMods.Concat(explicitMods).ToList();
             }
         }
-        public int ItemLevel => Address != 0 ? M.ReadInt(Address + 0x2DC) : 1;
-        public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0x2E0) : 1;
+        public int ItemLevel => Address != 0 ? M.ReadInt(Address + 0x374) : 1;
+        public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0x378) : 1;
         public ItemStats ItemStats => new ItemStats(Owner);
 
         private List<ItemMod> GetMods(int startOffset, int endOffset)
