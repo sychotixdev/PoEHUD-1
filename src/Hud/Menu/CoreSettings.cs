@@ -24,6 +24,9 @@ namespace PoeHUD.Hud.Menu
 
         public ToggleNode DeveloperMode { get; set; } = false;
 
+        [Menu("Show plugins Render Time")]
+        public ToggleNode ShowPluginsMS { get; set; } = false;
+
         [JsonIgnore]
         public ToggleNode ShowImguiDemo { get; set; } = false;
 

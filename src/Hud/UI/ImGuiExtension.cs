@@ -12,7 +12,7 @@ using ImGuiVector4 = System.Numerics.Vector4;
 
 namespace PoeHUD.Hud.UI
 {
-    class ImGuiExtension
+    public class ImGuiExtension
     {
         public static bool BeginWindow(string title, ref bool isOpened, int x, int y, int width, int height, bool autoResize = false)
         {

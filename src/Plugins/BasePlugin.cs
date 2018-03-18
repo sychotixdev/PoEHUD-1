@@ -139,8 +139,6 @@ namespace PoeHUD.Plugins
 
         internal virtual void _OnPluginSelectedInMenu()
         {
-            if (!_initialized || !_allowRender) return;
-
             try { OnPluginSelectedInMenu(); }
             catch (Exception e) { HandlePluginError("OnPluginSelectedInMenu", e); }
         }
