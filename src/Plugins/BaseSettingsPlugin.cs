@@ -64,6 +64,7 @@ namespace PoeHUD.Plugins
         {
             try
             {
+                if (Settings == null) return;
                 var settingsDirName = Path.GetDirectoryName(SettingsFullPath);
                 if (!Directory.Exists(settingsDirName))
                     Directory.CreateDirectory(settingsDirName);

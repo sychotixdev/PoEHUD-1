@@ -12,6 +12,8 @@ using PoeHUD.Hud.Performance;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Models;
 using PoeHUD.Poe.RemoteMemoryObjects;
+
+
 namespace PoeHUD.Controllers
 {
     public class GameController
@@ -30,6 +32,7 @@ namespace PoeHUD.Controllers
             Cache = new Cache();
             Game = new TheGame(memory);
             Files = new FsController(memory);
+            StashController = new StashTabController();
             InGame = InGameReal;
             IsForeGroundCache = WinApi.IsForegroundWindow(Window.Process.MainWindowHandle);
             MainTimer = Stopwatch.StartNew();
@@ -59,7 +62,7 @@ namespace PoeHUD.Controllers
         public readonly Runner CoroutineRunner;
         public readonly Runner CoroutineRunnerParallel;
         public PerformanceSettings Performance;
-
+        private StashTabController StashController;
         public bool IsForeGroundLast = false;
         public static event Action<bool> eIsForegroundChanged = delegate { };
 
@@ -82,6 +85,7 @@ namespace PoeHUD.Controllers
             float loopLimit = 1;
             int updateAreaLimit = 100;
             int updateEntityLimit = 50;
+            int updateStashTabs = 500;
             int updateIngameState = 100;
             int deltaError = 500;
             //Pause?resumt coroutines in plugins
@@ -154,7 +158,11 @@ namespace PoeHUD.Controllers
             var updateArea = (new Coroutine(() => { Area.RefreshState(); }, updateAreaLimit, nameof(GameController),"Update area") {Priority = CoroutinePriority.High});
            //Coroutine for update entity list
             var updateEntity = (new Coroutine(() => { EntityListWrapper.RefreshState(); }, updateEntityLimit,nameof(GameController), "Update Entity"){Priority = CoroutinePriority.High});
-          //Control cache for game status
+
+            var checkTabs = (new Coroutine(() => { StashController.CheckStashTabsLoop(); }, updateStashTabs, nameof(StashTabController), "Stash Tab Controller") { Priority = CoroutinePriority.Normal });
+
+            //
+            //Control cache for game status
             var updateGameState = (new Coroutine(() => { 
                InGame = InGameReal;
                 IsForeGroundCache = Performance.AlwaysForeground || WinApi.IsForegroundWindow(Window.Process.MainWindowHandle); 
@@ -197,6 +205,7 @@ namespace PoeHUD.Controllers
                 updateEntity.AutoRestart(CoroutineRunner).Run();
             sw.Restart();
             updateCoroutine.Run();
+            checkTabs.Run();
             while (true)
             {
                 if (!InGame)

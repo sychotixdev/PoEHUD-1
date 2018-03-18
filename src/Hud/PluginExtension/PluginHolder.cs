@@ -12,6 +12,7 @@ using ImGuiNET;
 using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
 using Vector2 = System.Numerics.Vector2;
+using PoeHUD.Controllers;
 
 namespace PoeHUD.Hud.PluginExtension
 {
@@ -95,11 +96,14 @@ namespace PoeHUD.Hud.PluginExtension
         public int GetUniqDrawerId() => Enumerable.Range(100000, 1000).Except(DrawersDict.Keys).FirstOrDefault();
 
         private Dictionary<int, BaseSettingsDrawer> DrawersDict = new Dictionary<int, BaseSettingsDrawer>();
+        private List<StashTabNode> StashTabNodesToUnload = new List<StashTabNode>();
         internal void InitializeSettingsMenu(bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
         {
             SettingPropertyDrawers.Clear();
             DrawersDict.Clear();
-            
+            StashTabNodesToUnload.ForEach(x => StashTabController.UnregisterStashNode(x));
+            StashTabNodesToUnload.Clear();
+
             var settingsProps = Settings.GetType().GetProperties();
             foreach (var property in settingsProps)
             {
@@ -143,6 +147,13 @@ namespace PoeHUD.Hud.PluginExtension
                     else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
                     {
                         drawer = new FilePickerDrawer(property.GetValue(Settings) as FileNode);
+                    }
+                    else if (propType == typeof(StashTabNode) || propType.IsSubclassOf(typeof(StashTabNode)))
+                    {
+                        var stashNode = property.GetValue(Settings) as StashTabNode;
+                        StashTabNodesToUnload.Add(stashNode);
+                        StashTabController.RegisterStashNode(stashNode);
+                        drawer = new StashTabNodeSettingDrawer(stashNode);
                     }
                     else if (propType.IsGenericType)
                     {

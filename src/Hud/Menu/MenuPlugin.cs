@@ -17,7 +17,6 @@ namespace PoeHUD.Hud.Menu
     {
         //For spawning the menu in external plugins
         public static event Action<int> eInitMenu = delegate { };
-
         public static IKeyboardMouseEvents KeyboardMouseEvents;
         private readonly SettingsHub settingsHub;
         private readonly MainMenuWindow MenuWindow;
@@ -48,9 +47,10 @@ namespace PoeHUD.Hud.Menu
             KeyboardMouseEvents.MouseUpExt -= KeyboardMouseEvents_MouseUpExt;
             KeyboardMouseEvents.Dispose();
         }
+
         public override void Render()
         {
-             MenuWindow.Render();
+            MenuWindow.Render();
             return;
             CreateImGuiMenu();
             try

@@ -95,7 +95,8 @@ namespace PoeHUD.Hud.Settings
 
                 if (string.IsNullOrEmpty(json.Trim()))//Sometimes settings is empty
                     throw new Exception();
-
+                if (json == "null")//Sometime it contains only null word
+                    throw new Exception();
                 return JsonConvert.DeserializeObject<SettingsHub>(json, jsonSettings);
             }
             catch
@@ -114,6 +115,7 @@ namespace PoeHUD.Hud.Settings
 
         public static void Save(SettingsHub settings)
         {
+            if (settings == null) return;
             using (var stream = new StreamWriter(File.Create(SETTINGS_FILE_NAME)))
             {
                 string json = JsonConvert.SerializeObject(settings, Formatting.Indented, jsonSettings);

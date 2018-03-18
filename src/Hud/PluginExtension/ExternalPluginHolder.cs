@@ -82,6 +82,7 @@ namespace PoeHUD.Hud.PluginExtension
             }
 
             var myAsm = Assembly.Load(File.ReadAllBytes(DllPath));
+
             if (myAsm == null)
             {
                 State = PluginState.Reload_DllNotFound;
@@ -96,8 +97,19 @@ namespace PoeHUD.Hud.PluginExtension
             }
 
             //Spawning a new plugin class instance   
-            var pluginClassObj = Activator.CreateInstance(pluginType);
+            object pluginClassObj = null;
             
+            try
+            {
+                pluginClassObj = Activator.CreateInstance(pluginType);
+            }
+            catch (Exception ex)
+            {
+                BasePlugin.LogMessage("Error loading plugin: " + ex.Message, 3);
+                State = PluginState.ErrorClassInstance;
+                return;
+            }
+
             BPlugin = pluginClassObj as BasePlugin;
             BPlugin.InitPlugin(this);
             Settings = BPlugin._LoadSettings();
@@ -136,6 +148,7 @@ namespace PoeHUD.Hud.PluginExtension
         {
             Unknown,
             Loaded,
+            ErrorClassInstance,
             Reload_CantUnload,
             Reload_DllNotFound,
             Reload_ClassNotFound

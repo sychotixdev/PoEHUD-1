@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PoeHUD.Hud;
 using PoeHUD.Hud.UI;
 using PoeHUD.Hud.Settings;
 using ImGuiNET;
 using System.IO;
+using PoeHUD.Controllers;
 using Vector2 = System.Numerics.Vector2;
 
 namespace PoeHUD.Hud.Menu.SettingsDrawers
@@ -14,7 +16,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class BaseSettingsDrawer
     {
         public int SettingId { get; set; } = -1;
-        public string SettingName { get; set; } = "%NoName%";
+        public string SettingName { get; set; } = "#NONAME#";
 
         public Func<bool> IsVisibleFunc = delegate { return true; };
 
@@ -128,6 +130,39 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         public override void Draw()
         {
             IntegerNode.Value = ImGuiExtension.IntSlider(ImguiUniqLabel, IntegerNode.Value, IntegerNode.Min, IntegerNode.Max);
+        }
+    }
+
+    public class StashTabNodeSettingDrawer : BaseSettingsDrawer
+    {
+        public StashTabNode StashNode;
+        public StashTabNodeSettingDrawer(StashTabNode stashNode) => StashNode = stashNode;
+
+        public override void Draw()
+        {
+            var selectedIndex = StashNode.Exist ? StashNode.VisibleIndex : -1;
+
+            if(ImGui.Button($"x##{SettingName}{SettingId}ClearButton"))
+            {
+                StashNode.Name = StashTabNode.EMPTYNAME;
+                StashNode.VisibleIndex = -1;
+                StashNode.Id = -1;
+                StashNode.Exist = false;
+            }
+            ImGui.SameLine();
+            //ImGuiExtension.Label($"Ex:{StashNode.Exist}, Ind:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name}");
+            //ImGui.SameLine();
+            if (ImGui.Combo(ImguiUniqLabel, ref selectedIndex, StashTabController.StashTabNames, StashTabController.StashTabNames.Length * 20))
+            {
+                var node = StashTabController.GetStashTabNodeByVisibleIndex(selectedIndex);
+                DebugPlug.DebugPlugin.LogMsg($"Selected new!", 2);
+
+                StashNode.Name = node.Name;
+                StashNode.VisibleIndex = node.VisibleIndex;
+                StashNode.Id = node.Id;
+                StashNode.Exist = true;
+                StashNode.IsRemoveOnly = node.IsRemoveOnly;
+            }
         }
     }
 
