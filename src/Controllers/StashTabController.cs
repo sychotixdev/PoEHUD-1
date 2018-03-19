@@ -45,6 +45,9 @@ namespace PoeHUD.Controllers
 
         private static List<StashTabNode> CachedStashTabs = new List<StashTabNode>();
         internal static string[] StashTabNames = new string[0];
+
+        //We are not going to iterate throught all subscribed settings stash nodes,
+        //so let's detect changes in cached tabs and then apply cahnges to subscribed nodes
         private static void CacheStashTabs(List<ServerStashTab> playerStashTabs)
         {
             CachedStashTabs.Clear();

@@ -211,5 +211,6 @@ namespace PoeHUD.Plugins
 
         public virtual void DrawSettingsMenu() { }
         public virtual void InitializeSettingsMenu() { }
+        public virtual void OnPluginDestroyForHotReload() { }
     }
 }
