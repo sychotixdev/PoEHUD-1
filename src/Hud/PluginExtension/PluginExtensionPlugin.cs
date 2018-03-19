@@ -161,7 +161,7 @@ namespace PoeHUD.Hud.PluginExtension
 
         #region Plugins Events
         private Dictionary<string, Action<object[]>> PluginEvents = new Dictionary<string, Action<object[]>>();
-        public void UnsubscribePluginEvent(string uniqEventName, Action<object[]> func)
+        public void UnsubscribePluginEvent(string uniqEventName)
         {
             PluginEvents.Remove(uniqEventName);
         }
