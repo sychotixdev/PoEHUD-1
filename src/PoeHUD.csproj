@@ -212,16 +212,11 @@
     <Compile Include="Hud\Loot\QualityItemSettings.cs" />
     <Compile Include="Hud\Loot\QualityItemsSettings.cs" />
     <Compile Include="Hud\AdvancedTooltip\ItemModsSettings.cs" />
-    <Compile Include="Hud\Menu\ButtonButton.cs" />
-    <Compile Include="Hud\Menu\FileButton.cs" />
-    <Compile Include="Hud\Menu\ColorButton.cs" />
-    <Compile Include="Hud\Menu\HotkeyButton.cs" />
-    <Compile Include="Hud\Menu\ListButton.cs" />
-    <Compile Include="Hud\Menu\MenuSettings.cs" />
-    <Compile Include="Hud\Menu\RootButton.cs" />
-    <Compile Include="Hud\Menu\SimpleMenu.cs" />
+    <Compile Include="Hud\Menu\CoreSettings.cs" />
+    <Compile Include="Hud\Menu\SettingsDrawers\BaseSettingsDrawer.cs" />
     <Compile Include="Hud\Performance.cs" />
-    <Compile Include="Hud\PluginExtension\ExternalPlugin.cs" />
+    <Compile Include="Hud\PluginExtension\ExternalPluginHolder.cs" />
+    <Compile Include="Hud\PluginExtension\PluginHolder.cs" />
     <Compile Include="Hud\PluginExtension\FileOperationAPIWrapper.cs" />
     <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
@@ -233,8 +228,13 @@
     <Compile Include="Hud\Settings\FileNode.cs" />
     <Compile Include="Hud\Settings\HotkeyNode.cs" />
     <Compile Include="Hud\Settings\ListNode.cs" />
+    <Compile Include="Hud\Settings\StashTabNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
+    <Compile Include="Controllers\StashTabController.cs" />
+    <Compile Include="Hud\Themes\ThemeConfig.cs" />
+    <Compile Include="Hud\Themes\ThemeEditor.cs" />
+    <Compile Include="Hud\UI\ImGuiExtension.cs" />
     <Compile Include="Hud\UI\Renderers\ImGuiRender.cs" />
     <Compile Include="Hud\UI\Vertexes\GuiVertex.cs" />
     <Compile Include="Models\Attributes\HideInReflectionAttibute.cs" />
@@ -280,6 +280,7 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
+    <Compile Include="Poe\Extensions.cs" />
     <Compile Include="Poe\FilesInMemory\Base\UniversalFileWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
@@ -367,7 +368,7 @@
     <Compile Include="Models\Interfaces\IEntity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GrantedEffectsPerLevel.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\HideoutWrapper.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\Inventory2.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ServerInventory.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\InventoryHolder.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\SkillGemWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\WorldAreas.cs" />
@@ -407,13 +408,10 @@
     <Compile Include="Poe\Components\Targetable.cs" />
     <Compile Include="Poe\Components\Weapon.cs" />
     <Compile Include="Poe\Components\WorldItem.cs" />
-    <Compile Include="Hud\Menu\ToggleButton.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Hud\Trackers\MonsterTracker.cs" />
-    <Compile Include="Hud\Menu\Picker.cs" />
     <Compile Include="Hud\Loot\ItemAlertPlugin.cs" />
     <Compile Include="Hud\Menu\MenuPlugin.cs" />
-    <Compile Include="Hud\Menu\MenuItem.cs" />
     <Compile Include="Hud\MapIcon.cs" />
     <Compile Include="Hud\Icons\LargeMapPlugin.cs" />
     <Compile Include="Hud\Preload\PreloadAlertPlugin.cs" />
@@ -452,18 +450,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hud\Menu\MainMenuWindow.cs" />
     <Content Include="poehud.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF "$(ConfigurationName)"=="Debug" (
-mkdir .\config
-mkdir .\sounds
-mkdir .\textures
-
-copy /Y $(ProjectDir)..\Release\config .\config
-copy /Y $(ProjectDir)..\Release\sounds .\sounds
-copy /Y $(ProjectDir)..\Release\textures .\textures
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

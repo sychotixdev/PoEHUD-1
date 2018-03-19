@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class Inventory2 : RemoteMemoryObject
+    public class ServerInventory : RemoteMemoryObject
     {
         public InventoryTypeE InventType => (InventoryTypeE)M.ReadByte(Address);
         public InventorySlotE InventSlot => (InventorySlotE)M.ReadByte(Address + 0x1);

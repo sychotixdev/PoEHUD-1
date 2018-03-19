@@ -44,10 +44,20 @@ namespace PoeHUD.Hud.Health
         public ToggleNode ShowPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
         public RangeNode<int> TextSize { get; set; }
+
+        [PoeHUD.Plugins.Menu("Floating Combat Text", 0)]
         public ToggleNode ShowFloatingCombatDamage { get; set; }
-        public RangeNode<int> FloatingCombatTextSize { get; set; }
+
+        [PoeHUD.Plugins.Menu("Damage Color", 2, 0)]
         public ColorNode FloatingCombatDamageColor { get; set; }
+
+        [PoeHUD.Plugins.Menu("Heal Color", 3, 0)]
         public ColorNode FloatingCombatHealColor { get; set; }
+
+        [PoeHUD.Plugins.Menu("Text Size", 1, 0)]
+        public RangeNode<int> FloatingCombatTextSize { get; set; }
+
+        [PoeHUD.Plugins.Menu("Number of Lines", 4, 0)]
         public RangeNode<int> FloatingCombatStackSize { get; set; }
     }
 }

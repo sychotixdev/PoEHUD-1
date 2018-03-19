@@ -62,9 +62,10 @@ namespace PoeHUD.Hud.Loot
         public RangeNode<int> LootIcon { get; set; }
         public ToggleNode LootIconBorderColor { get; set; }
 
+        [PoeHUD.Plugins.IgnoreMenu]
         [JsonProperty("Show quality items")]
         public QualityItemsSettings QualityItems { get; set; }
-
+        [PoeHUD.Plugins.IgnoreMenu]
         public BorderSettings BorderSettings { get; set; }
         public ToggleNode WithBorder { get; set; }
         public ToggleNode WithSound { get; set; }

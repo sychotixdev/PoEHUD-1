@@ -14,12 +14,15 @@ namespace PoeHUD.Hud.AdvancedTooltip
             WeaponDps = new WeaponDpsSettings();
         }
 
+        [PoeHUD.Plugins.IgnoreMenu]
         [JsonProperty("Item level")]
         public ItemLevelSettings ItemLevel { get; set; }
 
+        [PoeHUD.Plugins.IgnoreMenu]
         [JsonProperty("Item mods")]
         public ItemModsSettings ItemMods { get; set; }
 
+        [PoeHUD.Plugins.IgnoreMenu]
         [JsonProperty("Weapon DPS")]
         public WeaponDpsSettings WeaponDps { get; set; }
     }

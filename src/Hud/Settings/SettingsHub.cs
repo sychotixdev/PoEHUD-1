@@ -38,7 +38,7 @@ namespace PoeHUD.Hud.Settings
 
         public SettingsHub()
         {
-            MenuSettings = new MenuSettings();
+            MenuSettings = new CoreSettings();
             DpsMeterSettings = new DpsMeterSettings();
             MapIconsSettings = new MapIconsSettings();
             ItemAlertSettings = new ItemAlertSettings();
@@ -53,7 +53,7 @@ namespace PoeHUD.Hud.Settings
         }
 
         [JsonProperty("Menu")]
-        public MenuSettings MenuSettings { get; private set; }
+        public CoreSettings MenuSettings { get; private set; }
 
         [JsonProperty("DPS meter")]
         public DpsMeterSettings DpsMeterSettings { get; private set; }
@@ -92,6 +92,11 @@ namespace PoeHUD.Hud.Settings
             try
             {
                 string json = File.ReadAllText(SETTINGS_FILE_NAME);
+
+                if (string.IsNullOrEmpty(json.Trim()))//Sometimes settings is empty
+                    throw new Exception();
+                if (json == "null")//Sometime it contains only null word
+                    throw new Exception();
                 return JsonConvert.DeserializeObject<SettingsHub>(json, jsonSettings);
             }
             catch
@@ -110,6 +115,7 @@ namespace PoeHUD.Hud.Settings
 
         public static void Save(SettingsHub settings)
         {
+            if (settings == null) return;
             using (var stream = new StreamWriter(File.Create(SETTINGS_FILE_NAME)))
             {
                 string json = JsonConvert.SerializeObject(settings, Formatting.Indented, jsonSettings);
