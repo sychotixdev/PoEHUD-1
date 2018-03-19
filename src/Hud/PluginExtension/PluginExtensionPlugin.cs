@@ -30,30 +30,15 @@ namespace PoeHUD.Hud.PluginExtension
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
-
-            //GameController.eIsForegroundChanged += GameController_eIsForegroundChanged;
         }
         
-        /*
-        private bool SkipFirstIsForegroundChanged;
-        private void GameController_eIsForegroundChanged(bool state)
-        {
-           if(!SkipFirstIsForegroundChanged || !state)
-            {
-                SkipFirstIsForegroundChanged = true;
-                return;
-            }
-
-            eCheckPluginsDllReload();
-        }
-        */
         public event Action eInitialise = delegate { };
         public event Action eRender = delegate { };
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
         public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
-        private List<string> PluginUpdateLog;
+        private static List<string> PluginUpdateLog = new List<string>();
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
         public const string UpdateBackupDir = "%Backup%";
 
@@ -67,42 +52,42 @@ namespace PoeHUD.Hud.PluginExtension
 
             foreach (var pluginDirectoryInfo in PluginsDir.GetDirectories())
             {
-                var pluginTempUpdateDir = Path.Combine(pluginDirectoryInfo.FullName, UpdateTempDir);
+                ApplyUpdateFiles(pluginDirectoryInfo.FullName);
 
-                if(Directory.Exists(pluginTempUpdateDir))
-                {
-                    PluginUpdateLog = new List<string>();
-
-                    var backupDir = Path.Combine(pluginDirectoryInfo.FullName, UpdateBackupDir);
-
-                    if (Directory.Exists(backupDir))
-                        FileOperationAPIWrapper.MoveToRecycleBin(backupDir);
-
-                    var logFilePAth = Path.Combine(pluginDirectoryInfo.FullName, "%PluginUpdateLog.txt");
-                    if (File.Exists(logFilePAth))
-                        File.Delete(logFilePAth);
-
-                    if (MoveDirectoryFiles(pluginDirectoryInfo.FullName, pluginTempUpdateDir, pluginDirectoryInfo.FullName))
-                    {
-                        PluginUpdateLog.Add("Deleting temp dir:\t" + pluginTempUpdateDir);
-                        Directory.Delete(pluginTempUpdateDir, true);
-                    }
-                    else
-                    {
-                        LogMessage("PoeHUD PluginUpdater: some files wasn't moved or replaced while update (check %PluginUpdateLog.txt). You can move them manually: " + pluginTempUpdateDir, 20);
-                        File.WriteAllLines(logFilePAth, PluginUpdateLog.ToArray());
-                    }
-                }
-
-                var directoryDlls = pluginDirectoryInfo.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
-
-           
-
-                foreach (var dll in directoryDlls)
-                    TryLoadDll(dll.FullName, pluginDirectoryInfo.FullName);
+                LoadPluginFromDirectory(pluginDirectoryInfo.FullName);
             }
         }
-        private bool MoveDirectoryFiles(string origDirectory, string sourceDirectory, string targetDirectory)
+
+        public static void ApplyUpdateFiles(string pluginDirectory)
+        {
+            var pluginTempUpdateDir = Path.Combine(pluginDirectory, UpdateTempDir);
+            if (Directory.Exists(pluginTempUpdateDir))
+            {
+                PluginUpdateLog.Clear();
+
+                var backupDir = Path.Combine(pluginDirectory, UpdateBackupDir);
+
+                if (Directory.Exists(backupDir))
+                    FileOperationAPIWrapper.MoveToRecycleBin(backupDir);
+
+                var logFilePAth = Path.Combine(pluginDirectory, "%PluginUpdateLog.txt");
+                if (File.Exists(logFilePAth))
+                    File.Delete(logFilePAth);
+
+                if (MoveDirectoryFiles(pluginDirectory, pluginTempUpdateDir, pluginDirectory))
+                {
+                    PluginUpdateLog.Add("Deleting temp dir:\t" + pluginTempUpdateDir);
+                    Directory.Delete(pluginTempUpdateDir, true);
+                }
+                else
+                {
+                    BasePlugin.LogMessage("PoeHUD PluginUpdater: some files wasn't moved or replaced while update (check %PluginUpdateLog.txt). You can move them manually: " + pluginTempUpdateDir, 20);
+                    File.WriteAllLines(logFilePAth, PluginUpdateLog.ToArray());
+                }
+            }
+        }
+
+        private static bool MoveDirectoryFiles(string origDirectory, string sourceDirectory, string targetDirectory)
         {
             bool noErrors = true;
             var sourceDirectoryInfo = new DirectoryInfo(sourceDirectory);
@@ -140,12 +125,12 @@ namespace PoeHUD.Hud.PluginExtension
                     noErrors = false;
                     if (fileExist)
                     {
-                        LogError("PoeHUD PluginUpdater: can't replace file: " + destFile + ", Error: " + ex.Message, 10);
+                        BasePlugin.LogError("PoeHUD PluginUpdater: can't replace file: " + destFile + ", Error: " + ex.Message, 10);
                         PluginUpdateLog.Add("Error replacing file: \t" + destFile);
                     }
                     else
                     {
-                        LogError("PoeHUD PluginUpdater: can't move file: " + destFile + ", Error: " + ex.Message, 10);
+                        BasePlugin.LogError("PoeHUD PluginUpdater: can't move file: " + destFile + ", Error: " + ex.Message, 10);
                         PluginUpdateLog.Add("Error moving file: \t" + destFile);
                     }
                 }
@@ -176,6 +161,10 @@ namespace PoeHUD.Hud.PluginExtension
 
         #region Plugins Events
         private Dictionary<string, Action<object[]>> PluginEvents = new Dictionary<string, Action<object[]>>();
+        public void UnsubscribePluginEvent(string uniqEventName, Action<object[]> func)
+        {
+            PluginEvents.Remove(uniqEventName);
+        }
         public void SubscribePluginEvent(string uniqEventName, Action<object[]> func)
         {
             if (!PluginEvents.ContainsKey(uniqEventName))
@@ -189,6 +178,22 @@ namespace PoeHUD.Hud.PluginExtension
                 PluginEvents[uniqEventName](args);
         }
         #endregion
+
+        public static void LoadPluginFromDirectory(string directory)
+        {
+            var dInfo = new DirectoryInfo(directory);
+            if (!dInfo.Exists)
+            {
+                BasePlugin.LogMessage("Dir not exist: " + directory, 10);
+                return;
+            }
+
+            var directoryDlls = dInfo.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
+
+            foreach (var dll in directoryDlls)
+                BasePlugin.API.TryLoadDll(dll.FullName, directory);
+        }
+
 
         private void TryLoadDll(string path, string dir)
         {
@@ -238,6 +243,7 @@ namespace PoeHUD.Hud.PluginExtension
                 {
                     var extPlugin = new ExternalPluginHolder(this, path, type.FullName);
                     Plugins.Add(extPlugin);
+                    LogMessage("Load plugin: " + extPlugin.PluginName, 2);
                 }
             }
         }
