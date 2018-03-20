@@ -48,6 +48,8 @@ namespace PoeHUD.Plugins
         //For modification of default rendering of settings
         public List<BaseSettingsDrawer> SettingsDrawers => _ExternalPluginData.SettingPropertyDrawers;
 
+        public int GetUniqDrawerId() => _ExternalPluginData.GetUniqDrawerId();
+
         public static PluginExtensionPlugin API;
         public GameController GameController => API.GameController;
         public Graphics Graphics => API.Graphics;
@@ -74,8 +76,7 @@ namespace PoeHUD.Plugins
             _ForceInitialize();
         }
 
-        //This will be also called when plugin is disabled, 
-        //but selected in main menu for settings rendering. We should initialize before generating the menu
+        //This will be also called when plugin is disabled, but selected in main menu for settings rendering. We should initialize before generating the menu
         internal void _ForceInitialize()
         {
             if (_initialized) return;
@@ -93,7 +94,11 @@ namespace PoeHUD.Plugins
         {
             if (!_allowRender) return;
 
-            if (!_initialized) _Initialise();//init if load disabled plugin
+            if (!_initialized)
+            {
+                _ForceInitialize();//init if load disabled plugin
+                return;
+            }
 
             if (MainMenuWindow.Settings.DeveloperMode.Value)
                 DiagnosticTimer.Restart();

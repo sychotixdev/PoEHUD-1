@@ -85,15 +85,25 @@ namespace PoeHUD.Hud.PluginExtension
                 GC.Collect();
             }
 
-            var myAsm = Assembly.Load(File.ReadAllBytes(DllPath));
+            Assembly asmToLoad = null;
+            var debugCymboldFilePath = DllPath.Replace(".dll", ".pdb");
+            if (File.Exists(debugCymboldFilePath))
+            {
+                var dbgCymboldBytes = File.ReadAllBytes(debugCymboldFilePath);
+                asmToLoad = Assembly.Load(File.ReadAllBytes(DllPath), dbgCymboldBytes);
+            }
+            else
+            {
+                asmToLoad = Assembly.Load(File.ReadAllBytes(DllPath));
+            }
 
-            if (myAsm == null)
+            if (asmToLoad == null)
             {
                 State = PluginState.Reload_DllNotFound;
                 return;
             }
 
-            var pluginType = myAsm.GetType(FullTypeName);
+            var pluginType = asmToLoad.GetType(FullTypeName);
             if (pluginType == null)
             {
                 State = PluginState.Reload_ClassNotFound;

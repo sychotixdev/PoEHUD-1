@@ -92,15 +92,39 @@ namespace PoeHUD.Hud.PluginExtension
                 owner.ChildHeight = childSize;
         }
 
-        
-        public int GetUniqDrawerId() => Enumerable.Range(100000, 1000).Except(DrawersDict.Keys).FirstOrDefault();
+        public int GetUniqDrawerId() => Enumerable.Range(100000, 1000).Except(DrawersIds).FirstOrDefault();
+        private List<int> DrawersIds
+        {
+            get
+            {
+                return GetAllDrawers().Select(x => x.SettingId).ToList();
+            }
+        }
 
-        private Dictionary<int, BaseSettingsDrawer> DrawersDict = new Dictionary<int, BaseSettingsDrawer>();
+        private List<BaseSettingsDrawer> GetAllDrawers()
+        {
+            var result = new List<BaseSettingsDrawer>();
+            GetDrawersRecurs(SettingPropertyDrawers, result);
+            return result;
+        }
+
+        private void GetDrawersRecurs(List<BaseSettingsDrawer> drawers, List<BaseSettingsDrawer> result)
+        {
+            foreach(var drawer in drawers)
+            {
+                if (!result.Contains(drawer))
+                    result.Add(drawer);
+                else
+                    BasePlugin.LogError($"{PluginName}: Possible stashoverflow or duplicating drawers detected while generating menu. Drawer SettingName: {drawer.SettingName}, Id: {drawer.SettingId}", 5);
+            }
+            
+            drawers.ForEach(x => GetDrawersRecurs(x.Children, result));
+        }
+
         private List<StashTabNode> StashTabNodesToUnload = new List<StashTabNode>();
         internal void InitializeSettingsMenu(bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
         {
             SettingPropertyDrawers.Clear();
-            DrawersDict.Clear();
             StashTabNodesToUnload.ForEach(x => StashTabController.UnregisterStashNode(x));
             StashTabNodesToUnload.Clear();
 
@@ -112,7 +136,7 @@ namespace PoeHUD.Hud.PluginExtension
                 if (property.GetCustomAttribute<IgnoreMenuAttribute>() != null) continue;
 
                 var menuAttrib = property.GetCustomAttribute<MenuAttribute>();
-                if(ignoreAttribute && menuAttrib == null)
+                if (ignoreAttribute && menuAttrib == null)
                     menuAttrib = new MenuAttribute(System.Text.RegularExpressions.Regex.Replace(property.Name, "(\\B[A-Z])", " $1"));//fix camel case
 
                 if (menuAttrib != null)
@@ -228,7 +252,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 {
                                     var vect = property.GetValue(Settings) as RangeNode<Vector2>;
                                     valueDrawer.DrawDelegate = delegate
-                                    {               
+                                    {
                                         var val = vect.Value;
                                         ImGui.SliderVector2(valueDrawer.ImguiUniqLabel, ref val, vect.Min.X, vect.Max.X, "%.0f", 1);
                                         vect.Value = val;
@@ -250,24 +274,26 @@ namespace PoeHUD.Hud.PluginExtension
                         BasePlugin.LogError($"{PluginName}: Type of option node is not defined: " + propType.Name, 5);
 
                     if (drawer != null)
-                    {           
+                    {
                         drawer.SettingName = menuAttrib.MenuName;
 
-                        if(menuAttrib.index == -1)
+                        if (menuAttrib.index == -1)
                             drawer.SettingId = GetUniqDrawerId();
                         else
+                        {
                             drawer.SettingId = menuAttrib.index;
 
-                        if(DrawersDict.ContainsKey(drawer.SettingId))
-                        {
-                            BasePlugin.LogError($"{PluginName}: Already contain child with id {menuAttrib.parentIndex}. Trying to fix... Property " + property.Name, 5);
-                            drawer.SettingId = GetUniqDrawerId();
+                            if (DrawersIds.Contains(drawer.SettingId))
+                            {
+                                BasePlugin.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. Fixed by giving a new uniq ID. Property " + property.Name, 5);
+                                drawer.SettingId = GetUniqDrawerId();
+                            }
                         }
-                        DrawersDict.Add(drawer.SettingId, drawer);
 
                         if (menuAttrib.parentIndex != -1)
                         {
-                            if(DrawersDict.TryGetValue(menuAttrib.parentIndex, out var parent))
+                            var parent = GetAllDrawers().Find(x => x.SettingId == menuAttrib.parentIndex);
+                            if (parent != null)
                             {
                                 parent.Children.Add(drawer);
                                 continue;
