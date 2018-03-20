@@ -143,13 +143,21 @@ namespace PoeHUD.Plugins
             catch (Exception e) { HandlePluginError("OnPluginSelectedInMenu", e); }
         }
 
+        internal virtual void _OnPluginDestroyForHotReload()
+        {
+            if (!_initialized) return;
+
+            try { OnPluginDestroyForHotReload(); }
+            catch (Exception e) { HandlePluginError("OnPluginDestroyForHotReload", e); }
+        }
+
         #endregion
 
         internal virtual SettingsBase _LoadSettings() { return null; }
         internal virtual void _SaveSettings() { }
 
         #region Error Logging
-        public float PluginErrorDisplayTime = 2;
+        public float PluginErrorDisplayTime = 3;
         private string LogFileName = "ErrorLog.txt";
         private string logPath => PluginDirectory + "\\" + LogFileName;
 

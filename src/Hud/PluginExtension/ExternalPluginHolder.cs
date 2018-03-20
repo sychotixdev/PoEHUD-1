@@ -77,9 +77,7 @@ namespace PoeHUD.Hud.PluginExtension
                 API.eEntityRemoved -= BPlugin._EntityRemoved;
                 API.eClose -= BPlugin._OnClose;
                 API.eInitialise -= BPlugin._Initialise;
-
-                try { BPlugin.OnPluginDestroyForHotReload(); }
-                catch (Exception e) { BPlugin.HandlePluginError("OnPluginDestroyForHotReload", e); }
+                BPlugin._OnPluginDestroyForHotReload();
 
                 BPlugin = null;
                 SettingPropertyDrawers.Clear();
