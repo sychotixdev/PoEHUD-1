@@ -24,10 +24,12 @@ namespace PoeHUD.Controllers
         }
         private void Area_OnAreaChange(AreaController obj) => CheckCacheStashTabs();
 
-        private string League;
-        private string PlayerName;
+        //private string League;
+        //private string PlayerName;
         private void CheckCacheStashTabs()
         {
+            //Fixed a bug when server stash tabs change their position on area change
+            /*
             var serverData = GameController.Instance.Game.IngameState.ServerData;
             var playerName = GameController.Instance.Player.GetComponent<Player>().PlayerName;
             var league = serverData.League;
@@ -41,6 +43,9 @@ namespace PoeHUD.Controllers
                 CacheStashTabs(GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs);
                 UpdateRegisteredStashTabNodes();
             }
+            */
+            CacheStashTabs(GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs);
+            UpdateRegisteredStashTabNodes();
         }
 
         private static List<StashTabNode> CachedStashTabs = new List<StashTabNode>();

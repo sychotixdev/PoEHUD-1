@@ -150,8 +150,13 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
                 StashNode.Exist = false;
             }
             ImGui.SameLine();
-            //ImGuiExtension.Label($"Ex:{StashNode.Exist}, Ind:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name}");
-            //ImGui.SameLine();
+
+            if(MainMenuWindow.Settings.DeveloperMode.Value)
+            {
+                ImGuiExtension.Label($"Ex:{StashNode.Exist}, Ind:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name}");
+                ImGui.SameLine();
+            }
+
             if (ImGui.Combo(ImguiUniqLabel, ref selectedIndex, StashTabController.StashTabNames, StashTabController.StashTabNames.Length * 20))
             {
                 var node = StashTabController.GetStashTabNodeByVisibleIndex(selectedIndex);
