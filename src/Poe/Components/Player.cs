@@ -14,23 +14,6 @@ namespace PoeHUD.Poe.Components
     public class Player : Component
     {
         public string PlayerName => GetObject<NativeStringReader>(Address + 0x20).Value;
-        /*
-        {
-            get
-            {
-                if (Address == 0)
-                {
-                    return "";
-                }
-                int NameLength = M.ReadInt(Address + 0x30);
-                if (NameLength > 512)
-                {
-                    return "";
-                }
-                return NameLength < 8 ? M.ReadStringU(Address + 0x20, NameLength * 2) : M.ReadStringU(M.ReadLong(Address + 0x20), NameLength * 2);
-            }
-        }
-*/
 
         public uint XP => Address != 0 ? M.ReadUInt(Address + 0x48) : 0;
 		public int Strength => Address != 0 ? M.ReadInt(Address + 0x4c) : 0;
@@ -42,6 +25,29 @@ namespace PoeHUD.Poe.Components
 
         public int HideoutLevel => M.ReadByte(Address + 0x256);
         public byte PropheciesCount => M.ReadByte(Address + 0x257);
+
+        public List<Prophecy> Prophecies
+        {
+            get
+            {
+                var result = new List<Prophecy>();
+                var readAddr = Address + 0x258;
+
+                for (int i = 0; i < 7; i++)
+                {
+                    var prophecyId = M.ReadUShort(readAddr);
+                    //if(prophacyId > 0)//Dunno why it will never be 0 even if there is no prophecy
+                    {
+                        var prophecy = GameController.Instance.Files.Prophecies.GetProphecyById(prophecyId);
+                        if (prophecy != null)
+                            result.Add(prophecy);
+                    }
+                    readAddr += 4;//prophecy prophecyId(UShort), Skip index(byte), Skip unknown(byte)
+                }
+                return result;
+            }
+        }
+
 
         public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x230);
 

@@ -281,6 +281,7 @@
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\Extensions.cs" />
+    <Compile Include="Poe\FilesInMemory\PropheciesDat.cs" />
     <Compile Include="Poe\FilesInMemory\Base\UniversalFileWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryGenus.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Labyrinth\LabyrinthData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\MonsterVariety.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\Prophecy.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Quest.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\QuestState.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\WorldArea.cs" />

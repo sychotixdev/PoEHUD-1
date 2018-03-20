@@ -26,11 +26,13 @@ namespace PoeHUD.Controllers
         public readonly UniversalFileWrapper<BestiaryFamily> BestiaryFamilies;
         public readonly UniversalFileWrapper<BestiaryGenus> BestiaryGenuses;
         public readonly MonsterVarieties MonsterVarieties;
+        public readonly PropheciesDat Prophecies;
 
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
 
         //Debug for DeveloperTool
+        private PassiveSkills _PassiveSkills => PassiveSkills;
         private WorldAreas _WorldAreas => WorldAreas;
         private BestiaryCapturableMonsters _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
         private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes => BestiaryRecipes;
@@ -39,7 +41,8 @@ namespace PoeHUD.Controllers
         private UniversalFileWrapper<BestiaryFamily> _BestiaryFamilies => BestiaryFamilies;
         private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses => BestiaryGenuses;
         private MonsterVarieties _MonsterVarieties => MonsterVarieties;
-       
+        private PropheciesDat _Prophecies => Prophecies;
+
 
 
         public FsController(Memory mem)
@@ -63,6 +66,7 @@ namespace PoeHUD.Controllers
             BestiaryFamilies = new UniversalFileWrapper<BestiaryFamily>(mem, FindFile("Data/BestiaryFamilies.dat"));
             BestiaryGenuses = new UniversalFileWrapper<BestiaryGenus>(mem, FindFile("Data/BestiaryGenus.dat"));
             MonsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat"));
+            Prophecies = new PropheciesDat(mem, FindFile("Data/Prophecies.dat"));
         }
 
         public Dictionary<string, long> GetAllFiles()

@@ -55,8 +55,6 @@ namespace PoeHUD.Poe.FilesInMemory
             name = M.ReadStringU(M.ReadLong(Address + 0x34), 255);
 
         public string Icon => M.ReadStringU(M.ReadLong(Address + 0x8), 255);//Read on request
-        private Memory M;
-
 
         private List<Tuple<StatRecord, int>> stats;
         public List<Tuple<StatRecord, int>> Stats
