@@ -120,35 +120,37 @@ namespace PoeHUD.Hud.Themes
             
             var style = ImGui.GetStyle();
 
-            style.AntiAliasedFill = DrawBoolSetting("AntiAliasedFill", style.AntiAliasedFill);
-            style.AntiAliasedLines = DrawBoolSetting("AntiAliasedLines", style.AntiAliasedLines);
+            if (ImGui.TreeNode("Theme settings"))
+            {
+                style.AntiAliasedFill = DrawBoolSetting("AntiAliasedFill", style.AntiAliasedFill);
+                style.AntiAliasedLines = DrawBoolSetting("AntiAliasedLines", style.AntiAliasedLines);
 
-            style.Alpha = DrawFloatSetting("Alpha", style.Alpha * 100, 0, 100) / 100f;
-            
-            style.DisplayWindowPadding = DrawVectorSetting("DisplayWindowPadding", style.DisplayWindowPadding, 0, 20);
-            style.TouchExtraPadding = DrawVectorSetting("TouchExtraPadding", style.TouchExtraPadding, 0, 10);
-            style.WindowPadding = DrawVectorSetting("WindowPadding", style.WindowPadding, 0, 20);
-            style.FramePadding = DrawVectorSetting("FramePadding", style.FramePadding, 0, 20);
-            style.DisplaySafeAreaPadding = DrawVectorSetting("DisplaySafeAreaPadding", style.DisplaySafeAreaPadding, 0, 20);
+                style.Alpha = DrawFloatSetting("Alpha", style.Alpha * 100, 0, 100) / 100f;
 
-            style.ItemInnerSpacing = DrawVectorSetting("ItemInnerSpacing", style.ItemInnerSpacing, 0, 20);
-            style.ItemSpacing = DrawVectorSetting("ItemSpacing", style.ItemSpacing, 0, 20);
+                style.DisplayWindowPadding = DrawVectorSetting("DisplayWindowPadding", style.DisplayWindowPadding, 0, 20);
+                style.TouchExtraPadding = DrawVectorSetting("TouchExtraPadding", style.TouchExtraPadding, 0, 10);
+                style.WindowPadding = DrawVectorSetting("WindowPadding", style.WindowPadding, 0, 20);
+                style.FramePadding = DrawVectorSetting("FramePadding", style.FramePadding, 0, 20);
+                style.DisplaySafeAreaPadding = DrawVectorSetting("DisplaySafeAreaPadding", style.DisplaySafeAreaPadding, 0, 20);
 
-            style.GrabMinSize = DrawFloatSetting("GrabMinSize", style.GrabMinSize, 0, 20);
-            style.GrabRounding = DrawFloatSetting("GrabRounding", style.GrabRounding, 0, 12);
-            style.IndentSpacing = DrawFloatSetting("IndentSpacing", style.IndentSpacing, 0, 30);
+                style.ItemInnerSpacing = DrawVectorSetting("ItemInnerSpacing", style.ItemInnerSpacing, 0, 20);
+                style.ItemSpacing = DrawVectorSetting("ItemSpacing", style.ItemSpacing, 0, 20);
 
-            style.ScrollbarRounding = DrawFloatSetting("ScrollbarRounding", style.ScrollbarRounding, 0, 19);
-            style.ScrollbarSize = DrawFloatSetting("ScrollbarSize", style.ScrollbarSize, 0, 20);
+                style.GrabMinSize = DrawFloatSetting("GrabMinSize", style.GrabMinSize, 0, 20);
+                style.GrabRounding = DrawFloatSetting("GrabRounding", style.GrabRounding, 0, 12);
+                style.IndentSpacing = DrawFloatSetting("IndentSpacing", style.IndentSpacing, 0, 30);
 
-            style.WindowTitleAlign = DrawVectorSetting("WindowTitleAlign", style.WindowTitleAlign, 0, 1, 0.1f);
-            style.WindowRounding = DrawFloatSetting("WindowRounding", style.WindowRounding, 0, 14);
-            style.ChildWindowRounding = DrawFloatSetting("ChildWindowRounding", style.ChildWindowRounding, 0, 16);
-            style.FrameRounding = DrawFloatSetting("FrameRounding", style.FrameRounding, 0, 12);
-            style.ColumnsMinSpacing = DrawFloatSetting("ColumnsMinSpacing", style.ColumnsMinSpacing, 0, 30);
-       
-            style.CurveTessellationTolerance = DrawFloatSetting("CurveTessellationTolerance", style.CurveTessellationTolerance * 100, 0, 100) / 100;
+                style.ScrollbarRounding = DrawFloatSetting("ScrollbarRounding", style.ScrollbarRounding, 0, 19);
+                style.ScrollbarSize = DrawFloatSetting("ScrollbarSize", style.ScrollbarSize, 0, 20);
 
+                style.WindowTitleAlign = DrawVectorSetting("WindowTitleAlign", style.WindowTitleAlign, 0, 1, 0.1f);
+                style.WindowRounding = DrawFloatSetting("WindowRounding", style.WindowRounding, 0, 14);
+                style.ChildWindowRounding = DrawFloatSetting("ChildWindowRounding", style.ChildWindowRounding, 0, 16);
+                style.FrameRounding = DrawFloatSetting("FrameRounding", style.FrameRounding, 0, 12);
+                style.ColumnsMinSpacing = DrawFloatSetting("ColumnsMinSpacing", style.ColumnsMinSpacing, 0, 30);
+
+                style.CurveTessellationTolerance = DrawFloatSetting("CurveTessellationTolerance", style.CurveTessellationTolerance * 100, 0, 100) / 100;
+            }
 
             ImGui.Text("");
             #region ColorsDraw

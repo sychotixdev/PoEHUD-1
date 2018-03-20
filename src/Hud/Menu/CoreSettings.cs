@@ -23,22 +23,35 @@ namespace PoeHUD.Hud.Menu
         public TreeNodeFlags CorePluginsTreeState;
         public TreeNodeFlags InstalledPluginsTreeNode;
 
-        [Menu("Main Menu Key Toggle")]
+        [Menu("Key Settings", 0)]
+        public EmptyNode KeyMenuRoot { get; set; } = new EmptyNode();
+
+        [Menu("Main Menu Key Toggle", 1, 0)]
         public HotkeyNode MainMenuKeyToggle { get; set; } = Keys.F12;
 
-        [Menu("Developer Mode")]
-        public ToggleNode DeveloperMode { get; set; } = false;
+        [Menu("Close HUD on Escape button", 2, 0)]
+        public ToggleNode CloseOnEsc { get; set; } = true;
 
-        [Menu("Show plugins Render Time")]
-        public ToggleNode ShowPluginsMS { get; set; } = false;
-
-        [JsonIgnore]
-        public ToggleNode ShowImguiDemo { get; set; } = false;
+        [Menu("Close HUD on Space button", 3, 0)]
+        public ToggleNode CloseOnSpace { get; set; } = false;
 
         [Menu("Reload plugin DLL on change")]
         public ToggleNode AutoReloadDllOnChanges { get; set; } = true;
 
         [Menu("Current Menu Theme")]
         public ListNode Theme { get; set; } = new ListNode() { Value = ThemeEditor.DefaultThemeName };
+
+        [Menu("Developer", 100)]
+        public EmptyNode DeveloperRoot { get; set; } = new EmptyNode();
+
+        [JsonIgnore]
+        [Menu("Show Imgui Demo", 101, 100)]
+        public ToggleNode ShowImguiDemo { get; set; } = false;
+
+        [Menu("Developer Mode", 102, 100)]
+        public ToggleNode DeveloperMode { get; set; } = false;
+
+        [Menu("Show plugins Render Time", 103, 102)]
+        public ToggleNode ShowPluginsMS { get; set; } = false;
     }
 }

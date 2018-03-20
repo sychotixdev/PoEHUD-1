@@ -111,6 +111,22 @@ namespace PoeHUD.Hud.Menu
                 {
                     Settings.Enable.Value = !Settings.Enable.Value;
                     SettingsHub.Save(settingsHub);
+                    e.Handled = true;
+                }
+                if(Settings.Enable.Value)
+                {
+                    if (Settings.CloseOnEsc.Value && e.KeyCode == Keys.Escape)
+                    {
+                        Settings.Enable.Value = !Settings.Enable.Value;
+                        e.Handled = true;
+                        return;
+                    }
+                    if (Settings.CloseOnSpace.Value && e.KeyCode == Keys.Space)
+                    {
+                        Settings.Enable.Value = !Settings.Enable.Value;
+                        e.Handled = true;
+                        return;
+                    }
                 }
             }
             var io = ImGui.GetIO();
