@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
@@ -10,6 +10,7 @@ using PoeHUD.Hud.Loot;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace PoeHUD.Hud.Menu
 {
@@ -20,6 +21,7 @@ namespace PoeHUD.Hud.Menu
         public static IKeyboardMouseEvents KeyboardMouseEvents;
         private readonly SettingsHub settingsHub;
         private readonly MainMenuWindow MenuWindow;
+        private RectangleF MenuToggleButtonRect;
         private bool isPoeGameVisible => (GameController.Window.IsForeground() || settingsHub.PerformanceSettings.AlwaysForeground);
 
         public MenuPlugin(GameController gameController, Graphics graphics, SettingsHub settingsHub) : base(gameController, graphics, settingsHub.MenuSettings)
@@ -35,6 +37,7 @@ namespace PoeHUD.Hud.Menu
             KeyboardMouseEvents.MouseMove += KeyboardMouseEvents_MouseMove;
 
             MenuWindow = new MainMenuWindow(Settings, settingsHub);
+            MenuToggleButtonRect = new RectangleF(10, 85, 80, 25);
         }
         public override void Dispose()
         {
@@ -48,28 +51,14 @@ namespace PoeHUD.Hud.Menu
             KeyboardMouseEvents.Dispose();
         }
 
+   
         public override void Render()
         {
+            Graphics.DrawImage("menu-background.png", MenuToggleButtonRect, new ColorBGRA(128, 0, 0, 230));
+            Graphics.DrawText("≡", 16, MenuToggleButtonRect.TopLeft + new Vector2(25, 12), new ColorBGRA(255, 0, 0, 255), FontDrawFlags.VerticalCenter | FontDrawFlags.Center);
             MenuWindow.Render();
-            return;
-            CreateImGuiMenu();
-            try
-            {
-                if (Settings.Enable)
-                    CreateImGuiMenu();
-            }
-            catch (Exception e)
-            {
-                DebugPlug.DebugPlugin.LogMsg("Error Rendering PoeHUD Menu." + e.Message, 1);
-            }
         }
 
-        private void CreateImGuiMenu()
-        {
-            bool tmp = Settings.Enable.Value;
-            ImGuiNative.igShowDemoWindow(ref tmp);
-            Settings.Enable.Value = tmp;
-        }
         private bool ImGuiWantCaptureMouse(IO io)
         {
             unsafe
@@ -118,12 +107,10 @@ namespace PoeHUD.Hud.Menu
         {
             if (isPoeGameVisible)
             {
-                switch (e.KeyCode)
+                if (e.KeyCode == Settings.MainMenuKeyToggle)
                 {
-                    case Keys.F12:
-                        Settings.Enable.Value = !Settings.Enable.Value;
-                        SettingsHub.Save(settingsHub);
-                        break;
+                    Settings.Enable.Value = !Settings.Enable.Value;
+                    SettingsHub.Save(settingsHub);
                 }
             }
             var io = ImGui.GetIO();
@@ -199,8 +186,19 @@ namespace PoeHUD.Hud.Menu
         }
         private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
         {
-            var io = ImGui.GetIO();
             Vector2 mousePosition = GameController.Window.ScreenToClient(e.X, e.Y);
+
+            if (isPoeGameVisible)
+            {
+                if (MenuToggleButtonRect.Contains(mousePosition))
+                {
+                    Settings.Enable.Value = !Settings.Enable.Value;
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            var io = ImGui.GetIO();
             io.MousePosition = new System.Numerics.Vector2(mousePosition.X, mousePosition.Y);
 
             if (ImGuiWantCaptureMouse(io))

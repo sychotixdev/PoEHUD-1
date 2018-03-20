@@ -243,7 +243,7 @@ namespace PoeHUD.Hud.PluginExtension
                 {
                     var extPlugin = new ExternalPluginHolder(this, path, type.FullName);
                     Plugins.Add(extPlugin);
-                    LogMessage("Load plugin: " + extPlugin.PluginName, 2);
+                    //LogMessage("Load plugin: " + extPlugin.PluginName, 2);
                 }
             }
         }
