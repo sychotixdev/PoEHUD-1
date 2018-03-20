@@ -9,7 +9,7 @@ using PoeHUD.Controllers;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class Prophecy : RemoteMemoryObject
+    public class ProphecyDat : RemoteMemoryObject
     {
         public int Index { get; internal set; }
 

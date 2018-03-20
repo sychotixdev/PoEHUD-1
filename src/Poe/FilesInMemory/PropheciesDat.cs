@@ -11,26 +11,26 @@ using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
-    public class PropheciesDat : UniversalFileWrapper<Prophecy>
+    public class PropheciesDat : UniversalFileWrapper<ProphecyDat>
     {
-        private Dictionary<int, Prophecy> ProphecyIndexDictionary = new Dictionary<int, Prophecy>();
+        private Dictionary<int, ProphecyDat> ProphecyIndexDictionary = new Dictionary<int, ProphecyDat>();
 
         public PropheciesDat(Memory m, long address) 
             : base(m, address)
         {
         }
 
-        public Prophecy GetProphecyById(int index)
+        public ProphecyDat GetProphecyById(int index)
         {
             CheckCache();
 
-            Prophecy prophecy;
+            ProphecyDat prophecy;
             ProphecyIndexDictionary.TryGetValue(index, out prophecy);
             return prophecy;
         }
 
         private int IndexCounter;
-        protected override void EntryAdded(long addr, Prophecy entry)
+        protected override void EntryAdded(long addr, ProphecyDat entry)
         {
             entry.Index = IndexCounter++;
             ProphecyIndexDictionary.Add(entry.ProphecyId, entry);

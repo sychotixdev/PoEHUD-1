@@ -26,11 +26,11 @@ namespace PoeHUD.Poe.Components
         public int HideoutLevel => M.ReadByte(Address + 0x256);
         public byte PropheciesCount => M.ReadByte(Address + 0x257);
 
-        public List<Prophecy> Prophecies
+        public List<ProphecyDat> Prophecies
         {
             get
             {
-                var result = new List<Prophecy>();
+                var result = new List<ProphecyDat>();
                 var readAddr = Address + 0x258;
 
                 for (int i = 0; i < 7; i++)
