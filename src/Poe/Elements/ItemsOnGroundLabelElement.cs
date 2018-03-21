@@ -5,7 +5,12 @@ namespace PoeHUD.Poe.Elements
 {
     public class ItemsOnGroundLabelElement : Element
     {
-        private readonly Lazy<int> labelInfo;
+		private const int ChildStartOffset = 0x254;
+		private const int ChildEndOffset = 0x258;
+		public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
+		public Element Label => ReadObject<Element>(Address + 0x8);
+
+		private readonly Lazy<int> labelInfo;
 
         /*
         public ItemsOnGroundLabelElement()
@@ -14,8 +19,6 @@ namespace PoeHUD.Poe.Elements
         }
         */
 
-        public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
-        public Element Label => ReadObject<Element>(Address + 0x8);
         //public bool CanPickUp => labelInfo.Value == 0;
 
         /*
@@ -37,15 +40,18 @@ namespace PoeHUD.Poe.Elements
         public new bool IsVisible => Label.IsVisible;
 
         public new IEnumerable<ItemsOnGroundLabelElement> Children
-        {
-            get
-            {
-                int address = M.ReadInt(Address + OffsetBuffers + 0x254);
-                for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
-                {
-                    yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
-                }
-            }
+		{
+		// iterate through child entities
+		get
+			{
+				int ChildStart = M.ReadInt(Address + OffsetBuffers + ChildStartOffset);
+				int ChildEnd = M.ReadInt(Address + OffsetBuffers + ChildEndOffset);
+
+				for (int addr = ChildStart; addr < ChildEnd; addr += 4)
+				{
+					yield return GetObject<ItemsOnGroundLabelElement>(addr);
+				}
+			}
         }
 
         private int GetLabelInfo()
