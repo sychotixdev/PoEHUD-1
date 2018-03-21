@@ -5,7 +5,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameState : RemoteMemoryObject
     {
-        public int EntityLabelMap => M.ReadInt(Address + 0x54, 0x954);
+        public int EntityLabelMap => M.ReadInt(Address + 0x54, 0x958);
 
         public IngameData Data => ReadObject<IngameData>(Address + 0x1C0 + Offsets.IgsOffset);
         public bool InGame => ServerData.IsInGame;
