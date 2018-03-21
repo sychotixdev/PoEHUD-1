@@ -29,9 +29,7 @@ namespace PoeHUD.Hud.Dps
 
         [Menu("Show AOE")]
         public ToggleNode ShowAOE { get; set; } = true;
-        public ToggleNode ShowSingleHit { get; set; } = true;
         public ToggleNode ShowCurrentHitDamage { get; set; } = true;
-
         public ToggleNode HasCullingStrike { get; set; } = false;
     }
 }
