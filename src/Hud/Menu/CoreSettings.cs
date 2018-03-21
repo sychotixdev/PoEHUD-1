@@ -29,10 +29,13 @@ namespace PoeHUD.Hud.Menu
         [Menu("Main Menu Key Toggle", 1, 0)]
         public HotkeyNode MainMenuKeyToggle { get; set; } = Keys.F12;
 
-        [Menu("Close HUD on Escape button", 2, 0)]
+        [Menu("Show Main Menu button", 2, 0)]
+        public ToggleNode ShowMenuButton { get; set; } = true;
+
+        [Menu("Close HUD on Escape button", 3, 0)]
         public ToggleNode CloseOnEsc { get; set; } = true;
 
-        [Menu("Close HUD on Space button", 3, 0)]
+        [Menu("Close HUD on Space button", 4, 0)]
         public ToggleNode CloseOnSpace { get; set; } = false;
 
         [Menu("Reload plugin DLL on change")]

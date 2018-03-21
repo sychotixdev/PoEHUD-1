@@ -54,8 +54,11 @@ namespace PoeHUD.Hud.Menu
    
         public override void Render()
         {
-            Graphics.DrawImage("menu-background.png", MenuToggleButtonRect, new ColorBGRA(0, 0, 0, 230));
-            Graphics.DrawText("≡", 16, MenuToggleButtonRect.TopLeft + new Vector2(25, 12), new ColorBGRA(255, 0, 0, 255), FontDrawFlags.VerticalCenter | FontDrawFlags.Center);
+            if (Settings.ShowMenuButton)
+            {
+                Graphics.DrawImage("menu-background.png", MenuToggleButtonRect, new ColorBGRA(0, 0, 0, 230));
+                Graphics.DrawText("≡", 16, MenuToggleButtonRect.TopLeft + new Vector2(25, 12), new ColorBGRA(255, 0, 0, 255), FontDrawFlags.VerticalCenter | FontDrawFlags.Center);
+            }
             MenuWindow.Render();
         }
 
@@ -206,7 +209,7 @@ namespace PoeHUD.Hud.Menu
 
             if (isPoeGameVisible)
             {
-                if (MenuToggleButtonRect.Contains(mousePosition))
+                if (Settings.ShowMenuButton && MenuToggleButtonRect.Contains(mousePosition))
                 {
                     Settings.Enable.Value = !Settings.Enable.Value;
                     e.Handled = true;
