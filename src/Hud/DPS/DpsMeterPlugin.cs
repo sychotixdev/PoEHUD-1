@@ -99,17 +99,17 @@ namespace PoeHUD.Hud.Dps
             if (Settings.ShowCurrentHitDamage.Value)
             {
                 if(Settings.ShowAOE.Value)
-                offsetY += Graphics.DrawText($"{CurrentDmgAoe}{layoutFix}  aoe hit", Settings.DpsTextSize, position, Settings.DpsFontColor, FontDrawFlags.Right).Height;
-                offsetY += Graphics.DrawText($"{CurrentDmgSingle}{layoutFix}        hit", Settings.PeakDpsTextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
+                offsetY += Graphics.DrawText($"{CurrentDmgAoe}{layoutFix}  aoe hit", Settings.TextSize, position, Settings.DpsFontColor, FontDrawFlags.Right).Height;
+                offsetY += Graphics.DrawText($"{CurrentDmgSingle}{layoutFix}        hit", Settings.TextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
             }
 
             if (Settings.ShowAOE.Value)
-                offsetY += Graphics.DrawText($"{CurrentDpsAoe}{layoutFix} aoe dps", Settings.PeakDpsTextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
-            offsetY += Graphics.DrawText($"{CurrentDpsSingle}{layoutFix}       dps", Settings.PeakDpsTextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
+                offsetY += Graphics.DrawText($"{CurrentDpsAoe}{layoutFix} aoe dps", Settings.TextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
+            offsetY += Graphics.DrawText($"{CurrentDpsSingle}{layoutFix}       dps", Settings.TextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
 
             if (Settings.ShowAOE.Value)
-                offsetY += Graphics.DrawText($"{MaxDpsAoe} max aoe dps", Settings.PeakDpsTextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
-            offsetY += Graphics.DrawText($"{MaxDpsSingle}{layoutFix} max dps", Settings.PeakDpsTextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
+                offsetY += Graphics.DrawText($"{MaxDpsAoe} max aoe dps", Settings.TextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
+            offsetY += Graphics.DrawText($"{MaxDpsSingle}{layoutFix} max dps", Settings.TextSize, position.Translate(0, offsetY), Settings.PeakFontColor, FontDrawFlags.Right).Height;
 
             var width = 150;
             var bounds = new RectangleF(position.X - 5 - width - 41, position.Y - 5, width + 50, offsetY + 10);
