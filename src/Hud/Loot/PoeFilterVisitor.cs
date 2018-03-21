@@ -203,7 +203,7 @@ namespace PoeHUD.Hud.Loot
                                                                             var poeAlertSoundContext = statement.poeAlertSound();
                                                                             if (poeAlertSoundContext != null)
                                                                             {
-                                                                                sound = Convert.ToInt32(poeAlertSoundContext.id().GetText());
+                                                                                sound = Convert.ToInt32(poeAlertSoundContext.soundId().GetText());
                                                                             }
                                                                             else
                                                                             {
