@@ -142,12 +142,12 @@ namespace PoeHUD.Hud.Dps
             foreach (var monster in CachedMonsters)
             {
                 var life = monster.GetComponent<Life>();
-                int hp = monster.IsAlive ? life.CurHP + life.CurES : 0;
-
                 if(!monster.IsAlive && Settings.HasCullingStrike.Value)
                 {
                     continue;
                 }
+                int hp = monster.IsAlive ? life.CurHP + life.CurES : 0;
+
                 if (hp > -1000000 && hp < 10000000)
                 {
                     int lastHP;

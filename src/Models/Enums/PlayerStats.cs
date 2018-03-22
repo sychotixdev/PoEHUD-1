@@ -2,7 +2,7 @@
 
 namespace PoeHUD.Models.Enums
 {
-    public enum PlayerStats
+    public enum GameStat
     {
         [Description("Level")]
         Level = 1,
