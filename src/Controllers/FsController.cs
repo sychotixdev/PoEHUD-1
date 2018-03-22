@@ -27,6 +27,7 @@ namespace PoeHUD.Controllers
         public readonly UniversalFileWrapper<BestiaryGenus> BestiaryGenuses;
         public readonly MonsterVarieties MonsterVarieties;
         public readonly PropheciesDat Prophecies;
+        public readonly UniversalFileWrapper<AtlasNode> AtlasNodes;
 
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
@@ -42,6 +43,7 @@ namespace PoeHUD.Controllers
         private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses => BestiaryGenuses;
         private MonsterVarieties _MonsterVarieties => MonsterVarieties;
         private PropheciesDat _Prophecies => Prophecies;
+        private UniversalFileWrapper<AtlasNode> _AtlasNodes => AtlasNodes;
 
 
 
@@ -67,6 +69,7 @@ namespace PoeHUD.Controllers
             BestiaryGenuses = new UniversalFileWrapper<BestiaryGenus>(mem, FindFile("Data/BestiaryGenus.dat"));
             MonsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat"));
             Prophecies = new PropheciesDat(mem, FindFile("Data/Prophecies.dat"));
+            AtlasNodes = new UniversalFileWrapper<AtlasNode>(mem, FindFile("Data/AtlasNode.dat"));
         }
 
         public Dictionary<string, long> GetAllFiles()
