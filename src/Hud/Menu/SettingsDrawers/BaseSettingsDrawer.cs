@@ -17,12 +17,22 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     {
         public int SettingId { get; set; } = -1;
         public string SettingName { get; set; } = "#NONAME#";
+        public string SettingTooltip { get; set; } = "";
 
         public Func<bool> IsVisibleFunc = delegate { return true; };
 
         internal string ImguiUniqLabel => $"{SettingName}##{SettingId}";
 
         public virtual void Draw() => ImGuiExtension.Label(SettingName);
+
+        public void DrawWithTooltip()
+        {
+            Draw();
+            if (!string.IsNullOrEmpty(SettingTooltip) && ImGui.IsItemHovered(HoveredFlags.Default))
+            {
+                ImGui.SetTooltip(SettingTooltip);
+            }
+        }
 
         public readonly List<BaseSettingsDrawer> Children = new List<BaseSettingsDrawer>();
         internal float ChildHeight;
