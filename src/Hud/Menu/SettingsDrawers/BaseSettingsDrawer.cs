@@ -15,6 +15,12 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
 {
     public class BaseSettingsDrawer
     {
+        [Obsolete("Use BaseSettingsDrawer(string settingName, int settingId) to avoid problems with drawing. Use GetUniqDrawerId() for SettingId")]
+        public BaseSettingsDrawer() { }
+        [Obsolete("Use BaseSettingsDrawer(string settingName, int settingId) to avoid problems with drawing. Use GetUniqDrawerId() for SettingId")]
+        public BaseSettingsDrawer(string settingName) { SettingName = settingName; }
+        public BaseSettingsDrawer(string settingName, int settingId) { SettingName = settingName; SettingId = settingId; }
+
         public int SettingId { get; set; } = -1;
         public string SettingName { get; set; } = "#NONAME#";
         public string SettingTooltip { get; set; } = "";
@@ -42,17 +48,26 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     //Label (EmptyNode)
     public class LabelSettingDrawer : BaseSettingsDrawer
     {
+        [Obsolete()]
+        public LabelSettingDrawer() { }
+        public LabelSettingDrawer(string settingName, int settingId) : base(settingName, settingId) { }
         public override void Draw() => ImGuiExtension.Label(SettingName);
     }
 
     public class SameLineSettingDrawer : BaseSettingsDrawer
     {
+        [Obsolete()]
+        public SameLineSettingDrawer() { }
+        public SameLineSettingDrawer(string settingName, int settingId) : base(settingName, settingId) { }
         public override void Draw() => ImGui.SameLine();
     }
 
     //Button
     public class ButtonSettingDrawer : BaseSettingsDrawer
     {
+        [Obsolete()]
+        public ButtonSettingDrawer() { }
+        public ButtonSettingDrawer(ButtonNode button, string settingName, int settingId) : base(settingName, settingId) => Button = button;
         public ButtonNode Button;
         public ButtonSettingDrawer(ButtonNode button) => Button = button;
 
@@ -65,7 +80,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class HotkeySettingDrawer : BaseSettingsDrawer
     {
         public HotkeyNode Hotkey;
+        [Obsolete()]
         public HotkeySettingDrawer(HotkeyNode hotkey) => Hotkey = hotkey;
+        public HotkeySettingDrawer(HotkeyNode hotkey, string settingName, int settingId) : base(settingName, settingId) => Hotkey = hotkey;
 
         public override void Draw()
         {
@@ -83,7 +100,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class CheckboxSettingDrawer : BaseSettingsDrawer
     {
         public ToggleNode Toggle;
+        [Obsolete()]
         public CheckboxSettingDrawer(ToggleNode toggle) => Toggle = toggle;
+        public CheckboxSettingDrawer(ToggleNode toggle, string settingName, int settingId) : base(settingName, settingId) => Toggle = toggle;
 
         public override void Draw()
         {
@@ -101,8 +120,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class ColorSettingDrawer : BaseSettingsDrawer
     {
         public ColorNode Color;
+        [Obsolete()]
         public ColorSettingDrawer(ColorNode color) => Color = color;
-
+        public ColorSettingDrawer(ColorNode color, string settingName, int settingId) : base(settingName, settingId) => Color = color;
         public override void Draw()
         {
             Color.Value = ImGuiExtension.ColorPicker(ImguiUniqLabel, Color.Value);
@@ -113,8 +133,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class ComboBoxSettingDrawer : BaseSettingsDrawer
     {
         public ListNode List;
+        [Obsolete()]
         public ComboBoxSettingDrawer(ListNode list) => List = list;
-
+        public ComboBoxSettingDrawer(ListNode list, string settingName, int settingId) : base(settingName, settingId) => List = list;
         public override void Draw()
         {
             List.Value = ImGuiExtension.ComboBox(ImguiUniqLabel, List.Value, List.Values);
@@ -124,19 +145,27 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
 
     public class CustomSettingsDrawer : BaseSettingsDrawer
     {
-        public Action DrawDelegate = delegate { ImGuiExtension.Label($"Not implemented in code"); };
+        public Action DrawDelegate = delegate { ImGuiExtension.Label($"Not implemented in code. Set DrawDelegate to draw own code."); };
 
         public override void Draw()
         {
-            DrawDelegate();
+            try
+            {
+                DrawDelegate();
+            }
+            catch (Exception e)
+            {
+                DebugPlug.DebugPlugin.LogMsg("Error in CustomSettingsDrawer.DrawDelegate: " + e.Message, 5, SharpDX.Color.Red);
+            }
         }
     }
 
     public class IntegerSettingsDrawer : BaseSettingsDrawer
     {
         public RangeNode<int> IntegerNode;
+        [Obsolete()]
         public IntegerSettingsDrawer(RangeNode<int> node) => IntegerNode = node;
-
+        public IntegerSettingsDrawer(RangeNode<int> node, string settingName, int settingId) : base(settingName, settingId) => IntegerNode = node;
         public override void Draw()
         {
             IntegerNode.Value = ImGuiExtension.IntSlider(ImguiUniqLabel, IntegerNode.Value, IntegerNode.Min, IntegerNode.Max);
@@ -146,7 +175,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
     public class StashTabNodeSettingDrawer : BaseSettingsDrawer
     {
         public StashTabNode StashNode;
+        [Obsolete()]
         public StashTabNodeSettingDrawer(StashTabNode stashNode) => StashNode = stashNode;
+        public StashTabNodeSettingDrawer(StashTabNode stashNode, string settingName, int settingId) : base(settingName, settingId) => StashNode = stashNode;
 
         public override void Draw()
         {

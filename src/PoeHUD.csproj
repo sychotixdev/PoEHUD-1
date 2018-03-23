@@ -243,6 +243,7 @@
     <Compile Include="Models\CacheComponent\PlayerCache.cs" />
     <Compile Include="Models\ConfigLineBase.cs" />
     <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
+    <Compile Include="Models\Enums\GameStat.cs" />
     <Compile Include="Models\Enums\InventoryType.cs" />
     <Compile Include="Models\Enums\PlayerStats.cs" />
     <Compile Include="Models\ItemClass.cs" />
