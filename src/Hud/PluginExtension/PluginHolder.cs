@@ -77,7 +77,7 @@ namespace PoeHUD.Hud.PluginExtension
                     ImGui.BeginChild($"##{ChildUniqId++}", new Vector2(newcontentRegionArea2.X, drawer.ChildHeight), false, WindowFlags.NoScrollWithMouse);
 
                     DrawSettingsRecursively(drawer.Children, drawer);
-                    childSize += drawer.ChildHeight + 10;
+                    childSize += drawer.ChildHeight + 15;
                     ImGui.EndChild();
                     ImGui.EndChild();
                 }
