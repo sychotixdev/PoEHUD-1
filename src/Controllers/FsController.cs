@@ -76,19 +76,6 @@ namespace PoeHUD.Controllers
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;
 
-        //Debug for DeveloperTool
-        private PassiveSkills _PassiveSkills => PassiveSkills;
-        private WorldAreas _WorldAreas => WorldAreas;
-        private BestiaryCapturableMonsters _BestiaryCapturableMonsters => BestiaryCapturableMonsters;
-        private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes => BestiaryRecipes;
-        private UniversalFileWrapper<BestiaryRecipeComponent> _BestiaryRecipeComponents => BestiaryRecipeComponents;
-        private UniversalFileWrapper<BestiaryGroup> _BestiaryGroups => BestiaryGroups;
-        private UniversalFileWrapper<BestiaryFamily> _BestiaryFamilies => BestiaryFamilies;
-        private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses => BestiaryGenuses;
-        private MonsterVarieties _MonsterVarieties => MonsterVarieties;
-        private PropheciesDat _Prophecies => Prophecies;
-        private UniversalFileWrapper<AtlasNode> _AtlasNodes => AtlasNodes;
-
         public FsController(Memory mem)
         {
             this.mem = mem;

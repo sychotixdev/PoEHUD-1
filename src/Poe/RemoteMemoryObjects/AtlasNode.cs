@@ -30,6 +30,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public string FlavourText => text != null ? text :
             text = M.ReadStringU(M.ReadLong(Address + 0x44));
 
+        public bool IsUniqueMap
+        {
+            get
+            {
+                string uniqTest = M.ReadStringU(M.ReadLong(Address + 0x3c, 0));
+                return !string.IsNullOrEmpty(uniqTest) && uniqTest.Contains("Uniq");
+            }
+        }
+
         public override string ToString()
         {
             return $"{Area.Name}, PosX: {PosX}, PosY: {PosY}, Text: {FlavourText}";
