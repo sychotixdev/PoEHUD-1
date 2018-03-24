@@ -34,9 +34,9 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         public void DrawWithTooltip()
         {
             Draw();
-            if (!string.IsNullOrEmpty(SettingTooltip) && ImGui.IsItemHovered(HoveredFlags.Default))
+            if (!string.IsNullOrEmpty(SettingTooltip))
             {
-                ImGui.SetTooltip(SettingTooltip);
+                ImGuiExtension.ToolTip(SettingTooltip);
             }
         }
 
