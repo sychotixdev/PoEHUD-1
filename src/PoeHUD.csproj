@@ -288,6 +288,7 @@
     <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
     <Compile Include="Poe\FilesInMemory\QuestStates.cs" />
+    <Compile Include="Poe\Pathfinding.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BestiaryCapturableMonster.cs" />
