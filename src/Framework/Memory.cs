@@ -20,7 +20,7 @@ namespace PoeHUD.Framework
         private readonly Dictionary<string, int> modules;
         private bool closed;
         public Offsets offsets;
-        private IntPtr procHandle;
+        public IntPtr procHandle;
 
         public Memory(Offsets offs, int pId)
         {

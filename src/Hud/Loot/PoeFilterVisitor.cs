@@ -5,7 +5,6 @@ using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
 using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
-using PoeHUD.Poe.EntityComponents;
 using SharpDX;
 using System;
 using System.Collections.Generic;
