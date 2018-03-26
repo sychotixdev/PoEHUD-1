@@ -67,16 +67,18 @@ namespace PoeHUD.Hud.Dps
             if (elapsedTime.TotalSeconds > DPS_PERIOD)
             {
                 CalculateDps(out var aoe, out var single);
+
+                //Shift array
+                //{ 1, 2, 3, 4, 5 }
+                //{ 0, 1, 2, 3, 4 }
+                Array.Copy(AOEDamageMemory, 0, AOEDamageMemory, 1, AOEDamageMemory.Length - 1);
+                Array.Copy(SingleDamageMemory, 0, SingleDamageMemory, 1, SingleDamageMemory.Length - 1);
+
+                AOEDamageMemory[0] = aoe;
+                SingleDamageMemory[0] = single;
+
                 if (single > 0)
-                {    //Shift array
-                     //{ 1, 2, 3, 4, 5 }
-                     //{ 0, 1, 2, 3, 4 }
-                    Array.Copy(AOEDamageMemory, 0, AOEDamageMemory, 1, AOEDamageMemory.Length - 1);
-                    Array.Copy(SingleDamageMemory, 0, SingleDamageMemory, 1, SingleDamageMemory.Length - 1);
-
-                    AOEDamageMemory[0] = aoe;
-                    SingleDamageMemory[0] = single;
-
+                { 
                     CurrentDmgAoe = aoe;
                     CurrentDmgSingle = single;
                     CurrentDpsAoe = AOEDamageMemory.Sum();
