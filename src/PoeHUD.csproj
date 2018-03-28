@@ -229,6 +229,7 @@
     <Compile Include="Hud\Settings\HotkeyNode.cs" />
     <Compile Include="Hud\Settings\ListNode.cs" />
     <Compile Include="Hud\Settings\StashTabNode.cs" />
+    <Compile Include="Hud\Settings\TextNode.cs" />
     <Compile Include="Hud\SizedPlugin.cs" />
     <Compile Include="Hud\SizedPluginWithMapIcons.cs" />
     <Compile Include="Controllers\StashTabController.cs" />

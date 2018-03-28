@@ -56,8 +56,8 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
 
     public class SameLineSettingDrawer : BaseSettingsDrawer
     {
-        [Obsolete()]
         public SameLineSettingDrawer() { }
+        [Obsolete("Use constructor without parameters")]
         public SameLineSettingDrawer(string settingName, int settingId) : base(settingName, settingId) { }
         public override void Draw() => ImGui.SameLine();
     }
@@ -106,14 +106,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
 
         public override void Draw()
         {
-            var oldValue = ImGuiExtension.Checkbox(ImguiUniqLabel, Toggle.Value);
-
-            if (Toggle.Value != oldValue)
-            {
-                Toggle.Value = oldValue;
-                try { Toggle.OnValueChanged?.Invoke(); }
-                catch (Exception ex) { DebugPlug.DebugPlugin.LogMsg("Error while invoking OnValueChanged in ToggleNode", 5); }
-            }
+            Toggle.Value = ImGuiExtension.Checkbox(ImguiUniqLabel, Toggle.Value);
         }
     }
 
@@ -172,6 +165,27 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         }
     }
 
+    public class FloatSettingsDrawer : BaseSettingsDrawer
+    {
+        public RangeNode<float> IntegerNode;
+        public FloatSettingsDrawer(RangeNode<float> node, string settingName, int settingId) : base(settingName, settingId) => IntegerNode = node;
+        public override void Draw()
+        {
+            IntegerNode.Value = ImGuiExtension.FloatSlider(ImguiUniqLabel, IntegerNode.Value, IntegerNode.Min, IntegerNode.Max);
+        }
+    }
+
+    public class TextSettingDrawer : BaseSettingsDrawer
+    {
+        public TextNode Toggle;
+        public TextSettingDrawer(TextNode toggle, string settingName, int settingId) : base(settingName, settingId) => Toggle = toggle;
+
+        public override void Draw()
+        {
+            Toggle.Value = ImGuiExtension.InputText(ImguiUniqLabel, Toggle.Value, 500, InputTextFlags.Default);
+        }
+    }
+
     public class StashTabNodeSettingDrawer : BaseSettingsDrawer
     {
         public StashTabNode StashNode;
@@ -183,7 +197,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         {
             var selectedIndex = StashNode.Exist ? StashNode.VisibleIndex : -1;
 
-            if(ImGui.Button($"x##{SettingName}{SettingId}ClearButton"))
+            if (ImGui.Button($"x##{SettingName}{SettingId}ClearButton"))
             {
                 StashNode.Name = StashTabNode.EMPTYNAME;
                 StashNode.VisibleIndex = -1;
@@ -192,7 +206,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
             }
             ImGui.SameLine();
 
-            if(MainMenuWindow.Settings.DeveloperMode.Value)
+            if (MainMenuWindow.Settings.DeveloperMode.Value)
             {
                 ImGuiExtension.Label($"Ex:{StashNode.Exist}, Ind:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name}");
                 ImGui.SameLine();
@@ -220,13 +234,13 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
             CurrentFolder = Path.Combine(documentsPath, @"My Games\Path of Exile");
             SelectedFile = FNode.Value;
         }
-        
+
         public override void Draw()
         {
-            if(ImGui.TreeNode(ImguiUniqLabel))
+            if (ImGui.TreeNode(ImguiUniqLabel))
             {
                 var selected = FNode.Value;
-                if(DrawFolder(ref selected))
+                if (DrawFolder(ref selected))
                 {
                     FNode.Value = selected;
                 }
@@ -254,7 +268,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
                         ImGui.PopStyleColor();
                     }
 
-                    foreach(var dict in di.GetDirectories())
+                    foreach (var dict in di.GetDirectories())
                     {
                         ImGui.PushStyleColor(ColorTarget.Text, new System.Numerics.Vector4(1, 1, 0, 1));
                         if (ImGui.Selectable(dict.Name + "/", false, SelectableFlags.DontClosePopups))
