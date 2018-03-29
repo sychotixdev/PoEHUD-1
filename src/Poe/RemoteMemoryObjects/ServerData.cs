@@ -12,9 +12,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ServerData : RemoteMemoryObject
     {
-
-
-        [Obsolete("Obsolete. Use StashTabs instead")]
+        //[Obsolete("Obsolete. Use StashTabs instead")]
         public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C0, 0xA0, 0x78)) : null;
 
         public ushort GlobalChatChannel => M.ReadUShort(Address + 0x4d48);
@@ -35,7 +33,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int SpentAscendencyPoints => M.ReadInt(Address + 0x47a0);
         public string League => GetObject<NativeStringReader>(Address + 0x47e0).Value;
         public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x49a0);
-        public bool IsInGame => NetworkState == NetworkStateE.Connected;
+        public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
         public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x47c8);
         public int Latency => M.ReadInt(Address + 0x4848);
         public List<ushort> SkillBarIds

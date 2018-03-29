@@ -39,7 +39,6 @@ namespace PoeHUD.Controllers
         //so we skipping them when reading in ServerData.PlayerStashTabs
         private void CheckCacheStashTabs()
         {
-            DebugPlug.DebugPlugin.LogMsg($"CheckCacheStashTabs", 3);
             //Fixed a bug when server stash tabs change their position on area change
             CacheStashTabs(GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs);
 
@@ -129,7 +128,7 @@ namespace PoeHUD.Controllers
             if (!GameController.Instance.Area.CurrentArea.IsHideout && !GameController.Instance.Area.CurrentArea.IsTown)
                 return;
 
-            if (!GameController.Instance.Game.IngameState.IngameUi.OpenLeftPanel.IsVisible)
+            if (!GameController.Instance.Game.IngameState.IngameUi.InventoryPanel.IsVisible)
                 return;
 
             if(!StashTabsIsInitialized)

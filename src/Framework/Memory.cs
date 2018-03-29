@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PoeHUD.Controllers;
 using System.Runtime.InteropServices;
+using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Framework
 {
@@ -157,6 +158,8 @@ namespace PoeHUD.Framework
             return num > 0 ? text.Substring(0, num) : text;
         }
 
+        public string ReadNativeString(long addr) => NativeStringReader.ReadString(addr);
+
         /// <summary>
         /// Read string as Unicode
         /// </summary>
@@ -233,11 +236,23 @@ namespace PoeHUD.Framework
             return result;
         }
 
-        public List<T> ReadClassesArray<T>(long startAddress, long endAddress, int structSize) where T : RemoteMemoryObject, new()
+        public List<T> ReadDoublePtrVectorClasses<T>(long address, bool noNullPointers = false) where T : RemoteMemoryObject, new()
         {
+            var start = ReadLong(address);
+            //var end = ReadLong(address + 0x8);
+            var last = ReadLong(address + 0x10);
+
+            var length = (int)(last - start);
+            var bytes = ReadBytes(start, length);
+
             var result = new List<T>();
-            for (var address = startAddress; address < endAddress; address += structSize)
-                result.Add(GameController.Instance.Game.ReadObject<T>(address));
+            for (int readOffset = 0; readOffset < length; readOffset += 16)
+            {
+                var pointer = BitConverter.ToInt64(bytes, readOffset);
+                if (pointer == 0 && noNullPointers)
+                    continue;
+                result.Add(GameController.Instance.Game.GetObject<T>(pointer));
+            }
             return result;
         }
 
