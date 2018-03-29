@@ -104,6 +104,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var lastAddr = M.ReadLong(Address + offsetEnd);
 
             var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize);
+
+            //Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
             tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
             return tabs;
         }

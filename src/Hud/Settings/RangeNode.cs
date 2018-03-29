@@ -37,9 +37,8 @@ namespace PoeHUD.Hud.Settings
                 }
             }
         }
-
-        [JsonIgnore]
-        public Action OnValueChanged = delegate { };
+        
+        public event Action OnValueChanged = delegate { };
 
         [JsonIgnore]
         public T Min { get; set; }
