@@ -131,7 +131,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         public ComboBoxSettingDrawer(ListNode list, string settingName, int settingId) : base(settingName, settingId) => List = list;
         public override void Draw()
         {
-            List.Value = ImGuiExtension.ComboBox(ImguiUniqLabel, List.Value, List.Values);
+            List.Value = ImGuiExtension.ComboBox(ImguiUniqLabel, SettingName, List.Value, List.Values);
         }
     }
 

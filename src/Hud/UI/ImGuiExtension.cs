@@ -226,9 +226,9 @@ namespace PoeHUD.Hud.UI
             return currentSelectedItem;
         }
 
-        public static string ComboBox(string sideLabel, string currentSelectedItem, List<string> objectList, ComboFlags comboFlags = ComboFlags.HeightRegular)
+        public static string ComboBox(string sideLabel, string previewString, string currentSelectedItem, List<string> objectList, ComboFlags comboFlags = ComboFlags.HeightRegular)
         {
-            if (ImGui.BeginCombo(sideLabel, currentSelectedItem, comboFlags))
+            if (ImGui.BeginCombo(sideLabel, currentSelectedItem == null? previewString : currentSelectedItem, comboFlags))
             {
                 var refObject = currentSelectedItem;
                 for (var n = 0; n < objectList.Count; n++)
@@ -249,9 +249,9 @@ namespace PoeHUD.Hud.UI
             return currentSelectedItem;
         }
 
-        public static string ComboBox(string sideLabel, string currentSelectedItem, List<string> objectList, out bool didChange, ComboFlags comboFlags = ComboFlags.HeightRegular)
+        public static string ComboBox(string sideLabel, string previewString, string currentSelectedItem, List<string> objectList, out bool didChange, ComboFlags comboFlags = ComboFlags.HeightRegular)
         {
-            if (ImGui.BeginCombo(sideLabel, currentSelectedItem, comboFlags))
+            if (ImGui.BeginCombo(sideLabel, currentSelectedItem == null? previewString : currentSelectedItem, comboFlags))
             {
                 var refObject = currentSelectedItem;
                 for (var n = 0; n < objectList.Count; n++)
