@@ -88,10 +88,11 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 {
                     Graphics.DrawText(tier, 18, tooltipRect.TopLeft.Translate(0 + 14 * t1++, 56), Settings.ItemMods.T1Color);
                 }
+
                 int t2 = 0;
                 foreach (string tier in from item in mods where item.CouldHaveTiers() && item.Tier == 2 select " \u2605 ")
                 {
-                    Graphics.DrawText(tier, 12, tooltipRect.TopLeft.Translate(t1 * 14 + 12 * t2++, 56), Settings.ItemMods.T1Color);
+                    Graphics.DrawText(tier, 18, tooltipRect.TopLeft.Translate(t1 * 14 + 14 * t2++, 56), Settings.ItemMods.T2Color);
                 }
 
                 if (Settings.ItemLevel.Enable)
