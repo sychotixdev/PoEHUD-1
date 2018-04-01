@@ -34,7 +34,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public string League => GetObject<NativeStringReader>(Address + 0x47e0).Value;
         public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x49a0);
         public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
-        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x47c8);
+        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x4850);
         public int Latency => M.ReadInt(Address + 0x4848);
         public List<ushort> SkillBarIds
         {
