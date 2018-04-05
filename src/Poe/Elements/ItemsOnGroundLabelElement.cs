@@ -8,8 +8,9 @@ namespace PoeHUD.Poe.Elements
 		public Element Label => ReadObject<Element>(Address + 0x8);
 		public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
 
-		private const int ChildStartOffset = 0x254;
-		private const int ChildEndOffset = 0x258;
+        private const int ChildCount = 0x250;
+        private const int ChildStartOffset = 0x254;
+        private const int ChildEndOffset = 0x258;
 
 		private readonly Lazy<int> labelInfo;
 
@@ -45,11 +46,13 @@ namespace PoeHUD.Poe.Elements
 		// iterate through child entities
 		get
 			{
-                int address = M.ReadInt(M.ReadInt(Address + OffsetBuffers + ChildStartOffset));
+                int count = M.ReadInt(Address + OffsetBuffers + ChildCount);
+                int address = M.ReadInt(Address + OffsetBuffers + ChildStartOffset);
 
-                for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
+                for (int x = 0; x < ChildCount; x++)
                 {
-                    yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
+                    address = M.ReadInt(address);
+                    yield return GetObject<ItemsOnGroundLabelElement>(address);
                 }
             }
         }
