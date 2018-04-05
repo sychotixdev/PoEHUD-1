@@ -5,10 +5,11 @@ namespace PoeHUD.Poe.Elements
 {
     public class ItemsOnGroundLabelElement : Element
     {
+		public Element Label => ReadObject<Element>(Address + 0x8);
+		public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
+
 		private const int ChildStartOffset = 0x254;
 		private const int ChildEndOffset = 0x258;
-		public Entity ItemOnGround => ReadObject<Entity>(Address + 0xC);
-		public Element Label => ReadObject<Element>(Address + 0x8);
 
 		private readonly Lazy<int> labelInfo;
 

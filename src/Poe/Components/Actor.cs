@@ -4,12 +4,16 @@ namespace PoeHUD.Poe.Components
 {
     public class Actor : Component
     {
-        /// <summary>
-        ///     Standing still = 2048 =bit 11 set
-        ///     running = 2178 = bit 11 & 7
-        ///     Maybe Bit-field : Bit 7 set = running
-        /// </summary>
-        public int ActionId => Address != 0 ? M.ReadInt(Address + 0x7C) : 1;
+		const int ACTION_ID_OFFSET = 0x7C;
+		const int MINION_LIST_START_OFFSET = 0x270;
+		const int MINION_LIST_END_OFFSET = 0x274;
+
+		/// <summary>
+		///     Standing still = 2048 =bit 11 set
+		///     running = 2178 = bit 11 & 7
+		///     Maybe Bit-field : Bit 7 set = running
+		/// </summary>
+		public int ActionId => Address != 0 ? M.ReadInt(Address + ACTION_ID_OFFSET) : 1;
 
         public bool isMoving => (ActionId & 128) > 0;
 
@@ -22,8 +26,8 @@ namespace PoeHUD.Poe.Components
                 {
                     return list;
                 }
-                int num = M.ReadInt(Address + 0x270);
-                int num2 = M.ReadInt(Address + 0x274);
+                int num = M.ReadInt(Address + MINION_LIST_START_OFFSET);
+                int num2 = M.ReadInt(Address + MINION_LIST_END_OFFSET);
                 for (int i = num; i < num2; i += 8)
                 {
                     int item = M.ReadInt(i);
@@ -39,8 +43,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            int num = M.ReadInt(Address + 0x270);
-            int num2 = M.ReadInt(Address + 0x274);
+            int num = M.ReadInt(Address + MINION_LIST_START_OFFSET);
+            int num2 = M.ReadInt(Address + MINION_LIST_END_OFFSET);
             for (int i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);
