@@ -45,19 +45,18 @@ namespace PoeHUD.Poe.Elements
 		// iterate through child entities
 		get
 			{
-				int ChildStart = M.ReadInt(Address + OffsetBuffers + ChildStartOffset);
-				int ChildEnd = M.ReadInt(Address + OffsetBuffers + ChildEndOffset);
+                int address = M.ReadInt(M.ReadInt(Address + OffsetBuffers + ChildStartOffset));
 
-				for (int addr = ChildStart; addr < ChildEnd; addr += 4)
-				{
-					yield return GetObject<ItemsOnGroundLabelElement>(addr);
-				}
-			}
+                for (int nextAddress = M.ReadInt(address); nextAddress != address; nextAddress = M.ReadInt(nextAddress))
+                {
+                    yield return GetObject<ItemsOnGroundLabelElement>(nextAddress);
+                }
+            }
         }
 
         private int GetLabelInfo()
         {
-            return Label.Address != 0 ? M.ReadInt(Label.Address + OffsetBuffers + 0x454) : 0;
+            return Label.Address != 0 ? M.ReadInt(Label.Address + OffsetBuffers + 0x59C) : 0;
         }
     }
 }
