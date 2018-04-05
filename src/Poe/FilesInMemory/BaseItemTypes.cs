@@ -2,17 +2,18 @@ using PoeHUD.Framework;
 using PoeHUD.Models;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PoeHUD.Poe.FilesInMemory
 {
     public class BaseItemTypes : FileInMemory
     {
-        private readonly Dictionary<string, BaseItemType> contents = new Dictionary<string, BaseItemType>();
-        private readonly ItemClassesDisplay itemClassesDisplay;
+        public readonly Dictionary<string, BaseItemType> contents = new Dictionary<string, BaseItemType>();
+        private readonly ItemClasses itemClasses;
 
-        public BaseItemTypes(Memory m, int address, ItemClassesDisplay itemClassesDisplay) : base(m, address)
+        public BaseItemTypes(Memory m, int address, ItemClasses itemClasses) : base(m, address)
         {
-            this.itemClassesDisplay = itemClassesDisplay;
+            this.itemClasses = itemClasses;
             LoadItemTypes();
         }
 
@@ -37,10 +38,11 @@ namespace PoeHUD.Poe.FilesInMemory
                 string key = M.ReadStringU(M.ReadInt(i));
                 var baseItemType = new BaseItemType
                 {
-                    BaseName = M.ReadStringU(M.ReadInt(i + 0x14)),
                     ClassName = M.ReadStringU(M.ReadInt(i + 0x8, 0)),
-                    Width = M.ReadInt(i + 0xC),
-                    Height = M.ReadInt(i + 0x10),
+
+					Width = M.ReadInt(i + 0xC),
+					Height = M.ReadInt(i + 0x10),
+					BaseName = M.ReadStringU(M.ReadInt(i + 0x14)),
                     DropLevel = M.ReadInt(i + 0x1C)
                 };
                 if (!contents.ContainsKey(key))

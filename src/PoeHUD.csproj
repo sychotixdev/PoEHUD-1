@@ -181,6 +181,7 @@
     <Compile Include="Models\BaseItemType.cs" />
     <Compile Include="Models\ConfigLineBase.cs" />
     <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
+    <Compile Include="Models\ItemClass.cs" />
     <Compile Include="Models\MonsterConfigLine.cs" />
     <Compile Include="Hud\Trackers\MonsterTrackerSettings.cs" />
     <Compile Include="Hud\Trackers\PoiTrackerSettings.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Hud\Health\CreatureType.cs" />
     <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Models\AreaInstance.cs" />
+    <Compile Include="Poe\Components\Base.cs" />
     <Compile Include="Poe\Components\Flask.cs" />
     <Compile Include="Poe\Components\Inventories.cs" />
     <Compile Include="Poe\Components\Stack.cs" />
@@ -217,7 +219,7 @@
     <Compile Include="Poe\Elements\ItemOnGroundTooltip.cs" />
     <Compile Include="Poe\Elements\ItemsOnGroundLabelElement.cs" />
     <Compile Include="Poe\FileInMemory.cs" />
-    <Compile Include="Poe\FilesInMemory\ItemClassesDisplay.cs" />
+    <Compile Include="Poe\FilesInMemory\ItemClasses.cs" />
     <Compile Include="Poe\FilesInMemory\StatsDat.cs" />
     <Compile Include="Poe\FilesInMemory\ModsDat.cs" />
     <Compile Include="Framework\ColorUtils.cs" />
