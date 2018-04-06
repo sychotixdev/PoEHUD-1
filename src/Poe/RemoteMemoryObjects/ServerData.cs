@@ -101,7 +101,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var firstAddr = M.ReadLong(Address + offsetBegin);
             var lastAddr = M.ReadLong(Address + offsetEnd);
 
-            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize);
+            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 100);
 
             //Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
             tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
@@ -115,7 +115,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var firstAddr = M.ReadLong(Address + 0x4BA8);
                 var lastAddr = M.ReadLong(Address + 0x4BB0);
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
             }
         }
         public List<InventoryHolder> NPCInventories
@@ -128,7 +128,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 if (firstAddr == 0)
                     return new List<InventoryHolder>();
 
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
             }
         }
 
@@ -138,7 +138,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var firstAddr = M.ReadLong(Address + 0x4CF8);
                 var lastAddr = M.ReadLong(Address + 0x4D00);
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize);
+                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
             }
         }
 

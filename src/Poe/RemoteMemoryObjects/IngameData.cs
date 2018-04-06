@@ -53,7 +53,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var statPtrStart = M.ReadLong(Address + 0x318);
                 var statPtrEnd = M.ReadLong(Address + 0x320);
 
-                return M.ReadStructsArray<PortalObject>(statPtrStart, statPtrEnd, PortalObject.StructSize);
+                return M.ReadStructsArray<PortalObject>(statPtrStart, statPtrEnd, PortalObject.StructSize, 20);
             }
         }
         public class PortalObject : RemoteMemoryObject

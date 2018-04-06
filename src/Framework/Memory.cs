@@ -228,9 +228,16 @@ namespace PoeHUD.Framework
         }
 
         //I hope in future all of this next shit will be replaced with GrayMagic:
-        public List<T> ReadStructsArray<T>(long startAddress, long endAddress, int structSize) where T : RemoteMemoryObject, new()
+        public List<T> ReadStructsArray<T>(long startAddress, long endAddress, int structSize, int maxCountLimit) where T : RemoteMemoryObject, new()
         {
             var result = new List<T>();
+            var range = endAddress - startAddress;
+            if (range < 0 || range / structSize > maxCountLimit)
+            {
+                DebugPlug.DebugPlugin.LogMsg($"Fixed possible memory leak while reading array of struct '{nameof(T)}'", 10, SharpDX.Color.Yellow);
+                return result;
+            }
+
             for (var address = startAddress; address < endAddress; address += structSize)
                 result.Add(GameController.Instance.Game.GetObject<T>(address));
             return result;
