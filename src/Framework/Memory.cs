@@ -234,7 +234,8 @@ namespace PoeHUD.Framework
             var range = endAddress - startAddress;
             if (range < 0 || range / structSize > maxCountLimit)
             {
-                DebugPlug.DebugPlugin.LogMsg($"Fixed possible memory leak while reading array of struct '{nameof(T)}'", 10, SharpDX.Color.Yellow);
+                if(PoeHUD.Hud.MainMenuWindow.Settings.DeveloperMode.Value)
+                    DebugPlug.DebugPlugin.LogMsg($"Fixed possible memory leak while reading array of struct '{typeof(T).Name}'", 1, SharpDX.Color.Yellow);
                 return result;
             }
 
