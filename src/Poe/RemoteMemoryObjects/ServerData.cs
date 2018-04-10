@@ -184,7 +184,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public List<WorldArea> CompletedAreas => GetAreas(0x4E90);
         public List<WorldArea> ShapedMaps => GetAreas(0x4ED0);
         public List<WorldArea> BonusCompletedAreas => GetAreas(0x4F10);
-        //public List<WorldArea> Unknown_Areas => GetAreas(0x4F50);
+        public List<WorldArea> ElderGuardiansAreas => GetAreas(0x4F50);
         public List<WorldArea> ShaperElderAreas => GetAreas(0x4F90);
 
         private List<WorldArea> GetAreas(int offset)
