@@ -15,6 +15,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         //[Obsolete("Obsolete. Use StashTabs instead")]
         public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C8, 0xA0, 0x78)) : null;
 
+        public ushort TradeChatChannel => M.ReadUShort(Address + 0x4DC8);
         public ushort GlobalChatChannel => M.ReadUShort(Address + 0x4DD0);
         public byte MonsterLevel => M.ReadByte(Address + 0x5924);
 
@@ -101,7 +102,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var firstAddr = M.ReadLong(Address + offsetBegin);
             var lastAddr = M.ReadLong(Address + offsetEnd);
 
-            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 100);
+            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 5000);
 
             //Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
             tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
