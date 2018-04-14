@@ -20,29 +20,6 @@ namespace PoeHUD.Poe.Components
         public bool isMoving => Action == ActionFlags.Moving;
         public bool isAttacking => Action == ActionFlags.UsingAbility;
 
-        [Obsolete("Use DeployedObjects instead")]
-        public List<int> Minions
-        {
-            get
-            {
-                var list = new List<int>();
-                if (Address == 0)
-                {
-                    return list;
-                }
-                long num = M.ReadLong(Address + 0x310);
-                long num2 = M.ReadLong(Address + 0x318);
-                for (long i = num; i < num2; i += 8)
-                {
-                    // using int instead of long because first 4 bytes are id
-                    // second 4 bytes are wierd number which depend on socket number/location.
-                    int item = M.ReadInt(i);
-                    list.Add(item);
-                }
-                return list;
-            }
-        }
-
         public bool HasMinion(Entity entity)
         {
             if (Address == 0)
@@ -68,6 +45,7 @@ namespace PoeHUD.Poe.Components
 
         public ActionWrapper CurrentAction => Action == ActionFlags.UsingAbility ? ReadObject<ActionWrapper>(Address + 0x60) : null;
 
+        // e.g minions, mines
         public List<DeployedObject> DeployedObjects
         {
             get

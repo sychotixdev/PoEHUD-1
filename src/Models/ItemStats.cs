@@ -73,11 +73,5 @@ namespace PoeHUD.Models
         {
             return stats[(int)stat];
         }
-
-        [Obsolete]
-        public ItemType GetSlot()
-        {
-            return ItemType.All;
-        }
     }
 }

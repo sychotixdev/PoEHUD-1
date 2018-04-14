@@ -142,42 +142,48 @@ namespace PoeHUD.Hud.PluginExtension
                 if (menuAttrib != null)
                 {
                     BaseSettingsDrawer drawer = null;
+                    int drawerId = menuAttrib.index == -1 ? GetUniqDrawerId() : menuAttrib.index;
+                    if (DrawersIds.Contains(drawerId))
+                    {
+                        BasePlugin.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. Fixed by giving a new uniq ID. Property " + property.Name, 5);
+                        drawer.SettingId = GetUniqDrawerId();
+                    }
                     var propType = property.PropertyType;
 
                     if (propType == typeof(ButtonNode) || propType.IsSubclassOf(typeof(ButtonNode)))
                     {
-                        drawer = new ButtonSettingDrawer(property.GetValue(Settings) as ButtonNode);
+                        drawer = new ButtonSettingDrawer(property.GetValue(Settings) as ButtonNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(EmptyNode) || propType.IsSubclassOf(typeof(EmptyNode)))
                     {
-                        drawer = new LabelSettingDrawer();
+                        drawer = new LabelSettingDrawer(menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(HotkeyNode) || propType.IsSubclassOf(typeof(HotkeyNode)))
                     {
-                        drawer = new HotkeySettingDrawer(property.GetValue(Settings) as HotkeyNode);
+                        drawer = new HotkeySettingDrawer(property.GetValue(Settings) as HotkeyNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(ToggleNode) || propType.IsSubclassOf(typeof(ToggleNode)))
                     {
-                        drawer = new CheckboxSettingDrawer(property.GetValue(Settings) as ToggleNode);
+                        drawer = new CheckboxSettingDrawer(property.GetValue(Settings) as ToggleNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(ColorNode) || propType.IsSubclassOf(typeof(ColorNode)))
                     {
-                        drawer = new ColorSettingDrawer(property.GetValue(Settings) as ColorNode);
+                        drawer = new ColorSettingDrawer(property.GetValue(Settings) as ColorNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(ListNode) || propType.IsSubclassOf(typeof(ListNode)))
                     {
-                        drawer = new ComboBoxSettingDrawer(property.GetValue(Settings) as ListNode);
+                        drawer = new ComboBoxSettingDrawer(property.GetValue(Settings) as ListNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
                     {
-                        drawer = new FilePickerDrawer(property.GetValue(Settings) as FileNode);
+                        drawer = new FilePickerDrawer(property.GetValue(Settings) as FileNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(StashTabNode) || propType.IsSubclassOf(typeof(StashTabNode)))
                     {
                         var stashNode = property.GetValue(Settings) as StashTabNode;
                         StashTabNodesToUnload.Add(stashNode);
                         StashTabController.RegisterStashNode(stashNode);
-                        drawer = new StashTabNodeSettingDrawer(stashNode);
+                        drawer = new StashTabNodeSettingDrawer(stashNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType.IsGenericType)
                     {
@@ -190,7 +196,7 @@ namespace PoeHUD.Hud.PluginExtension
                             if (genericParameter.Length > 0)
                             {
                                 var argType = genericParameter[0];
-                                var valueDrawer = new CustomSettingsDrawer();
+                                var valueDrawer = new CustomSettingsDrawer(menuAttrib.MenuName, drawerId);
 
                                 if (argType == typeof(int))
                                 {
@@ -275,21 +281,7 @@ namespace PoeHUD.Hud.PluginExtension
 
                     if (drawer != null)
                     {
-                        drawer.SettingName = menuAttrib.MenuName;
                         drawer.SettingTooltip = menuAttrib.Tooltip;
-
-                        if (menuAttrib.index == -1)
-                            drawer.SettingId = GetUniqDrawerId();
-                        else
-                        {
-                            drawer.SettingId = menuAttrib.index;
-
-                            if (DrawersIds.Contains(drawer.SettingId))
-                            {
-                                BasePlugin.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. Fixed by giving a new uniq ID. Property " + property.Name, 5);
-                                drawer.SettingId = GetUniqDrawerId();
-                            }
-                        }
 
                         if (menuAttrib.parentIndex != -1)
                         {
