@@ -15486,59 +15486,71 @@ namespace PoeHUD.Models.Enums
         MapNumGrandmasters = 7739,
         [Description("Map Grandmaster Seed")]
         MapGrandmasterSeed = 7740,
-        [Description("Minimum Fire Damage To Hits Against Blinded Enemies")]
-        MinimumFireDamageToHitsAgainstBlindedEnemies = 7741,
-        [Description("Maximum Fire Damage To Hits Against Blinded Enemies")]
-        MaximumFireDamageToHitsAgainstBlindedEnemies = 7742,
+        [Description("Minimum Added Fire Damage To Hits Vs Blinded Enemies")]
+        MinimumAddedFireDamageToHitsVsBlindedEnemies = 7741,
+        [Description("Maximum Added Fire Damage To Hits Vs Blinded Enemies")]
+        MaximumAddedFireDamageToHitsVsBlindedEnemies = 7742,
+        [Description("Main Hand Minimum Added Fire Damage To Hits Vs Blinded Enemies")]
+        MainHandMinimumAddedFireDamageToHitsVsBlindedEnemies = 7743,
+        [Description("Main Hand Maximum Added Fire Damage To Hits Vs Blinded Enemies")]
+        MainHandMaximumAddedFireDamageToHitsVsBlindedEnemies = 7744,
+        [Description("Off Hand Minimum Added Fire Damage To Hits Vs Blinded Enemies")]
+        OffHandMinimumAddedFireDamageToHitsVsBlindedEnemies = 7745,
+        [Description("Off Hand Maximum Added Fire Damage To Hits Vs Blinded Enemies")]
+        OffHandMaximumAddedFireDamageToHitsVsBlindedEnemies = 7746,
         [Description("Light Radius Increases Apply To Accuracy")]
-        LightRadiusIncreasesApplyToAccuracy = 7743,
+        LightRadiusIncreasesApplyToAccuracy = 7747,
         [Description("Endurance Charge On Melee Stun Damage +% Final Per Endurance Charge")]
-        EnduranceChargeOnMeleeStunDamagePosPctFinalPerEnduranceCharge = 7744,
+        EnduranceChargeOnMeleeStunDamagePosPctFinalPerEnduranceCharge = 7748,
         [Description("Tectonic Slam Chance To Not Consume Endurance Charge %")]
-        TectonicSlamChanceToNotConsumeEnduranceChargePct = 7745,
+        TectonicSlamChanceToNotConsumeEnduranceChargePct = 7749,
         [Description("% Number Of Raging Spirits Allowed")]
-        PctNumberOfRagingSpiritsAllowed = 7746,
+        PctNumberOfRagingSpiritsAllowed = 7750,
         [Description("Manifest Dancing Dervish Number Of Additional Copies")]
-        ManifestDancingDervishNumberOfAdditionalCopies = 7747,
+        ManifestDancingDervishNumberOfAdditionalCopies = 7751,
         [Description("Map Is Zana Map")]
-        MapIsZanaMap = 7748,
+        MapIsZanaMap = 7752,
         [Description("Map Num Zana Mods")]
-        MapNumZanaMods = 7749,
+        MapNumZanaMods = 7753,
         [Description("Local Display Trigger Level X Curse Nova On Hit While Cursed")]
-        LocalDisplayTriggerLevelXCurseNovaOnHitWhileCursed = 7750,
+        LocalDisplayTriggerLevelXCurseNovaOnHitWhileCursed = 7754,
         [Description("Cast On Hit If Cursed %")]
-        CastOnHitIfCursedPct = 7751,
+        CastOnHitIfCursedPct = 7755,
         [Description("Base Life Recovery Per Minute From Flask")]
-        BaseLifeRecoveryPerMinuteFromFlask = 7752,
+        BaseLifeRecoveryPerMinuteFromFlask = 7756,
         [Description("Base Mana Recovery Per Minute From Flask")]
-        BaseManaRecoveryPerMinuteFromFlask = 7753,
+        BaseManaRecoveryPerMinuteFromFlask = 7757,
         [Description("Tectonic Slam Damage +%")]
-        TectonicSlamDamagePosPct = 7754,
+        TectonicSlamDamagePosPct = 7758,
         [Description("Tectonic Slam Area Of Effect +%")]
-        TectonicSlamAreaOfEffectPosPct = 7755,
+        TectonicSlamAreaOfEffectPosPct = 7759,
         [Description("Spectral Shield Throw Damage +%")]
-        SpectralShieldThrowDamagePosPct = 7756,
+        SpectralShieldThrowDamagePosPct = 7760,
         [Description("Spectral Shield Throw Projectile Speed +%")]
-        SpectralShieldThrowProjectileSpeedPosPct = 7757,
+        SpectralShieldThrowProjectileSpeedPosPct = 7761,
         [Description("Spectral Shield Throw Num Of Additional Projectiles")]
-        SpectralShieldThrowNumOfAdditionalProjectiles = 7758,
+        SpectralShieldThrowNumOfAdditionalProjectiles = 7762,
         [Description("Cannot Take Reflected Elemental Damage")]
-        CannotTakeReflectedElementalDamage = 7759,
+        CannotTakeReflectedElementalDamage = 7763,
         [Description("Cannot Take Reflected Physical Damage")]
-        CannotTakeReflectedPhysicalDamage = 7760,
+        CannotTakeReflectedPhysicalDamage = 7764,
         [Description("Golem Damage +% Per Active Golem")]
-        GolemDamagePosPctPerActiveGolem = 7761,
+        GolemDamagePosPctPerActiveGolem = 7765,
         [Description("Tailwind Effect On Self +% For Each Skill Used Recently")]
-        TailwindEffectOnSelfPosPctForEachSkillUsedRecently = 7762,
+        TailwindEffectOnSelfPosPctForEachSkillUsedRecently = 7766,
         [Description("Virtual Spider Aspect Web Interval Ms")]
-        VirtualSpiderAspectWebIntervalMs = 7763,
+        VirtualSpiderAspectWebIntervalMs = 7767,
         [Description("Aspect Of The Spider Web Count +")]
-        AspectOfTheSpiderWebCountPos = 7764,
+        AspectOfTheSpiderWebCountPos = 7768,
         [Description("Crab Aspect Crab Barrier Max +")]
-        CrabAspectCrabBarrierMaxPos = 7765,
+        CrabAspectCrabBarrierMaxPos = 7769,
         [Description("Combined Skill Dot Fire Damage Over Time +% Final")]
-        CombinedSkillDotFireDamageOverTimePosPctFinal = 7766,
+        CombinedSkillDotFireDamageOverTimePosPctFinal = 7770,
         [Description("Virtual No Mana Cost")]
-        VirtualNoManaCost = 7767,
+        VirtualNoManaCost = 7771,
+        [Description("Life Loss % Per Minute")]
+        LifeLossPctPerMinute = 7772,
+        [Description("Spectating")]
+        Spectating = 7773,
     }
 }
