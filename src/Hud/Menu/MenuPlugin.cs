@@ -53,7 +53,12 @@ namespace PoeHUD.Hud.Menu
 
    
         public override void Render()
-        {
+        {            
+            if (Settings.ShowMenuButton)
+            {
+                Graphics.DrawImage("menu-background.png", MenuToggleButtonRect, new ColorBGRA(0, 0, 0, 230));
+                Graphics.DrawText("≡", 16, MenuToggleButtonRect.TopLeft + new Vector2(25, 12), new ColorBGRA(255, 0, 0, 255), FontDrawFlags.VerticalCenter | FontDrawFlags.Center);
+            }
             MenuWindow.Render();
         }
 
