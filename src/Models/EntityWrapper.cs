@@ -49,6 +49,7 @@ namespace PoeHUD.Models
         public long LongId { get; }
         public bool IsAlive => GetComponent<Life>().CurHP > 0;
         public int DistanceFromPlayer => GetDistanceFromPlayer();
+        public Positioned PositionedComp => internalEntity.PositionedComp;
 
         public Vector3 Pos
         {

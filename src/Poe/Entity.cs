@@ -1,6 +1,8 @@
 using System;
 using PoeHUD.Models.Interfaces;
 using System.Collections.Generic;
+using PoeHUD.Controllers;
+using PoeHUD.Poe.Components;
 
 namespace PoeHUD.Poe
 {
@@ -9,17 +11,23 @@ namespace PoeHUD.Poe
         private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30);
         private long ComponentList => M.ReadLong(Address + 0x8);
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
+
+        /// <summary>
+        /// 0x65004D = "Me"(4 bytes) from word Metadata
+        /// </summary>
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
         public long Id => (long)M.ReadInt(Address + 0x40) << 32 ^ Address;
         public int InventoryId => M.ReadInt(Address + 0x58);
 
-        /// <summary>
-        /// 0x65004D = "Me"(4 bytes) from word Metadata
-        /// </summary>
+        /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers
 
+        public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
 
-        public bool IsHostile => (M.ReadByte(M.ReadLong(Address + 0x50) + 0x130) & 1) == 0;
+        public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
+        //IsHostile should looks like this: 
+        //(GameController.Instance.Player.InternalEntity.PositionedComp.Reaction & 0x7f) != (PositionedComp.Reaction & 0x7f);
+        //We will hope that player's value will be always 1
 
         public bool HasComponent<T>() where T : Component, new()
         {
