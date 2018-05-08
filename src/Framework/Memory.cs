@@ -179,7 +179,39 @@ namespace PoeHUD.Framework
                 return String.Empty;
             }
             if (mem[0] == 0 && mem[1] == 0)
+            {
+                var checkByte = ReadByte(addr);
+                if(checkByte != 0)  
+                {
+                    //Reading an array of bytes gives us a 0 first byte and manual reading the first byte gives us not 0,
+                    //mean that this was a reading out of memory region, we will try to read with step of 10 bytes, 
+                    //but perfectly we should read with a step of 2 bytes
+
+                    const int step = 8;//should be 'even' number (2,4,6,8, etc) (or remove if (bytes[0] == 0) check) 
+                                       //because each second byte of string is 0
+                    string result = "";
+                
+                    for (int offset = 0; offset < length; offset += step)
+                    {
+                        var bytes = ReadMem(addr + offset, step);
+
+                        if (replaceNull && bytes[0] == 0)//I suppose here should/can be out of memory page. Or this also can be end of a string
+                            break;//we are not going to do RTrimNull here, because our string don't have end of string cymbol '\0' (zero byte) and here we have the end of string
+
+                        var partialString = Encoding.Unicode.GetString(bytes);
+                        result += partialString;
+                       
+                        if(replaceNull && partialString.Contains('\0'))
+                        {
+                            return RTrimNull(result);
+                        }
+                    }
+                    return result;
+                }
+
                 return string.Empty;
+            }
+
             string @string = Encoding.Unicode.GetString(mem);
             return replaceNull ? RTrimNull(@string) : @string;
         }
