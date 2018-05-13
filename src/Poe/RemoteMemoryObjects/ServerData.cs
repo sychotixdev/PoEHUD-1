@@ -33,6 +33,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public int TotalAscendencyPoints => M.ReadInt(Address + 0x4824);
         public int SpentAscendencyPoints => M.ReadInt(Address + 0x4828);
         public string League => GetObject<NativeStringReader>(Address + 0x4868).Value;
+        public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x4a08);
         public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x4a28);
         public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
         public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x4850);
@@ -216,6 +217,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Disconnected,
             Connecting,
             Connected
+        }
+
+        public enum PartyStatus
+        {
+            PartyLeader,
+            Invited,
+            PartyMember,
+            None,
         }
 
         public enum PartyAllocation : byte
