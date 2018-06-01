@@ -36,30 +36,6 @@ namespace PoeHUD.Controllers
         public QuestStates QuestStates => questStates != null ? questStates :
             questStates = new QuestStates(mem, FindFile("Data/QuestStates.dat"));
 
-        private BestiaryCapturableMonsters bestiaryCapturableMonsters;
-        public BestiaryCapturableMonsters BestiaryCapturableMonsters => bestiaryCapturableMonsters != null ? bestiaryCapturableMonsters :
-            bestiaryCapturableMonsters = new BestiaryCapturableMonsters(mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
-
-        private UniversalFileWrapper<BestiaryRecipe> bestiaryRecipes;
-        public UniversalFileWrapper<BestiaryRecipe> BestiaryRecipes => bestiaryRecipes != null ? bestiaryRecipes :
-            bestiaryRecipes = new UniversalFileWrapper<BestiaryRecipe>(mem, FindFile("Data/BestiaryRecipes.dat"));
-
-        private UniversalFileWrapper<BestiaryRecipeComponent> bestiaryRecipeComponents;
-        public UniversalFileWrapper<BestiaryRecipeComponent> BestiaryRecipeComponents => bestiaryRecipeComponents != null ? bestiaryRecipeComponents :
-            bestiaryRecipeComponents = new UniversalFileWrapper<BestiaryRecipeComponent>(mem, FindFile("Data/BestiaryRecipeComponent.dat"));
-
-        private UniversalFileWrapper<BestiaryGroup> bestiaryGroups;
-        public UniversalFileWrapper<BestiaryGroup> BestiaryGroups => bestiaryGroups != null ? bestiaryGroups :
-            bestiaryGroups = new UniversalFileWrapper<BestiaryGroup>(mem, FindFile("Data/BestiaryGroups.dat"));
-
-        private UniversalFileWrapper<BestiaryFamily> bestiaryFamilies;
-        public UniversalFileWrapper<BestiaryFamily> BestiaryFamilies => bestiaryFamilies != null ? bestiaryFamilies :
-            bestiaryFamilies = new UniversalFileWrapper<BestiaryFamily>(mem, FindFile("Data/BestiaryFamilies.dat"));
-
-        private UniversalFileWrapper<BestiaryGenus> bestiaryGenuses;
-        public UniversalFileWrapper<BestiaryGenus> BestiaryGenuses => bestiaryGenuses != null ? bestiaryGenuses :
-            bestiaryGenuses = new UniversalFileWrapper<BestiaryGenus>(mem, FindFile("Data/BestiaryGenus.dat"));
-
         private MonsterVarieties monsterVarieties;
         public MonsterVarieties MonsterVarieties => monsterVarieties != null ? monsterVarieties :
             monsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat"));

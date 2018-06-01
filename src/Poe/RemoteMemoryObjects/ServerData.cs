@@ -204,13 +204,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
         #endregion
 
-
-        public int GetBeastCapturedAmount(BestiaryCapturableMonster monster)
-        {
-            return M.ReadInt(Address + 0x5120 + monster.Id * 4);
-        }
-
-
         public enum NetworkStateE : byte
         {
             None,
