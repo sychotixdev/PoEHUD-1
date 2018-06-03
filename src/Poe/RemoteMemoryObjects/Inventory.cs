@@ -86,7 +86,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                         {
                             var normalItem = item.AsObject<NormalInventoryItem>();
                             if (normalItem.InventPosX > 11 || normalItem.InventPosY > 4) continue;//Sometimes it gives big wrong values. Fix from macaddict (#plugin-help)
-                            list.Add(normalItem);
+                            if(normalItem.ChildCount > 0)//Can cause problems but filter out first incorrect item
+                                list.Add(normalItem);
                         }
                         break;
                     case InventoryType.NormalStash:
