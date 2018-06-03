@@ -84,15 +84,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     case InventoryType.PlayerInventory:
                         foreach (var item in InvRoot.Children)
                         {
+                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
                             var normalItem = item.AsObject<NormalInventoryItem>();
                             if (normalItem.InventPosX > 11 || normalItem.InventPosY > 4) continue;//Sometimes it gives big wrong values. Fix from macaddict (#plugin-help)
-                            if(normalItem.ChildCount > 0)//Can cause problems but filter out first incorrect item
-                                list.Add(normalItem);
+                            list.Add(normalItem);
                         }
                         break;
                     case InventoryType.NormalStash:
                         foreach (var item in InvRoot.Children)
                         {
+                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
                             var normalItem = item.AsObject<NormalInventoryItem>();
                             if (normalItem.InventPosX > 11 || normalItem.InventPosY > 11) continue;
                             list.Add(normalItem);
@@ -101,13 +102,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     case InventoryType.QuadStash:
                         foreach (var item in InvRoot.Children)
                         {
+                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
                             var normalItem = item.AsObject<NormalInventoryItem>();
                             if (normalItem.InventPosX > 23 || normalItem.InventPosY > 23) continue;
                             list.Add(normalItem);
                         }
                         break;
 
-                        //For 3.3 child count is 3, not 2 as earlier, so we using the second one
+                    //For 3.3 child count is 3, not 2 as earlier, so we using the second one
                     case InventoryType.CurrencyStash:
                         foreach (var item in InvRoot.Children)
                         {

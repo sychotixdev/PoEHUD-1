@@ -17,19 +17,21 @@ namespace PoeHUD.Poe.FilesInMemory
 
         public BaseItemType Translate(string metadata)
         {
-            //if (string.IsNullOrEmpty(metadata))//this shit shows all the time....
+            if (string.IsNullOrEmpty(metadata))
+                return null;
             //    throw new Exception("Item metadata is null or empty. Try restart the game to fix this error. \"BaseItemType.Translate(metadata)\"");
 
-            if (!contents.ContainsKey(metadata))
+            if (contents.Count == 0)
             {
                 LoadItemTypes();
             }
-            if (!contents.ContainsKey(metadata))
+
+            if (!contents.TryGetValue(metadata, out var type))
             {
                 Console.WriteLine("Key not found in BaseItemTypes: " + metadata);
                 return null;
             }
-            return contents[metadata];
+            return type;
         }
 
         private void LoadItemTypes()
