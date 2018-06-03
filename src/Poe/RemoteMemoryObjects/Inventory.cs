@@ -78,35 +78,54 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     return null;
 
                 var list = new List<NormalInventoryItem>();
+
                 switch (InvType)
                 {
                     case InventoryType.PlayerInventory:
+                        foreach (var item in InvRoot.Children)
+                        {
+                            var normalItem = item.AsObject<NormalInventoryItem>();
+                            if (normalItem.InventPosX > 11 || normalItem.InventPosY > 4) continue;//Sometimes it gives big wrong values. Fix from macaddict (#plugin-help)
+                            list.Add(normalItem);
+                        }
+                        break;
                     case InventoryType.NormalStash:
+                        foreach (var item in InvRoot.Children)
+                        {
+                            var normalItem = item.AsObject<NormalInventoryItem>();
+                            if (normalItem.InventPosX > 11 || normalItem.InventPosY > 11) continue;
+                            list.Add(normalItem);
+                        }
+                        break;
                     case InventoryType.QuadStash:
                         foreach (var item in InvRoot.Children)
                         {
-                            list.Add(item.AsObject<NormalInventoryItem>());
+                            var normalItem = item.AsObject<NormalInventoryItem>();
+                            if (normalItem.InventPosX > 23 || normalItem.InventPosY > 23) continue;
+                            list.Add(normalItem);
                         }
                         break;
+
+                        //For 3.3 child count is 3, not 2 as earlier, so we using the second one
                     case InventoryType.CurrencyStash:
                         foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 0)
-                                list.Add(item.Children[0].AsObject<CurrencyInventoryItem>());
+                            if (item.ChildCount > 1)
+                                list.Add(item.Children[1].AsObject<CurrencyInventoryItem>());
                         }
                         break;
                     case InventoryType.EssenceStash:
                         foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 0)
-                                list.Add(item.Children[0].AsObject<EssenceInventoryItem>());
+                            if (item.ChildCount > 1)
+                                list.Add(item.Children[1].AsObject<EssenceInventoryItem>());
                         }
                         break;
                     case InventoryType.FragmentStash:
                         foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 0)
-                                list.Add(item.Children[0].AsObject<FragmentInventoryItem>());
+                            if (item.ChildCount > 1)
+                                list.Add(item.Children[1].AsObject<FragmentInventoryItem>());
                         }
                         break;
                     case InventoryType.DivinationStash:
@@ -116,8 +135,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                             if (item.ChildCount < 2)
                                 return null;
 
-                            if (item.Children[1].ChildCount > 0)
-                                list.Add(item.Children[1].Children[0].AsObject<DivinationInventoryItem>());
+                            if (item.Children[1].ChildCount > 1)
+                                list.Add(item.Children[1].Children[1].AsObject<DivinationInventoryItem>());
                         }
                         break;
                     case InventoryType.MapStash:
@@ -133,6 +152,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                             foreach (var item in subInventories.Children)
                             {
+                                if (item.ChildCount == 0) continue; //3.3 fix
                                 list.Add(item.AsObject<NormalInventoryItem>());
                             }
                         }
