@@ -6,13 +6,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class IngameState : RemoteMemoryObject
 	{
-		private Cache _cache;
-		public IngameState()
-		{
-			_cache = GameController.Instance.Cache;
-		}
+        private Cache _cache => GameController.Instance.Cache;
 
-		public Camera Camera => _cache.Enable && _cache.Camera != null ? _cache.Camera :
+        public Camera Camera => _cache.Enable && _cache.Camera != null ? _cache.Camera :
 			_cache.Enable ? _cache.Camera = CameraReal : CameraReal;
 
 		private Camera CameraReal => GetObject<Camera>(Address + 0x17B4 + Offsets.IgsOffsetDelta);
