@@ -72,10 +72,13 @@ namespace PoeHUD.Poe.Components
                 var skillsEndPointer = M.ReadLong(Address + 0x2c8);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
 
+                int stuckCounter = 0;
                 var result = new List<ActorSkill>();
                 for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += 16)//16 because we are reading each second pointer (pointer vectors)
                 {
                     result.Add(ReadObject<ActorSkill>(addr));
+                    if (stuckCounter++ > 50)
+                        return new List<ActorSkill>();
                 }
                 return result;
             }

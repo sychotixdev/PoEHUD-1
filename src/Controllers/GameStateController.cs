@@ -52,6 +52,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public static List<GameState> CurrentGameStates => Instance.M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x8);
         public static List<GameState> ActiveGameStates => Instance.M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x20, true);
 
+        //For debug
+        public List<GameState> _CurrentGameStates => CurrentGameStates;
+        //For debug
+        public List<GameState> _ActiveGameStates => ActiveGameStates;
+
         public static bool IsPreGame => GameStateActive(PreGameStatePtr);
         public static bool IsLoginState => GameStateActive(LoginStatePtr);
         public static bool IsSelectCharacterState => GameStateActive(SelectCharacterStatePtr);
