@@ -56,6 +56,7 @@ namespace PoeHUD.Hud.Loot
 			var mods = entity.GetComponent<Mods>();
 			var isSkillHGem = entity.HasComponent<SkillGem>();
 			var isMap = entity.HasComponent<Map>();
+			var stackSize = entity.GetComponent<Stack>().Size;
 
 			var isShapedMap = false;
 			var isElderMap = false;
@@ -65,6 +66,12 @@ namespace PoeHUD.Hud.Loot
 						isElderMap = (mod.Value1 == 1);
 					else if (mod.Name == "MapShaped")
 						isShapedMap = (mod.Value1 == 1);
+
+			List<string> explicitMods = new List<string>();
+			foreach (var mod in mods.ItemMods)
+			{
+				explicitMods.Add(mod.Name);
+			}
 
 			var itemRarity = mods.ItemRarity;
 			var quality = 0;
@@ -112,6 +119,9 @@ namespace PoeHUD.Hud.Loot
 				var borderWidth = defaultBorderWidth;
 				var sound = -1;
 				var statements = block.statement();
+				var poeGemLevelCondition = true;
+				var poeStackSizeCondition = true;
+				var poeHasExplicitModCondition = true;
 
 				foreach (var statement in statements)
 				{
@@ -290,6 +300,24 @@ namespace PoeHUD.Hud.Loot
 																									{
 																										poeElderMapCondition &= isElderMap == Convert.ToBoolean(poeElderMapContext.Boolean().GetText());
 																									}
+																									else
+																									{
+																										var poeStackSizeContext = statement.poeStackSize();
+																										if (poeStackSizeContext != null)
+																										{
+																											poeStackSizeCondition &= CalculateDigitsCondition(poeStackSizeContext.compareOpNullable(),
+																												poeStackSizeContext.digitsParams(), stackSize);
+																										}
+																										else
+																										{
+																											var poeExplicitModContext = statement.poeHasExplicitMod();
+																											if (poeExplicitModContext != null)
+																											{
+																												poeHasExplicitModCondition &= poeExplicitModContext.@params()
+																													.strValue().Any(y => explicitMods.Contains(GetRawText(y)));
+																											}
+																										}
+																									}
 																								}
 																							}
 																						}
@@ -312,10 +340,11 @@ namespace PoeHUD.Hud.Loot
 					}
 				}
 
-				if (itemLevelCondition && dropLevelCondition && poeClassCondition && poeBaseTypeCondition &&
-					poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition &&
-					poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition && poeCorruptedCondition
-					&& poeElderCondition && poeShaperCondition && poeShapedMapCondition && poeElderMapCondition)
+				if (itemLevelCondition && dropLevelCondition && poeClassCondition && poeBaseTypeCondition
+					&& poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition
+					&& poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition
+					&& poeCorruptedCondition && poeElderCondition && poeShaperCondition && poeShapedMapCondition
+					&& poeElderMapCondition && poeStackSizeCondition && poeHasExplicitModCondition && poeGemLevelCondition)
 				{
 					if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
 						return null;

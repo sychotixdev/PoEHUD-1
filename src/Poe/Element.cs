@@ -38,7 +38,7 @@ namespace PoeHUD.Poe
             {
                 return list;
             }
-            for (int i = 0; i < ChildCount; i++)
+            for (int i = 1; i < ChildCount; i++)
             {
                 list.Add(GetObject<T>(M.ReadInt(Address + listOffset, i * 4)));
             }
@@ -75,9 +75,9 @@ namespace PoeHUD.Poe
         public RectangleF GetClientRect()
         {
             var vPos = GetParentPos();
-            float width = Game.IngameState.Camera.Width;
+			float width = Game.IngameState.Camera.Width;
             float height = Game.IngameState.Camera.Height;
-            float ratioFixMult = width / height / 1.6f;
+			float ratioFixMult = width / height / 1.6f;
             float xScale = width / 2560f / ratioFixMult;
             float yScale = height / 1600f;
 

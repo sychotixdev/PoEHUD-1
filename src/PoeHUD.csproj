@@ -99,8 +99,8 @@
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PoeFilterParser, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\PoeFilterParser.1.0.24\lib\net46\PoeFilterParser.dll</HintPath>
+    <Reference Include="PoeFilterParser, Version=1.0.26.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PoeFilterParser.1.0.26\lib\net46\PoeFilterParser.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX, Version=3.0.2.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>packages\SharpDX.3.0.2\lib\net45\SharpDX.dll</HintPath>
