@@ -51,8 +51,8 @@ namespace PoeHUD.Poe.Components
             get
             {
                 var result = new List<DeployedObject>();
-                var start = M.ReadLong(Address + 0x310);
-                var end = M.ReadLong(Address + 0x318);
+                var start = M.ReadLong(Address + 0x328);
+                var end = M.ReadLong(Address + 0x330);
 
                 for (var addr = start; addr < end; addr += 8)
                 {
