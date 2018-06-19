@@ -84,8 +84,27 @@ namespace PoeHUD.Poe.Components
             }
         }
 
+		public List<ActorVaalSkill> ActorVaalSkills
+		{
+			get
+			{
+				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
+				var skillsStartPointer = M.ReadLong(Address + 0x2F0);
+				var skillsEndPointer = M.ReadLong(Address + 0x2F8);
 
-        public class ActionWrapper : RemoteMemoryObject
+				int stuckCounter = 0;
+				var result = new List<ActorVaalSkill>();
+				for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += ACTOR_VAAL_SKILLS_SIZE)
+				{
+					result.Add(ReadObject<ActorVaalSkill>(addr));
+					if (stuckCounter++ > 50)
+						return new List<ActorVaalSkill>();
+				}
+				return result;
+			}
+		}
+
+		public class ActionWrapper : RemoteMemoryObject
         {
             public float DestinationX => M.ReadInt(Address + 0x38);
             public float DestinationY => M.ReadInt(Address + 0x3c);
