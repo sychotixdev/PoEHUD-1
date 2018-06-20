@@ -46,15 +46,15 @@ namespace PoeHUD.Poe.Components
         public ActionWrapper CurrentAction => Action == ActionFlags.UsingAbility ? ReadObject<ActionWrapper>(Address + 0x60) : null;
 
         // e.g minions, mines
+        private long DeployedObjectStart => M.ReadLong(Address + 0x328);
+        private long DeployedObjectEnd => M.ReadLong(Address + 0x330);
+        public long DeployedObjectsCount => (DeployedObjectEnd - DeployedObjectStart) / 8;
         public List<DeployedObject> DeployedObjects
         {
             get
             {
                 var result = new List<DeployedObject>();
-                var start = M.ReadLong(Address + 0x328);
-                var end = M.ReadLong(Address + 0x330);
-
-                for (var addr = start; addr < end; addr += 8)
+                for (var addr = DeployedObjectStart; addr < DeployedObjectEnd; addr += 8)
                 {
                     var objectId = M.ReadUInt(addr);
                     var objectKey = M.ReadUShort(addr + 4);//in list of entities
