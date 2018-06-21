@@ -117,11 +117,12 @@ namespace PoeHUD.Hud.Loot
                 const int BOTTOM_MARGIN = 2;
                 bool shouldUpdate = false;
 
+                var validAlerts = currentAlerts.ToList().AsParallel<KeyValuePair<EntityWrapper, AlertDrawStyle>>().Where(
+                    x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid);
+
                 if (Settings.BorderSettings.Enable)
                 {
-                    Dictionary<EntityWrapper, AlertDrawStyle> tempCopy = new Dictionary<EntityWrapper, AlertDrawStyle>(currentAlerts);
-                    var keyValuePairs = tempCopy.AsParallel().Where(x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid).ToList();
-                    foreach (var kv in keyValuePairs)
+                    foreach (var kv in validAlerts)
                     {
                         if (DrawBorder(kv.Key.Address) && !shouldUpdate)
                         {
@@ -129,46 +130,11 @@ namespace PoeHUD.Hud.Loot
                         }
                     }
                 }
-                var currentAlertsArray = currentAlerts.Where(x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid).ToArray();
-                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in currentAlertsArray)
-                {
-                    //
-                    //                       _oo0oo_
-                    //                      o8888888o
-                    //                      88" . "88
-                    //                      (| -_- |)
-                    //                      0\  =  /0
-                    //                    ___/`---'\___
-                    //                  .' \\|     |// '.
-                    //                 / \\|||  :  |||// \
-                    //                / _||||| -:- |||||- \
-                    //               |   | \\\  -  /// |   |
-                    //               | \_|  ''\---/''  |_/ |
-                    //               \  .-\__  '-'  ___/-. /
-                    //             ___'. .'  /--.--\  `. .'___
-                    //          ."" '<  `.___\_<|>_/___.' >' "".
-                    //         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-                    //         \  \ `_.   \_ __\ /__ _/   .-` /  /
-                    //     =====`-.____`.___ \_____/___.-`___.-'=====
-                    //                       `=---='
-                    //
-                    //
-                    //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                    //feature! until not be fixed offsets
-                    string text = "";
-                    if (true)
-                    {
-                        text = kv.Value.Text; 
-                    }
-                    else
-                    {
-                        text = GetItemName(kv);
-                    }
 
-                    if (text == null)
-                    {
+                foreach (KeyValuePair<EntityWrapper, AlertDrawStyle> kv in validAlerts)
+                {
+                    if (string.IsNullOrEmpty(kv.Value.Text))
                         continue;
-                    }
 
                     ItemsOnGroundLabelElement entityLabel;
                     if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
@@ -183,14 +149,14 @@ namespace PoeHUD.Hud.Loot
                             {
                                 if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
                                 {
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, kv.Value.Text);
                                 }
                             }
                             else
                             {
                                 if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
                                 {
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, text);
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, kv.Value.Text);
                                 }
                                 else
                                 {
@@ -214,10 +180,10 @@ namespace PoeHUD.Hud.Loot
                                     }
 
                                     // Complete new KeyValuePair with new stuff
-                                    AlertDrawStyle ModifiedDrawStyle = new AlertDrawStyle(text, TextColor, kv.Value.BorderWidth, BorderColor, BackgroundColor, kv.Value.IconIndex);
+                                    AlertDrawStyle ModifiedDrawStyle = new AlertDrawStyle(kv.Value.Text, TextColor, kv.Value.BorderWidth, BorderColor, BackgroundColor, kv.Value.IconIndex);
                                     KeyValuePair<EntityWrapper, AlertDrawStyle> NewKV = new KeyValuePair<EntityWrapper, AlertDrawStyle>(kv.Key, ModifiedDrawStyle);
 
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, NewKV, text);
+                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, NewKV, kv.Value.Text);
                                 }
                             }
                         }
