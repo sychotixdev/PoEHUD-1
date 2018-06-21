@@ -139,6 +139,7 @@ namespace PoeHUD.Hud.Loot
                     ItemsOnGroundLabelElement entityLabel;
                     if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
                     {
+                        DebugPlug.DebugPlugin.LogMsg("I need an update.render", 3);
                         shouldUpdate = true;
                     }
                     else
@@ -226,6 +227,7 @@ namespace PoeHUD.Hud.Loot
 
         protected override void OnEntityAdded(EntityWrapper entity)
         {
+            DebugPlug.DebugPlugin.LogMsg("I am new entity added", 2);
             if (Settings.Enable && entity != null && !GameController.Area.CurrentArea.IsTown
                 && !currentAlerts.ContainsKey(entity) && entity.HasComponent<WorldItem>())
             {
@@ -375,6 +377,7 @@ namespace PoeHUD.Hud.Loot
             }
             else
             {
+                DebugPlug.DebugPlugin.LogMsg("I need an update.draw border", 3);
                 shouldUpdate = true;
             }
             return shouldUpdate;
