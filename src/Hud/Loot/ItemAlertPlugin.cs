@@ -117,7 +117,7 @@ namespace PoeHUD.Hud.Loot
                 const int BOTTOM_MARGIN = 2;
                 bool shouldUpdate = false;
 
-                var validAlerts = currentAlerts.ToList().AsParallel<KeyValuePair<EntityWrapper, AlertDrawStyle>>().Where(
+                var validAlerts = currentAlerts.ToList().Where(
                     x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid);
 
                 if (Settings.BorderSettings.Enable)
