@@ -132,50 +132,41 @@ namespace PoeHUD.Hud.Loot
                     }
                     else
                     {
-                        if (Settings.BorderSettings.Enable && DrawBorder(kv.Key.Address) && !shouldUpdate)
-                            shouldUpdate = true;
+                        if (Settings.BorderSettings.Enable)
+                            DrawBorder(entityLabel);
+
                         if (Settings.ShowText)
                         {
-                            if (Settings.HideOthers)
+                            if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
                             {
-                                if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
-                                {
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, kv.Value.Text);
-                                }
+                                position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, kv.Value.Text);
                             }
-                            else
+                            else if (!Settings.HideOthers)
                             {
-                                if (entityLabel.CanPickUp || entityLabel.MaxTimeForPickUp.TotalSeconds == 0)
+                                // get current values
+                                Color TextColor = kv.Value.TextColor;
+                                Color BorderColor = kv.Value.BorderColor;
+                                Color BackgroundColor = kv.Value.BackgroundColor;
+
+                                if (Settings.DimOtherByPercentToggle)
                                 {
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, kv, kv.Value.Text);
+                                    // edit values to new ones
+                                    double ReduceByPercent = (double)Settings.DimOtherByPercent / 100;
+
+                                    TextColor = ReduceNumbers(TextColor, ReduceByPercent);
+                                    BorderColor = ReduceNumbers(BorderColor, ReduceByPercent);
+                                    BackgroundColor = ReduceNumbers(BackgroundColor, ReduceByPercent);
+
+                                    // backgrounds with low alpha start to look a little strange when dark so im adding an alpha threshold
+                                    if (BackgroundColor.A < 210)
+                                        BackgroundColor.A = 210;
                                 }
-                                else
-                                {
-                                    // get current values
-                                    Color TextColor = kv.Value.TextColor;
-                                    Color BorderColor = kv.Value.BorderColor;
-                                    Color BackgroundColor = kv.Value.BackgroundColor;
 
-                                    if (Settings.DimOtherByPercentToggle)
-                                    {
-                                        // edit values to new ones
-                                        double ReduceByPercent = (double)Settings.DimOtherByPercent / 100;
+                                // Complete new KeyValuePair with new stuff
+                                AlertDrawStyle ModifiedDrawStyle = new AlertDrawStyle(kv.Value.Text, TextColor, kv.Value.BorderWidth, BorderColor, BackgroundColor, kv.Value.IconIndex);
+                                KeyValuePair<EntityWrapper, AlertDrawStyle> NewKV = new KeyValuePair<EntityWrapper, AlertDrawStyle>(kv.Key, ModifiedDrawStyle);
 
-                                        TextColor = ReduceNumbers(TextColor, ReduceByPercent);
-                                        BorderColor = ReduceNumbers(BorderColor, ReduceByPercent);
-                                        BackgroundColor = ReduceNumbers(BackgroundColor, ReduceByPercent);
-
-                                        // backgrounds with low alpha start to look a little strange when dark so im adding an alpha threshold
-                                        if (BackgroundColor.A < 210)
-                                            BackgroundColor.A = 210;
-                                    }
-
-                                    // Complete new KeyValuePair with new stuff
-                                    AlertDrawStyle ModifiedDrawStyle = new AlertDrawStyle(kv.Value.Text, TextColor, kv.Value.BorderWidth, BorderColor, BackgroundColor, kv.Value.IconIndex);
-                                    KeyValuePair<EntityWrapper, AlertDrawStyle> NewKV = new KeyValuePair<EntityWrapper, AlertDrawStyle>(kv.Key, ModifiedDrawStyle);
-
-                                    position = DrawText(playerPos, position, BOTTOM_MARGIN, NewKV, kv.Value.Text);
-                                }
+                                position = DrawText(playerPos, position, BOTTOM_MARGIN, NewKV, kv.Value.Text);
                             }
                         }
                     }
@@ -334,41 +325,30 @@ namespace PoeHUD.Hud.Loot
             return hashSet;
         }
 
-        private bool DrawBorder(long entityAddress)
+        private void DrawBorder(ItemsOnGroundLabelElement entityLabel)
         {
             IngameUIElements ui = GameController.Game.IngameState.IngameUi;
-            ItemsOnGroundLabelElement entityLabel;
-            bool shouldUpdate = false;
-            if (currentLabels.TryGetValue(entityAddress, out entityLabel))
+            if (entityLabel.IsVisible)
             {
-                if (entityLabel.IsVisible)
-                {
-                    RectangleF rect = entityLabel.Label.GetClientRect();
-                    if ((ui.OpenLeftPanel.IsVisible && ui.OpenLeftPanel.GetClientRect().Intersects(rect)) ||
-                        (ui.OpenRightPanel.IsVisible && ui.OpenRightPanel.GetClientRect().Intersects(rect)))
-                    {
-                        return false;
-                    }
+                RectangleF rect = entityLabel.Label.GetClientRect();
+                if ((ui.OpenLeftPanel.IsVisible && ui.OpenLeftPanel.GetClientRect().Intersects(rect)) ||
+                    (ui.OpenRightPanel.IsVisible && ui.OpenRightPanel.GetClientRect().Intersects(rect)))
+                    return;
 
-                    ColorNode borderColor = Settings.BorderSettings.BorderColor;
-                    if (!entityLabel.CanPickUp)
+
+                ColorNode borderColor = Settings.BorderSettings.BorderColor;
+                if (!entityLabel.CanPickUp)
+                {
+                    borderColor = Settings.BorderSettings.NotMyItemBorderColor;
+                    TimeSpan timeLeft = entityLabel.TimeLeft;
+                    if (Settings.BorderSettings.ShowTimer && timeLeft.TotalMilliseconds > 0)
                     {
-                        borderColor = Settings.BorderSettings.NotMyItemBorderColor;
-                        TimeSpan timeLeft = entityLabel.TimeLeft;
-                        if (Settings.BorderSettings.ShowTimer && timeLeft.TotalMilliseconds > 0)
-                        {
-                            borderColor = Settings.BorderSettings.CantPickUpBorderColor;
-                            Graphics.DrawText(timeLeft.ToString(@"mm\:ss"), Settings.BorderSettings.TimerTextSize, rect.TopRight.Translate(4, 0));
-                        }
+                        borderColor = Settings.BorderSettings.CantPickUpBorderColor;
+                        Graphics.DrawText(timeLeft.ToString(@"mm\:ss"), Settings.BorderSettings.TimerTextSize, rect.TopRight.Translate(4, 0));
                     }
-                    Graphics.DrawFrame(rect, Settings.BorderSettings.BorderWidth, borderColor);
                 }
+                Graphics.DrawFrame(rect, Settings.BorderSettings.BorderWidth, borderColor);
             }
-            else
-            {
-                shouldUpdate = true;
-            }
-            return shouldUpdate;
         }
 
         private Vector2 DrawItem(AlertDrawStyle drawStyle, Vector2 delta, Vector2 position, Vector2 padding, string text)
