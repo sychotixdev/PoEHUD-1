@@ -69,13 +69,13 @@ namespace PoeHUD.Hud.Loot
                 }
                 else
                 {
-                    Settings.Alternative.Value = false;
+                    Settings.ShouldUseFilterFile.Value = false;
                 }
             }
             catch (SyntaxErrorException ex)
             {
                 Settings.FilePath.Value = string.Empty;
-                Settings.Alternative.Value = false;
+                Settings.ShouldUseFilterFile.Value = false;
                 MessageBox.Show($"Line: {ex.Line}:{ex.CharPositionInLine}, " +
                                 $"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 visitor = null;
@@ -83,7 +83,7 @@ namespace PoeHUD.Hud.Loot
             catch (Exception ex)
             {
                 Settings.FilePath.Value = string.Empty;
-                Settings.Alternative.Value = false;
+                Settings.ShouldUseFilterFile.Value = false;
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -214,7 +214,7 @@ namespace PoeHUD.Hud.Loot
 
                 IEntity item = entity.GetComponent<WorldItem>().ItemEntity;
 
-                if (Settings.Alternative && !string.IsNullOrEmpty(Settings.FilePath))
+                if (Settings.ShouldUseFilterFile && !string.IsNullOrEmpty(Settings.FilePath))
                 {
                     var result = visitor.Visit(item);
                     if (result != null)
@@ -234,7 +234,7 @@ namespace PoeHUD.Hud.Loot
                         AlertDrawStyle drawStyle = props.GetDrawStyle();
                         PrepareForDrawingAndPlaySound(entity, drawStyle);
                     }
-                    Settings.Alternative.Value = false;
+                    Settings.ShouldUseFilterFile.Value = false;
                 }
             }
         }
