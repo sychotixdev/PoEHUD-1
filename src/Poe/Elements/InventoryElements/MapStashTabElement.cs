@@ -6,9 +6,10 @@ namespace PoeHUD.Poe.Elements
     {
         public int Tier;
         public int Count;
+        public string MapName;
         public override string ToString()
         {
-            return "Tier:" + Tier + " Count:" + Count;
+            return "Tier:" + Tier + " Count:" + Count + " MapName:" + MapName;
         }
     }
 
@@ -50,6 +51,7 @@ namespace PoeHUD.Poe.Elements
                 subInventoryKey = new MapSubInventoryKey();
                 subInventoryInfo.Tier = SubInventoryMapTier(i);
                 subInventoryInfo.Count = SubInventoryMapCount(i);
+                subInventoryInfo.MapName = SubInventoryMapName(i);
                 if (subInventoryInfo.Count == 0)
                     continue;
                 subInventoryKey.Path = SubInventoryMapPath(i);
@@ -74,6 +76,10 @@ namespace PoeHUD.Poe.Elements
         private string SubInventoryMapPath(int index)
         {
             return M.ReadStringU(M.ReadLong(mapListStartPtr + (index * 0x10), 0x28, 0x00));
+        }
+        private string SubInventoryMapName(int index)
+        {
+            return M.ReadStringU(M.ReadLong(mapListStartPtr + (index * 0x10), 0x28, 0x20));
         }
     }
 }
