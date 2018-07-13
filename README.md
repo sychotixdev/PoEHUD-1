@@ -4,7 +4,7 @@ PoeHud
 CURRENTLY DETECTED - USE AT YOUR OWN RISK
 =========================================
 
-Warning are currently going out for HUD users. Using this can and likely will get you banned.
+Warnings are currently going out for HUD users. Using this can and likely will get you banned.
 
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
