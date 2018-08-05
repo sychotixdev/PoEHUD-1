@@ -70,14 +70,11 @@ namespace PoeHUD.Poe
 		//     48 83 EC 58 4C 8B C1 41 B9 01 00 00 00 48 8B 49 10
 
 		private static readonly Pattern areaChangePattern = new Pattern(new byte[]
-        {
-             0x48, 0x83, 0xEC, 0x58,
-             0x4C, 0x8B, 0xC1,
-             0x41, 0xB9, 0x01, 0x00, 0x00, 0x00,
-             0x48, 0x8B, 0x49, 0x10
-        }, "xxxxxxxxxxxxxxxxx");
-
-        /*
+		{
+			0x41, 0x8B, 0xC2, 0xF0, 0x41, 0x0F, 0xC1, 0x40, 0x54, 0x8B, 0x05
+		}, "xxxxxxxxxxx");
+		
+		/*
         PathOfExile_x64.exe+853E28 - 48 89 05 E9ABC400     - mov [PathOfExile_x64.exe+149EA18],rax { [00000000] }
         PathOfExile_x64.exe+853E2F - 48 8B 44 24 40        - mov rax,[rsp+40]
         PathOfExile_x64.exe+853E34 - 48 89 06              - mov [rsi],rax
@@ -87,7 +84,7 @@ namespace PoeHUD.Poe
         PathOfExile_x64.exe+853E3F - C3                    - ret 
         */
 
-        private static readonly Pattern isLoadingScreenPattern = new Pattern(new byte[]
+		private static readonly Pattern isLoadingScreenPattern = new Pattern(new byte[]
         {
             0x48, 0x89, 0x05, 0x00, 0x00, 0x00, 0x00,
             0x48, 0x8B, 0x00, 0x00, 0x00,
@@ -134,8 +131,8 @@ namespace PoeHUD.Poe
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
 
-            AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0x25) + array[2] + 0x29;
-            System.Console.WriteLine("AreaChangeCount: " + m.ReadInt(AreaChangeCount + m.AddressOfProcess).ToString());
+			AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xB) + array[2] + 0xF;
+			System.Console.WriteLine("AreaChangeCount: " + m.ReadInt(AreaChangeCount + m.AddressOfProcess).ToString());
 
             isLoadingScreenOffset = m.ReadInt(m.AddressOfProcess + array[3] + 0x03) + array[3] + 0x07;
             System.Console.WriteLine("Is Loading Screen Offset:" + (isLoadingScreenOffset + m.AddressOfProcess).ToString("x8"));
