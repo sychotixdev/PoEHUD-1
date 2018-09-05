@@ -183,11 +183,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         #endregion
         #endregion
         #region Completed Areas
-        public List<WorldArea> CompletedAreas => GetAreas(0x5638);
-        public List<WorldArea> ShapedMaps => GetAreas(0x5678);
-        public List<WorldArea> BonusCompletedAreas => GetAreas(0x56B8);
-        public List<WorldArea> ElderGuardiansAreas => GetAreas(0x56F8);
-        public List<WorldArea> ShaperElderAreas => GetAreas(0x5738);
+        public List<WorldArea> CompletedAreas => GetAreas(0x5638 + 0x28);
+        public List<WorldArea> ShapedMaps => GetAreas(0x5678 + 0x28);
+        public List<WorldArea> BonusCompletedAreas => GetAreas(0x56B8 + 0x28);
+        public List<WorldArea> ElderGuardiansAreas => GetAreas(0x56F8 + 0x28);
+        public List<WorldArea> ShaperElderAreas => GetAreas(0x5738 + 0x28);
 
         private List<WorldArea> GetAreas(int offset)
         {
