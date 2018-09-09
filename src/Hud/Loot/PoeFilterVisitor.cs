@@ -62,12 +62,14 @@ namespace PoeHUD.Hud.Loot
 			var isShapedMap = false;
 			var isElderMap = false;
 			if (isMap)
+			{
 				MapTier = entity.GetComponent<Map>().Tier;
-			foreach (var mod in mods.ItemMods)
-				if (mod.Name == "MapElder")
-					isElderMap = (mod.Value1 == 1);
-				else if (mod.Name == "MapShaped")
-					isShapedMap = (mod.Value1 == 1);
+				foreach (var mod in mods.ItemMods)
+					if (mod.Name == "MapElder")
+						isElderMap = (mod.Value1 == 1);
+					else if (mod.Name == "MapShaped")
+						isShapedMap = (mod.Value1 == 1);
+			}
 
 			List<string> explicitMods = new List<string>();
 			foreach (var mod in mods.ItemMods)
@@ -345,7 +347,8 @@ namespace PoeHUD.Hud.Loot
 					&& poeRarityCondition && poeQualityCondition && poeWidthCondition && poeHeightCondition
 					&& poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition
 					&& poeCorruptedCondition && poeElderCondition && poeShaperCondition && poeShapedMapCondition
-					&& poeElderMapCondition && poeStackSizeCondition && poeHasExplicitModCondition && poeGemLevelCondition)
+					&& poeElderMapCondition && poeStackSizeCondition && poeHasExplicitModCondition && poeGemLevelCondition
+					&& poeMapTierCondition)
 				{
 					if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
 						return null;
