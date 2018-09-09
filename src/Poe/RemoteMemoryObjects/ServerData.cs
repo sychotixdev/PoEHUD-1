@@ -32,8 +32,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4FA0);
 		public int TotalAscendencyPoints => M.ReadInt(Address + 0x4FA4);
         public int SpentAscendencyPoints => M.ReadInt(Address + 0x4FA8);
-        public string League => GetObject<NativeStringReader>(Address + 0x4FE8).Value;
-        public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x4F08);
+        public string League => NativeStringReader.ReadString(Address + 0x4FE8);
+        public string Guild => NativeStringReader.ReadString(M.ReadLong(Address + 0x5210));
+	    public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x4F08);
         public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x5021);
         public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
         public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x4FD0); // + 0x500
@@ -92,21 +93,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
         #region Stash Tabs
-        private const int PlayerStashTabsStartOffset = 0x5060;
-        private const int PlayerStashTabsEndOffset = 0x5068;
-
-
-        public List<ServerStashTab> PlayerStashTabs => GetStashTabs(PlayerStashTabsStartOffset, PlayerStashTabsEndOffset);
+        public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x5060, 0x5068);
         public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x5078, 0x5080);
         private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
         {
             var firstAddr = M.ReadLong(Address + offsetBegin);
             var lastAddr = M.ReadLong(Address + offsetEnd);
 
-            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 5000);
+            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 500);
 
             //Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
-            tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
+            tabs.RemoveAll(x => x.IsHidden);
             return tabs;
         }
         #endregion
