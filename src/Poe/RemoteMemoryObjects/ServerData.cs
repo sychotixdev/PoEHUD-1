@@ -13,7 +13,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class ServerData : RemoteMemoryObject
     {
         //[Obsolete("Obsolete. Use StashTabs instead")]
-        //public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C8, 0xA0, 0x78)) : null;
+        public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;
 
         public ushort TradeChatChannel => M.ReadUShort(Address + 0x5568);
         public ushort GlobalChatChannel => M.ReadUShort(Address + 0x5570);
