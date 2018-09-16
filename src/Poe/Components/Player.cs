@@ -78,14 +78,14 @@ namespace PoeHUD.Poe.Components
             if(trialWrapper == null)
                 throw new ArgumentException($"Trial with id '{trialId}' is not found. Use WorldArea.Id or LabyrinthTrials.LabyrinthTrialAreaIds[]");
 
-            return TrialPassStates.Get(trialWrapper.Id - TotalBitsSkip);
+            return TrialPassStates.Get(trialWrapper.Id - 1);
         }
         public bool IsTrialCompleted(LabyrinthTrial trialWrapper)
         {
             if (trialWrapper == null)
                 throw new ArgumentException($"Argument {nameof(trialWrapper)} should not be null");
 
-            return TrialPassStates.Get(trialWrapper.Id - TotalBitsSkip);
+            return TrialPassStates.Get(trialWrapper.Id - 1);
         }
         public bool IsTrialCompleted(WorldArea area)
         {
@@ -97,7 +97,7 @@ namespace PoeHUD.Poe.Components
             if (trialWrapper == null)
                 throw new ArgumentException($"Can't find trial wrapper for area '{area.Name}' (seems not a trial area).");
 
-            return TrialPassStates.Get(trialWrapper.Id - TotalBitsSkip);
+            return TrialPassStates.Get(trialWrapper.Id - 1);
         }
 
 		/*
@@ -117,21 +117,19 @@ namespace PoeHUD.Poe.Components
 		so after activating trial the last (8) bit of 0x181 byte was changed (count bits from right to left).
 		Open in QDT GameController->Files->LabyrinthTrials->EntriesList. Here we can see that area Id of "The Bath House" trial is 272
 		So the 8th bit of 0x181 byte is "The Bath House" trial
-		The first trial (Lower Prison) id is 263 (at this moment) (set this value to FirstTrialAreaId constant), so Bath House is 272-263= 9th bit from our data bits. 
-		Byte have 8 bits (yes, obviously), so we going to start read bytes array data from 0x180 and skip first 7 bits (TrialBitsSkip constant)
-		(we doin this because we don't want to read whole 0x11E (286) byte array, and just 4 bytes than substract 263 from area id)
+		The first trial (Lower Prison) id is 263 (at this moment), so Bath House is 272-263= 9th bit from our data bits, 
+
+		Byte have 8 bits (yes, obviously), so we going to start read bytes array data from 0x180 (ignoring first 7 bits)
+		And to simplify it we will read whole array (286 bits (as 286 is the last trial area id) = 35,75(36) bytes). 
+		So 263 - 7(skipped) = 256 = 0x20 back from 0x180. So 0x180 - 0x20 = 0x160. Read offset is 0x160
 		*/
 
-	    private const int FirstTrialAreaId = 263;	//First trial area Id (Lower Prison). Look at GameController->Files->LabyrinthTrials->EntriesList
-	    private const int TrialBitsSkip = 7;
-	    private const int TotalBitsSkip = FirstTrialAreaId - TrialBitsSkip + 1;	//+ 1 because we always do "areaWrapper.Id - 1" everywhere
-
         [HideInReflection]
-        public BitArray TrialPassStates
+        private BitArray TrialPassStates
         {
             get
             {
-	            var stateBuff = M.ReadBytes(Address + 0x180, 4);//4 bytes of info. But can be read in 3 bytes, maybe..
+	            var stateBuff = M.ReadBytes(Address + 0x160, 36);// (286+) bytes of info.
                 return new BitArray(stateBuff);
             }
         }
@@ -147,8 +145,7 @@ namespace PoeHUD.Poe.Components
                 foreach (var trialAreaId in LabyrinthTrials.LabyrinthTrialAreaIds)
                 {
                     var wrapper = GameController.Instance.Files.LabyrinthTrials.GetLabyrinthTrialByAreaId(trialAreaId);
-	                var bitIndex = wrapper.Id - TotalBitsSkip;
-                    result.Add(new TrialState { TrialAreaId = trialAreaId, TrialArea = wrapper, IsCompleted = passStates.Get(bitIndex) });
+                    result.Add(new TrialState { TrialAreaId = trialAreaId, TrialArea = wrapper, IsCompleted = passStates.Get(wrapper.Id - 1) });
                 }
                 return result;
             }
