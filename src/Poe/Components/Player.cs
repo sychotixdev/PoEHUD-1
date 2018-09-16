@@ -121,7 +121,7 @@ namespace PoeHUD.Poe.Components
 
 		Byte have 8 bits (yes, obviously), so we going to start read bytes array data from 0x180 (ignoring first 7 bits)
 		And to simplify it we will read whole array (286 bits (as 286 is the last trial area id) = 35,75(36) bytes). 
-		So 263 - 7(skipped) = 256 = 0x20 back from 0x180. So 0x180 - 0x20 = 0x160. Read offset is 0x160
+		So 263 - 7(skipped) = 256.  256/8bits = 0x20 back from 0x180. So 0x180 - 0x20 = 0x160. Read offset is 0x160
 		*/
 
         [HideInReflection]
