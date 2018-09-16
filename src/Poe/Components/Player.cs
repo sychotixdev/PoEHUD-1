@@ -49,7 +49,7 @@ namespace PoeHUD.Poe.Components
         }
 
 
-        public HideoutWrapper Hidout => ReadObject<HideoutWrapper>(Address + 0x230);
+        public HideoutWrapper Hideout => ReadObject<HideoutWrapper>(Address + 0x230);
 
         public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
         public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
@@ -152,7 +152,12 @@ namespace PoeHUD.Poe.Components
         #endregion
         #endregion
 
-        /*//TODO fixme https://pathofexile.gamepedia.com/Master
+	    public override string ToString()
+	    {
+		    return $"{PlayerName} ({Level})";
+	    }
+
+	    /*//TODO fixme https://pathofexile.gamepedia.com/Master
         #region Master Exp Levels
         public uint CurrentExperienceTora => M.ReadUInt(Address + 0x198);
         public uint CurrentExperienceVorici => M.ReadUInt(Address + 0x188);
