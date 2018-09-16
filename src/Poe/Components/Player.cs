@@ -117,8 +117,8 @@ namespace PoeHUD.Poe.Components
 		so after activating trial the last (8) bit of 0x181 byte was changed (count bits from right to left).
 		Open in QDT GameController->Files->LabyrinthTrials->EntriesList. Here we can see that area Id of "The Bath House" trial is 272
 		So the 8th bit of 0x181 byte is "The Bath House" trial
-		The first trial (Lower Prison) id is 263 (at this moment) (set this value to FirstTrialAreaId constant), 
-		so Bath House is the 9th bit. Byte have 8 bits (yes, obviously), so we going to start read bytes array data from 0x180 and skip first 7 bits (TrialBitsSkip constant)
+		The first trial (Lower Prison) id is 263 (at this moment) (set this value to FirstTrialAreaId constant), so Bath House is 272-263= 9th bit from our data bits. 
+		Byte have 8 bits (yes, obviously), so we going to start read bytes array data from 0x180 and skip first 7 bits (TrialBitsSkip constant)
 		(we doin this because we don't want to read whole 0x11E (286) byte array, and just 4 bytes than substract 263 from area id)
 		*/
 
