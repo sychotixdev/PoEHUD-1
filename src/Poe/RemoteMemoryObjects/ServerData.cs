@@ -10,42 +10,44 @@ using PoeHUD.Models.Attributes;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class ServerData : RemoteMemoryObject
+	public class ServerData : RemoteMemoryObject
     {
-        //[Obsolete("Obsolete. Use StashTabs instead")]
-        public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;
+		private const int TENCENT_BUFFER = 0x400;
 
-        public ushort TradeChatChannel => M.ReadUShort(Address + 0x5568);
-        public ushort GlobalChatChannel => M.ReadUShort(Address + 0x5570);
-        public byte MonsterLevel => M.ReadByte(Address + 0x60CC);
+		//[Obsolete("Obsolete. Use StashTabs instead")]
+		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;
+
+        public ushort TradeChatChannel => M.ReadUShort(Address + TENCENT_BUFFER + 0x5568);
+        public ushort GlobalChatChannel => M.ReadUShort(Address + TENCENT_BUFFER + 0x5570);
+        public byte MonsterLevel => M.ReadByte(Address + TENCENT_BUFFER + 0x60CC);
 
         //if 51 - more than 50 monsters remaining (no exact number)
         //if 255 - not supported for current map (town or scenary map)
-        public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4F90) & 0xF);
-        public byte MonstersRemaining => M.ReadByte(Address + 0x60CD);
+        public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + TENCENT_BUFFER + 0x4F90) & 0xF);
+        public byte MonstersRemaining => M.ReadByte(Address + TENCENT_BUFFER + 0x60CD);
 
         #region PlayerData
-        public ushort LastActionId => M.ReadUShort(Address + 0x55C0);
-        public int CharacterLevel => M.ReadInt(Address + 0x4F94);
-        public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x4F98);
-        public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x4F9C);
-		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4FA0);
-		public int TotalAscendencyPoints => M.ReadInt(Address + 0x4FA4);
-        public int SpentAscendencyPoints => M.ReadInt(Address + 0x4FA8);
-        public string League => NativeStringReader.ReadString(Address + 0x4FE8);
-        public string Guild => NativeStringReader.ReadString(M.ReadLong(Address + 0x5210));
-	    public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x4F08);
-        public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x5021);
+        public ushort LastActionId => M.ReadUShort(Address + TENCENT_BUFFER + 0x55C0);
+        public int CharacterLevel => M.ReadInt(Address + TENCENT_BUFFER + 0x4F94);
+        public int PassiveRefundPointsLeft => M.ReadInt(Address + TENCENT_BUFFER + 0x4F98);
+        public int QuestPassiveSkillPoints => M.ReadInt(Address + TENCENT_BUFFER + 0x4F9C);
+		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + TENCENT_BUFFER + 0x4FA0);
+		public int TotalAscendencyPoints => M.ReadInt(Address + TENCENT_BUFFER + 0x4FA4);
+        public int SpentAscendencyPoints => M.ReadInt(Address + TENCENT_BUFFER + 0x4FA8);
+        public string League => NativeStringReader.ReadString(Address + TENCENT_BUFFER + 0x4FE8);
+        public string Guild => NativeStringReader.ReadString(M.ReadLong(Address + TENCENT_BUFFER + 0x5210));
+	    public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + TENCENT_BUFFER + 0x4F08);
+        public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + TENCENT_BUFFER + 0x5021);
         public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
-        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x4FD0); // + 0x500
-        public int Latency => M.ReadInt(Address + 0x5050);
+        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + TENCENT_BUFFER + 0x4FD0); // + 0x500
+        public int Latency => M.ReadInt(Address + TENCENT_BUFFER + 0x5050);
         public List<ushort> SkillBarIds
         {
             get
             {
                 var result = new List<ushort>();
 
-                var readAddr = Address + 0x5218;
+                var readAddr = Address + TENCENT_BUFFER + 0x5218;
                 for (int i = 0; i < 8; i++)
                 {
                     result.Add(M.ReadUShort(readAddr));
@@ -58,9 +60,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var fisrPtr = M.ReadLong(Address + 0x4F20);
-                var endPtr = M.ReadLong(Address + 0x4F28);
-                //var lastPtr = M.ReadLong(Address + 0x47B0);
+                var fisrPtr = M.ReadLong(Address + TENCENT_BUFFER + 0x4F20);
+                var endPtr = M.ReadLong(Address + TENCENT_BUFFER + 0x4F28);
+                //var lastPtr = M.ReadLong(Address + TENCENT_BUFFER + 0x47B0);
 
                 int total_stats = (int)(endPtr - fisrPtr);
                 var bytes = M.ReadBytes(fisrPtr, total_stats);
@@ -79,8 +81,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var startPtr = M.ReadLong(Address + 0x5258);
-                var endPtr = M.ReadLong(Address + 0x5260);
+                var startPtr = M.ReadLong(Address + TENCENT_BUFFER + 0x5258);
+                var endPtr = M.ReadLong(Address + TENCENT_BUFFER + 0x5260);
                 startPtr += 16;//Don't ask me why. Just skipping first 2
 
                 var result = new List<Player>();
@@ -97,8 +99,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x5078, 0x5080);
         private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
         {
-            var firstAddr = M.ReadLong(Address + offsetBegin);
-            var lastAddr = M.ReadLong(Address + offsetEnd);
+            var firstAddr = M.ReadLong(Address + TENCENT_BUFFER + offsetBegin);
+            var lastAddr = M.ReadLong(Address + TENCENT_BUFFER + offsetEnd);
 
             var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 500);
 
@@ -112,8 +114,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var firstAddr = M.ReadLong(Address + 0x5338);
-                var lastAddr = M.ReadLong(Address + 0x5340);
+                var firstAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x5338);
+                var lastAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x5340);
                 return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
             }
         }
@@ -121,8 +123,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var firstAddr = M.ReadLong(Address + 0x53E8);
-                var lastAddr = M.ReadLong(Address + 0x53F0);
+                var firstAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x53E8);
+                var lastAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x53F0);
 
                 if (firstAddr == 0)
                     return new List<InventoryHolder>();
@@ -135,8 +137,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var firstAddr = M.ReadLong(Address + 0x5498);
-                var lastAddr = M.ReadLong(Address + 0x54A0);
+                var firstAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x5498);
+                var lastAddr = M.ReadLong(Address + TENCENT_BUFFER + 0x54A0);
                 return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
             }
         }
@@ -189,8 +191,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private List<WorldArea> GetAreas(int offset)
         {
             var result = new List<WorldArea>();
-            var size = M.ReadInt(Address + offset - 0x8);
-            var listStart = M.ReadLong(Address + offset);
+            var size = M.ReadInt(Address + TENCENT_BUFFER + offset - 0x8);
+            var listStart = M.ReadLong(Address + TENCENT_BUFFER + offset);
 
             for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
             {
