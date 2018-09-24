@@ -27,6 +27,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public byte MonstersRemaining => M.ReadByte(Address + 0x60CD);
 
 	    public int CurrentSulphiteAmount => M.ReadInt(Address + 0x6170);
+	    public int CurrentAzuriteAmount => M.ReadInt(Address + 0x6160);
 
         #region PlayerData
         public ushort LastActionId => M.ReadUShort(Address + 0x55C0);
@@ -144,7 +145,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
             }
         }
-
+		
         #region Utils functions
         public ServerInventory GetPlayerInventoryBySlot(InventorySlotE slot)
         {
