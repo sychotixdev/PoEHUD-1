@@ -19,10 +19,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public ushort GlobalChatChannel => M.ReadUShort(Address + 0x5570);
         public byte MonsterLevel => M.ReadByte(Address + 0x60CC);
 
-        //if 51 - more than 50 monsters remaining (no exact number)
-        //if 255 - not supported for current map (town or scenary map)
+		/// <summary>
+		/// if 51 - more than 50 monsters remaining (no exact number)
+		/// if 255 - not supported for current map (town or scenary map)
+		/// </summary>
         public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4F90) & 0xF);
         public byte MonstersRemaining => M.ReadByte(Address + 0x60CD);
+
+	    public int CurrentSulphiteAmount => M.ReadInt(Address + 0x6170);
 
         #region PlayerData
         public ushort LastActionId => M.ReadUShort(Address + 0x55C0);
