@@ -190,7 +190,6 @@
     <Compile Include="Framework\WinApi.cs" />
     <Compile Include="Hud\AdvancedTooltip\AdvancedTooltipPlugin.cs" />
     <Compile Include="Hud\AdvancedTooltip\AdvancedTooltipSettings.cs" />
-    <Compile Include="Hud\CustomColorDialog.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPlugin.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPluginSettings.cs" />
     <Compile Include="Hud\Dps\DpsMeterSettings.cs" />
