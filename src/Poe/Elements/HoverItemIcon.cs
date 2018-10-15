@@ -10,31 +10,14 @@ namespace PoeHUD.Poe.Elements
     // for getting it's info and might give incorrect result.
     public class HoverItemIcon : Element
     {
-        private readonly Func<Element> inventoryItemTooltip;
-        private readonly Func<Element> itemInChatTooltip;
-        private readonly Func<ItemOnGroundTooltip> toolTipOnground;
         private ToolTipType? toolTip;
 
         public int InventPosX => M.ReadInt(Address + 0xb70);
         public int InventPosY => M.ReadInt(Address + 0xb74);
-
-        public HoverItemIcon()
-        {
-            toolTipOnground = () => Game.IngameState.IngameUi.ItemOnGroundTooltip;
-            inventoryItemTooltip = () => ReadObject<Element>(Address + 0xB18);
-            itemInChatTooltip = () => ReadObject<Element>(Address + 0x7E8);
-        }
-
-        public ToolTipType ToolTipType {
-            get {
-                try {
-                    return (ToolTipType)(toolTip ?? (toolTip = GetToolTipType()));
-                } catch (Exception)
-                {
-                    return ToolTipType.None;
-                }
-            }
-        }
+		public Element InventoryItemTooltip =>ReadObject<Element>(Address + 0xB18);
+		public Element ItemInChatTooltip => ReadObject<Element>(Address + 0x7E8);
+		public ItemOnGroundTooltip ToolTipOnGround => Game.IngameState.IngameUi.ItemOnGroundTooltip;
+	    public ToolTipType ToolTipType => GetToolTipType();
 
         public Element Tooltip
         {
@@ -43,12 +26,11 @@ namespace PoeHUD.Poe.Elements
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        return toolTipOnground().Tooltip;
-
+                        return ToolTipOnGround.Tooltip;
                     case ToolTipType.InventoryItem:
-                        return inventoryItemTooltip();
+                        return InventoryItemTooltip;
                     case ToolTipType.ItemInChat:
-                        return itemInChatTooltip().Children[1];
+                        return ItemInChatTooltip.Children[1];
                 }
                 return null;
             }
@@ -61,9 +43,9 @@ namespace PoeHUD.Poe.Elements
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        return toolTipOnground().ItemFrame;
+                        return ToolTipOnGround.ItemFrame;
                     case ToolTipType.ItemInChat:
-                        return itemInChatTooltip().Children[0];
+                        return ItemInChatTooltip.Children[0];
                     default:
                         return null;
                 }
@@ -95,15 +77,16 @@ namespace PoeHUD.Poe.Elements
 
         private ToolTipType GetToolTipType()
         {
-            if (inventoryItemTooltip() != null && inventoryItemTooltip().IsVisible)
+            if (InventoryItemTooltip != null && InventoryItemTooltip.IsVisible)
             {
                 return ToolTipType.InventoryItem;
             }
-            if (toolTipOnground != null && toolTipOnground().Tooltip != null && toolTipOnground().TooltipUI != null && toolTipOnground().TooltipUI.IsVisible)
+            if (ToolTipOnGround.Tooltip != null && ToolTipOnGround.TooltipUI != null && ToolTipOnGround.TooltipUI.IsVisible)
             {
                 return ToolTipType.ItemOnGround;
             }
-            if (itemInChatTooltip() != null && itemInChatTooltip().IsVisible && itemInChatTooltip().ChildCount > 1 && itemInChatTooltip().Children[0].IsVisible && itemInChatTooltip().Children[1].IsVisible)
+            if (ItemInChatTooltip.IsVisible && ItemInChatTooltip.ChildCount > 1 && ItemInChatTooltip.Children[0].IsVisible && 
+                ItemInChatTooltip.Children[1].IsVisible)
             {
                 return ToolTipType.ItemInChat;
             }
