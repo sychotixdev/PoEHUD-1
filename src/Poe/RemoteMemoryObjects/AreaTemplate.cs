@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class AreaTemplate : RemoteMemoryObject
@@ -7,7 +9,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int Act => M.ReadInt(Address + 0x10);
         public bool IsTown => M.ReadByte(Address + 0x14) == 1;
         public bool HasWaypoint => M.ReadByte(Address + 0x15) == 1;
-        public int NominalLevel => M.ReadInt(Address + 0x16);//Not sure
+        public int MonsterLevel => M.ReadInt(Address + 0x26);
+        public int WorldAreaId => M.ReadInt(Address + 0x2A);
+
+		/// <summary>
+		/// Possible amount (varieties) of CorruptedAreas
+		/// </summary>
+        public int CorruptedAreasVariety => M.ReadInt(Address + 0xFB);
+	    public List<WorldArea> PossibleCorruptedAreas => M.ReadClassesFromPointerArray<WorldArea>(Address + 0x103, CorruptedAreasVariety);
     }
 
     /*

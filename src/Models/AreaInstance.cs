@@ -15,8 +15,11 @@ namespace PoeHUD.Models
 
         public DateTime TimeEntered = DateTime.Now;
 
+		public AreaTemplate Area { get; }
+
         public AreaInstance(AreaTemplate area, uint hash, int realLevel)
         {
+	        Area = area;
             Hash = hash;
             RealLevel = realLevel;
             Name = area.Name;
