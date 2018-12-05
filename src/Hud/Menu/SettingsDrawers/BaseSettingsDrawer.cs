@@ -263,8 +263,8 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
                         bool isSelected = SelectedFile == file.FullName;
                         if (ImGui.Selectable(file.Name, isSelected, SelectableFlags.DontClosePopups))
                         {
-                            selected = SelectedFile;
                             SelectedFile = file.FullName;
+                            selected = SelectedFile;
                             result = true;
                         }
                     }
