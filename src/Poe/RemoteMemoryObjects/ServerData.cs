@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		//[Obsolete("Obsolete. Use StashTabs instead")]
 		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;//TODO Fixme
 
-		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x5DA8);
+		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x5D88);
 
 		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x5B90) & 0xF);
 
