@@ -86,12 +86,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 				return result;
 			}
 		}
-		public List<Player> NearestPlayers//TODO Fixme
+		public List<Player> NearestPlayers
 		{
 			get
 			{
-				var startPtr = M.ReadLong(Address + 0x52D8);
-				var endPtr = M.ReadLong(Address + 0x52E0);
+				var startPtr = M.ReadLong(Address + 0x5E58);
+				var endPtr = M.ReadLong(Address + 0x5E60);
 
 			    if (Math.Abs(endPtr - startPtr) / 8 > 50)
 			        return null;
