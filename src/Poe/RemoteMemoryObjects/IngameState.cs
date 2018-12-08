@@ -8,7 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 	{
         private Cache _cache => GameController.Instance.Cache;
 
-		public long EntityLabelMap => M.ReadLong(Address + 0x98, 0xA80);
+		public long EntityLabelMap => M.ReadLong(Address + 0x98, 0xA88);
 
 		public IngameData Data => _cache.Enable && _cache.Data != null ? _cache.Data : _cache.Enable ? _cache.Data = DataReal : DataReal;
 		private IngameData DataReal => ReadObject<IngameData>(Address + 0x370 + Offsets.IgsOffset);
