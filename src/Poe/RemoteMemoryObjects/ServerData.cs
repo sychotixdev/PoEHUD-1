@@ -15,12 +15,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
 		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x5B90) & 0xF);
 
-		public List<ushort> PassiveSkillIds//TODO Fixme
+		public List<ushort> PassiveSkillIds
 		{
 			get
 			{
-				var fisrPtr = M.ReadLong(Address + 0x4FA0);
-				var endPtr = M.ReadLong(Address + 0x4FA8);
+				var fisrPtr = M.ReadLong(Address + 0x5B20);
+				var endPtr = M.ReadLong(Address + 0x5B28);
 
 				int skillIds = (int)(endPtr - fisrPtr);
 
@@ -71,14 +71,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
 		public string Guild => NativeStringReader.ReadString(M.ReadLong(Address + 0x5290));//TODO Fixme
 
-		public List<ushort> SkillBarIds//TODO Fixme
+		public List<ushort> SkillBarIds
 		{
 			get
 			{
 				var result = new List<ushort>();
 
-				var readAddr = Address + 0x5298;
-				for (int i = 0; i < 8; i++)
+				var readAddr = Address + 0x5E18;
+				for (var i = 0; i < 8; i++)
 				{
 					result.Add(M.ReadUShort(readAddr));
 					readAddr += 2;
