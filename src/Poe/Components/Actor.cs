@@ -26,8 +26,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            long num = M.ReadLong(Address + 0x308);
-            long num2 = M.ReadLong(Address + 0x310);
+            long num = M.ReadLong(Address + 0x328);
+            long num2 = M.ReadLong(Address + 0x330);
             for (long i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);
