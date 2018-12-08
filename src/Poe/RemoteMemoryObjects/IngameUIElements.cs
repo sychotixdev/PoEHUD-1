@@ -17,23 +17,23 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xB58);
 		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0xB60);
 		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0xBD8, 0xAB8, 0xC30));
-		public Element QuestTracker => ReadObjectAt<Element>(0xC60);
-		public Element OpenLeftPanel => ReadObjectAt<Element>(0xCA0);
-		public Element OpenRightPanel => ReadObjectAt<Element>(0xCA8);
-		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0xCD8);
-		public Element TreePanel => ReadObjectAt<Element>(0xD08);
-		public Element AtlasPanel => ReadObjectAt<Element>(0xD10);
-		public Map Map => ReadObjectAt<Map>(0xD60);
+		public Element QuestTracker => ReadObjectAt<Element>(0xC80);
+		public Element OpenLeftPanel => ReadObjectAt<Element>(0xCC0);
+		public Element OpenRightPanel => ReadObjectAt<Element>(0xCC8);
+		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0xCF8);
+		public Element TreePanel => ReadObjectAt<Element>(0xD28);
+		public Element AtlasPanel => ReadObjectAt<Element>(0xD30);
+		public Map Map => ReadObjectAt<Map>(0xD80);
 		public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD68);
+				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD88);
 				return itemsOnGroundLabelRoot.Children;
 			}
 		}
 		public Element GemLvlUpPanel => ReadObjectAt<Element>(0xFF0);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x1060);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x1000);
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));

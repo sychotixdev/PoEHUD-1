@@ -17,8 +17,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer
             : GameController.Instance.Cache.Enable ? GameController.Instance.Cache.LocalPlayer = LocalPlayerReal : LocalPlayerReal;
-        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x370);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x3F8);
+        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x380);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x408);
 
         private long LabDataPtr => M.ReadLong(Address + 0xC0);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
