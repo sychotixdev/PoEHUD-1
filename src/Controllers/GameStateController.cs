@@ -26,7 +26,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             M = m;
             Instance = this;
             Address = m.ReadLong(Offsets.GameStateOffset + m.AddressOfProcess);
-
             AllGameStates = ReadHashMap(Address + 0x48);
 
             PreGameStatePtr = AllGameStates["PreGameState"].Address;
@@ -139,8 +138,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
-        public bool IsLoading => M.ReadLong(Address + 0xBD0) != 0;
-        public string AreaName => M.ReadString(Address + 0xBE8);
+        public bool IsLoading => M.ReadLong(Address + 0xBE0) != 0;
+        public string AreaName => M.ReadString(Address + 0xBF0);
 
         public override string ToString()
         {
