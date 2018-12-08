@@ -23,14 +23,15 @@ namespace PoeHUD.Poe
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
-            0x90,
-            0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x89, 0x05, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x85, 0xDB,
-            0x74, 0x15,
-            0x48, 0x8B, 0xCB,
-            0xE8
-        }, "xxxx????xxx????xxxxxxxxx");
+			0x90,
+			0x48, 0x03, 0xD8,
+			0x48, 0x8B, 0x03,
+			0x48, 0x85, 0xC0,
+			0x75, 0xE5,
+			0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00,
+			0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00,
+			0x48, 0x85, 0xC0
+		}, "xxxxxxxxxxxxxxx????xxx????xxx");
 
 		/* FileRoot Pointer
 		00007FF6C47EED01  | 48 8D 0D A8 23 7F 00               | lea rcx,qword ptr ds:[7FF6C4FE10B0]        | <--FileRootPtr
@@ -122,10 +123,10 @@ namespace PoeHUD.Poe
             long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern, isLoadingScreenPattern, GameStatePattern);
             System.Console.WriteLine("Base Pattern: " + (m.AddressOfProcess + array[0]).ToString("x8"));
 
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x4) + array[0] + 0x8;
+            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0xF) + array[0] + 0x13;
             System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
 
-            long InGameState = m.ReadLong(Base + m.AddressOfProcess, 0x8, 0xF8, 0x38);
+            long InGameState = m.ReadLong(Base + m.AddressOfProcess, 0x8, 0x110, 0x8A0);
             System.Console.WriteLine("InGameState: " + InGameState.ToString("x8"));
 
             FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
