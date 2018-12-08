@@ -23,8 +23,8 @@ namespace PoeHUD.Poe
         public float Y => M.ReadFloat(Address + 0xD8 + OffsetBuffers);
         public Element Tooltip => ReadObject<Element>(Address + 0x104 + OffsetBuffers); //0x7F0
         public float Scale => M.ReadFloat(Address + 0x1D0 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x214 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x218 + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x21C + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x220 + OffsetBuffers);
         public string Text => !string.IsNullOrWhiteSpace(AsObject<EntityLabel>().Text) ? AsObject<EntityLabel>().Text : null;
         public bool isHighlighted => M.ReadByte(Address + 0x948) > 0;
 
