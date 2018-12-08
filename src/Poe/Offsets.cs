@@ -19,7 +19,7 @@ namespace PoeHUD.Poe
         00007FF7006C78A5  | 48 8B CB                           | mov rcx,rbx                                |
         00007FF7006C78A8  | E8 53 D7 00 00                     | call pathofexile_x64.7FF7006D5000          |
         */
-        //    90 48 8B 1D ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 48 85 DB 74 15 48 8B CB E8
+        //    90 48 03 D8 48 8B 03 48 85 c0 75 ?? 48 8b 1d ?? ?? ?? ?? 48 8b 05 ?? ?? ?? ?? 48 85 c0 74 ?? 66 90
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
@@ -27,11 +27,13 @@ namespace PoeHUD.Poe
 			0x48, 0x03, 0xD8,
 			0x48, 0x8B, 0x03,
 			0x48, 0x85, 0xC0,
-			0x75, 0xE5,
+			0x75, 0x00,
 			0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00,
 			0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00,
-			0x48, 0x85, 0xC0
-		}, "xxxxxxxxxxxxxxx????xxx????xxx");
+			0x48, 0x85, 0xC0,
+			0X74, 0x00,
+			0x66, 0x90
+		}, "xxxxxxxxxxx?xxx????xxx????xxxx?xx");
 
 		/* FileRoot Pointer
 		00007FF6C47EED01  | 48 8D 0D A8 23 7F 00               | lea rcx,qword ptr ds:[7FF6C4FE10B0]        | <--FileRootPtr
