@@ -47,15 +47,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public float TimeInGame => M.ReadFloat(Address + 0x5C48);
 
 		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x5BD0);
-		public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
+		public bool IsInGame => true ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
 
 		public string League => NativeStringReader.ReadString(Address + 0x5BE8);
 		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x50B5);//TODO Fixme
 		public int Latency => M.ReadInt(Address + 0x5C50);
 		#endregion
 		#region Stash Tabs
-		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x50E0, 0x50E8);//TODO Fixme
-		public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x50F8, 0x5100);//TODO Fixme
+		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x5C60, 0x5C68);
+		public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x5C78, 0x5C80);
 		private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
 		{
 			var firstAddr = M.ReadLong(Address + offsetBegin);

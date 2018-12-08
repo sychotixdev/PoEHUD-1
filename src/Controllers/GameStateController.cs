@@ -30,15 +30,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
             PreGameStatePtr = AllGameStates["PreGameState"].Address;
             LoginStatePtr = AllGameStates["LoginState"].Address;
-            SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
-            WaitingStatePtr = AllGameStates["WaitingState"].Address;
-            InGameStatePtr = AllGameStates["InGameState"].Address;
-            LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
-            IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
-        }
+			SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
+			WaitingStatePtr = AllGameStates["WaitingState"].Address;
+			InGameStatePtr = AllGameStates["InGameState"].Address;
+			LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
+			IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
+		}
 
-        //I hope this caching will works fine
-        private static long PreGameStatePtr = -1;
+		//I hope this caching will works fine
+		private static long PreGameStatePtr = -1;
         private static long LoginStatePtr = -1;
         private static long SelectCharacterStatePtr = -1;
         private static long WaitingStatePtr = -1;
@@ -138,8 +138,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
-        public bool IsLoading => M.ReadLong(Address + 0xBE0) != 0;
-        public string AreaName => M.ReadString(Address + 0xBF0);
+        public bool IsLoading => M.ReadLong(Address + 0xBA8) != 0;
+        public string AreaName => M.ReadString(Address + 0xBB0);
 
         public override string ToString()
         {
