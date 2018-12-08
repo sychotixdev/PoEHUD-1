@@ -138,8 +138,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
-        public bool IsLoading => M.ReadLong(Address + 0xBA8) != 0;
-        public string AreaName => M.ReadString(Address + 0xBB0);
+        public bool IsLoading => M.ReadLong(Address + 0xAC0) == 1; 
+        public string AreaName => M.ReadStringU(M.ReadLong(Address + 0xBF0));
 
         public override string ToString()
         {
