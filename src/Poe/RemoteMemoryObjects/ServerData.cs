@@ -108,12 +108,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		}
 
 		#region Inventories
-		public List<InventoryHolder> PlayerInventories//TODO Fixme
+		public List<InventoryHolder> PlayerInventories
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x53B8);
-				var lastAddr = M.ReadLong(Address + 0x53C0);
+				var firstAddr = M.ReadLong(Address + 0x5F38);
+				var lastAddr = M.ReadLong(Address + 0x5F40);
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
 			}
 		}
