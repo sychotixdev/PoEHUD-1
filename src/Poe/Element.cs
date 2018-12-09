@@ -6,6 +6,8 @@ using PoeHUD.Poe.Elements;
 
 namespace PoeHUD.Poe
 {
+    using RemoteMemoryObjects;
+
     public class Element : RemoteMemoryObject
     {
         public const int OffsetBuffers = 0x6EC;
@@ -25,7 +27,7 @@ namespace PoeHUD.Poe
         public float Scale => M.ReadFloat(Address + 0x1D0 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x21C + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x220 + OffsetBuffers);
-        public string Text => !string.IsNullOrWhiteSpace(AsObject<EntityLabel>().Text) ? AsObject<EntityLabel>().Text : null;
+        public string Text => AsObject<EntityLabel>().Text;
         public bool isHighlighted => M.ReadByte(Address + 0x948) > 0;
 
         public bool IsVisible

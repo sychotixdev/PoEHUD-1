@@ -411,22 +411,19 @@ namespace PoeHUD.Hud.Loot
 
         private string GetItemName(KeyValuePair<EntityWrapper, AlertDrawStyle> kv)
         {
-            string text;
-            Entity itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
-            EntityLabel labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
+            var itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
+
+            var labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
             if (labelForEntity == null)
             {
                 if (!itemEntity.IsValid)
                 {
                     return null;
                 }
-                text = kv.Value.Text;
+                labelForEntity = kv.Value.Text;
             }
-            else
-            {
-                text = labelForEntity.Text;
-            }
-            return text;
+
+            return labelForEntity;
         }
 
         private void OnAreaChange(AreaController area)

@@ -14,7 +14,9 @@ namespace PoeHUD.Poe.Elements
         public Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC20)) : null;
  
         public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC28)) : null;
-        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC28, 0xC20)) : null; // going extra inside.
+
+        //Not easy to find it, coz it like a tooltipe element. Use IngameState.UIHoverTooltip instead IngameState.UIHover. Use it's address and StructureSpiderAdvanced to find it's offset fast.
+        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC30)) : null;
 
         public Element MoveStashTabLabelsLeft_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC38)) : null;
         public Element MoveStashTabLabelsRight_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC40)) : null;
@@ -50,7 +52,7 @@ namespace PoeHUD.Poe.Elements
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
-            return ViewAllStashPanel.Children[index].AsObject<EntityLabel>().Text;
+            return ViewAllStashPanel.GetChildAtIndex(2).GetChildAtIndex(index).GetChildAtIndex(1).AsObject<EntityLabel>().Text;
         }
     }
 }
