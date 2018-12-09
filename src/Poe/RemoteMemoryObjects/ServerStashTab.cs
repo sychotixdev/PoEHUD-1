@@ -15,7 +15,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public InventoryTabType TabType => (InventoryTabType)M.ReadUInt(Address + 0x34);
         public ushort VisibleIndex => M.ReadUShort(Address + 0x38);
         //public ushort LinkedParentId => M.ReadUShort(Address + 0x26);
-        public InventoryTabFlags Flags => (InventoryTabFlags)M.ReadByte(Address + 0x3C);
+        public InventoryTabFlags Flags => (InventoryTabFlags)M.ReadByte(Address + 0x3D);
 	    public bool RemoveOnly => (Flags & InventoryTabFlags.RemoveOnly) == InventoryTabFlags.RemoveOnly;
 	    public bool IsHidden => (Flags & InventoryTabFlags.Hidden) == InventoryTabFlags.Hidden;
 
