@@ -7,20 +7,20 @@ namespace PoeHUD.Poe.Elements
     {
         public long TotalStashes => StashInventoryPanel.ChildCount;
 
-        public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xA98)) : null;
+        public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAA0)) : null;//or (10, A88) or (708, AA0) or (998, 100) or better (AA0, 708)
 
         // Nice struct starts at 0xB80 till 0xBD0 and all are 8 byte long pointers.
-        public Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC08)) : null;
-        public Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC18)) : null;
+        public Element StashTitlePanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC08)) : null;
+        public Element StashInventoryPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC20)) : null;
  
-        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC20)) : null;
-        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC28, 0xC00)) : null; // going extra inside.
+        public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC28)) : null;
+        public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC28, 0xC20)) : null; // going extra inside.
 
-        public Element MoveStashTabLabelsLeft_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC30)) : null;
-        public Element MoveStashTabLabelsRight_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAB8, 0xC38)) : null;
+        public Element MoveStashTabLabelsLeft_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC38)) : null;
+        public Element MoveStashTabLabelsRight_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAC0, 0xC40)) : null;
 
 
-        public int IndexVisibleStash => M.ReadInt(Address + 0xAB8, 0xC60);
+        public int IndexVisibleStash => M.ReadInt(Address + 0xAC0, 0xC68);
         public Inventory VisibleStash => GetVisibleStash();
         private Inventory GetVisibleStash()
         {

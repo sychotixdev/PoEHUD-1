@@ -9,7 +9,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 	public class ServerData : RemoteMemoryObject
 	{
 		//[Obsolete("Obsolete. Use StashTabs instead")]
-		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;//TODO Fixme
+		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;
 
 		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x5D88);
 

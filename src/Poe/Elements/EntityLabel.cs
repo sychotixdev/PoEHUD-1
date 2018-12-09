@@ -6,7 +6,7 @@ namespace PoeHUD.Poe.Elements
         {
             get
             {
-                int LabelLen = M.ReadInt(Address + 0xC60);
+                int LabelLen = M.ReadInt(Address + 0xC50);
                 if (LabelLen <= 0 || LabelLen > 256)
                 {
                     return 0;

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
+    using System;
+    using System.Linq;
+
     public class Inventory : RemoteMemoryObject
     {
         public long ItemCount => M.ReadLong(Address + 0x410, 0x640, 0x50);//This one is correct
@@ -67,6 +70,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
         public Element InventoryUiElement => getInventoryElement();
 
+        //I'm using this to debug all items (NormalInventoryItem.InventPosX), etc..
+        //public List<NormalInventoryItem> _DebugVisibleInventoryItems => InventoryUiElement.Children.Select(x => InventoryUiElement.GetObject<NormalInventoryItem>(x.Address)).ToList();
+
         // Shows Item details of visible inventory/stashes
         public List<NormalInventoryItem> VisibleInventoryItems
         {
@@ -74,9 +80,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var InvRoot = InventoryUiElement;
                 if (InvRoot == null || InvRoot.Address == 0x00)
-                    return null;
+                    throw new InvalidOperationException("InventoryUiElement is incorrect (address is '0')");
                 else if (!InvRoot.IsVisible)
-                    return null;
+                    throw new InvalidOperationException("InventoryUiElement is not visible");
 
                 var list = new List<NormalInventoryItem>();
 
