@@ -26,7 +26,7 @@ namespace PoeHUD.Models
             Act = area.Act;
             IsTown = area.IsTown;
             HasWaypoint = area.HasWaypoint;
-            IsHideout = Name.Contains("Hideout");
+            IsHideout = area.RawName.ToLower().Contains("hideout");
         }
 
         public override string ToString()
