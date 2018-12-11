@@ -13,6 +13,8 @@ using System.Diagnostics;
 
 namespace PoeHUD.Hud.PluginExtension
 {
+    using System.Linq;
+
     public class PluginExtensionPlugin : IPlugin
     {
         public readonly GameController GameController;
@@ -56,6 +58,8 @@ namespace PoeHUD.Hud.PluginExtension
 
                 LoadPluginFromDirectory(pluginDirectoryInfo.FullName);
             }
+
+            Plugins = Plugins.OrderBy(x => x.PluginName).ToList();
         }
 
         public static void ApplyUpdateFiles(string pluginDirectory)
