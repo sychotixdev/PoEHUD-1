@@ -239,6 +239,7 @@
     <Compile Include="Hud\UI\Renderers\ImGuiRender.cs" />
     <Compile Include="Hud\UI\Vertexes\GuiVertex.cs" />
     <Compile Include="Models\Attributes\HideInReflectionAttibute.cs" />
+    <Compile Include="Models\Attributes\StaticOffsetFieldDebugAttribute.cs" />
     <Compile Include="Models\BaseItemType.cs" />
     <Compile Include="Models\Cache.cs" />
     <Compile Include="Models\CacheComponent\PlayerCache.cs" />

@@ -102,6 +102,12 @@ namespace PoeHUD.Poe.Components
 
 		/*
 		 How to fix TrialPassStates offsets. Detailed example. 
+
+        Update. New way: Uncomment argument (StaticOffsetFieldDebugAttribute) from:
+        public static int DebugPlayerTrialStates
+        Use "Qvin Debug Tree" plugin. Change slider DebugPlayerTrialStates to pick the right offset. Convert slider number to hex
+            
+        Old way:
 		 Better to use ReClass.Net for that (or program that can show bits of byte on some offset)
 		 Go to some uncompleted trial but do not activate it!
 		 Open ReClass on Player component address (get it from "Qvin Debug Tree" (QDT) plugin)
@@ -124,18 +130,21 @@ namespace PoeHUD.Poe.Components
 		So 263 - 7(skipped) = 256.  256/8bits = 0x20 back from 0x180. So 0x180 - 0x20 = 0x160. Read offset is 0x160
 		*/
 
-        [HideInReflection]
+        //[StaticOffsetFieldDebugAttribute]
+        public static int DebugPlayerTrialStates = 0x17E;
+
+        [HideInReflection]//Comment this attribute to see it in "Qvin Debug Tree" plugin.
         private BitArray TrialPassStates
         {
             get
             {
-	            var stateBuff = M.ReadBytes(Address + 0x160, 36);// (286+) bytes of info.
+	            var stateBuff = M.ReadBytes(Address + DebugPlayerTrialStates, 36);// (286+) bytes of info.
                 return new BitArray(stateBuff);
             }
         }
 
         #region Debug things
-        
+
         public List<TrialState> TrialStates
         {
             get
