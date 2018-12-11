@@ -423,7 +423,11 @@ Metadata/Chests/Abyss/AbyssFinalChest3; Abyss #3; ff00AA00
 Metadata/Chests/Abyss/AbyssFinalChest4; Abyss #4; ff00AA00
 
 # BETRAYAL
-Metadata/NPC/League/BetrayalNinjaCopRaid; Syndicate Laboratory; ff36b4b4
+Metadata/NPC/League/BetrayalNinjaCopRaid; Syndicate Research; ff00FF00
+Metadata/Monsters/LeagueBetrayal/FortWall/FortWall; Syndicate Fortification; ff00FF00
+Metadata/Monsters/LeagueBetrayal/BetrayalSecretPoliceChampion; Syndicate Interception; ff00FF00
+Metadata/Monsters/LeagueBetrayal/BetrayalOriathBlackguardMeleeChampionCartGuard; Syndicate Transportation; ff00FF00
+
 Metadata/Monsters/LeagueBetrayal/BetrayalCatarina; Catarina, Master of Undeath; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalBreach;It That Fled; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalGravicius;Gravicius Reborn; ff36b4b4
@@ -435,6 +439,7 @@ Metadata/Monsters/LeagueBetrayal/BetrayalVorici; Vorici, Silent Brother; ff36b4b
 Metadata/Monsters/LeagueBetrayal/BetrayalAislin; Aisling Laffrey; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalHaku; Haku, Warmaster; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalHillock; Hillock, the Blacksmith; ff36b4b4
+Metadata/Monsters/LeagueBetrayal/BetrayalHillock_; Hillock, the Blacksmith; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalCameria; Cameria, the Coldblooded; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalRiker; Riker Maloney; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalElreon; Elreon, Light's Judge; ff36b4b4
@@ -443,7 +448,28 @@ Metadata/Monsters/LeagueBetrayal/BetrayalVagan; Vagan, Victory's Herald; ff36b4b
 Metadata/Monsters/LeagueBetrayal/BetrayalThane; Thane Jorgin the Banished; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalKeema; Korell Goya, Son of Stone; ff36b4b4
 
-Metadata/Terrain/Leagues/Delve/Objects/DelveMineralVein; Delve Minerals ; ff3bd30c
-Metadata/Terrain/Leagues/Delve/Objects/DelveMineralChest; Delve Minerals ; ff3bd30c
-Metadata/Terrain/Leagues/Incursion/Objects/IncursionPortal1; Incursion Portal ; ff3bd30c
-Metadata/Monsters/Masters/Einhar; Einhar; ff3bd30c
+Metadata/NPC/League/TreasureHunterWild; Alva, Master Explorer; ff64ffff 
+Metadata/Monsters/Masters/Einhar; Einhar, Beastmaster; ff64ffff
+Metadata/NPC/League/DelveMinerWildVein; Niko, Master of the Depths; ff64ffff
+
+# CRAFTING RECIPES
+Metadata/Terrain/Missions/CraftingUnlocks/BeastRecipe; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/Helena; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeDecayed; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeDelve; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeGravestone; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeMap; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockBase; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockBeast; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockBoundBook; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockDecayed; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockDelve; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockGoldenBookstand; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockGravestone; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockKaruiPillar; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockLabyrinth; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockMap; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockRunestone; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockTemplarBook; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockTemplarBookNoHelena; Crafting Recipe; ff964DF1
+Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockVaal; Crafting Recipe; ff964DF1
