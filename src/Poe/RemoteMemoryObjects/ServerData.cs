@@ -185,11 +185,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public ushort LastActionId => M.ReadUShort(Address + 0x61E4);
 
 		#region Completed Areas
-		public List<WorldArea> CompletedAreas => GetAreas(0x56E0);//TODO Fixme
-		public List<WorldArea> ShapedMaps => GetAreas(0x5720);//TODO Fixme
-		public List<WorldArea> BonusCompletedAreas => GetAreas(0x5760);//TODO Fixme
-		public List<WorldArea> ElderGuardiansAreas => GetAreas(0x57A0);//TODO Fixme
-		public List<WorldArea> ShaperElderAreas => GetAreas(0x57E0);//TODO Fixme
+		public List<WorldArea> ElderGuardiansAreas=> GetAreas(0x6230);//TODO Fixme
+		public List<WorldArea> CompletedAreas => GetAreas(0x6260);//TODO Fixme
+		public List<WorldArea> Unknown => GetAreas(0x62A0);//TODO Fixme
+		public List<WorldArea> BonusCompletedAreas => GetAreas(0x62E0);
+		public List<WorldArea> ShapedMaps => GetAreas(0x6320);//TODO Fixme
+		public List<WorldArea> _UniqCompletedMaps => GetAreas(0x6360);//Dunno what is this
+		public List<WorldArea>  ShaperElderAreas=> GetAreas(0x63A0);
 
 		private List<WorldArea> GetAreas(int offset)
 		{
@@ -197,9 +199,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			var size = M.ReadInt(Address + offset - 0x8);
 			var listStart = M.ReadLong(Address + offset);
 
-		    if (size > 200)
-		        return null;
-
+		    if (size == 0 || size > 300)
+		        return result;
+		    listStart = M.ReadLong(listStart);
 			for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
 			{
 				result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(addr + 0x18)));
