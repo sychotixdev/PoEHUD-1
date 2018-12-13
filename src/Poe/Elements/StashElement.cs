@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace PoeHUD.Poe.Elements
 {
+    using System;
+
     public class StashElement : Element
     {
         public long TotalStashes => StashInventoryPanel.ChildCount;
@@ -48,11 +50,24 @@ namespace PoeHUD.Poe.Elements
                 return null;
             return StashInventoryPanel.Children[index].Children[0].Children[0].AsObject<Inventory>();
         }
+
+        private static bool IsInitializedOnce;
+        private static bool NoScrollBar;
         public string GetStashName(int index)
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
-            return ViewAllStashPanel.GetChildAtIndex(2).GetChildAtIndex(index).GetChildAtIndex(1).AsObject<EntityLabel>().Text;
+
+            //When users have a scrollbar we should read child 1 instead of 2
+            if (!IsInitializedOnce)
+            {
+                IsInitializedOnce = true;
+                var child1 = ViewAllStashPanel.GetChildAtIndex(2);
+                NoScrollBar = Math.Abs(child1.X - 30) < 1 && Math.Abs(child1.Y) < 1;
+            }
+
+            var readChild = ViewAllStashPanel.GetChildAtIndex(NoScrollBar ? 2 : 1);
+            return readChild.GetChildAtIndex(index).GetChildAtIndex(1).AsObject<EntityLabel>().Text;
         }
     }
 }
