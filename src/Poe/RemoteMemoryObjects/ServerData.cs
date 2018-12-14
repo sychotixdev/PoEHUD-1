@@ -24,7 +24,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
 				int skillIds = (int)(endPtr - fisrPtr);
 
-			    if (Math.Abs(skillIds) > 200)
+			    if (Math.Abs(skillIds) > 500)
 			        return null;
 				var bytes = M.ReadBytes(fisrPtr, skillIds);
 				var result = new List<ushort>();
