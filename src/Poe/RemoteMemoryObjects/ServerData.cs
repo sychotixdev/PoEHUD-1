@@ -117,12 +117,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
 			}
 		}
-		public List<InventoryHolder> NPCInventories//TODO Fixme
+		public List<InventoryHolder> NPCInventories
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x5468);
-				var lastAddr = M.ReadLong(Address + 0x5470);
+				var firstAddr = M.ReadLong(Address + 0x5FE8);
+				var lastAddr = M.ReadLong(Address + 0x5FF0);
 
 				if (firstAddr == 0)
 					return new List<InventoryHolder>();
@@ -131,12 +131,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			}
 		}
 
-		public List<InventoryHolder> GuildInventories//TODO Fixme
+		public List<InventoryHolder> GuildInventories
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x5518);
-				var lastAddr = M.ReadLong(Address + 0x5520);
+				var firstAddr = M.ReadLong(Address + 0x6098);
+				var lastAddr = M.ReadLong(Address + 0x60A0);
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
 			}
 		}
@@ -180,18 +180,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		#endregion
 		#endregion
 
-		public ushort TradeChatChannel => M.ReadUShort(Address + 0x6198);
+		public ushort TradeChatChannel => M.ReadUShort(Address + 0x6190);
 		public ushort GlobalChatChannel => M.ReadUShort(Address + 0x6198);
 		public ushort LastActionId => M.ReadUShort(Address + 0x61E4);
 
 		#region Completed Areas
 		public List<WorldArea> ElderGuardiansAreas=> GetAreas(0x6230);//TODO Fixme
-		public List<WorldArea> CompletedAreas => GetAreas(0x6260);//TODO Fixme
-		public List<WorldArea> Unknown => GetAreas(0x62A0);//TODO Fixme
+		public List<WorldArea> CompletedAreas => GetAreas(0x6260);
+		public List<WorldArea> ShapedMaps => GetAreas(0x62A0);
 		public List<WorldArea> BonusCompletedAreas => GetAreas(0x62E0);
-		public List<WorldArea> ShapedMaps => GetAreas(0x6320);//TODO Fixme
-		public List<WorldArea> _UniqCompletedMaps => GetAreas(0x6360);//Dunno what is this
-		public List<WorldArea>  ShaperElderAreas=> GetAreas(0x63A0);
+		public List<WorldArea> UnknownAreas => GetAreas(0x6320);//TODO Fixme
+		public List<WorldArea> MasterAreas => GetAreas(0x6360);
+		public List<WorldArea> ShaperElderAreas => GetAreas(0x63A0);
 
 		private List<WorldArea> GetAreas(int offset)
 		{
@@ -211,12 +211,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		}
 		#endregion
 		#region Monster Info
-		public byte MonsterLevel => M.ReadByte(Address + 0x6188);//TODO Fixme
-		public byte MonstersRemaining => M.ReadByte(Address + 0x6189); // 51 = 50+, 255 = N/A (Town, etc.)//TODO Fixme
+		public byte MonsterLevel => M.ReadByte(Address + 0x6D44);
+		public byte MonstersRemaining => M.ReadByte(Address + 0x6D45); // 51 = 50+, 255 = N/A (Town, etc.)
 		#endregion
 		#region Delve Info
-		public int CurrentAzuriteAmount => M.ReadInt(Address + 0x61E0);//TODO Fixme?
-		public int CurrentSulphiteAmount => M.ReadInt(Address + 0x61F0);//TODO Fixme?
+		public int CurrentSulphiteAmount => M.ReadUShort(Address + 0x6DDC);
+		public int CurrentAzuriteAmount => M.ReadInt(Address + 0x6DE8);
 		#endregion
 		public enum NetworkStateE : byte
 		{
