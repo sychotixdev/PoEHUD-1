@@ -8,6 +8,7 @@ namespace PoeHUD.Poe.Elements
     public class StashElement : Element
     {
         public long TotalStashes => StashInventoryPanel.ChildCount;
+        public bool HasScrollBar => TotalStashes >= 30;
 
         public Element ExitButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0xAA0)) : null;//or (10, A88) or (708, AA0) or (998, 100) or better (AA0, 708)
 
@@ -51,22 +52,13 @@ namespace PoeHUD.Poe.Elements
             return StashInventoryPanel.Children[index].Children[0].Children[0].AsObject<Inventory>();
         }
 
-        private static bool IsInitializedOnce;
-        private static bool NoScrollBar;
         public string GetStashName(int index)
         {
             if (index >= TotalStashes || index < 0)
                 return string.Empty;
 
             //When users have a scrollbar we should read child 1 instead of 2
-            if (!IsInitializedOnce)
-            {
-                IsInitializedOnce = true;
-                var child1 = ViewAllStashPanel.GetChildAtIndex(2);
-                NoScrollBar = Math.Abs(child1.X - 30) < 1 && Math.Abs(child1.Y) < 1;
-            }
-
-            var readChild = ViewAllStashPanel.GetChildAtIndex(NoScrollBar ? 2 : 1);
+            var readChild = ViewAllStashPanel.GetChildAtIndex(HasScrollBar ? 1 : 2);
             return readChild.GetChildAtIndex(index).GetChildAtIndex(1).AsObject<EntityLabel>().Text;
         }
     }
