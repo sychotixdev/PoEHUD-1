@@ -124,7 +124,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         PassiveTree = 13,
         RightHand = 3,
         Rings = 6,
+        Unknown1 = 14,
         Stash = 15,
-        Trade = 0x12
+        Unknown2 = 17,
+        Trade = 18,
+        TinysTrialCraftTable = 25
     }
 }
