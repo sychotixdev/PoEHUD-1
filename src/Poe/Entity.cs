@@ -21,9 +21,10 @@ namespace PoeHUD.Poe
         public int InventoryId => M.ReadInt(Address + 0x58);
 
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers
+
         public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
-        
-        public bool IsHostile => (GameController.Instance.Player.PositionedComp.Reaction & 0xFE) != (PositionedComp.Reaction & 0xFE);
+
+        public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
 
         public bool HasComponent<T>() where T : Component, new()
         {
