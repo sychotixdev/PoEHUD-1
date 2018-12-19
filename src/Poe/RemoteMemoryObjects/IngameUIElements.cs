@@ -14,26 +14,26 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class IngameUIElements : RemoteMemoryObject
 	{
-		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xB58);
+		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xB68);
 		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0xB60);
-		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0xBD8, 0xAB8, 0xC30));
-		public Element QuestTracker => ReadObjectAt<Element>(0xC80);
-		public Element OpenLeftPanel => ReadObjectAt<Element>(0xCC0);
-		public Element OpenRightPanel => ReadObjectAt<Element>(0xCC8);
-		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0xCF8);
-		public Element TreePanel => ReadObjectAt<Element>(0xD28);
-		public Element AtlasPanel => ReadObjectAt<Element>(0xD30);
-		public Map Map => ReadObjectAt<Map>(0xD80);
+		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0xBE8, 0xAB8, 0xC30)); //TODO: fix offset
+		public Element QuestTracker => ReadObjectAt<Element>(0xC70);
+		public Element OpenLeftPanel => ReadObjectAt<Element>(0xCD0);
+		public Element OpenRightPanel => ReadObjectAt<Element>(0xCD8);
+		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0xD08);
+		public Element TreePanel => ReadObjectAt<Element>(0xD38);
+		public Element AtlasPanel => ReadObjectAt<Element>(0xD40);
+		public Map Map => ReadObjectAt<Map>(0xD98);
 		public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD88);
+				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xDA0);
 				return itemsOnGroundLabelRoot.Children;
 			}
 		}
-		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x1068);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x10E8);
+		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x1098);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x1118);
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));
@@ -45,7 +45,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9F0));
+				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0xA00));
 				return stateListPres.Where(x => x.Item2 > 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
 			}
 		}
@@ -54,7 +54,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9F0));
+				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0xA00));
 				return stateListPres.Where(x => x.Item2 == 0).Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
 			}
 		}
@@ -85,7 +85,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0x9F0));
+				var stateListPres = M.ReadDoublePointerIntList(M.ReadLong(Address + 0xA00));
 				return stateListPres.Select(x => new Tuple<Quest, int>(GameController.Instance.Files.Quests.GetByAddress(x.Item1), x.Item2)).ToList();
 			}
 		}
