@@ -18,7 +18,7 @@ namespace PoeHUD.Poe.Elements
         public Element LabelOnHover => ReadObjectAt<Element>(OffsetBuffers + 0x344);
         public Entity ItemOnHover => ReadObjectAt<Entity>(OffsetBuffers + 0x34C);
 
-        public bool CanPickUp => labelInfo.Value == 0;
+        public bool CanPickUp => true;//labelInfo.Value == 0;
 
         public TimeSpan TimeLeft
         {
