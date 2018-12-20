@@ -59,7 +59,9 @@ namespace PoeHUD.Poe.Elements
 
             //When users have a scrollbar we should read child 1 instead of 2
             var readChild = ViewAllStashPanel.GetChildAtIndex(HasScrollBar ? 1 : 2);
-            return readChild.GetChildAtIndex(index).GetChildAtIndex(1).AsObject<EntityLabel>().Text;
+            var readChild2 = readChild.GetChildAtIndex(index);
+
+            return readChild2.GetChildAtIndex((int)Math.Max(0, readChild2.ChildCount - 1)).Text;
         }
     }
 }
