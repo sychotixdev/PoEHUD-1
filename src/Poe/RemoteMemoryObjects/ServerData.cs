@@ -61,7 +61,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			var firstAddr = M.ReadLong(Address + offsetBegin);
 			var lastAddr = M.ReadLong(Address + offsetEnd);
 
-			var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 200);
+			var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 5000);//Some players have 300 stash tabs, lol
 
 			//Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
 			tabs.RemoveAll(x => x.IsHidden);
