@@ -1,5 +1,4 @@
 ﻿using PoeHUD.Poe.RemoteMemoryObjects;
-using System;
 
 namespace PoeHUD.Poe.Components
 {
