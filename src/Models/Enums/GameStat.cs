@@ -3045,22 +3045,22 @@ namespace PoeHUD.Models.Enums
 		/// <summary>
 		/// base_critical_strike_multiplier
 		/// </summary>
-		BaseCriticalStrikeMultiplier = 1217,
+		BaseCriticalStrikeMultiplier2 = 1217,
 
 		/// <summary>
 		/// Main Hand Critical Strike Damage Multiplier
 		/// </summary>
-		MainHandCriticalStrikeMultiplier = 1219,
+		MainHandCriticalStrikeMultiplier2 = 1219,
 
 		/// <summary>
 		/// Off Hand Critical Strike Damage Multiplier
 		/// </summary>
-		OffHandCriticalStrikeMultiplier = 1221,
+		OffHandCriticalStrikeMultiplier2 = 1221,
 
 		/// <summary>
 		/// Spell Critical Strike Damage Multiplier
 		/// </summary>
-		SpellCriticalStrikeMultiplier = 1223,
+		SpellCriticalStrikeMultiplier2 = 1223,
 
 		/// <summary>
 		/// base_cold_damage_%_to_convert_to_fire
@@ -12500,7 +12500,7 @@ namespace PoeHUD.Models.Enums
 		/// <summary>
 		/// local_level_requirement_+
 		/// </summary>
-		LocalLevelRequirement = 4999,
+		LocalLevelRequirement2 = 4999,
 
 		/// <summary>
 		/// projectile_spiral_nova_starting_angle_offset
@@ -14280,7 +14280,7 @@ namespace PoeHUD.Models.Enums
 		/// <summary>
 		/// ignite_duration_-%
 		/// </summary>
-		IgniteDurationPct = 5711,
+		IgniteDurationPct2 = 5711,
 
 		/// <summary>
 		/// passive_can_be_allocated_without_connection

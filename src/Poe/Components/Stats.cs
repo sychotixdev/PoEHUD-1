@@ -28,5 +28,25 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
+
+        public Dictionary<GameStat, int> GameStatDictionary
+        {
+            get
+            {
+                var statPtrStart = M.ReadLong(Address + 0x50);
+                var statPtrEnd = M.ReadLong(Address + 0x58);
+
+                var total_stats = (int)(statPtrEnd - statPtrStart);
+                var bytes = M.ReadBytes(statPtrStart, total_stats);
+                var result = new Dictionary<GameStat, int>(total_stats / 8);
+                for (var i = 0; i < bytes.Length; i += 8)
+                {
+                    var key = BitConverter.ToInt32(bytes, i);
+                    var value = BitConverter.ToInt32(bytes, i + 0x04);
+                    result.Add((GameStat)key, value);
+                }
+                return result;
+            }
+        }
     }
 }
