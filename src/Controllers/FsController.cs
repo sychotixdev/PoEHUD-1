@@ -19,37 +19,31 @@ namespace PoeHUD.Controllers
 
         //Will be loaded on first access:
         private WorldAreas worldAreas;
-        public WorldAreas WorldAreas => worldAreas != null ? worldAreas :
-            worldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat"));
+        public WorldAreas WorldAreas => worldAreas ?? (worldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat")));
 
         private PassiveSkills passiveSkills;
-        public PassiveSkills PassiveSkills => passiveSkills != null ? passiveSkills :
-            passiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat"));
+        public PassiveSkills PassiveSkills => passiveSkills ?? (passiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat")));
 
         private LabyrinthTrials labyrinthTrials;
-        public LabyrinthTrials LabyrinthTrials => labyrinthTrials != null ? labyrinthTrials :
-            labyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat"));
+        public LabyrinthTrials LabyrinthTrials => labyrinthTrials ?? (labyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat")));
 
         private UniversalFileWrapper<Quest> quests;
-        public UniversalFileWrapper<Quest> Quests => quests != null ? quests :
-            quests = new UniversalFileWrapper<Quest>(mem, FindFile("Data/Quest.dat"));
+        public UniversalFileWrapper<Quest> Quests => quests ?? (quests = new UniversalFileWrapper<Quest>(mem, FindFile("Data/Quest.dat")));
 
         private QuestStates questStates;
-        public QuestStates QuestStates => questStates != null ? questStates :
-            questStates = new QuestStates(mem, FindFile("Data/QuestStates.dat"));
+        public QuestStates QuestStates => questStates ?? (questStates = new QuestStates(mem, FindFile("Data/QuestStates.dat")));
 
         private MonsterVarieties monsterVarieties;
-        public MonsterVarieties MonsterVarieties => monsterVarieties != null ? monsterVarieties :
-            monsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat"));
+        public MonsterVarieties MonsterVarieties => monsterVarieties ?? (monsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat")));
 
         private PropheciesDat prophecies;
-        public PropheciesDat Prophecies => prophecies != null ? prophecies :
-            prophecies = new PropheciesDat(mem, FindFile("Data/Prophecies.dat"));
+        public PropheciesDat Prophecies => prophecies ?? (prophecies = new PropheciesDat(mem, FindFile("Data/Prophecies.dat")));
 
         private UniversalFileWrapper<AtlasNode> atlasNodes;
-        public UniversalFileWrapper<AtlasNode> AtlasNodes => atlasNodes != null ? atlasNodes :
-            atlasNodes = new UniversalFileWrapper<AtlasNode>(mem, FindFile("Data/AtlasNode.dat"));
+        public UniversalFileWrapper<AtlasNode> AtlasNodes => atlasNodes ?? (atlasNodes = new UniversalFileWrapper<AtlasNode>(mem, FindFile("Data/AtlasNode.dat")));
 
+        private ChestsDat chests;
+        public ChestsDat Chests => chests ?? (chests = new ChestsDat(mem, FindFile("Data/Chests.dat")));
 
         private readonly Dictionary<string, long> files;
         private readonly Memory mem;

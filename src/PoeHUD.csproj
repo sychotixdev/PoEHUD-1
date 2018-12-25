@@ -287,6 +287,7 @@
     <Compile Include="Poe\Components\TimerComponent.cs" />
     <Compile Include="Poe\Elements\InventoryElements\MapStashTabElement.cs" />
     <Compile Include="Poe\Extensions.cs" />
+    <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\PropheciesDat.cs" />
     <Compile Include="Poe\FilesInMemory\Base\UniversalFileWrapper.cs" />
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Poe\RemoteMemoryObjects\ActorVaalSkill.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\ChestDat.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Labyrinth\LabyrinthData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\MonsterVariety.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ProphecyDat.cs" />

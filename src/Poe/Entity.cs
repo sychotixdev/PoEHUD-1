@@ -17,7 +17,7 @@ namespace PoeHUD.Poe
         /// </summary>
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
-        public long Id => (long)M.ReadInt(Address + 0x40) << 32 ^ Address;
+        public long Id => (long)M.ReadInt(Address + 0x40);// << 32 ^ Address;
         public int InventoryId => M.ReadInt(Address + 0x58);
 
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers

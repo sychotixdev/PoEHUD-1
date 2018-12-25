@@ -54,11 +54,18 @@ namespace PoeHUD.Poe.Components
             get
             {
                 var result = new List<DeployedObject>();
+                var LIMIT = 300;
                 for (var addr = DeployedObjectStart; addr < DeployedObjectEnd; addr += 8)
                 {
                     var objectId = M.ReadUInt(addr);
                     var objectKey = M.ReadUShort(addr + 4);//in list of entities
                     result.Add(new DeployedObject(objectId, objectKey));
+
+                    if (--LIMIT < 0)
+                    {
+                        DebugPlug.DebugPlugin.LogMsg("Fixed stuck in Actor.DeployedObjects", 2);
+                        break;
+                    }
                 }
                 return result;
             }
