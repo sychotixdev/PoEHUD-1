@@ -138,12 +138,27 @@ namespace PoeHUD.Hud.XpRate
                         Vector2 fourLine = thirdLine.Translate(-1, xpLeftSize.Height + 2);
                         Size2 xpGetLeftSize = Graphics.DrawText(xpGetLeft, Settings.TextSize, fourLine,
                             Settings.XphTextColor, FontDrawFlags.Right);
+
+                        Size2 delveInfoSize = Size2.Zero;
+                        if (GameController.Player.GetComponent<Stats>().StatDictionary.TryGetValue((int)Models.Enums.GameStat.DelveSulphiteCapacity, out var sulphiteCapacity))
+                        {
+                            if (sulphiteCapacity > 0)
+                            {
+                                string sulphite = $"Sulphite: {GameController.Game.IngameState.ServerData.CurrentSulphiteAmount}/{sulphiteCapacity}";
+                                string azurite = $"Azurite: {GameController.Game.IngameState.ServerData.CurrentAzuriteAmount}";
+                                Vector2 fifthLine = fourLine.Translate(-1, xpGetLeftSize.Height + 2);
+                                delveInfoSize = Graphics.DrawText($"{sulphite} {azurite}", Settings.TextSize, fifthLine,
+                                    Settings.DelveInfoTextcolor, FontDrawFlags.Right);
+                                delveInfoSize.Width += 40;
+                            }
+                        }
+
                         string timer = AreaInstance.GetTimeString(nowTime - GameController.Area.CurrentArea.TimeEntered);
                         Size2 timerSize = Graphics.MeasureText(timer, Settings.TextSize);
 
-                        float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40, areaNameSize.Width + 20, timerSize.Width);
-                        float boxHeight = xpRateSize.Height + xpLeftSize.Height + areaNameSize.Height;
-                        var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110, boxHeight + 30);
+                        float boxWidth = MathHepler.Max(xpRateSize.Width + 40, xpLeftSize.Width + 40, areaNameSize.Width + 20, timerSize.Width, delveInfoSize.Width);
+                        float boxHeight = xpRateSize.Height + xpLeftSize.Height + areaNameSize.Height + delveInfoSize.Height;
+                        var bounds = new RectangleF(position.X - boxWidth - 104, position.Y - 7, boxWidth + 110, boxHeight + 40);
 
                         Size2 timeFpsSize = Graphics.MeasureText(fps, Settings.TextSize);
                         var dif = bounds.Width - (12 + timeFpsSize.Width + xpRateSize.Width);
@@ -238,6 +253,7 @@ namespace PoeHUD.Hud.XpRate
         private void AreaChange()
         {
             (new Coroutine(StartXp(), nameof(XpRatePlugin), "AreaChange Start Xp")).Run();
+
         }
     }
 }
