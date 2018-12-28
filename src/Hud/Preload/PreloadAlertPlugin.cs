@@ -210,7 +210,7 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
-            if (WinApi.IsKeyDown(Keys.F5)) // do a full refresh if F5 is hit
+            if (Settings.ReloadButton.PressedOnce()) // do a full refresh if F5 is hit
             {
                 DebugPlug.DebugPlugin.LogMsg("Looking for new preloads.", 1);
                 ResetArea();
