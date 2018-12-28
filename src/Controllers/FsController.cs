@@ -2,6 +2,7 @@ using PoeHUD.Framework;
 using PoeHUD.Poe.FilesInMemory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using PoeHUD.Poe.RemoteMemoryObjects;
 
@@ -18,40 +19,49 @@ namespace PoeHUD.Controllers
 	    public StatsDat _Stats => Stats;
 
         //Will be loaded on first access:
-        private WorldAreas worldAreas;
-        public WorldAreas WorldAreas => worldAreas ?? (worldAreas = new WorldAreas(mem, FindFile("Data/WorldAreas.dat")));
+        private WorldAreas _worldAreas;
+        public WorldAreas WorldAreas => _worldAreas ?? (_worldAreas = new WorldAreas(_mem, FindFile("Data/WorldAreas.dat")));
 
-        private PassiveSkills passiveSkills;
-        public PassiveSkills PassiveSkills => passiveSkills ?? (passiveSkills = new PassiveSkills(mem, FindFile("Data/PassiveSkills.dat")));
+        private PassiveSkills _passiveSkills;
+        public PassiveSkills PassiveSkills => _passiveSkills ?? (_passiveSkills = new PassiveSkills(_mem, FindFile("Data/PassiveSkills.dat")));
 
-        private LabyrinthTrials labyrinthTrials;
-        public LabyrinthTrials LabyrinthTrials => labyrinthTrials ?? (labyrinthTrials = new LabyrinthTrials(mem, FindFile("Data/LabyrinthTrials.dat")));
+        private LabyrinthTrials _labyrinthTrials;
+        public LabyrinthTrials LabyrinthTrials => _labyrinthTrials ?? (_labyrinthTrials = new LabyrinthTrials(_mem, FindFile("Data/LabyrinthTrials.dat")));
 
-        private UniversalFileWrapper<Quest> quests;
-        public UniversalFileWrapper<Quest> Quests => quests ?? (quests = new UniversalFileWrapper<Quest>(mem, FindFile("Data/Quest.dat")));
+        private UniversalFileWrapper<Quest> _quests;
+        public UniversalFileWrapper<Quest> Quests => _quests ?? (_quests = new UniversalFileWrapper<Quest>(_mem, FindFile("Data/Quest.dat")));
 
-        private QuestStates questStates;
-        public QuestStates QuestStates => questStates ?? (questStates = new QuestStates(mem, FindFile("Data/QuestStates.dat")));
+        private QuestStates _questStates;
+        public QuestStates QuestStates => _questStates ?? (_questStates = new QuestStates(_mem, FindFile("Data/QuestStates.dat")));
 
-        private MonsterVarieties monsterVarieties;
-        public MonsterVarieties MonsterVarieties => monsterVarieties ?? (monsterVarieties = new MonsterVarieties(mem, FindFile("Data/MonsterVarieties.dat")));
+        private MonsterVarieties _monsterVarieties;
+        public MonsterVarieties MonsterVarieties => _monsterVarieties ?? (_monsterVarieties = new MonsterVarieties(_mem, FindFile("Data/MonsterVarieties.dat")));
 
-        private PropheciesDat prophecies;
-        public PropheciesDat Prophecies => prophecies ?? (prophecies = new PropheciesDat(mem, FindFile("Data/Prophecies.dat")));
+        private PropheciesDat _prophecies;
+        public PropheciesDat Prophecies => _prophecies ?? (_prophecies = new PropheciesDat(_mem, FindFile("Data/Prophecies.dat")));
 
         private UniversalFileWrapper<AtlasNode> atlasNodes;
-        public UniversalFileWrapper<AtlasNode> AtlasNodes => atlasNodes ?? (atlasNodes = new UniversalFileWrapper<AtlasNode>(mem, FindFile("Data/AtlasNode.dat")));
+        public UniversalFileWrapper<AtlasNode> AtlasNodes => atlasNodes ?? (atlasNodes = new UniversalFileWrapper<AtlasNode>(_mem, FindFile("Data/AtlasNode.dat")));
 
-        private ChestsDat chests;
-        public ChestsDat Chests => chests ?? (chests = new ChestsDat(mem, FindFile("Data/Chests.dat")));
+        private ChestsDat _chests;
+        public ChestsDat Chests => _chests ?? (_chests = new ChestsDat(_mem, FindFile("Data/Chests.dat")));
 
-        private readonly Dictionary<string, long> files;
-        private readonly Memory mem;
+        private readonly Dictionary<string, long> _files;
+        private readonly Memory _mem;
+
+	    private List<GenericFilesInMemory> _debugAllFiles;
+	    private List<GenericFilesInMemory> DebugAllFiles => _debugAllFiles ?? (_debugAllFiles = GetFilesForDebug());
+
+	    private UniversalFileWrapper<BetrayalTarget> _betrayalTargets;
+	    public UniversalFileWrapper<BetrayalTarget> BetrayalTargets => _betrayalTargets ?? (_betrayalTargets = new UniversalFileWrapper<BetrayalTarget>(_mem, FindFile("Data/BetrayalTargets.dat")));
+
+	    private UniversalFileWrapper<BetrayalJob> _betrayalJobs;
+	    public UniversalFileWrapper<BetrayalJob> BetrayalJobs => _betrayalJobs ?? (_betrayalJobs = new UniversalFileWrapper<BetrayalJob>(_mem, FindFile("Data/BetrayalJobs.dat")));
 
         public FsController(Memory mem)
         {
-            this.mem = mem;
-            files = GetAllFiles();
+            _mem = mem;
+            _files = GetAllFiles();
             ItemClasses = new ItemClasses();
             BaseItemTypes = new BaseItemTypes(mem, FindFile("Data/BaseItemTypes.dat"));
             Stats = new StatsDat(mem, FindFile("Data/Stats.dat"));
@@ -62,16 +72,16 @@ namespace PoeHUD.Controllers
         public Dictionary<string, long> GetAllFiles()
         {
             var fileList = new Dictionary<string, long>();
-            long fileRoot = mem.AddressOfProcess + mem.offsets.FileRoot;
-            long start = mem.ReadLong(fileRoot + 0x8);
+            long fileRoot = _mem.AddressOfProcess + _mem.offsets.FileRoot;
+            long start = _mem.ReadLong(fileRoot + 0x8);
 
-            for (long CurrFile = mem.ReadLong(start); CurrFile != start && CurrFile != 0; CurrFile = mem.ReadLong(CurrFile))
+            for (var currFile = _mem.ReadLong(start); currFile != start && currFile != 0; currFile = _mem.ReadLong(currFile))
             {
-                 var str = mem.ReadStringU(mem.ReadLong(CurrFile + 0x10), 512);
+                 var str = _mem.ReadStringU(_mem.ReadLong(currFile + 0x10), 512);
 
                 if (!fileList.ContainsKey(str))
                 {
-                    fileList.Add(str, mem.ReadLong(CurrFile + 0x18));
+                    fileList.Add(str, _mem.ReadLong(currFile + 0x18));
                 }
             }
             return fileList;
@@ -81,7 +91,7 @@ namespace PoeHUD.Controllers
         {
             try
             {
-                return files[name];
+                return _files[name];
             }
             catch (KeyNotFoundException)
             {
@@ -92,5 +102,22 @@ namespace PoeHUD.Controllers
 
             return 0;
         }
+
+	    private List<GenericFilesInMemory> GetFilesForDebug()
+	    {
+		    var result = new List<GenericFilesInMemory>();
+
+		    foreach (var file in _files)
+		    {
+			    if (!file.Key.EndsWith(".dat"))
+				    continue;
+			    result.Add(new GenericFilesInMemory(_mem, file.Key, file.Value));
+		    }
+
+		    result = result.OrderBy(x => x.ToString()).ToList();
+
+		    return result;
+	    }
+
     }
 }
