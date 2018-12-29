@@ -25,7 +25,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element AtlasPanel => ReadObjectAt<Element>(0xD30);
 		public Map Map => ReadObjectAt<Map>(0xD80);
 		public Element SyndicateTree => GetObject<Element>(M.ReadLong(Address + 0xEF8, 0xA50));
-
+        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0xED8);
 		public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
 		{
 			get
