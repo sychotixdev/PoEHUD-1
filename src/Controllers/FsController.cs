@@ -58,6 +58,12 @@ namespace PoeHUD.Controllers
 	    private UniversalFileWrapper<BetrayalJob> _betrayalJobs;
 	    public UniversalFileWrapper<BetrayalJob> BetrayalJobs => _betrayalJobs ?? (_betrayalJobs = new UniversalFileWrapper<BetrayalJob>(_mem, FindFile("Data/BetrayalJobs.dat")));
 
+	    private UniversalFileWrapper<BetrayalRank> _betrayalRanks;
+	    public UniversalFileWrapper<BetrayalRank> BetrayalRanks => _betrayalRanks ?? (_betrayalRanks = new UniversalFileWrapper<BetrayalRank>(_mem, FindFile("Data/BetrayalRanks.dat")));
+
+	    private UniversalFileWrapper<BetrayalReward> _betrayalRewards;
+	    public UniversalFileWrapper<BetrayalReward> BetrayalRewards => _betrayalRewards ?? (_betrayalRewards = new UniversalFileWrapper<BetrayalReward>(_mem, FindFile("Data/BetrayalTraitorRewards.dat")));
+
         public FsController(Memory mem)
         {
             _mem = mem;

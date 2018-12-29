@@ -298,6 +298,9 @@
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalJob.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalRank.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalReward.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalSyndicateState.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalTarget.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ChestDat.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GenericFileInMemory.cs" />
