@@ -8,15 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class ServerData : RemoteMemoryObject
 	{
-		public List<BetrayalSyndicateState> BetrayalStates
-		{
-			get
-			{
-				//This offsets seems good too https://dl.dropboxusercontent.com/s/2csb82ba4mmm2ee/StructureSpiderAdvanced_2018-12-29_02-42-18.png
-				var betrayalStateAddr = M.ReadLong(Address + 0x1FC8, 0x110, 0x178, 0x178, 0x178, 0x4A0);
-				return M.ReadStructsArray<BetrayalSyndicateState>(betrayalStateAddr,betrayalStateAddr + BetrayalSyndicateState.STRUCT_SIZE * 14, BetrayalSyndicateState.STRUCT_SIZE, 20);
-			}
-		}
+		public BetrayalData BetrayalData => GetObject<BetrayalData>(M.ReadLong(Address + 0x1FC8));
 
 		//[Obsolete("Obsolete. Use StashTabs instead")]
 		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;

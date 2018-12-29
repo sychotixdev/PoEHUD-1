@@ -14,6 +14,11 @@ namespace PoeHUD.Poe.Components
                 var statPtrStart = M.ReadLong(Address + 0x50);
                 var statPtrEnd = M.ReadLong(Address + 0x58);
 
+	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
+	            {
+		            return new Dictionary<int, int>();
+	            }
+
                 int key = 0;
                 int value = 0;
                 int total_stats = (int)(statPtrEnd - statPtrStart);
@@ -35,6 +40,11 @@ namespace PoeHUD.Poe.Components
             {
                 var statPtrStart = M.ReadLong(Address + 0x50);
                 var statPtrEnd = M.ReadLong(Address + 0x58);
+
+	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
+	            {
+		            return new Dictionary<GameStat, int>();
+	            }
 
                 var total_stats = (int)(statPtrEnd - statPtrStart);
                 var bytes = M.ReadBytes(statPtrStart, total_stats);

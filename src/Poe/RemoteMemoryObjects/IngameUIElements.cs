@@ -5,10 +5,6 @@ using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Controllers;
 using System;
 using System.Linq;
-using PoeHUD.Framework;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -24,8 +20,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element TreePanel => ReadObjectAt<Element>(0xD28);
 		public Element AtlasPanel => ReadObjectAt<Element>(0xD30);
 		public Map Map => ReadObjectAt<Map>(0xD80);
-		public Element SyndicateTree => GetObject<Element>(M.ReadLong(Address + 0xEF8, 0xA50));
+		public SyndicatePanel SyndicatePanel => GetObject<SyndicatePanel>(M.ReadLong(Address + 0xEF8, 0xA50));
         public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0xED8);
+
 		public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
 		{
 			get

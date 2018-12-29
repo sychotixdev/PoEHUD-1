@@ -287,6 +287,7 @@
     <Compile Include="Poe\Components\TimerComponent.cs" />
     <Compile Include="Poe\Elements\InventoryElements\MapStashTabElement.cs" />
     <Compile Include="Poe\Elements\SubterraneanChart.cs" />
+    <Compile Include="Poe\Elements\SyndicatePanel.cs" />
     <Compile Include="Poe\Extensions.cs" />
     <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\GenericFilesInMemory.cs" />
@@ -300,6 +301,9 @@
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoice.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoiceAction.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalData.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalDialogue.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalEventState.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalJob.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalRank.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalReward.cs" />

@@ -70,6 +70,9 @@ namespace PoeHUD.Controllers
 	    private UniversalFileWrapper<BetrayalChoiceAction> _betrayalChoiseActions;
 	    public UniversalFileWrapper<BetrayalChoiceAction> BetrayalChoiseActions => _betrayalChoiseActions ?? (_betrayalChoiseActions = new UniversalFileWrapper<BetrayalChoiceAction>(_mem, FindFile("Data/BetrayalChoiceActions.dat")));
 
+	    private UniversalFileWrapper<BetrayalDialogue> _betrayalDialogue;
+	    public UniversalFileWrapper<BetrayalDialogue> BetrayalDialogue => _betrayalDialogue ?? (_betrayalDialogue = new UniversalFileWrapper<BetrayalDialogue>(_mem, FindFile("Data/BetrayalDialogue.dat")));
+
         public FsController(Memory mem)
         {
             _mem = mem;
