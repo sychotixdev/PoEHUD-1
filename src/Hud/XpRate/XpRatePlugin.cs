@@ -25,12 +25,14 @@ namespace PoeHUD.Hud.XpRate
         private bool holdKey;
         private readonly SettingsHub settingsHub;
         private bool autoHide = false;
+        private int DelveSulphiteCapacityID = 0;
 
         public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
         {
             this.settingsHub = settingsHub;
             GameController.Area.OnAreaChange += area => AreaChange();
+            DelveSulphiteCapacityID = GameController.Instance.Files.Stats.records["delve_sulphite_capacity"].ID;
         }
 
         Dictionary<int, float> ArenaEffectiveLevels = new Dictionary<int, float>()
@@ -140,7 +142,7 @@ namespace PoeHUD.Hud.XpRate
                             Settings.XphTextColor, FontDrawFlags.Right);
 
                         Size2 delveInfoSize = Size2.Zero;
-                        if (GameController.Player.GetComponent<Stats>().StatDictionary.TryGetValue((int)Models.Enums.GameStat.DelveSulphiteCapacity, out var sulphiteCapacity))
+                        if (GameController.Player.GetComponent<Stats>().StatDictionary.TryGetValue(DelveSulphiteCapacityID, out var sulphiteCapacity))
                         {
                             if (sulphiteCapacity > 0)
                             {
