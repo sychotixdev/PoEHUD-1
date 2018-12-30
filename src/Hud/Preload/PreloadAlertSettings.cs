@@ -129,6 +129,7 @@ namespace PoeHUD.Hud.Preload
             AurelioVoidsinger = new ColorBGRA(254, 192, 118, 255);
         }
 
+	    public ToggleNode DumpPreloads { get; set; } = false;
         public HotkeyNode ReloadButton { get; set; }
         public ColorNode CadiroTrader { get; set; }
 

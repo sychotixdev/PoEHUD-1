@@ -128,7 +128,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         Stash = 15,
         Unknown2 = 17,
         Trade = 18,
-        TinysTrialCraftTableCurrency = 24,
-        TinysTrialCraftTableItem = 25
+	    TinysTrialCraftTableCurrency_undefined = 24,
+
+		/// <summary>
+		/// Transmute, alter, regal, exalts
+		/// </summary>
+	    TinysTrialCraftTableCurrency = 25,
+	    TinysTrialCraftTableItem = 26
     }
 }
