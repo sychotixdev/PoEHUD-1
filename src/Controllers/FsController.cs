@@ -49,8 +49,11 @@ namespace PoeHUD.Controllers
         private readonly Dictionary<string, long> _files;
         private readonly Memory _mem;
 
+	    private List<GenericFilesInMemory> _debugDatFiles;
+	    public List<GenericFilesInMemory> DebugDatFiles => _debugDatFiles ?? (_debugDatFiles = GetFilesForDebug());
+
 	    private List<GenericFilesInMemory> _debugAllFiles;
-	    private List<GenericFilesInMemory> DebugAllFiles => _debugAllFiles ?? (_debugAllFiles = GetFilesForDebug());
+	    public List<GenericFilesInMemory> DebugAllFiles => _debugAllFiles ?? (_debugAllFiles = GetFilesForDebug(false));
 
 	    private UniversalFileWrapper<BetrayalTarget> _betrayalTargets;
 	    public UniversalFileWrapper<BetrayalTarget> BetrayalTargets => _betrayalTargets ?? (_betrayalTargets = new UniversalFileWrapper<BetrayalTarget>(_mem, FindFile("Data/BetrayalTargets.dat")));
@@ -118,13 +121,13 @@ namespace PoeHUD.Controllers
             return 0;
         }
 
-	    private List<GenericFilesInMemory> GetFilesForDebug()
+	    private List<GenericFilesInMemory> GetFilesForDebug(bool datOnly = true)
 	    {
 		    var result = new List<GenericFilesInMemory>();
 
 		    foreach (var file in _files)
 		    {
-			    if (!file.Key.EndsWith(".dat"))
+			    if (datOnly && !file.Key.EndsWith(".dat"))
 				    continue;
 			    result.Add(new GenericFilesInMemory(_mem, file.Key, file.Value));
 		    }

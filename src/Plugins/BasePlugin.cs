@@ -64,6 +64,7 @@ namespace PoeHUD.Plugins
 
         public virtual void Initialise() { }
         public virtual void Render() { }
+        public virtual void UnconditionalRender() { }
         public virtual void EntityAdded(EntityWrapper entityWrapper) { }
         public virtual void EntityRemoved(EntityWrapper entityWrapper) { }
         public virtual void OnClose() { }
@@ -102,31 +103,57 @@ namespace PoeHUD.Plugins
         }
 
 
-        internal void _Render()
-        {
-            if (DisableDueToError) return;
-            if (!_allowRender) return;
+	    internal void _Render()
+	    {
+		    if (DisableDueToError) return;
+		    if (!_allowRender) return;
 
-            if (!_initialized)
-            {
-                _ForceInitialize();//init if load disabled plugin
-                return;
-            }
+		    if (!_initialized)
+		    {
+			    _ForceInitialize();//init if load disabled plugin
+			    return;
+		    }
 
-            if (MainMenuWindow.Settings.DeveloperMode.Value)
-                DiagnosticTimer.Restart();
-            try { Render(); }
-            catch (MissingMemberException me) { ProcessMissingMemberException(me, "Render"); }
-            catch (Exception e) { HandlePluginError("Render", e); }
+		    if (MainMenuWindow.Settings.DeveloperMode.Value)
+			    DiagnosticTimer.Restart();
+		    try { Render(); }
+		    catch (MissingMemberException me) { ProcessMissingMemberException(me, "Render"); }
+		    catch (Exception e) { HandlePluginError("Render", e); }
 
-            if (MainMenuWindow.Settings.DeveloperMode.Value)
-            {
-                DiagnosticTimer.Stop();
-                CurrentMs = DiagnosticTimer.ElapsedMilliseconds;
-                AwerageMs += (CurrentMs - AwerageMs) / 10;
-                TopMs = Math.Max(TopMs, CurrentMs);
-            }
-        }
+		    if (MainMenuWindow.Settings.DeveloperMode.Value)
+		    {
+			    DiagnosticTimer.Stop();
+			    CurrentMs = DiagnosticTimer.ElapsedMilliseconds;
+			    AwerageMs += (CurrentMs - AwerageMs) / 10;
+			    TopMs = Math.Max(TopMs, CurrentMs);
+		    }
+	    }
+
+	    internal void _UnconditionalRender()
+	    {
+		    if (DisableDueToError) return;
+		    if (!_allowRender) return;
+
+		    if (!_initialized)
+		    {
+			    _ForceInitialize();//init if load disabled plugin
+			    return;
+		    }
+
+		    if (MainMenuWindow.Settings.DeveloperMode.Value)
+			    DiagnosticTimer.Restart();
+		    try { UnconditionalRender(); }
+		    catch (MissingMemberException me) { ProcessMissingMemberException(me, "UnconditionalRender"); }
+		    catch (Exception e) { HandlePluginError("UnconditionalRender", e); }
+
+		    if (MainMenuWindow.Settings.DeveloperMode.Value)
+		    {
+			    DiagnosticTimer.Stop();
+			    CurrentMs = DiagnosticTimer.ElapsedMilliseconds;
+			    AwerageMs += (CurrentMs - AwerageMs) / 10;
+			    TopMs = Math.Max(TopMs, CurrentMs);
+		    }
+	    }
 
         internal void _EntityAdded(EntityWrapper entityWrapper)
         {
@@ -190,31 +217,36 @@ namespace PoeHUD.Plugins
             LogError($"Can't load plugin '{PluginName}' because poehud or plugin is not updated (You can use PluginsUpdater for this). Disabling plugin... ", 20);
             HandlePluginError(functionName, me, false);
         }
-
-        public float PluginErrorDisplayTime = 3;
-        private string LogFileName = "ErrorLog.txt";
-        private string logPath => PluginDirectory + "\\" + LogFileName;
+		
+        internal static string LogFileName = "ErrorLog.txt";
+        private string LogPath => PluginDirectory + "\\" + LogFileName;
 
         internal void HandlePluginError(string methodName, Exception exception, bool showMessage = true)
         {
-            if(showMessage)
-                LogError($"Plugin: '{PluginName}', Error in function: '{methodName}' : '{exception.Message}'", PluginErrorDisplayTime);
+	        if(showMessage)
+		        LogError($"Plugin: '{PluginName}', Error in function: '{methodName}' : '{exception.Message}'", 3);
 
-            try
-            {
-                using (StreamWriter w = File.AppendText(logPath))
-                {
-                    w.Write("\r\nLog Entry : ");
-                    w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
-                    w.WriteLine($" Method error: {methodName} : {exception.ToString()}");
-                    w.WriteLine("-------------------------------");
-                }
-            }
-            catch (Exception e)
-            {
-                LogError(" Can't save error log. Error: " + e.Message, 5);
-            }
+	        HandlePluginError(methodName, exception, LogPath);
         }
+
+	    internal static void HandlePluginError(string methodName, Exception exception, string logPath)
+	    {
+		    try
+		    {
+			    using (StreamWriter w = File.AppendText(logPath))
+			    {
+				    w.Write("\r\nLog Entry : ");
+				    w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
+				    w.WriteLine($" Method error: {methodName} : {exception}");
+				    w.WriteLine("-------------------------------");
+			    }
+		    }
+		    catch (Exception e)
+		    {
+			    LogError(" Can't save error log. Error: " + e.Message, 5);
+		    }
+	    }
+
         #endregion
 
         #region Logging

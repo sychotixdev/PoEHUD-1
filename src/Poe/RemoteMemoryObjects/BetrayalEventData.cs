@@ -2,7 +2,7 @@
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-	public class BetrayalEventState : RemoteMemoryObject
+	public class BetrayalEventData : RemoteMemoryObject
 	{
 		public BetrayalTarget Target1 => GameController.Instance.Files.BetrayalTargets.GetByAddress(M.ReadLong(Address + 0xAB8)); //ReadObjectAt<BetrayalTarget>(0xAB8);
 		public BetrayalTarget Target2 => GameController.Instance.Files.BetrayalTargets.GetByAddress(M.ReadLong(Address + 0xAD8)); //ReadObjectAt<BetrayalTarget>(0xAD8);

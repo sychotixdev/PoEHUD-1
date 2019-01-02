@@ -55,6 +55,7 @@ namespace PoeHUD.Hud.UI
         }
 
         public event Action Render;
+        public event Action UnconditionalRender;
 
 	    public DeviceEx Device => device;
 
@@ -64,39 +65,74 @@ namespace PoeHUD.Hud.UI
             device.Present();
         }
 
-        public void TryRender()
-        {
-            try
-            {
-                if (resized)
-                { 
-                    reset();
-                }
-                device.Clear(ClearFlags.Target, Color.Transparent, 0, 0);
-                device.SetRenderState(RenderState.AlphaBlendEnable, true);
-                device.SetRenderState(RenderState.CullMode, Cull.Clockwise);
-                device.BeginScene();
-                fontRenderer.Begin();
-                textureRenderer.Begin();
-                try
-                {
-                    imguiRenderer.GetNewFrame();
-                    Render.SafeInvoke();
-                    imguiRenderer.Draw();
-                }
-                finally
-                {
-                    textureRenderer.End();
-                    fontRenderer.End();
-                    device.EndScene();
-                    device.Present();
-                }
-                renderLocker.Set();
-            }
-            catch (SharpDXException)
-            {
-            }
-        }
+	    public void TryRender()
+	    {
+		    try
+		    {
+			    if (resized)
+			    { 
+				    reset();
+			    }
+			    device.Clear(ClearFlags.Target, Color.Transparent, 0, 0);
+			    device.SetRenderState(RenderState.AlphaBlendEnable, true);
+			    device.SetRenderState(RenderState.CullMode, Cull.Clockwise);
+			    device.BeginScene();
+			    fontRenderer.Begin();
+			    textureRenderer.Begin();
+			    try
+			    {
+				    imguiRenderer.GetNewFrame();
+				    Render.SafeInvoke();
+				    UnconditionalRender.SafeInvoke();
+				    imguiRenderer.Draw();
+			    }
+			    finally
+			    {
+				    textureRenderer.End();
+				    fontRenderer.End();
+				    device.EndScene();
+				    device.Present();
+			    }
+			    renderLocker.Set();
+		    }
+		    catch (SharpDXException)
+		    {
+		    }
+	    }
+
+	    public void UnconditionalTryRender()
+	    {
+		    try
+		    {
+			    if (resized)
+			    { 
+				    reset();
+			    }
+			    device.Clear(ClearFlags.Target, Color.Transparent, 0, 0);
+			    device.SetRenderState(RenderState.AlphaBlendEnable, true);
+			    device.SetRenderState(RenderState.CullMode, Cull.Clockwise);
+			    device.BeginScene();
+			    fontRenderer.Begin();
+			    textureRenderer.Begin();
+			    try
+			    {
+				    imguiRenderer.GetNewFrame();
+				    UnconditionalRender.SafeInvoke();
+				    imguiRenderer.Draw();
+			    }
+			    finally
+			    {
+				    textureRenderer.End();
+				    fontRenderer.End();
+				    device.EndScene();
+				    device.Present();
+			    }
+			    renderLocker.Set();
+		    }
+		    catch (SharpDXException)
+		    {
+		    }
+	    }
 
         public void Dispose()
         {

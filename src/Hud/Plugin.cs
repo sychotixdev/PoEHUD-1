@@ -33,8 +33,11 @@ namespace PoeHUD.Hud
         }
 
         public abstract void Render();
+	    public virtual void UnconditionalRender()
+	    {
+	    }
 
-        protected static RectangleF GetDirectionsUV(double phi, double distance)
+	    protected static RectangleF GetDirectionsUV(double phi, double distance)
         {
             // could not find a better place yet
             phi += Math.PI * 0.25; // fix rotation due to projection

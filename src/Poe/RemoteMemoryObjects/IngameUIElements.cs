@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-	public class IngameUIElements : RemoteMemoryObject
+	public partial class IngameUIElements : RemoteMemoryObject
 	{
 		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0xB58);
 		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0xB60);

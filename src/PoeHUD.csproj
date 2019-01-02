@@ -303,11 +303,12 @@
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoiceAction.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalDialogue.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\BetrayalEventState.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalEventData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalJob.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalRank.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalReward.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalSyndicateState.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BetrayalSyndicateLeadersData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalTarget.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ChestDat.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GenericFileInMemory.cs" />

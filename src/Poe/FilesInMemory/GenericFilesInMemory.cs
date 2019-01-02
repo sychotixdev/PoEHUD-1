@@ -8,15 +8,16 @@ namespace PoeHUD.Poe.FilesInMemory
 	/// </summary>
 	public class GenericFilesInMemory : UniversalFileWrapper<GenericFileInMemory>
 	{
-		private readonly string _fileName;
+		public string FileName { get; set; }
+
 		public GenericFilesInMemory(Memory m, string fileName, long address) : base(m, address)
 		{
-			_fileName = fileName;
+			FileName = fileName;
 		}
 
 		public override string ToString()
 		{
-			return _fileName;
+			return FileName;
 		}
 	}
 }
