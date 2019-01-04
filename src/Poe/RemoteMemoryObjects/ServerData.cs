@@ -187,11 +187,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public ushort LastActionId => M.ReadUShort(Address + 0x61E4);
 
 		#region Completed Areas
-		public List<WorldArea> ElderGuardiansAreas=> GetAreas(0x6230);//TODO Fixme
+		public List<WorldArea> UnknownAreas => GetAreas(0x6230);
 		public List<WorldArea> CompletedAreas => GetAreas(0x6260);
 		public List<WorldArea> ShapedMaps => GetAreas(0x62A0);
 		public List<WorldArea> BonusCompletedAreas => GetAreas(0x62E0);
-		public List<WorldArea> UnknownAreas => GetAreas(0x6320);//TODO Fixme
+		public List<WorldArea> ElderGuardiansAreas => GetAreas(0x6320);
 		public List<WorldArea> MasterAreas => GetAreas(0x6360);
 		public List<WorldArea> ShaperElderAreas => GetAreas(0x63A0);
 
@@ -203,11 +203,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
 		    if (size == 0 || size > 300)
 		        return result;
-		    listStart = M.ReadLong(listStart);
+		    //listStart = M.ReadLong(listStart);
 			for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
 			{
-				result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(addr + 0x18)));
 				if (--size < 0) break;
+				var areaAddr = M.ReadLong(addr + 0x18);
+				if(areaAddr != 0)
+					result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(areaAddr));
 			}
 			return result;
 		}

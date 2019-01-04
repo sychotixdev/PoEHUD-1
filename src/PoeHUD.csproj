@@ -288,6 +288,7 @@
     <Compile Include="Poe\Elements\InventoryElements\MapStashTabElement.cs" />
     <Compile Include="Poe\Elements\SubterraneanChart.cs" />
     <Compile Include="Poe\Elements\SyndicatePanel.cs" />
+    <Compile Include="Poe\Elements\WorldMapElement.cs" />
     <Compile Include="Poe\Extensions.cs" />
     <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\GenericFilesInMemory.cs" />
