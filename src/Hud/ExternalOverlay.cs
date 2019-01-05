@@ -191,10 +191,8 @@ namespace PoeHUD.Hud
             CheckGameWindow();
             CheckGameState();
             graphics.Render += () => plugins.ForEach(x => x.Render());
-            graphics.UnconditionalRender += () => plugins.ForEach(x => x.UnconditionalRender());
             gameController.Clear += graphics.Clear;
             gameController.Render += graphics.TryRender;
-            gameController.UnconditionedRender += graphics.UnconditionalTryRender;
             await Task.Run(() => gameController.WhileLoop());
         }
     }

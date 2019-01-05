@@ -64,7 +64,6 @@ namespace PoeHUD.Hud.PluginExtension
                 State = PluginState.Reload_DllNotFound;
                 return;
             }
-	      
 	        try
 	        {
 		        ReloadPlugin();
@@ -83,7 +82,6 @@ namespace PoeHUD.Hud.PluginExtension
                 BPlugin._OnClose();//saving settings, closing opened threads (on plugin side)
 
                 API.eRender -= BPlugin._Render;
-                API.eUnconditionalRender -= BPlugin._UnconditionalRender;
                 API.eEntityAdded -= BPlugin._EntityAdded;
                 API.eEntityRemoved -= BPlugin._EntityRemoved;
                 API.eClose -= BPlugin._OnClose;
@@ -108,6 +106,12 @@ namespace PoeHUD.Hud.PluginExtension
                 asmToLoad = Assembly.Load(File.ReadAllBytes(DllPath));
             }
 
+            if (asmToLoad == null)
+            {
+                State = PluginState.Reload_DllNotFound;
+                return;
+            }
+
             var pluginType = asmToLoad.GetType(FullTypeName);
             if (pluginType == null)
             {
@@ -122,10 +126,9 @@ namespace PoeHUD.Hud.PluginExtension
             {
                 pluginClassObj = Activator.CreateInstance(pluginType);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-				var logPath = PluginDirectory + "\\" + BasePlugin.LogFileName;
-	            BasePlugin.HandlePluginError("loading plugin (create instance)", e, logPath);
+                BasePlugin.LogMessage("Error loading plugin: " + ex.Message, 3);
                 State = PluginState.ErrorClassInstance;
                 return;
             }
@@ -138,7 +141,6 @@ namespace PoeHUD.Hud.PluginExtension
                 PluginName = BPlugin.PluginName;
 
             API.eRender += BPlugin._Render;
-	        API.eUnconditionalRender += BPlugin._UnconditionalRender;
             API.eEntityAdded += BPlugin._EntityAdded;
             API.eEntityRemoved += BPlugin._EntityRemoved;
             API.eClose += BPlugin._OnClose;
