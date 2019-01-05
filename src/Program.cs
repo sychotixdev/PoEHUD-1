@@ -67,15 +67,6 @@ namespace PoeHUD
             }
 
             Sounds.LoadSounds();
-	
-	        try
-	        {
-				//For plugins references
-		        Environment.SetEnvironmentVariable("POEHUD_PATH", Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), EnvironmentVariableTarget.User);
-	        }
-	        catch (Exception e)
-	        {
-	        }
 
             using (var memory = new Memory(offs, pid))
             {

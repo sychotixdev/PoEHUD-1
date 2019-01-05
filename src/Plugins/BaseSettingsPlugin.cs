@@ -35,7 +35,7 @@ namespace PoeHUD.Plugins
                 if (File.Exists(settingsFullPath))
                 {
                     string json = File.ReadAllText(settingsFullPath);
-	                if (!string.IsNullOrEmpty(json))
+                    if (!string.IsNullOrEmpty(json))
 	                {
 		                Settings = JsonConvert.DeserializeObject<TSettings>(json, SettingsHub.jsonSettings);
 	                }

@@ -65,7 +65,6 @@ namespace PoeHUD.Controllers
         public FsController Files { get; private set; }
         public bool IsForeGroundCache { get; private set; }
         public Action Render;
-        public Action UnconditionedRender;
         public Action Clear;
         public ConcurrentDictionary<string, float> DebugInformation = new ConcurrentDictionary<string, float>();
         public readonly Runner CoroutineRunner;
@@ -250,12 +249,7 @@ namespace PoeHUD.Controllers
                     RenderCount++;
                     DebugInformation["DeltaRender"] = (float) (sw.Elapsed.TotalMilliseconds - startFrameTime);
                 }
-                else
-                {
-					//To debug problems with InGame or what..
-	                UnconditionedRender.SafeInvoke();
-                }
-	         
+                
 
                 if (sw.ElapsedMilliseconds >= tickEverySecond)
                 {
