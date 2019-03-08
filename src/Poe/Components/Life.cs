@@ -6,16 +6,16 @@ namespace PoeHUD.Poe.Components
 {
 	public class Life : Component
 	{
-		public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x80) : 1;
-		public int CurHP => Address != 0 ? M.ReadInt(Address + 0x84) : 1;
-		public int ReservedFlatHP => Address != 0 ? M.ReadInt(Address + 0x8C) : 0;
-		public int ReservedPercentHP => Address != 0 ? M.ReadInt(Address + 0x90) : 0;
-		public int MaxMana => Address != 0 ? M.ReadInt(Address + 0xC0) : 1;
-		public int CurMana => Address != 0 ? M.ReadInt(Address + 0xC4) : 1;
-		public int ReservedFlatMana => Address != 0 ? M.ReadInt(Address + 0xCC) : 0;
-		public int ReservedPercentMana => Address != 0 ? M.ReadInt(Address + 0xD0) : 0;
-		public int MaxES => Address != 0 ? M.ReadInt(Address + 0xF8) : 0;
-		public int CurES => Address != 0 ? M.ReadInt(Address + 0xFC) : 0;
+		public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x88) : 1;
+		public int CurHP => Address != 0 ? M.ReadInt(Address + 0x8C) : 1;
+		public int ReservedFlatHP => Address != 0 ? M.ReadInt(Address + 0x90) : 0;
+		public int ReservedPercentHP => Address != 0 ? M.ReadInt(Address + 0x94) : 0;
+		public int MaxMana => Address != 0 ? M.ReadInt(Address + 0xC8) : 1;
+		public int CurMana => Address != 0 ? M.ReadInt(Address + 0xCC) : 1;
+		public int ReservedFlatMana => Address != 0 ? M.ReadInt(Address + 0xD0) : 0;
+		public int ReservedPercentMana => Address != 0 ? M.ReadInt(Address + 0xD4) : 0;
+		public int MaxES => Address != 0 ? M.ReadInt(Address + 0x100) : 0;
+		public int CurES => Address != 0 ? M.ReadInt(Address + 0x104) : 0;
 		public float HPPercentage => CurHP / (float)(MaxHP - ReservedFlatHP - Math.Round(ReservedPercentHP * 0.01 * MaxHP));
 		public float MPPercentage => CurMana / (float)(MaxMana - ReservedFlatMana - Math.Round(ReservedPercentMana * 0.01 * MaxMana));
 

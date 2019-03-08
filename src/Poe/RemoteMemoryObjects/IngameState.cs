@@ -21,18 +21,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public IngameUIElements IngameUi => _cache.Enable && _cache.IngameUi != null ? _cache.IngameUi : _cache.Enable ? _cache.IngameUi = IngameUiReal : IngameUiReal;
 		private IngameUIElements IngameUiReal => ReadObjectAt<IngameUIElements>(0x7D0 + Offsets.IgsOffset);
 
-		public float CurentUIElementPosX => M.ReadFloat(Address + 0xAC8 + Offsets.IgsOffset);
-		public float CurentUIElementPosY => M.ReadFloat(Address + 0xACC + Offsets.IgsOffset);
+		public float CurentUIElementPosX => M.ReadFloat(Address + 0x524 + Offsets.IgsOffset);
+		public float CurentUIElementPosY => M.ReadFloat(Address + 0x528 + Offsets.IgsOffset);
 
 		public Element UIRoot => _cache.Enable && _cache.UIRoot != null ? _cache.UIRoot : _cache.Enable ? _cache.UIRoot = UIRootReal : UIRootReal;
 		private Element UIRootReal => ReadObjectAt<Element>(0xE88 + Offsets.IgsOffset);
-		public Element UIHoverTooltip => ReadObjectAt<Element>(0xEC0 + Offsets.IgsOffset);
-		public float UIHoverX => M.ReadFloat(Address + 0xEC8 + Offsets.IgsOffset);
-		public float UIHoverY => M.ReadFloat(Address + 0xECC + Offsets.IgsOffset);
-		public Element UIHover => ReadObjectAt<Element>(0xED0 + Offsets.IgsOffset);
+		public Element UIHoverTooltip => ReadObjectAt<Element>(0x4E8 + Offsets.IgsOffset);
+		public float UIHoverX => M.ReadFloat(Address + 0x4E0 + Offsets.IgsOffset);
+		public float UIHoverY => M.ReadFloat(Address + 0x4E4 + Offsets.IgsOffset);
+		public Element UIHover => ReadObjectAt<Element>(0x4D8 + Offsets.IgsOffset);
 
-		public TimeSpan TimeInGame => TimeSpan.FromSeconds(M.ReadFloat(Address + 0xF50 + Offsets.IgsOffset));
-		public float TimeInGameF => M.ReadFloat(Address + 0xF54 + Offsets.IgsOffset);
+		public TimeSpan TimeInGame => TimeSpan.FromSeconds(M.ReadFloat(Address + 0x570 + Offsets.IgsOffset));
+		public float TimeInGameF => M.ReadFloat(Address + 0x570 + Offsets.IgsOffset);
 
 		public DiagnosticInfoType DiagnosticInfoType => (DiagnosticInfoType)M.ReadInt(Address + 0xF68 + Offsets.IgsOffset);
 
