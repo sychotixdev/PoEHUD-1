@@ -51,6 +51,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Camera Camera => _cache.Enable && _cache.Camera != null ? _cache.Camera :
 			_cache.Enable ? _cache.Camera = CameraReal : CameraReal;
 
-		private Camera CameraReal => GetObject<Camera>(Address + 0x1934 + Offsets.IgsOffsetDelta);
+		private Camera CameraReal => GetObject<Camera>(Address + 0x1258 + Offsets.IgsOffsetDelta);
 	}
 }
