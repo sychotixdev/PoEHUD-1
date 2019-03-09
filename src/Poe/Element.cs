@@ -15,8 +15,7 @@ namespace PoeHUD.Poe
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
-
-        public int vTable => M.ReadInt(Address + 0);
+        
         public long ChildCount => (M.ReadLong(Address + 0x44 + OffsetBuffers) - M.ReadLong(Address + 0x3c + OffsetBuffers)) / 8;
         public bool IsVisibleLocal => (M.ReadInt(Address + 0x94 + OffsetBuffers) & 1) == 1;
         public Element Root => ReadObject<Element>(Address + 0xC4 + OffsetBuffers);

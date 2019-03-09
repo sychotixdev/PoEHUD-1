@@ -1,7 +1,5 @@
 using System;
-using System.Text;
 using PoeHUD.Controllers;
-using PoeHUD.Poe.FilesInMemory;
 using System.Collections.Generic;
 using PoeHUD.Models.Enums;
 
@@ -18,7 +16,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             ? GameController.Instance.Cache.LocalPlayer
             : GameController.Instance.Cache.Enable ? GameController.Instance.Cache.LocalPlayer = LocalPlayerReal : LocalPlayerReal;
         private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x3E0);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x408);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x468);
 
         private long LabDataPtr => M.ReadLong(Address + 0xC0);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);

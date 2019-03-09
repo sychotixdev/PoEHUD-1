@@ -25,11 +25,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public float CurentUIElementPosY => M.ReadFloat(Address + 0x528 + Offsets.IgsOffset);
 
 		public Element UIRoot => _cache.Enable && _cache.UIRoot != null ? _cache.UIRoot : _cache.Enable ? _cache.UIRoot = UIRootReal : UIRootReal;
-		private Element UIRootReal => ReadObjectAt<Element>(0xE88 + Offsets.IgsOffset);
+		private Element UIRootReal => ReadObjectAt<Element>(0xE90 + Offsets.IgsOffset);
 		public Element UIHoverTooltip => ReadObjectAt<Element>(0x4E8 + Offsets.IgsOffset);
-		public float UIHoverX => M.ReadFloat(Address + 0x4E0 + Offsets.IgsOffset);
-		public float UIHoverY => M.ReadFloat(Address + 0x4E4 + Offsets.IgsOffset);
-		public Element UIHover => ReadObjectAt<Element>(0x4D8 + Offsets.IgsOffset);
+		public float UIHoverX => M.ReadFloat(Address + 0x51C + Offsets.IgsOffset);
+		public float UIHoverY => M.ReadFloat(Address + 0x520 + Offsets.IgsOffset);
+		public Element UIHover => ReadObjectAt<Element>(0x4E8 + Offsets.IgsOffset);
 
 		public TimeSpan TimeInGame => TimeSpan.FromSeconds(M.ReadFloat(Address + 0x570 + Offsets.IgsOffset));
 		public float TimeInGameF => M.ReadFloat(Address + 0x570 + Offsets.IgsOffset);
