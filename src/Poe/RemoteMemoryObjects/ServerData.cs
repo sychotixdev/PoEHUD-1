@@ -11,18 +11,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public BetrayalData BetrayalData => GetObject<BetrayalData>(M.ReadLong(Address + 0x1FC8));
 
 		//[Obsolete("Obsolete. Use StashTabs instead")]
-		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null;
+		public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null; // needs fixed, but if it's obsolete, just remove it
 
-		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x5D88);
+		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x6188);
 
-		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x5B90) & 0xF);
+		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x5F90) & 0xF);
 
 		public List<ushort> PassiveSkillIds
 		{
 			get
 			{
-				var fisrPtr = M.ReadLong(Address + 0x5B20);
-				var endPtr = M.ReadLong(Address + 0x5B28);
+				var fisrPtr = M.ReadLong(Address + 0x5F20);
+				var endPtr = M.ReadLong(Address + 0x5F28);
 
 				int skillIds = (int)(endPtr - fisrPtr);
 
@@ -40,20 +40,20 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			}
 		}
 		#region PlayerData
-		public int CharacterLevel => M.ReadInt(Address + 0x5B94);
-		public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x5018);//TODO Fixme
-		public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x501C);//TODO Fixme
-		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x5020);//TODO Fixme
-		public int TotalAscendencyPoints => M.ReadInt(Address + 0x5024);//TODO Fixme
-		public int SpentAscendencyPoints => M.ReadInt(Address + 0x5028);//TODO Fixme
-		public float TimeInGame => M.ReadFloat(Address + 0x5C48);
+		public int CharacterLevel => M.ReadInt(Address + 0x5F94);
+		public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x5F98);
+		public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x5F9C);
+		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x5FA0);
+		public int TotalAscendencyPoints => M.ReadInt(Address + 0x5FA4);
+		public int SpentAscendencyPoints => M.ReadInt(Address + 0x5FA8);
+		public int TimeInGame => M.ReadInt(Address + 0x6048);
 
-		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x5BD0);
+		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x5FD0);
 		public bool IsInGame => true ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
 
-		public string League => NativeStringReader.ReadString(Address + 0x5BE8);
-		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x50B5);//TODO Fixme
-		public int Latency => M.ReadInt(Address + 0x5C50);
+		public string League => NativeStringReader.ReadString(Address + 0x5FE8);
+		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x6035);
+		public int Latency => M.ReadInt(Address + 0x6050);
 		#endregion
 		#region Stash Tabs
 		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x5C60, 0x5C68);
