@@ -29,7 +29,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element UIHoverTooltip => ReadObjectAt<Element>(0x4E8 + Offsets.IgsOffset);
 		public float UIHoverX => M.ReadFloat(Address + 0x51C + Offsets.IgsOffset);
 		public float UIHoverY => M.ReadFloat(Address + 0x520 + Offsets.IgsOffset);
-		public Element UIHover => ReadObjectAt<Element>(0x4E8 + Offsets.IgsOffset);
+		public Element UIHover => ReadObjectAt<Element>(0x4D8 + Offsets.IgsOffset);
 
 		public TimeSpan TimeInGame => TimeSpan.FromSeconds(M.ReadFloat(Address + 0x570 + Offsets.IgsOffset));
 		public float TimeInGameF => M.ReadFloat(Address + 0x570 + Offsets.IgsOffset);
