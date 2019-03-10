@@ -46,7 +46,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public unsafe Vector2 WorldToScreen(Vector3 vec3)
         {
             float x, y;
-            long addr = Address + 0x6C;
+            long addr = Address + 0x5C;
             fixed (byte* numRef = M.ReadBytes(addr, 0x40))
             {
                 Matrix4x4 matrix = *(Matrix4x4*)numRef;
