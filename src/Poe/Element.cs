@@ -17,7 +17,7 @@ namespace PoeHUD.Poe
         // then the rest is
         
         public long ChildCount => (M.ReadLong(Address + 0x38 + OffsetBuffers) - M.ReadLong(Address + 0x40 + OffsetBuffers)) / 8;
-        public bool IsVisibleLocal => (M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
+        public bool IsVisibleLocal => M.ReadByte(Address + 0x111) == 23;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
         public Element Root => Game.IngameState.UIRoot; //ReadObject<Element>(Address + 0xC4 + OffsetBuffers); 
         public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
@@ -26,7 +26,7 @@ namespace PoeHUD.Poe
         public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
-        public string Text => AsObject<EntityLabel>().Text;
+        public string Text => M.ReadStringU(Address + 0x3B0);// AsObject<EntityLabel>().Text;
         public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
 
         public bool IsVisible
