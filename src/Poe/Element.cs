@@ -10,24 +10,24 @@ namespace PoeHUD.Poe
 
     public class Element : RemoteMemoryObject
     {
-        public const int OffsetBuffers = 0x6EC;
+        public const int OffsetBuffers = 0;//0x6EC;
         // dd id
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
         
-        public long ChildCount => (M.ReadLong(Address + 0x44 + OffsetBuffers) - M.ReadLong(Address + 0x3c + OffsetBuffers)) / 8;
-        public bool IsVisibleLocal => (M.ReadInt(Address + 0x94 + OffsetBuffers) & 1) == 1;
-        public Element Root => ReadObject<Element>(Address + 0xC4 + OffsetBuffers);
-        public Element Parent => ReadObject<Element>(Address + 0xCC + OffsetBuffers);
-        public float X => M.ReadFloat(Address + 0xD4 + OffsetBuffers);
-        public float Y => M.ReadFloat(Address + 0xD8 + OffsetBuffers);
+        public long ChildCount => (M.ReadLong(Address + 0x38 + OffsetBuffers) - M.ReadLong(Address + 0x40 + OffsetBuffers)) / 8;
+        public bool IsVisibleLocal => (M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
+        public Element Root => Game.IngameState.UIRoot; //ReadObject<Element>(Address + 0xC4 + OffsetBuffers); 
+        public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
+        public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
+        public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);
         public Element Tooltip => ReadObject<Element>(Address + 0x104 + OffsetBuffers); //0x7F0
-        public float Scale => M.ReadFloat(Address + 0x1D0 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x21C + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x220 + OffsetBuffers);
+        public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
+        public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
+        public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
         public string Text => AsObject<EntityLabel>().Text;
-        public bool isHighlighted => M.ReadByte(Address + 0x948) > 0;
+        public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
 
         public bool IsVisible
         {
@@ -36,9 +36,8 @@ namespace PoeHUD.Poe
 
         public List<Element> Children => GetChildren<Element>();
 
-        protected List<T> GetChildren<T>() where T : Element, new()
-        {
-            const int listOffset = 0x3C + OffsetBuffers;
+        protected List<T> GetChildren<T>() where T : Element, new() {
+            const int listOffset = 0; //0x3C + OffsetBuffers;
             var list = new List<T>();
             if (M.ReadLong(Address + listOffset + 8) == 0 || M.ReadLong(Address + listOffset) == 0 ||
                 ChildCount > 1000)
