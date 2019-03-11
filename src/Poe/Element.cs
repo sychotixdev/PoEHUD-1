@@ -111,7 +111,7 @@ namespace PoeHUD.Poe
 
         public Element GetChildAtIndex(int index)
         {
-            return index >= ChildCount ? null : GetObject<Element>(M.ReadLong(Address + 0x24 + OffsetBuffers, index * 8));
+            return index >= ChildCount ? null : GetObject<Element>(M.ReadLong(Address + 0x38 + OffsetBuffers, index * 8));
         }
 
 	    public Element this[int index] => GetChildAtIndex(index);
