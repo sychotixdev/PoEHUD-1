@@ -20,7 +20,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element AtlasPanel => ReadObjectAt<Element>(0x550);
 		public Map Map => ReadObjectAt<Map>(0x5A0);
 		public SyndicatePanel SyndicatePanel => GetObject<SyndicatePanel>(M.ReadLong(Address + 0xEF8, 0xA50));
-        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0xED8);
+        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x6F8/*0xED8*/);
 		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xCC0);
 		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7A8);
 
