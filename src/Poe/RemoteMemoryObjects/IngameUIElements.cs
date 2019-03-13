@@ -15,7 +15,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element OpenLeftPanel => ReadObjectAt<Element>(0x4E0/*4F0*/);
 		public Element OpenRightPanel => ReadObjectAt<Element>(0x4E8/*4F8 */);
 		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0x518);
-		public StashElement StashElement => GetObject<StashElement>(0x520); //This element was in serverdata
+		public StashElement StashElement => ReadObjectAt<StashElement>(0x520); //This element was in serverdata
 		public Element TreePanel => ReadObjectAt<Element>(0x548);
 		public Element AtlasPanel => ReadObjectAt<Element>(0x550);
 		public Map Map => ReadObjectAt<Map>(0x5A0);
