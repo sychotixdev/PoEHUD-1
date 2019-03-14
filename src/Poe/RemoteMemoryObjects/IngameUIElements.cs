@@ -28,12 +28,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD88);
+				var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5A8));
 				return itemsOnGroundLabelRoot.Children;
 			}
 		}
 		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x1068);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x10E8);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x248);//or 0x250
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));
