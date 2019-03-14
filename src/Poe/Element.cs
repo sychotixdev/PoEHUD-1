@@ -16,9 +16,9 @@ namespace PoeHUD.Poe
         // 16 dup <128-bytes structure>
         // then the rest is
         
-        public long ChildCount => (M.ReadLong(Address + 0x38 + OffsetBuffers) - M.ReadLong(Address + 0x40 + OffsetBuffers)) / 8;
+        public long ChildCount => (M.ReadLong(Address + 0x40 + OffsetBuffers) - M.ReadLong(Address + 0x38 + OffsetBuffers)) / 8;
         public bool IsVisibleLocal => M.ReadByte(Address + 0x111) == 23;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
-        public Element Root => Game.IngameState.UIRoot; //ReadObject<Element>(Address + 0xC4 + OffsetBuffers); 
+        public Element Root => ReadObject<Element>(Address + 0x88 + OffsetBuffers);
         public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);
@@ -37,7 +37,7 @@ namespace PoeHUD.Poe
         public List<Element> Children => GetChildren<Element>();
 
         protected List<T> GetChildren<T>() where T : Element, new() {
-            const int listOffset = 0; //0x3C + OffsetBuffers;
+            const int listOffset = 0x38;
             var list = new List<T>();
             if (M.ReadLong(Address + listOffset + 8) == 0 || M.ReadLong(Address + listOffset) == 0 ||
                 ChildCount > 1000)

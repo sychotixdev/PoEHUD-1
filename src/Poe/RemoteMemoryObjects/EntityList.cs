@@ -45,9 +45,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     queue.Enqueue(M.ReadLong(nextAddr + 0x10));
                 }
 
-                if (loopcount++ < 10000)
+                if (loopcount++ > 10000)
                 {
-                    DebugPlug.DebugPlugin.LogMsg("Entities processing limit reached (10k)", 0.1f, Color.Yellow);
+                    DebugPlug.DebugPlugin.LogMsg("Entities processing limit reached (10k)", 10, Color.Yellow);
+					break;
                 }
             }
         }

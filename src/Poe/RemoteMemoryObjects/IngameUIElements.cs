@@ -15,12 +15,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element OpenLeftPanel => ReadObjectAt<Element>(0x4E0/*4F0*/);
 		public Element OpenRightPanel => ReadObjectAt<Element>(0x4E8/*4F8 */);
 		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0x518);
-		public StashElement StashElement => GetObject<StashElement>(0x520); //This element was in serverdata
+		public StashElement StashElement => ReadObjectAt<StashElement>(0x520); //This element was in serverdata
 		public Element TreePanel => ReadObjectAt<Element>(0x548);
 		public Element AtlasPanel => ReadObjectAt<Element>(0x550);
 		public Map Map => ReadObjectAt<Map>(0x5A0);
 		public SyndicatePanel SyndicatePanel => GetObject<SyndicatePanel>(M.ReadLong(Address + 0xEF8, 0xA50));
-        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0xED8);
+        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x6F8/*0xED8*/);
 		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xCC0);
 		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7A8);
 
@@ -28,12 +28,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD88);
+				var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5A8));
 				return itemsOnGroundLabelRoot.Children;
 			}
 		}
 		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x1068);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x10E8);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x248);//or 0x250
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));
