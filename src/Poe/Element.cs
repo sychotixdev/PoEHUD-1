@@ -26,8 +26,8 @@ namespace PoeHUD.Poe
         public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
-        public string Text => M.ReadStringU(Address + 0x3B0);// AsObject<EntityLabel>().Text;
-        public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
+        public string Text => M.ReadStringU(Address + 0x3B0); // also 0x320, full string at 0x2E8
+        public bool isHighlighted => M.ReadByte(Address + 0x17C) > 0;
 
         public bool IsVisible
         {
