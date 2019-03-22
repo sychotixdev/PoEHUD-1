@@ -1,10 +1,22 @@
 ﻿using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Portal : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct PortalStruct
     {
-        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x28));
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x28)]
+        public byte AreaPtr;
+    }
+
+    public class Portal : StructuredRemoteMemoryObject<PortalStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+
+        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetByAddress(Structure.AreaPtr);
     }
 }

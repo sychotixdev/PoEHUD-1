@@ -1,7 +1,20 @@
+using System.Runtime.InteropServices;
+
 namespace PoeHUD.Poe.Components
 {
-    public class Quality : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct QualityStruct
     {
-        public int ItemQuality => Address != 0 ? M.ReadInt(Address + 0x18) : 0;
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x18)]
+        public int ItemQuality;
+    }
+
+    public class Quality : StructuredRemoteMemoryObject<QualityStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+
+        public int ItemQuality => Address != 0 ? Structure.ItemQuality : 0;
     }
 }

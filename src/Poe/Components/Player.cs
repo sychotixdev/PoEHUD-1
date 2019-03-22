@@ -5,28 +5,64 @@ using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Attributes;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Player : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ElementMemoryStruct
     {
+
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x44)]
+        public byte AllocatedLootId;
+        [FieldOffset(0x48)]
+        public uint XP;
+        [FieldOffset(0x4C)]
+        public int Strength;
+        [FieldOffset(0x50)]
+        public int Dexterity;
+        [FieldOffset(0x54)]
+        public int Intelligence;
+        [FieldOffset(0x58)]
+        public byte Level;
+        [FieldOffset(0x5b)]
+        public byte PantheonMinor;
+        [FieldOffset(0x5c)]
+        public byte PantheonMajor;
+        [FieldOffset(0x17E)]
+        public byte DebugPlayerTrialStates;
+        [FieldOffset(0x1ea)]
+        public byte PropheciesCount;
+        [FieldOffset(0x1ec)]
+        public ushort Prophecies;
+        [FieldOffset(0x230)]
+        public long HideoutPtr;
+        [FieldOffset(0x256)]
+        public byte HideoutLevel;
+    }
+
+    public class Player : StructuredRemoteMemoryObject<ElementMemoryStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
         public string PlayerName => GetObject<NativeStringReader>(Address + 0x20).Value;
 
-        public uint XP => Address != 0 ? M.ReadUInt(Address + 0x48) : 0;
-		public int Strength => Address != 0 ? M.ReadInt(Address + 0x4c) : 0;
-		public int Dexterity => Address != 0 ? M.ReadInt(Address + 0x50) : 0;
-		public int Intelligence => Address != 0 ? M.ReadInt(Address + 0x54) : 0;
-        public int Level => Address != 0 ? M.ReadByte(Address + 0x58) : 1;
-        public int AllocatedLootId => Address != 0 ? M.ReadByte(Address + 0x44) : 1;
+        public uint XP => Address != 0 ? Structure.XP : 0;
+		public int Strength => Address != 0 ? Structure.Strength : 0;
+		public int Dexterity => Address != 0 ? Structure.Dexterity : 0;
+		public int Intelligence => Address != 0 ? Structure.Intelligence : 0;
+        public int Level => Address != 0 ? Structure.Level : 1;
+        public int AllocatedLootId => Address != 0 ? Structure.AllocatedLootId : 1;
 
-        public int HideoutLevel => M.ReadByte(Address + 0x256);
-	    public HideoutWrapper Hideout => ReadObject<HideoutWrapper>(Address + 0x230);
+        public int HideoutLevel => Structure.HideoutLevel;
+	    public HideoutWrapper Hideout => GetObject<HideoutWrapper>(Structure.HideoutPtr);
 
-	    public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
-	    public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
+	    public PantheonGod PantheonMinor => (PantheonGod)Structure.PantheonMinor;
+	    public PantheonGod PantheonMajor => (PantheonGod)Structure.PantheonMajor;
 
 	    #region Prophecy
-	    public byte PropheciesCount => M.ReadByte(Address + 0x1EA);
+	    public byte PropheciesCount => Structure.PropheciesCount;
 
         //How to fix prophecies:
         //PropheciesCount is ez to find (use Structure Spider Advanced)
@@ -137,15 +173,12 @@ namespace PoeHUD.Poe.Components
 		So 263 - 7(skipped) = 256.  256/8bits = 0x20 back from 0x180. So 0x180 - 0x20 = 0x160. Read offset is 0x160
 		*/
 
-        //[StaticOffsetFieldDebugAttribute]
-        public static int DebugPlayerTrialStates = 0x17E;
-
         [HideInReflection]//Comment this attribute to see it in "Qvin Debug Tree" plugin.
         private BitArray TrialPassStates
         {
             get
             {
-	            var stateBuff = M.ReadBytes(Address + DebugPlayerTrialStates, 36);// (286+) bytes of info.
+	            var stateBuff = M.ReadBytes(Structure.DebugPlayerTrialStates, 36);// (286+) bytes of info.
                 return new BitArray(stateBuff);
             }
         }

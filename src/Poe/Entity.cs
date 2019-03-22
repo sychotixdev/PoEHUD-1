@@ -6,14 +6,62 @@ using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.Components;
 using SharpDX;
+using System.Runtime.InteropServices;
+using PoeHUD.Plugins;
 
 namespace PoeHUD.Poe
 {
-    public sealed class Entity : RemoteMemoryObject, IEntity
+    [StructLayout(LayoutKind.Explicit)]
+    public struct EntityMemoryStruct
     {
-        private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30);
-        private long ComponentList => M.ReadLong(Address + 0x8);
-        public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
+        [FieldOffset(0x0)]
+        public long VMTPtr;
+        [FieldOffset(0x8)]
+        public long ComponentListPtr;
+        [FieldOffset(0x40)]
+        public uint Id;
+        [FieldOffset(0x50)]
+        public long PositionedCompPtr;
+        [FieldOffset(0x58)]
+        public int InventoryId;
+    }
+
+    public sealed class Entity : StructuredRemoteMemoryObject<EntityMemoryStruct>, IEntity
+    {
+        [StructLayout(LayoutKind.Explicit)]
+        public struct VMTStructure
+        {
+            [FieldOffset(0x20)]
+            public long PathPtr;
+            [FieldOffset(0x48)]
+            public long ComponentLookup1Ptr;
+        }
+
+        public sealed class EntityVMT : StructuredRemoteMemoryObject<VMTStructure>
+        {
+            public string Path => M.ReadStringU(Structure.PathPtr);
+            public ComponentLookup2 ComponentLookup2 => GetObject<ComponentLookup2>(Structure.ComponentLookup1Ptr);
+        }
+        
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ComponentLookup2Struct
+        {
+            [FieldOffset(0x30)]
+            public long ComponentLookupPtr;
+        }
+
+        public sealed class ComponentLookup2 : StructuredRemoteMemoryObject<ComponentLookup2Struct>
+        {
+            // Don't think we need to return pointers, they can check the object
+            //public long ComponentLookup2Ptr => StructObject.ComponentLookupPtr;
+        }
+
+        private EntityVMT ComponentInfo => GetObject<EntityVMT>(Structure.VMTPtr);
+
+        private long ComponentLookup => ComponentInfo.ComponentLookup2.Structure.ComponentLookupPtr; //M.ReadLong(Address, 0x48, 0x30);
+        private long ComponentList => Structure.ComponentListPtr; // M.ReadLong(Address + 0x8);
+        public string Path => ComponentInfo.Path;
 
         public string Metadata
         {
@@ -41,14 +89,14 @@ namespace PoeHUD.Poe
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
-        public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
+        public bool IsValid => Path?.Contains("Metadata") ?? false;
 
-        public uint Id => M.ReadUInt(Address + 0x40);// << 32 ^ Address;
-        public int InventoryId => M.ReadInt(Address + 0x58);
+        public uint Id => Structure.Id;// << 32 ^ Address;
+        public int InventoryId => Structure.InventoryId;
 
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers
 
-        public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
+        public Positioned PositionedComp => GetObject<Positioned>(Structure.PositionedCompPtr);
 
         public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
         public bool IsAlive => GetComponent<Life>().CurHP > 0;
@@ -97,13 +145,13 @@ namespace PoeHUD.Poe
             }
         }
 
-        public bool HasComponent<T>() where T : Component, new()
+        public bool HasComponent<T>() where T : RemoteMemoryObject, new()
         {
             long addr;
             return HasComponent<T>(out addr);
         }
 
-        private bool HasComponent<T>(out long addr) where T : Component, new()
+        private bool HasComponent<T>(out long addr) where T : RemoteMemoryObject, new()
         {
             string name = typeof(T).Name;
             long componentLookup = ComponentLookup;
@@ -119,7 +167,7 @@ namespace PoeHUD.Poe
             return true;
         }
 
-        public T GetComponent<T>() where T : Component, new()
+        public T GetComponent<T>() where T : RemoteMemoryObject, new()
         {
             long addr;
             return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0x18) * 8) : GetObject<T>(0);

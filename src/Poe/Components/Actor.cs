@@ -4,19 +4,50 @@ using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
 using PoeHUD.Models;
 using SharpDX;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.Components
 {
-    public partial class Actor : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ActorStruct
     {
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x60)]
+        public long CurrentActionPtr;
+        [FieldOffset(0xD8)]
+        public int ActionId;
+        [FieldOffset(0x110)]
+        public float TimeSinceLastMove;
+        [FieldOffset(0x114)]
+        public float TimeSinceLastAction;
+        [FieldOffset(0x2C0)]
+        public long SkillsStartPointer;
+        [FieldOffset(0x2C8)]
+        public long SkillsEndPointer;
+        [FieldOffset(0x2F0)]
+        public long VaalSkillsStartPointer;
+        [FieldOffset(0x2F8)]
+        public long VaalSkillsEndPointer;
+        [FieldOffset(0x328)]
+        public long DeployedObjectStartPtr;
+        [FieldOffset(0x330)]
+        public long DeployedObjectEndPtr;
+ 
+    }
+
+    public partial class Actor : StructuredRemoteMemoryObject<ActorStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+
         /// <summary>
         ///     Standing still = 2048 =bit 11 set
         ///     running = 2178 = bit 11 & 7
         ///     Maybe Bit-field : Bit 7 set = running
         /// </summary>
-        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xD8) : 1;
+        public int ActionId => Address != 0 ? Structure.ActionId : 1;
 
-        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xD8) : ActionFlags.None;
+        public ActionFlags Action => Address != 0 ? (ActionFlags)Structure.ActionId : ActionFlags.None;
         public bool isMoving => (Action & ActionFlags.Moving) > 0;
         public bool isAttacking => (Action & ActionFlags.UsingAbility) > 0;
 
@@ -26,8 +57,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            long num = M.ReadLong(Address + 0x328);
-            long num2 = M.ReadLong(Address + 0x330);
+            long num = Structure.DeployedObjectStartPtr;
+            long num2 = Structure.DeployedObjectEndPtr;
             for (long i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);
@@ -40,14 +71,14 @@ namespace PoeHUD.Poe.Components
         }
 
 
-        public float TimeSinseLastMove => -M.ReadFloat(Address + 0x110);
-        public float TimeSinseLastAction => -M.ReadFloat(Address + 0x114);
+        public float TimeSinseLastMove => -Structure.TimeSinceLastMove;
+        public float TimeSinseLastAction => -Structure.TimeSinceLastAction;
 
-        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x60) : null;
+        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? GetObject<ActionWrapper>(Structure.CurrentActionPtr) : null;
 
         // e.g minions, mines
-        private long DeployedObjectStart => M.ReadLong(Address + 0x328);
-        private long DeployedObjectEnd => M.ReadLong(Address + 0x330);
+        private long DeployedObjectStart => Structure.DeployedObjectStartPtr;
+        private long DeployedObjectEnd => Structure.DeployedObjectEndPtr;
         public long DeployedObjectsCount => (DeployedObjectEnd - DeployedObjectStart) / 8;
         public List<DeployedObject> DeployedObjects
         {
@@ -75,8 +106,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var skillsStartPointer = M.ReadLong(Address + 0x2c0);
-                var skillsEndPointer = M.ReadLong(Address + 0x2c8);
+                var skillsStartPointer = Structure.SkillsStartPointer;
+                var skillsEndPointer = Structure.SkillsEndPointer;
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
 
                 int stuckCounter = 0;
@@ -96,8 +127,8 @@ namespace PoeHUD.Poe.Components
 			get
 			{
 				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
-				var skillsStartPointer = M.ReadLong(Address + 0x2F0);
-				var skillsEndPointer = M.ReadLong(Address + 0x2F8);
+				var skillsStartPointer = Structure.VaalSkillsStartPointer;
+				var skillsEndPointer = Structure.VaalSkillsEndPointer;
 
 				int stuckCounter = 0;
 				var result = new List<ActorVaalSkill>();
@@ -111,14 +142,26 @@ namespace PoeHUD.Poe.Components
 			}
 		}
 
-		public class ActionWrapper : RemoteMemoryObject
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ActionWrapperStruct
         {
-            public float DestinationX => M.ReadInt(Address + 0x48);
-            public float DestinationY => M.ReadInt(Address + 0x4C);
+            [FieldOffset(0x18)]
+            public long SkillPtr;
+            [FieldOffset(0x48)]
+            public float DestinationX;
+            [FieldOffset(0x4C)]
+            public float DestinationY;
+
+        }
+
+        public class ActionWrapper : StructuredRemoteMemoryObject<ActionWrapperStruct>
+        {
+            public float DestinationX => Structure.DestinationX;
+            public float DestinationY => Structure.DestinationY;
 
             public Vector2 CastDestination => new Vector2(DestinationX, DestinationY);
 
-            public ActorSkill Skill => ReadObject<ActorSkill>(Address + 0x18);
+            public ActorSkill Skill => GetObject<ActorSkill>(Structure.SkillPtr);
 
         }
 

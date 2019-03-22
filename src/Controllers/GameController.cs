@@ -74,7 +74,7 @@ namespace PoeHUD.Controllers
         public bool IsForeGroundLast = false;
         public static event Action<bool> eIsForegroundChanged = delegate { };
 
-        public  long RenderCount { get; private set; }
+        public long RenderCount;
         public void WhileLoop()
         {
             Task.Run(ParallelCoroutineRunner);
