@@ -208,13 +208,16 @@ namespace PoeHUD.Hud.PluginExtension
             }
 
             AppDomain.CurrentDomain.AppendPrivatePath(dir);
-            var myAsm = Assembly.Load(File.ReadAllBytes(path));
-            if (myAsm == null) return;
 
-            Type[] asmTypes = null;
+            Type[] asmTypes;
             try
             {
+                var myAsm = Assembly.LoadFrom(path);
                 asmTypes = myAsm.GetTypes();
+            }
+            catch (BadImageFormatException)
+            {
+                return;
             }
             catch (ReflectionTypeLoadException typeLoadException)
             {

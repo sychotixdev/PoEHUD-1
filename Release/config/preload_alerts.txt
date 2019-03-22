@@ -423,9 +423,8 @@ Metadata/Chests/Abyss/AbyssFinalChest3; Abyss #3; ff00AA00
 Metadata/Chests/Abyss/AbyssFinalChest4; Abyss #4; ff00AA00
 
 # BETRAYAL
-Metadata/NPC/League/BetrayalNinjaCopRaid; Syndicate Research; ff00FF00
+Metadata/NPC/League/Betrayal/BetrayalNinjaCopRaid; Syndicate Research; ff00FF00
 Metadata/Monsters/LeagueBetrayal/FortWall/FortWall; Syndicate Fortification; ff00FF00
-Metadata/Monsters/LeagueBetrayal/BetrayalSecretPoliceChampion; Syndicate Interception; ff00FF00
 Metadata/Monsters/LeagueBetrayal/BetrayalOriathBlackguardMeleeChampionCartGuard; Syndicate Transportation; ff00FF00
 
 Metadata/Monsters/LeagueBetrayal/BetrayalCatarina; Catarina, Master of Undeath; ff36b4b4
