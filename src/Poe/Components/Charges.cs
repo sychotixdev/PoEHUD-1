@@ -1,11 +1,41 @@
+using System.Runtime.InteropServices;
+
 namespace PoeHUD.Poe.Components
 {
-    public class Charges : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ChargesStruct
     {
-        public int NumCharges => Address != 0 ? M.ReadInt(Address + 0x18) : 0;
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x10)]
+        public long InternalPtr;
+        [FieldOffset(0x18)]
+        public int NumCharges;
+    }
 
-        public int ChargesPerUse => Address != 0 ? M.ReadInt(Address + 0x10, 0x14) : 0;
+    public class Charges : StructuredRemoteMemoryObject<ChargesStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+        public ChargesInternal Internal => GetObject<ChargesInternal>(Structure.InternalPtr);
 
-        public int ChargesMax => Address != 0 ? M.ReadInt(Address + 0x10, 0x10) : 0;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ChargesInternalStruct
+        {
+            [FieldOffset(0x10)]
+            public int ChargesMax;
+            [FieldOffset(0x14)]
+            public int ChargesPerUse;
+        }
+
+        public class ChargesInternal : StructuredRemoteMemoryObject<ChargesInternalStruct>
+        {
+
+        }
+
+        public int NumCharges => Address != 0 ? Structure.NumCharges : 0;
+
+        public int ChargesPerUse => Address != 0 ? Internal.Structure.ChargesPerUse : 0;
+
+        public int ChargesMax => Address != 0 ? Internal.Structure.ChargesMax : 0;
     }
 }

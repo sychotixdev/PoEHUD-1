@@ -1,12 +1,39 @@
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Map : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MapStruct
     {
-        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x10, 0x28)); 
-        public int Tier => M.ReadByte(Address + 0x18);//let it be int to not break some plugins
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x10)]
+        public long InternalPtr;
+        [FieldOffset(0x18)]
+        public byte Tier;
+    }
+
+    public class Map : StructuredRemoteMemoryObject<MapStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+        public MapInternal Internal => GetObject<MapInternal>(Structure.InternalPtr);
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct MapInternalStruct
+        {
+            [FieldOffset(0x28)]
+            public long AreaPtr;
+        }
+
+        public class MapInternal : StructuredRemoteMemoryObject<MapInternalStruct>
+        {
+
+        }
+
+        public WorldArea Area => GameController.Instance.Files.WorldAreas.GetByAddress(Internal.Structure.AreaPtr);
+        public int Tier => Structure.Tier;//let it be int to not break some plugins
         //public InventoryTabMapSeries MapSeries => (InventoryTabMapSeries)M.ReadByte(Address + 0x10, 0x9c);
     }
 

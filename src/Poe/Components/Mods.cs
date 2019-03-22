@@ -6,8 +6,11 @@ using System.Linq;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Mods : Component
+    // TODO: Convert this to structure reading
+    public class Mods : RemoteMemoryObject, Component
     {
+        public Entity Owner => ReadObject<Entity>(Address + 8);
+
         public string UniqueName => M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4));
         public bool Identified => M.ReadByte(Address + 0x88) == 1;
         public ItemRarity ItemRarity => (ItemRarity) M.ReadInt(Address + 0x8C);
@@ -22,6 +25,9 @@ namespace PoeHUD.Poe.Components
             }
         }
 
+        public int FracturedMods => M.ReadByte(Address + 0x89);
+        public bool Synthesised => M.ReadByte(Address + 0x437) == 1;
+        
         public int ItemLevel => M.ReadInt(Address + 0x42c);
         public int RequiredLevel => M.ReadInt(Address + 0x430);
         public bool IsUsable => M.ReadByte(Address + 0x370) != 0;

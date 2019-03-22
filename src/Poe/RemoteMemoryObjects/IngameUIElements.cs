@@ -20,20 +20,20 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public Element AtlasPanel => ReadObjectAt<Element>(0x550);
 		public Map Map => ReadObjectAt<Map>(0x5A0);
 		public SyndicatePanel SyndicatePanel => GetObject<SyndicatePanel>(M.ReadLong(Address + 0xEF8, 0xA50));
-        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0xED8);
+        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x6F8/*0xED8*/);
 		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xCC0);
 		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7A8);
 
-		public IEnumerable<ItemsOnGroundLabelElement> ItemsOnGroundLabels
+		public IEnumerable<LabelOnGround> ItemsOnGroundLabels
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = ReadObjectAt<ItemsOnGroundLabelElement>(0xD88);
-				return itemsOnGroundLabelRoot.Children;
+				var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5A8));
+				return itemsOnGroundLabelRoot.LabelsOnGround;
 			}
 		}
-		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x1068);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x10E8);
+		public Element GemLvlUpPanel => ReadObjectAt<Element>(0xBA0);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x928);//or 0x250
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));

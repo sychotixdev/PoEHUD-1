@@ -1,7 +1,10 @@
+using System;
+using System.Runtime.InteropServices;
+
 namespace PoeHUD.Poe
 {
-    public abstract class Component : RemoteMemoryObject
+    public interface Component
     {
-        protected Entity Owner => ReadObject<Entity>(Address + 8);
+        Entity Owner { get; }
     }
 }

@@ -77,7 +77,7 @@ namespace PoeHUD.Models
             return (int)distance;
         }
 
-        public T GetComponent<T>() where T : Component, new()
+        public T GetComponent<T>() where T : RemoteMemoryObject, new()
         {
             string name = typeof(T).Name;
             if (gameController.Cache.Enable)
@@ -92,7 +92,7 @@ namespace PoeHUD.Models
             return gameController.Game.GetObject<T>(components.ContainsKey(name) ? components[name] : 0);
         }
 
-        public bool HasComponent<T>() where T : Component, new()
+        public bool HasComponent<T>() where T : RemoteMemoryObject, new()
         {
             return components.ContainsKey(typeof(T).Name);
         }

@@ -10,8 +10,8 @@ namespace PoeHUD.Models.Interfaces
         bool IsHostile { get; }
         long Address { get; }
 
-        bool HasComponent<T>() where T : Component, new();
+        bool HasComponent<T>() where T : RemoteMemoryObject, new();
 
-        T GetComponent<T>() where T : Component, new();
+        T GetComponent<T>() where T : RemoteMemoryObject, new();
     }
 }
