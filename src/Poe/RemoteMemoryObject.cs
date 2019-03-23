@@ -1,4 +1,6 @@
+using PoeHUD.Controllers;
 using PoeHUD.Framework;
+using PoeHUD.Models;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using System;
 
@@ -17,11 +19,10 @@ namespace PoeHUD.Poe
             return ReadObject<T>(Address + offset);
         }
 
-
         public T ReadObject<T>(long addressPointer) where T : RemoteMemoryObject, new()
         {
-            var t = new T { M = M, Address = M.ReadLong(addressPointer), Game = Game };
-            return t;
+            long address = M.ReadLong(addressPointer);
+            return GetObject<T>(address);
         }
 
         public T GetObjectAt<T>(int offset) where T : RemoteMemoryObject, new()
@@ -37,8 +38,13 @@ namespace PoeHUD.Poe
 
         public T GetObject<T>(long address) where T : RemoteMemoryObject, new()
         {
-            var t = new T { M = M, Address = address, Game = Game };
-            return t;
+            T retObject = RemoteMemoryObjectCache.GetCachedObject<T>(address);
+            if (retObject == null)
+            {
+                retObject = new T { M = M, Address = address, Game = Game };
+                RemoteMemoryObjectCache.CacheObject(retObject);
+            }
+            return retObject;
         }
 
         public T AsObject<T>() where T : RemoteMemoryObject, new()

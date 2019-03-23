@@ -8,16 +8,16 @@ namespace PoeHUD.Poe
 {
     public abstract class StructuredRemoteMemoryObject<T> : RemoteMemoryObject where T : struct 
     {
-        private long renderCountWhenRead = 0;
         private T? _readStructure;
+        private long ReadFrame = -1;
         public T Structure
         {
             get
             {
-                if (_readStructure == null || renderCountWhenRead != GameController.Instance.RenderCount)
+                if (_readStructure == null || ReadFrame != GameController.Instance.RenderCount)
                 {
                     _readStructure = M.IntptrToStruct<T>(Address, Marshal.SizeOf(typeof(T)));
-                    renderCountWhenRead = GameController.Instance.RenderCount;
+                    ReadFrame = GameController.Instance.RenderCount;
                 }
                 return _readStructure ?? new T();
             }
