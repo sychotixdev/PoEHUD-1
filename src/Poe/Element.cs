@@ -34,7 +34,7 @@ namespace PoeHUD.Poe
         public float Height;
         [FieldOffset(0x17C)]
         public float IsHighlighted;
-        [FieldOffset(0x340)]
+        [FieldOffset(0x338)]
         public long ToolTipElementPtr;
         [FieldOffset(0x3B0)]
         public long TextPtr;
@@ -59,7 +59,9 @@ namespace PoeHUD.Poe
         public float Scale => Structure.Scale;
         public float Width => Structure.Width;
         public float Height => Structure.Height;
-        public string Text => M.ReadStringU(Address + 0x3B0); // also 0x320, full string at 0x2E8 // TODO: This seems wrong...
+
+        // Always fix EntityLabel offset in a new patch. Don't change the line over here
+        public string Text => this.AsObject<EntityLabel>().Text;
         public bool isHighlighted => Structure.IsHighlighted > 0;
 
         public bool IsVisible
