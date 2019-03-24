@@ -190,7 +190,8 @@ namespace PoeHUD.Hud.XpRate
 
         private void CalculateXp(DateTime nowTime)
         {
-            int level = GameController.Player.GetComponent<Player>().Level;
+            Player playerComponent = GameController.Player.GetComponent<Player>();
+            int level = playerComponent.Level;
             if (level >= 100)
             {
                 // player can't level up, just show fillers
@@ -198,7 +199,7 @@ namespace PoeHUD.Hud.XpRate
                 timeLeft = "--h--m--s";
                 return;
             }
-            long currentXp = GameController.Player.GetComponent<Player>().XP;
+            long currentXp = playerComponent.XP;
             getXp = currentXp - startXp;
             double rate = (currentXp - startXp) / (nowTime - startTime).TotalHours;
             xpRate = $"{ConvertHelper.ToShorten(rate, "0.00")} xp/h";
