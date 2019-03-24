@@ -19,10 +19,10 @@ namespace PoeHUD.Models
             RemoteMemoryObject rmo = cache[$"{RMOCachePrefix}{address}"] as RemoteMemoryObject;
             if (rmo != null)
             {
-                BasePlugin.LogMessage("Found rmo in the cache!", 2);
+                //BasePlugin.LogMessage("Found rmo in the cache!", 2);
                 if (rmo is T)
                 {
-                    BasePlugin.LogMessage("And it was even the type we expected!", 2);
+                    //BasePlugin.LogMessage("And it was even the type we expected!", 2);
                     return rmo as T;
                 }
             }
