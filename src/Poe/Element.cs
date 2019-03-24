@@ -26,7 +26,9 @@ namespace PoeHUD.Poe
         public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
-        public string Text => M.ReadStringU(Address + 0x3B0); // also 0x320, full string at 0x2E8
+
+        // Always fix EntityLabel offset in a new patch. Don't change the line over here
+        public string Text => this.AsObject<EntityLabel>().Text;
         public bool isHighlighted => M.ReadByte(Address + 0x17C) > 0;
 
         public bool IsVisible
