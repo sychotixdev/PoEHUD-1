@@ -10,6 +10,6 @@ namespace PoeHUD.Poe.Components
     }
 
     public class Flask : StructuredRemoteMemoryObject<FlaskStruct>, Component {
-        public Entity Owner => ReadObject<Entity>(Structure.OwnerPtr);
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
     }
 }

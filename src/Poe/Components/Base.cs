@@ -40,7 +40,7 @@ namespace PoeHUD.Poe.Components
         }
 
 
-        public string Name => NativeStringReader.ReadString(Internal.Structure.NamePtr);
+        public string Name => NativeStringReader.ReadString(Internal.Address + 0x18); // TODO: Figure out the right way to handle this
         public int ItemCellsSizeX => Internal.Structure.ItemCellsSizeX;
         public int ItemCellsSizeY => Internal.Structure.ItemCellsSizeY;
         public bool isCorrupted => Structure.IsCorrupted == 1;
