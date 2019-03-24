@@ -47,6 +47,6 @@ namespace PoeHUD.Poe.Components
         public Vector3 Bounds => new Vector3(Structure.BoundsX, Structure.BoundsY, Structure.BoundsZ);
         public Vector3 MeshRoration => new Vector3(Structure.MeshRotationX, Structure.MeshRotationY, Structure.MeshRotationZ);
 
-        public float TerrainHeight => M.ReadFloat(Address + 0xD4);
+        public float TerrainHeight => Structure.TerrainHeight;
     }
 }

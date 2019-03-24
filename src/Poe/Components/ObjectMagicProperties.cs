@@ -6,7 +6,7 @@ namespace PoeHUD.Poe.Components
     // TODO: Convert to structure reading
     public class ObjectMagicProperties : RemoteMemoryObject, Component
     {
-        public Entity Owner => ReadObject<Entity>(Address + 8);
+        public Entity Owner => GetObject<Entity>(Address + 8);
 
         public MonsterRarity Rarity
         {
