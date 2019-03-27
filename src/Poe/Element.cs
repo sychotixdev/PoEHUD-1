@@ -22,11 +22,13 @@ namespace PoeHUD.Poe
         public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);
-        public Element Tooltip => ReadObject<Element>(Address + 0x340); //0x7F0
+        public Element Tooltip => ReadObject<Element>(Address + 0x338); //0x7F0
         public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
-        public string Text => M.ReadStringU(Address + 0x3B0); // also 0x320, full string at 0x2E8
+
+        // Always fix EntityLabel offset in a new patch. Don't change the line over here
+        public string Text => this.AsObject<EntityLabel>().Text;
         public bool isHighlighted => M.ReadByte(Address + 0x17C) > 0;
 
         public bool IsVisible
