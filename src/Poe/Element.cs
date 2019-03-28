@@ -29,7 +29,7 @@ namespace PoeHUD.Poe
 
         // Always fix EntityLabel offset in a new patch. Don't change the line over here
         public string Text => this.AsObject<EntityLabel>().Text;
-        public bool isHighlighted => M.ReadByte(Address + 0x17C) > 0;
+        public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
 
         public bool IsVisible
         {
