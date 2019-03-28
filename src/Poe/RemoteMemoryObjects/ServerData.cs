@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PoeHUD.Poe.Elements;
 using PoeHUD.Controllers;
 using PoeHUD.Poe.Components;
@@ -13,9 +14,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		[Obsolete("Obsolete. Use GameController.Game.IngameState.IngameUi.StashElement instead")]
 	    public StashElement StashPanel => GameController.Instance.Game.IngameState.IngameUi.StashElement;// Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null; // needs fixed, but if it's obsolete, just remove it
 
-		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x6188);
+		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x6288);
 
-		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x5F90) & 0xF);
+		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x6090) & 0xF);
 
 		public List<ushort> PassiveSkillIds
 		{
@@ -140,8 +141,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x64B8); // double check these
-				var lastAddr = M.ReadLong(Address + 0x64C0);
+				var firstAddr = M.ReadLong(Address + 0x65B8); // double check these
+				var lastAddr = M.ReadLong(Address + 0x65C0);
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
 			}
 		}
