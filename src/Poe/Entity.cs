@@ -1,8 +1,11 @@
 using System;
 using PoeHUD.Models.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using PoeHUD.Controllers;
+using PoeHUD.Models.Enums;
 using PoeHUD.Poe.Components;
+using SharpDX;
 
 namespace PoeHUD.Poe
 {
@@ -12,12 +15,35 @@ namespace PoeHUD.Poe
         private long ComponentList => M.ReadLong(Address + 0x8);
         public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
 
+        public string Metadata
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(Path))
+                        return string.Empty;
+
+                    var splitIndex = Path.IndexOf("@");
+
+                    if (splitIndex != -1)
+                        return Path.Substring(0, splitIndex);
+                }
+                catch (Exception e)
+                {
+                    return Path;
+                }
+
+                return Path;
+            }
+        }
+
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
         public bool IsValid => M.ReadInt(Address, 0x20, 0) == 0x65004D;
 
-        public long Id => (long)M.ReadInt(Address + 0x40);// << 32 ^ Address;
+        public uint Id => M.ReadUInt(Address + 0x40);// << 32 ^ Address;
         public int InventoryId => M.ReadInt(Address + 0x58);
 
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers
@@ -25,6 +51,51 @@ namespace PoeHUD.Poe
         public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
 
         public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
+        public bool IsAlive => GetComponent<Life>().CurHP > 0;
+        public bool IsTargetable => GetComponent<Targetable>().isTargetable;
+        public bool CannotDieAura => HasBuff("monster_aura_cannot_die");
+        public bool BestiaryMonsterCaptured => HasBuff("capture_monster_trapped");
+        public bool IsHidden => GetComponent<Stats>().GameStatDictionary.TryGetValue(GameStat.IsHiddenMonster, out var stat) && stat == 1;
+        public bool CannotBeDamagedStat => GetComponent<Stats>().GameStatDictionary.TryGetValue(GameStat.CannotBeDamaged, out var stat) && stat == 1;
+        public bool Invincible => CannotDieAura || CannotBeDamagedStat;
+        public bool IsEmerging
+        {
+            get
+            {
+                if (IsHidden)
+                    return false;
+
+                var m = Path;
+                return m.Contains("/SandSpitterEmerge/") ||
+                       //   m.Contains("/WaterElemental/") ||//https://dl.dropboxusercontent.com/s/d3qb1c0tg3mo1p6/PoeHUD_2019-03-24_23-04-01.png
+                       m.Contains("/RootSpiders/") ||
+                       m.Contains("ZombieMiredGraspEmerge") ||
+                       m.Contains("ReliquaryMonsterEmerge");
+            }
+        }
+
+        public bool IsActive => IsHostile && IsAlive && IsTargetable && !IsHidden;
+        public bool HasBuff(string buff) => GetComponent<Life>().Buffs.Any(x => x.Name == buff);
+        public bool HasBuff(List<string> buffs) => !GetComponent<Life>().Buffs.TrueForAll(x => !buffs.Contains(x.Name));
+        public float Distance => Vector2.Distance(GameController.Instance.Player.PositionedComp.GridPos, PositionedComp.GridPos);
+
+        public Vector3 Pos
+        {
+            get
+            {
+                var p = GetComponent<Render>();
+                return new Vector3(p.X, p.Y, p.Z);
+            }
+        }
+
+        public Vector3 PosEntityCenter
+        {
+            get
+            {
+                var p = GetComponent<Render>();
+                return new Vector3(p.X, p.Y, p.Z + p.Bounds.Z / 2);
+            }
+        }
 
         public bool HasComponent<T>() where T : Component, new()
         {
@@ -51,7 +122,7 @@ namespace PoeHUD.Poe
         public T GetComponent<T>() where T : Component, new()
         {
             long addr;
-            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0x18) * 8) : ReadObject<T>(0);
+            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0x18) * 8) : GetObject<T>(0);
         }
 
         public Dictionary<string, long> GetComponents()

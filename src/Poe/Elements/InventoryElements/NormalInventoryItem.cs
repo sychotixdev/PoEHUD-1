@@ -1,8 +1,11 @@
+using PoeHUD.Poe.RemoteMemoryObjects;
+
 namespace PoeHUD.Poe.Elements
 {
     public class NormalInventoryItem : Element
     {
         public virtual int InventPosX => M.ReadInt(Address + 0x390);
+        //public ServerInventory.InventSlotItem ServerInventoryItem => ReadObject<ServerInventory.InventSlotItem>(Address + 0x18);//should work but it doesnt(. Offset is 0x18
         public virtual int InventPosY => M.ReadInt(Address + 0x394);
         public virtual int ItemWidth => M.ReadInt(Address + 0x398);
         public virtual int ItemHeight => M.ReadInt(Address + 0x39c);

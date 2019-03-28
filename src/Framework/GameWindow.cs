@@ -44,5 +44,12 @@ namespace PoeHUD.Framework
             WinApi.ScreenToClient(handle, ref point);
             return new Vector2(point.X, point.Y);
         }
+
+        public Vector2 ClientToScreen(int x, int y)
+        {
+            var point = new Point(x, y);
+            WinApi.ClientToScreen(handle, ref point);
+            return new Vector2(point.X, point.Y);
+        }
     }
 }

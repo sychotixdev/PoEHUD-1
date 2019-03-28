@@ -44,7 +44,7 @@ namespace PoeHUD.Hud.Loot
             currentLabels = new Dictionary<long, LabelOnGround>();
             currencyNames = LoadCurrency();
             craftingBases = LoadCraftingBases();
-            GameController.Area.OnAreaChange += OnAreaChange;
+            GameController.Area.AreaChange += OnAreaChange;
             PoeFilterInit(settings.FilePath);
             settings.FilePath.OnFileChanged += () => PoeFilterInit(settings.FilePath);
         }
@@ -91,7 +91,7 @@ namespace PoeHUD.Hud.Loot
 
         public override void Dispose()
         {
-            GameController.Area.OnAreaChange -= OnAreaChange;
+            GameController.Area.AreaChange -= OnAreaChange;
         }
 
         public override void Render()

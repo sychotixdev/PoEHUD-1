@@ -32,6 +32,7 @@ namespace PoeHUD.Hud.PluginExtension
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
+            gameController.Area.AreaChange += area => eAreaChange(area);
         }
         
         public event Action eInitialise = delegate { };
@@ -39,6 +40,7 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
+        public event Action<AreaController> eAreaChange = delegate { };
         public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
         private static List<string> PluginUpdateLog = new List<string>();
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.

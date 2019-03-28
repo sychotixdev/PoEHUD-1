@@ -12,6 +12,7 @@ namespace PoeHUD.Models
         public bool IsHideout { get; }
         public bool HasWaypoint { get; }
         public uint Hash { get; }
+        public bool IsCombatArea => !IsTown && !IsHideout;
 
         public DateTime TimeEntered = DateTime.Now;
 

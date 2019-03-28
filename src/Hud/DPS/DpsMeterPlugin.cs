@@ -33,7 +33,7 @@ namespace PoeHUD.Hud.Dps
             Settings.ClearNode.OnPressed += Clear;
 
             lastTime = DateTime.Now;
-            GameController.Area.OnAreaChange += area =>
+            GameController.Area.AreaChange += area =>
             {
                 Clear();
             };

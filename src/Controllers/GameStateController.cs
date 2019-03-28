@@ -72,7 +72,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var M = GameController.Instance.Memory;
             var address = Instance.Address + 0x20;
             var start = M.ReadLong(address);
-            //var end = ReadLong(address + 0x8);
             var last = M.ReadLong(address + 0x10);
 
             var length = (int)(last - start);
@@ -130,8 +129,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class GameState : RemoteMemoryObject
     {
         private string stateName;
-        public string StateName => stateName != null ? stateName :
-            stateName = M.ReadNativeString(Address + 0x10);
+        public string StateName => stateName ?? (stateName = M.ReadNativeString(Address + 0x10));
 
         public override string ToString()
         {
@@ -142,6 +140,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
+        //UPDATE: This is a byte.
         public bool IsLoading => M.ReadLong(Address + 0xD8) == 1; 
         public string AreaName => M.ReadStringU(M.ReadLong(Address + 0xBF0));
 

@@ -19,7 +19,7 @@ namespace PoeHUD.Models
             this.gameController = gameController;
             entityCache = new Dictionary<uint, EntityWrapper>();
             ignoredEntities = new HashSet<string>();
-            gameController.Area.OnAreaChange += OnAreaChanged;
+            gameController.Area.AreaChange += OnAreaChanged;
         }
 
         public ICollection<EntityWrapper> Entities => entityCache.Values;

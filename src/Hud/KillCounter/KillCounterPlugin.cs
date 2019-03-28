@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.KillCounter
             countedIds = new Dictionary<uint, HashSet<long>>();
             counters = new Dictionary<MonsterRarity, int>();
             Init();
-            GameController.Area.OnAreaChange += area =>
+            GameController.Area.AreaChange += area =>
             {
                 if (!Settings.Enable) { return; }
                 aliveEntities.Clear();

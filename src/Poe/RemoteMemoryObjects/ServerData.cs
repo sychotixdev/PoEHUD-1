@@ -49,7 +49,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public int TimeInGame => M.ReadInt(Address + 0x6148);
 
 		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x60D0);
-		public bool IsInGame => true ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
+	    public bool IsInGame => GameStateController.IsInGameState;
 
 		public string League => NativeStringReader.ReadString(Address + 0x60E8);
 		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x6135);

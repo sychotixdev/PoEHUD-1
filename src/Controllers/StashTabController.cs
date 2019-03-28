@@ -18,7 +18,7 @@ namespace PoeHUD.Controllers
 
         public StashTabController()
         {
-            GameController.Instance.Area.OnAreaChange += delegate { StashTabsIsInitialized = false; };
+            GameController.Instance.Area.AreaChange += delegate { StashTabsIsInitialized = false; };
             CheckCacheStashTabs();
             StashTabsIsInitialized = true;
         }

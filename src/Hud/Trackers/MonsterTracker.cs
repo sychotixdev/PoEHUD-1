@@ -59,7 +59,7 @@ namespace PoeHUD.Hud.Trackers
                 { MonsterRarity.Rare, (e,f) => new CreatureMapIcon(e, f("ms-yellow.png"), monsterSettings, settings.RareMobIcon) },
                 { MonsterRarity.Unique, (e,f) => new CreatureMapIcon(e, f("ms-purple.png"), monsterSettings, settings.UniqueMobIcon) }
             };
-            GameController.Area.OnAreaChange += area =>
+            GameController.Area.AreaChange += area =>
             {
                 alreadyAlertedOf.Clear();
                 alertTexts.Clear();

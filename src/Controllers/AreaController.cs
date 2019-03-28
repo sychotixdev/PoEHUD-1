@@ -13,12 +13,18 @@ namespace PoeHUD.Controllers
             GController = gameController;
         }
 
+        [Obsolete("Use OnAreaChange event in plugin to avoid memory leek")]
         public event Action<AreaController> OnAreaChange;
+        public event Action<AreaController> AreaChange;
+   
 
         public AreaInstance CurrentArea { get; private set; }
 
         public void RefreshState()
         {
+            if (!GController.InGame)
+                return;
+
             GController.Cache.UpdateCache();
             var ingameData = GController.Game.IngameState.Data;
             AreaTemplate clientsArea = ingameData.CurrentArea;
@@ -28,6 +34,7 @@ namespace PoeHUD.Controllers
                 return;
 
             CurrentArea = new AreaInstance(clientsArea, curAreaHash, ingameData.CurrentAreaLevel);
+            AreaChange?.Invoke(this);
             OnAreaChange?.Invoke(this);
         }
     }

@@ -224,7 +224,7 @@ namespace PoeHUD.Hud
                     if (Settings.DeveloperMode.Value && extPlugin != null)
                     {
                         if (ImGuiExtension.Button("Reload Plugin"))
-                            extPlugin.ReloadPlugin();
+                            extPlugin.ReloadPlugin(true);
 
                         if (extPlugin.BPlugin != null)
                         {

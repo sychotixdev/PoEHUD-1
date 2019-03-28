@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.XpRate
             : base(gameController, graphics, settings)
         {
             this.settingsHub = settingsHub;
-            GameController.Area.OnAreaChange += area => AreaChange();
+            GameController.Area.AreaChange += area => AreaChange();
             DelveSulphiteCapacityID = GameController.Instance.Files.Stats.records["delve_sulphite_capacity"].ID;
         }
 

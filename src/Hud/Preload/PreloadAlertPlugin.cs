@@ -56,7 +56,7 @@ namespace PoeHUD.Hud.Preload
                 File.WriteAllText(PRELOAD_ALERTS_PERSONAL, string.Empty);
             }
 
-            GameController.Area.OnAreaChange += OnAreaChange;
+            GameController.Area.AreaChange += OnAreaChange;
             AreaNameColor = Settings.AreaTextColor;
             SetupPredefinedConfigs();
         }

@@ -10,7 +10,7 @@ namespace PoeHUD.Models
 {
     public class EntityWrapper : IEntity
     {
-        private readonly long cachedId;
+        private readonly uint cachedId;
         private readonly Dictionary<string, long> components;
         private readonly Dictionary<string, object> cacheComponents;
         private readonly GameController gameController;
@@ -44,30 +44,21 @@ namespace PoeHUD.Models
         public string Path { get; }
         public bool IsValid => internalEntity.IsValid && IsInList && cachedId == internalEntity.Id;
         public long Address => internalEntity.Address;
-        public long Id => cachedId;
+        public uint Id => cachedId;
         public bool IsHostile => internalEntity.IsHostile;
+        public bool IsTargetable => internalEntity.IsTargetable;
+        public bool CannotDie => internalEntity.CannotDieAura;
+        public bool IsHidden => internalEntity.IsHidden;
+        public bool CannotBeDamaged => internalEntity.CannotBeDamagedStat;
+        public bool Invincible => internalEntity.CannotBeDamagedStat;
+        public bool IsEmerging => internalEntity.IsEmerging;
+        public bool IsActive => internalEntity.IsActive;
         public long LongId { get; }
-        public bool IsAlive => GetComponent<Life>().CurHP > 0;
+        public bool IsAlive => internalEntity.IsAlive;
         public int DistanceFromPlayer => GetDistanceFromPlayer();
         public Positioned PositionedComp => internalEntity.PositionedComp;
-
-        public Vector3 Pos
-        {
-            get
-            {
-                var p = GetComponent<Render>();
-                return new Vector3(p.X, p.Y, p.Z + p.Bounds.Z);
-            }
-        }
-
-        public Vector3 BoundsCenterPos
-        {
-            get
-            {
-                var p = GetComponent<Render>();
-                return new Vector3(p.X, p.Y, p.Z);
-            }
-        }
+        public Vector3 Pos => internalEntity.Pos;
+        public Vector3 BoundsCenterPos => internalEntity.PosEntityCenter;
 
         private int GetDistanceFromPlayer()
         {

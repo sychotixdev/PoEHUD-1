@@ -14,7 +14,7 @@ namespace PoeHUD.Hud
         protected PluginWithMapIcons(GameController gameController, Graphics graphics, TSettings settings) : base(gameController, graphics, settings)
         {
             CurrentIcons = new Dictionary<EntityWrapper, MapIcon>();
-            GameController.Area.OnAreaChange += delegate
+            GameController.Area.AreaChange += delegate
             {
                 CurrentIcons.Clear();
             };

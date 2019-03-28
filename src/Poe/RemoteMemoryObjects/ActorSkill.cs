@@ -22,6 +22,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public int SoulsPerUse => M.ReadInt(Address + 0x68);
         public int TotalVaalUses => M.ReadInt(Address + 0x6c);
+        public bool IsOnSkillBar => SkillBarSlot != -1;
+        public int SkillBarSlot => GameController.Instance.Game.IngameState.ServerData.SkillBarIds.IndexOf(Id);
 
         public string Name
         {
