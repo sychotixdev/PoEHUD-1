@@ -48,6 +48,7 @@ namespace PoeHUD.Poe
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
+
         public long ChildCount => (Structure.ChildrenEndPtr - Structure.ChildrenStartPtr) / 8;
         public bool IsVisibleLocal => (Structure.IsVisibleLocal & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
         public Element Root => GetObject<Element>(Structure.RootElementPtr);
@@ -58,7 +59,9 @@ namespace PoeHUD.Poe
         public float Scale => Structure.Scale;
         public float Width => Structure.Width;
         public float Height => Structure.Height;
-        public string Text => M.ReadStringU(Address + 0x3B0); // also 0x320, full string at 0x2E8 // TODO: This seems wrong...
+
+        // Always fix EntityLabel offset in a new patch. Don't change the line over here
+        public string Text => this.AsObject<EntityLabel>().Text;
         public bool isHighlighted => Structure.IsHighlighted > 0;
 
         public bool IsVisible
