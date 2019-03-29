@@ -55,8 +55,8 @@ namespace PoeHUD.Poe
         public bool IsTargetable => GetComponent<Targetable>().isTargetable;
         public bool CannotDieAura => HasBuff("monster_aura_cannot_die");
         public bool BestiaryMonsterCaptured => HasBuff("capture_monster_trapped");
-        public bool IsHidden => GetComponent<Stats>().GameStatDictionary.TryGetValue(GameStat.IsHiddenMonster, out var stat) && stat == 1;
-        public bool CannotBeDamagedStat => GetComponent<Stats>().GameStatDictionary.TryGetValue(GameStat.CannotBeDamaged, out var stat) && stat == 1;
+        public bool IsHidden => HasStat(GameStat.IsHiddenMonster, out var stat) && stat == 1;
+        public bool CannotBeDamagedStat => HasStat(GameStat.CannotBeDamaged, out var stat) && stat == 1;
         public bool Invincible => CannotDieAura || CannotBeDamagedStat;
         public bool IsEmerging
         {
@@ -72,6 +72,11 @@ namespace PoeHUD.Poe
                        m.Contains("ZombieMiredGraspEmerge") ||
                        m.Contains("ReliquaryMonsterEmerge");
             }
+        }
+
+        public bool HasStat(GameStat statType, out int value)
+        {
+            return GetComponent<Stats>().GameStatDictionary.TryGetValue(statType, out value);
         }
 
         public bool IsActive => IsHostile && IsAlive && IsTargetable && !IsHidden;
