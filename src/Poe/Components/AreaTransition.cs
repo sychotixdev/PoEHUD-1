@@ -18,7 +18,6 @@ namespace PoeHUD.Poe.Components
     public class AreaTransition : StructuredRemoteMemoryObject<AreaTransitionStruct>, Component
     {
         public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
-
         public int WorldAreaId => Structure.WorldAreaId;
         public WorldArea WorldArea => GameController.Instance.Files.WorldAreas.GetAreaByAreaId(WorldAreaId);
         public AreaTransitionType TransitionType => (AreaTransitionType)Structure.TransitionType;

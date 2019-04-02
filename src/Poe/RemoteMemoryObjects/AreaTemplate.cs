@@ -12,6 +12,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public bool HasWaypoint => M.ReadByte(Address + 0x15) == 1;
         public int MonsterLevel => M.ReadInt(Address + 0x26);
         public int WorldAreaId => M.ReadInt(Address + 0x2A);
+        public bool IsMap => M.ReadByte(Address + 0x7A) > 0;//or 0x130
+        public bool IsEndGameMap => M.ReadByte(Address + 0xBA) > 0;
 
         private WorldArea _worldArea;
         //public WorldArea WorldArea => _worldArea == null ? _worldArea = GameController.Instance.Files.WorldAreas.GetAreaByAreaId(WorldAreaId) : _worldArea;
