@@ -11,7 +11,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Game = this;
         }
 
-        public IngameState IngameState => GameStateController.IngameState;
+        public IngameState IngameState => GetObject<IngameState>(GameStateController.IngameState.Address);// GameStateController.IngameState;
         //We shouldn't have anithing here, GameStateController.IngameState is already cached, it's address is not changed while game running
             //GameController.Instance.Cache.Enable && GameController.Instance.Cache.IngameState != null
             //? GameController.Instance.Cache.IngameState

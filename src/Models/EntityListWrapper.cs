@@ -108,7 +108,7 @@ namespace PoeHUD.Models
         private void UpdatePlayer()
         {
             long address = gameController.Game.IngameState.Data.LocalPlayer.Address;
-            if ((player == null) || (player.Address != address))
+            //if (player == null || (player.Address != address))
             {
                 player = new EntityWrapper(gameController, address);
             }

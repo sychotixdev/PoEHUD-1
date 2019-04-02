@@ -23,9 +23,11 @@ namespace PoeHUD.Framework
         private bool closed;
         public Offsets offsets;
         public IntPtr procHandle;
+        public static Memory Instance;
 
         public Memory(Offsets offs, int pId)
         {
+            Instance = this;
             try
             {
                 offsets = offs;

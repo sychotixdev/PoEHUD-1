@@ -281,6 +281,7 @@
     <Compile Include="Plugins\BasePlugin.cs" />
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\CachedValue.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\AnimatedComponents\ClientAnimationController.cs" />
     <Compile Include="Poe\Components\Monolith.cs" />
