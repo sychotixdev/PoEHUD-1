@@ -4,8 +4,11 @@ using PoeHUD.Models.Enums;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Stats : Component
+    // TODO: Convert to structure reading
+    public class Stats : RemoteMemoryObject, Component
     {
+        public Entity Owner => ReadObject<Entity>(Address + 8);
+
         //Stats goes as sequence of 2 values, 4 byte each. First goes stat ID then goes stat value
         public Dictionary<int, int> StatDictionary
         {

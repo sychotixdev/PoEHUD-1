@@ -1,8 +1,24 @@
+using System.Runtime.InteropServices;
+
 namespace PoeHUD.Poe.Components
 {
-    public class Stack : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct StackStruct
     {
-        public int Size => Address == 0 ? 0 : M.ReadInt(Address + 0x18);//0xC ?
-        public CurrencyInfo Info => Address != 0 ? ReadObject<CurrencyInfo>(Address + 0x10) : null;
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x10)]
+        public long CurrencyInfoPtr;
+        [FieldOffset(0x18)]
+        public int Size;
+
+    }
+
+    public class Stack : StructuredRemoteMemoryObject<StackStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+
+        public int Size => Address == 0 ? 0 : Structure.Size;//0xC ?
+        public CurrencyInfo Info => Address != 0 ? GetObject<CurrencyInfo>(Structure.CurrencyInfoPtr) : null;
     }
 }

@@ -7,29 +7,62 @@ using PoeHUD.Poe.Elements;
 namespace PoeHUD.Poe
 {
     using RemoteMemoryObjects;
+    using System.Runtime.InteropServices;
 
-    public class Element : RemoteMemoryObject
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ElementMemoryStruct
+    {
+        [FieldOffset(0x38)]
+        public long ChildrenStartPtr;
+        [FieldOffset(0x40)]
+        public long ChildrenEndPtr;
+        [FieldOffset(0x88)]
+        public long RootElementPtr;
+        [FieldOffset(0x90)]
+        public long ParentElementPtr;
+        [FieldOffset(0x98)]
+        public float X;
+        [FieldOffset(0x9C)]
+        public float Y;
+        [FieldOffset(0x108)]
+        public float Scale;
+        [FieldOffset(0x111)]
+        public byte IsVisibleLocal;
+        [FieldOffset(0x130)]
+        public float Width;
+        [FieldOffset(0x134)]
+        public float Height;
+        [FieldOffset(0x178)]
+        public float IsHighlighted;
+        [FieldOffset(0x338)]
+        public long ToolTipElementPtr;
+        [FieldOffset(0x3B0)]
+        public long TextPtr;
+    }
+
+    public class Element : StructuredRemoteMemoryObject<ElementMemoryStruct>
     {
         public const int OffsetBuffers = 0;//0x6EC;
+
         // dd id
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
-        
-        public long ChildCount => (M.ReadLong(Address + 0x40 + OffsetBuffers) - M.ReadLong(Address + 0x38 + OffsetBuffers)) / 8;
-        public bool IsVisibleLocal => (M.ReadByte(Address + 0x111) & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
-        public Element Root => ReadObject<Element>(Address + 0x88 + OffsetBuffers);
-        public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
-        public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
-        public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);
-        public Element Tooltip => ReadObject<Element>(Address + 0x338); //0x7F0
-        public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
+
+        public long ChildCount => (Structure.ChildrenEndPtr - Structure.ChildrenStartPtr) / 8;
+        public bool IsVisibleLocal => (Structure.IsVisibleLocal & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
+        public Element Root => GetObject<Element>(Structure.RootElementPtr);
+        public Element Parent => GetObject<Element>(Structure.ParentElementPtr);
+        public float X => Structure.X;
+        public float Y => Structure.Y;
+        public Element Tooltip => GetObject<Element>(Structure.ToolTipElementPtr); //0x7F0
+        public float Scale => Structure.Scale;
+        public float Width => Structure.Width;
+        public float Height => Structure.Height;
 
         // Always fix EntityLabel offset in a new patch. Don't change the line over here
         public string Text => this.AsObject<EntityLabel>().Text;
-        public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
+        public bool isHighlighted => Structure.IsHighlighted > 0;
 
         public bool IsVisible
         {
@@ -39,16 +72,15 @@ namespace PoeHUD.Poe
         public List<Element> Children => GetChildren<Element>();
 
         protected List<T> GetChildren<T>() where T : Element, new() {
-            const int listOffset = 0x38;
             var list = new List<T>();
-            if (M.ReadLong(Address + listOffset + 8) == 0 || M.ReadLong(Address + listOffset) == 0 ||
+            if (Structure.ChildrenEndPtr == 0 || Structure.ChildrenStartPtr == 0 ||
                 ChildCount > 1000)
             {
                 return list;
             }
             for (int i = 0; i < ChildCount; i++)
             {
-                list.Add(GetObject<T>(M.ReadLong(Address + listOffset, i * 8)));
+                list.Add(GetObject<T>(M.ReadLong(Address + 0x38, i * 8))); // TODO: Need to fix this
             }
             return list;
         }
@@ -113,7 +145,7 @@ namespace PoeHUD.Poe
 
         public Element GetChildAtIndex(int index)
         {
-            return index >= ChildCount ? null : GetObject<Element>(M.ReadLong(Address + 0x38 + OffsetBuffers, index * 8));
+            return index >= ChildCount ? null : GetObject<Element>(M.ReadLong(Address + 0x38, index * 8)); // TODO: This needs a new method
         }
 
 	    public Element this[int index] => GetChildAtIndex(index);

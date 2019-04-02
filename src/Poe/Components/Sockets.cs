@@ -4,8 +4,11 @@ using System.Text;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Sockets : Component
+    // TODO: Update this to read structure
+    public class Sockets : RemoteMemoryObject, Component
     {
+        public Entity Owner => ReadObject<Entity>(Address + 8);
+
         public int LargestLinkSize
         {
             get

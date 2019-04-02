@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 namespace PoeHUD.Poe.Components
 {
-    public class ObjectMagicProperties : Component
+    // TODO: Convert to structure reading
+    public class ObjectMagicProperties : RemoteMemoryObject, Component
     {
+        public Entity Owner => GetObject<Entity>(Address + 8);
+
         public MonsterRarity Rarity
         {
             get

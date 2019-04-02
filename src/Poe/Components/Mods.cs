@@ -6,8 +6,11 @@ using System.Linq;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Mods : Component
+    // TODO: Convert this to structure reading
+    public class Mods : RemoteMemoryObject, Component
     {
+        public Entity Owner => ReadObject<Entity>(Address + 8);
+
         public string UniqueName => M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4));
         public bool Identified => M.ReadByte(Address + 0x88) == 1;
         public ItemRarity ItemRarity => (ItemRarity) M.ReadInt(Address + 0x8C);

@@ -1,7 +1,21 @@
-﻿namespace PoeHUD.Poe.Components
+﻿using System.Runtime.InteropServices;
+
+namespace PoeHUD.Poe.Components
 {
-    public class CurrencyInfo : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct CurrencyInfoStruct
     {
-        public int MaxStackSize => Address != 0 ? M.ReadInt(Address + 0x28) : 0;
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x28)]
+        public int MaxStackSize;
+
+    }
+
+    public class CurrencyInfo : StructuredRemoteMemoryObject<CurrencyInfoStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Address + 8);
+
+        public int MaxStackSize => Address != 0 ? Structure.MaxStackSize : 0;
     }
 }

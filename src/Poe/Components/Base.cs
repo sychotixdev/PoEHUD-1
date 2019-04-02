@@ -1,23 +1,51 @@
 ﻿using PoeHUD.Poe.RemoteMemoryObjects;
+using System.Runtime.InteropServices;
 
 namespace PoeHUD.Poe.Components
 {
-    public class Base : Component
+    [StructLayout(LayoutKind.Explicit)]
+    public struct BaseStruct
     {
+        [FieldOffset(0x8)]
+        public long OwnerPtr;
+        [FieldOffset(0x10)]
+        public long InternalPtr;
+        [FieldOffset(0xD8)]
+        public byte IsCorrupted;
+        [FieldOffset(0xD9)]
+        public byte IsShaper;
+        [FieldOffset(0xDA)]
+        public byte IsElder;
+    }
 
-        public string Name
+    public class Base : StructuredRemoteMemoryObject<BaseStruct>, Component
+    {
+        public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
+        public BaseInternal Internal => GetObject<BaseInternal>(Structure.InternalPtr);
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct BaseInternalStruct
         {
-            get
-            {
-                return NativeStringReader.ReadString(M.ReadLong(Address + 0x10) + 0x18);
-            }
+            [FieldOffset(0x10)]
+            public int ItemCellsSizeX;
+            [FieldOffset(0x14)]
+            public int ItemCellsSizeY;
+            [FieldOffset(0x18)]
+            public long NamePtr;
         }
 
-        public int ItemCellsSizeX => M.ReadInt(Address + 0x10, 0x10);
-        public int ItemCellsSizeY => M.ReadInt(Address + 0x10, 0x14);
-        public bool isCorrupted => M.ReadByte(Address + 0xD8) == 1;
-        public bool isShaper => M.ReadByte(Address + 0xD9) == 1;
-        public bool isElder => M.ReadByte(Address + 0xDA) == 1;
+        public class BaseInternal : StructuredRemoteMemoryObject<BaseInternalStruct>
+        {
+
+        }
+
+
+        public string Name => NativeStringReader.ReadString(Internal.Address + 0x18); // TODO: Figure out the right way to handle this
+        public int ItemCellsSizeX => Internal.Structure.ItemCellsSizeX;
+        public int ItemCellsSizeY => Internal.Structure.ItemCellsSizeY;
+        public bool isCorrupted => Structure.IsCorrupted == 1;
+        public bool isShaper => Structure.IsShaper == 1;
+        public bool isElder => Structure.IsElder == 1;
 
         // 0x8 - link to base item
         // +0x10 - Name
