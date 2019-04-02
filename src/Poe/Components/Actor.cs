@@ -33,11 +33,12 @@ namespace PoeHUD.Poe.Components
         public long DeployedObjectStartPtr;
         [FieldOffset(0x330)]
         public long DeployedObjectEndPtr;
- 
     }
 
-    public partial class Actor : StructuredRemoteMemoryObject<ActorStruct>, Component
+    public class Actor : StructuredRemoteMemoryObject<ActorStruct>, Component
     {
+        private const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
+
         public Entity Owner => GetObject<Entity>(Structure.OwnerPtr);
 
         /// <summary>
@@ -122,25 +123,24 @@ namespace PoeHUD.Poe.Components
             }
         }
 
-		public List<ActorVaalSkill> ActorVaalSkills
-		{
-			get
-			{
-				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
-				var skillsStartPointer = Structure.VaalSkillsStartPointer;
-				var skillsEndPointer = Structure.VaalSkillsEndPointer;
+        public List<ActorVaalSkill> ActorVaalSkills => M.ReadStructsArray<ActorVaalSkill>(Structure.VaalSkillsStartPointer, Structure.VaalSkillsEndPointer, ACTOR_VAAL_SKILLS_SIZE, 100);
+		//{
+		//	get
+		//	{
+		//						var skillsStartPointer = Structure.VaalSkillsStartPointer;
+		//		var skillsEndPointer = ;
 
-				int stuckCounter = 0;
-				var result = new List<ActorVaalSkill>();
-				for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += ACTOR_VAAL_SKILLS_SIZE)
-				{
-					result.Add(ReadObject<ActorVaalSkill>(addr));
-					if (stuckCounter++ > 50)
-						return new List<ActorVaalSkill>();
-				}
-				return result;
-			}
-		}
+		//		int stuckCounter = 0;
+		//		var result = new List<ActorVaalSkill>();
+		//		for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += ACTOR_VAAL_SKILLS_SIZE)
+		//		{
+		//			result.Add(ReadObject<ActorVaalSkill>(addr));
+		//			if (stuckCounter++ > 50)
+		//				return new List<ActorVaalSkill>();
+		//		}
+		//		return result;
+		//	}
+		//}
 
         [StructLayout(LayoutKind.Explicit)]
         public struct ActionWrapperStruct

@@ -38,13 +38,7 @@ namespace PoeHUD.Poe
 
         public T GetObject<T>(long address) where T : RemoteMemoryObject, new()
         {
-            T retObject = RemoteMemoryObjectCache.GetCachedObject<T>(address);
-            if (retObject == null)
-            {
-                retObject = new T { M = M, Address = address, Game = Game };
-                RemoteMemoryObjectCache.CacheObject(retObject);
-            }
-            return retObject;
+            return new T { M = M, Address = address, Game = Game };
         }
 
         public T AsObject<T>() where T : RemoteMemoryObject, new()

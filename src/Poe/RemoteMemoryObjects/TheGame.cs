@@ -10,12 +10,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Address = m.ReadLong(Offsets.Base + m.AddressOfProcess, 0x8, 0xf8);//0xC40
             Game = this;
         }
-        public IngameState IngameState => GameController.Instance.Cache.Enable && GameController.Instance.Cache.IngameState != null
-            ? GameController.Instance.Cache.IngameState
-            : (GameController.Instance.Cache.Enable
-                ? GameController.Instance.Cache.IngameState =
-                    IngameStateReal
-                : IngameStateReal);
+
+        public IngameState IngameState => GameStateController.IngameState;
+        //We shouldn't have anithing here, GameStateController.IngameState is already cached, it's address is not changed while game running
+            //GameController.Instance.Cache.Enable && GameController.Instance.Cache.IngameState != null
+            //? GameController.Instance.Cache.IngameState
+            //: (GameController.Instance.Cache.Enable
+            //    ? GameController.Instance.Cache.IngameState =
+            //        IngameStateReal
+            //    : IngameStateReal);
 
         private IngameState IngameStateReal => true ? GameStateController.IngameState : ReadObject<IngameState>(Address + 0x38);
 

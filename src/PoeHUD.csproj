@@ -270,7 +270,6 @@
     <Compile Include="Models\Enums\DamageType.cs" />
     <Compile Include="Hud\XpRate\XpRatePlugin.cs" />
     <Compile Include="Models\PreloadConfigLine.cs" />
-    <Compile Include="Models\RemoteMemoryObjectCache.cs" />
     <Compile Include="Models\StatTranslator.cs" />
     <Compile Include="Framework\Enums\ProcessAccessFlags.cs" />
     <Compile Include="Models\Enums\InventoryIndex.cs" />
@@ -300,6 +299,7 @@
     <Compile Include="Poe\FilesInMemory\MonsterVarieties.cs" />
     <Compile Include="Poe\FilesInMemory\QuestStates.cs" />
     <Compile Include="Poe\Pathfinding.cs" />
+    <Compile Include="Poe\PerFrameCachedValue.cs" />
     <Compile Include="Poe\StructuredRemoteMemoryObject.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ActorVaalSkill.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
