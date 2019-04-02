@@ -11,6 +11,7 @@ namespace PoeHUD.Models
         public bool IsTown { get; }
         public bool IsHideout { get; }
         public bool HasWaypoint { get; }
+        public bool IsMap { get; }
         public uint Hash { get; }
         public bool IsCombatArea => !IsTown && !IsHideout;
 
@@ -27,6 +28,7 @@ namespace PoeHUD.Models
             Act = area.Act;
             IsTown = area.IsTown;
             HasWaypoint = area.HasWaypoint;
+            IsMap = area.IsMap;
             IsHideout = area.RawName.ToLower().Contains("hideout");
         }
 
