@@ -118,6 +118,8 @@ namespace PoeHUD
                 var overlay = new ExternalOverlay(gameController, memory.IsInvalid);
                 Application.Run(overlay);
             }
+
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

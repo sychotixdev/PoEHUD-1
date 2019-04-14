@@ -31,7 +31,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var item = startNode.Root;
             stack.Push(item);
 
-            while (stack.Count != 0)
+            var stuckCounter = 500;
+            while (stack.Count != 0 && stuckCounter-- > 0)
             {
                 HashNode node = stack.Pop();
 

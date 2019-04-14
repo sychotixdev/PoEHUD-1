@@ -9,6 +9,10 @@ using ImGuiVector4 = System.Numerics.Vector4;
 
 namespace PoeHUD.Hud.PluginExtension
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// This class will load and process plugin that located in DLL file
+    /// </summary>
     public class ExternalPluginHolder : PluginHolder
     {
         public enum PluginState
@@ -21,51 +25,50 @@ namespace PoeHUD.Hud.PluginExtension
             Reload_ClassNotFound
         }
 
-        private readonly string DllPath;
-
-        private readonly string FullTypeName;
+        private readonly string _dllPath;
+        private readonly string _fullTypeName;
 
         //Saving all references to plugin. Will be destroyed on plugin reload
         internal BasePlugin BPlugin;
-        private readonly FileSystemWatcher DllChangeWatcher;
-
-        private DateTime lastWrite = DateTime.MinValue;
+        private DateTime _lastWrite = DateTime.MinValue;
 
         public ExternalPluginHolder(PluginExtensionPlugin api, string dllPath, string fullTypeName) : base(Path.GetFileNameWithoutExtension(dllPath))
         {
             API = api;
-            DllPath = dllPath;
-            FullTypeName = fullTypeName;
+            _dllPath = dllPath;
+            _fullTypeName = fullTypeName;
             PluginDirectory = Path.GetDirectoryName(dllPath);
 
             ReloadPlugin(false);
 
-            DllChangeWatcher = new FileSystemWatcher();
-            DllChangeWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime; // | NotifyFilters.Size | NotifyFilters.FileName;
-            DllChangeWatcher.Path = PluginDirectory;
-            DllChangeWatcher.Changed += DllChanged;
-            DllChangeWatcher.EnableRaisingEvents = true;
+            var dllChangeWatcher = new FileSystemWatcher
+            {
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime,
+                Path = PluginDirectory,
+                EnableRaisingEvents = true
+            };
+
+            dllChangeWatcher.Changed += DllChanged;
+            api.eClose += () => dllChangeWatcher.Dispose();
         }
 
         public PluginState State { get; private set; } //Will be used by poehud main menu to display why plugin is not loaded/reloaded
-
         internal override bool CanBeEnabledInOptions => BPlugin != null && BPlugin.CanPluginBeEnabledInOptions;
 
         private void DllChanged(object sender, FileSystemEventArgs e)
         {
             if (!MainMenuWindow.Settings.AutoReloadDllOnChanges.Value) return;
-            if (e.FullPath != DllPath) return; //Watchin only dll file
+            if (e.FullPath != _dllPath) return; //Watchin only dll file
 
             //Events being raised multiple times https://stackoverflow.com/questions/1764809/filesystemwatcher-changed-event-is-raised-twice
             var lastWriteTime = File.GetLastWriteTime(e.FullPath);
 
-            if (Math.Abs((lastWriteTime - lastWrite).TotalSeconds) < 1)
+            if (Math.Abs((lastWriteTime - _lastWrite).TotalSeconds) < 1)
                 return;
 
-            lastWrite = lastWriteTime;
+            _lastWrite = lastWriteTime;
 
-
-            if (!File.Exists(DllPath))
+            if (!File.Exists(_dllPath))
             {
                 State = PluginState.Reload_DllNotFound;
                 return;
@@ -74,11 +77,11 @@ namespace PoeHUD.Hud.PluginExtension
             try
             {
                 ReloadPlugin(true);
-                BasePlugin.LogMessage($"Reloaded dll: {Path.GetFileName(DllPath)}", 3);
+                BasePlugin.LogMessage($"Reloaded dll: {Path.GetFileName(_dllPath)}", 3);
             }
             catch (Exception ex)
             {
-                BasePlugin.LogError($"Cannot reload dll: {Path.GetFileName(DllPath)}, Error: {ex.Message}", 3);
+                BasePlugin.LogError($"Cannot reload dll: {Path.GetFileName(_dllPath)}, Error: {ex.Message}", 3);
             }
         }
 
@@ -100,20 +103,19 @@ namespace PoeHUD.Hud.PluginExtension
                 SettingPropertyDrawers.Clear();
 
                 GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
 
-            Assembly asmToLoad = null;
-            var debugCymboldFilePath = DllPath.Replace(".dll", ".pdb");
+            Assembly asmToLoad;
+            var debugCymboldFilePath = _dllPath.Replace(".dll", ".pdb");
 
             if (File.Exists(debugCymboldFilePath))
             {
                 var dbgCymboldBytes = File.ReadAllBytes(debugCymboldFilePath);
-                asmToLoad = Assembly.Load(File.ReadAllBytes(DllPath), dbgCymboldBytes);
+                asmToLoad = Assembly.Load(File.ReadAllBytes(_dllPath), dbgCymboldBytes);
             }
             else
-            {
-                asmToLoad = Assembly.Load(File.ReadAllBytes(DllPath));
-            }
+                asmToLoad = Assembly.Load(File.ReadAllBytes(_dllPath));
 
             if (asmToLoad == null)
             {
@@ -121,7 +123,7 @@ namespace PoeHUD.Hud.PluginExtension
                 return;
             }
 
-            var pluginType = asmToLoad.GetType(FullTypeName);
+            var pluginType = asmToLoad.GetType(_fullTypeName);
 
             if (pluginType == null)
             {
@@ -138,7 +140,7 @@ namespace PoeHUD.Hud.PluginExtension
             }
             catch (Exception ex)
             {
-                BasePlugin.LogMessage($"Error loading plugin {Path.GetFileNameWithoutExtension(DllPath)}: " + ex.Message, 3);
+                BasePlugin.LogMessage($"Error loading plugin {Path.GetFileNameWithoutExtension(_dllPath)}: " + ex.Message, 3);
                 State = PluginState.ErrorClassInstance;
                 return;
             }
@@ -160,9 +162,7 @@ namespace PoeHUD.Hud.PluginExtension
             BPlugin._Initialise();
 
             if (actualyReload)
-            {
                 BPlugin._AreaChange(GameController.Instance.Area);
-            }
 
             foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())
             {

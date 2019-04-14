@@ -18,7 +18,7 @@ namespace PoeHUD.Poe
         
         public long ChildCount => (M.ReadLong(Address + 0x40 + OffsetBuffers) - M.ReadLong(Address + 0x38 + OffsetBuffers)) / 8;
         public bool IsVisibleLocal => (M.ReadByte(Address + 0x111) & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
-        public Element Root => ReadObject<Element>(Address + 0x88 + OffsetBuffers);
+        public Element Root => GetObject<Element>(M.ReadLong(Address + 0x88 + OffsetBuffers, 0xE8));
         public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
         public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
         public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);

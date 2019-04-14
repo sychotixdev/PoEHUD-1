@@ -94,7 +94,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var item = startNode.Root;
             stack.Push(item);
 
-            while (stack.Count != 0)
+            var stuckCounter = 100;
+            while (stack.Count != 0 && stuckCounter-- > 0)
             {
                 GameStateHashNode node = stack.Pop();
                 if (!node.IsNull)

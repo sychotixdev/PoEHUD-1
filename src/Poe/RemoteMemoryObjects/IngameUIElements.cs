@@ -23,6 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x6F8/*0xED8*/);
 		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xCC0);
 		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7A8);
+	    public IncursionWindow IncursionWindow => GameController.Instance.Game.IngameState.UIRoot.GetChildFromIndices(1, 58).AsObject<IncursionWindow>();
 
 		public IEnumerable<LabelOnGround> ItemsOnGroundLabels
 		{

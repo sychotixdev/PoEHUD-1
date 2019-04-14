@@ -29,6 +29,23 @@ namespace PoeHUD.Poe
             return GetObject<T>(Address + offset);
         }
 
+        public T GetObjectAt<T>(params long[] offsets) where T : RemoteMemoryObject, new()
+        {
+            //Simple for better then LINQ for often operation
+            var num = M.ReadLong(Address + offsets[0]);
+            var result = num;
+
+            for (var index = 1; index < offsets.Length; index++)
+            {
+                if (result == 0)
+                    break;
+                var offset = offsets[index];
+                result = M.ReadLong(result + offset);
+            }
+
+            return GetObject<T>(result);
+        }
+
         public T GetObjectAt<T>(long offset) where T : RemoteMemoryObject, new()
         {
             return GetObject<T>(Address + offset);

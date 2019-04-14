@@ -11,8 +11,8 @@ namespace PoeHUD.Poe.Components
     {
         public bool IsClosed => Address != 0 && M.ReadByte(Address + 0x30) == 1;
 
-        public Point Min => new Point(M.ReadInt(Address + 0x58), M.ReadInt(Address + 0x5C));
-        public Point Max => new Point(M.ReadInt(Address + 0x60), M.ReadInt(Address + 0x64));
+        public Point Min => new Point(M.ReadInt(Address + 0x50), M.ReadInt(Address + 0x54));
+        public Point Max => new Point(M.ReadInt(Address + 0x58), M.ReadInt(Address + 0x5C));
 
         public byte[] Data
         {

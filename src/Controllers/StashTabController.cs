@@ -35,7 +35,6 @@ namespace PoeHUD.Controllers
         //so we skipping them when reading in ServerData.PlayerStashTabs
         private void CheckCacheStashTabs()
         {
-            //Fixed a bug when server stash tabs change their position on area change
             CacheStashTabs(GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs);
 
             foreach (var node in SubscribedNodes)
