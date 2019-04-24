@@ -58,6 +58,8 @@ namespace PoeHUD.Hud.Loot
 			var isMap = entity.HasComponent<Map>();
 			var stackSize = entity.GetComponent<Stack>().Size;
 			var MapTier = 0;
+            var isSynthesized = mods.Synthesised;
+            var isFractured = mods.FracturedMods > 0;
 
 			var isShapedMap = false;
 			var isElderMap = false;
@@ -127,6 +129,8 @@ namespace PoeHUD.Hud.Loot
 				var poeStackSizeCondition = true;
 				var poeHasExplicitModCondition = true;
 				var poeMapTierCondition = true;
+                var poeSynthesizedCondition = true;
+                var poeFracturedCondition = true;
 
 				foreach (var statement in statements)
 				{
@@ -296,29 +300,45 @@ namespace PoeHUD.Hud.Loot
 																										else
 																										{
 																											var poeExplicitModContext = statement.poeHasExplicitMod();
-																											if (poeExplicitModContext != null)
-																											{
-																												poeHasExplicitModCondition &= poeExplicitModContext.@params()
-																													.strValue().Any(y => explicitMods.Contains(GetRawText(y)));
-																											}
-																											else
-																											{
-																												var poeGemSkillContext = statement.poeGemLevel();
-																												if (poeGemSkillContext != null)
-																												{
-																													poeGemLevelCondition &= CalculateDigitsCondition(poeGemSkillContext.compareOpNullable(),
-																														poeGemSkillContext.digitsParams(), SkillGemLevel);
-																												}
-																												else
-																												{
-																													var poeMapTierContext = statement.poeMapTier();
-																													if (poeMapTierContext != null)
-																													{
-																														poeMapTierCondition &= CalculateDigitsCondition(poeMapTierContext.compareOpNullable(),
-																															poeMapTierContext.digitsParams(), MapTier);
-																													}
-																												}
-																											}
+                                                                                                            if (poeExplicitModContext != null)
+                                                                                                            {
+                                                                                                                poeHasExplicitModCondition &= poeExplicitModContext.@params()
+                                                                                                                    .strValue().Any(y => explicitMods.Contains(GetRawText(y)));
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                var poeGemSkillContext = statement.poeGemLevel();
+                                                                                                                if (poeGemSkillContext != null)
+                                                                                                                {
+                                                                                                                    poeGemLevelCondition &= CalculateDigitsCondition(poeGemSkillContext.compareOpNullable(),
+                                                                                                                        poeGemSkillContext.digitsParams(), SkillGemLevel);
+                                                                                                                }
+                                                                                                                else
+                                                                                                                {
+                                                                                                                    var poeMapTierContext = statement.poeMapTier();
+                                                                                                                    if (poeMapTierContext != null)
+                                                                                                                    {
+                                                                                                                        poeMapTierCondition &= CalculateDigitsCondition(poeMapTierContext.compareOpNullable(),
+                                                                                                                            poeMapTierContext.digitsParams(), MapTier);
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        var poeIsSynthesizedContext = statement.poeSynthesisedItem();
+                                                                                                                        if (poeIsSynthesizedContext != null)
+                                                                                                                        {
+                                                                                                                            poeSynthesizedCondition &= isSynthesized == Convert.ToBoolean(poeIsSynthesizedContext.Boolean().GetText());
+                                                                                                                        }
+                                                                                                                        else
+                                                                                                                        {
+                                                                                                                            var poeIsFracturedContext = statement.poeFracturedItem();
+                                                                                                                            if (poeIsFracturedContext != null)
+                                                                                                                            {
+                                                                                                                                poeFracturedCondition &= isFractured == Convert.ToBoolean(poeIsFracturedContext.Boolean().GetText());
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
 																										}
 																									}
 																								}
@@ -348,7 +368,7 @@ namespace PoeHUD.Hud.Loot
 					&& poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition
 					&& poeCorruptedCondition && poeElderCondition && poeShaperCondition && poeShapedMapCondition
 					&& poeElderMapCondition && poeStackSizeCondition && poeHasExplicitModCondition && poeGemLevelCondition
-					&& poeMapTierCondition)
+					&& poeMapTierCondition && poeSynthesizedCondition && poeFracturedCondition)
 				{
 					if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
 						return null;
