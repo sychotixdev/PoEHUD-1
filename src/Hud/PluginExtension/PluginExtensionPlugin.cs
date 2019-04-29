@@ -212,9 +212,18 @@ namespace PoeHUD.Hud.PluginExtension
             AppDomain.CurrentDomain.AppendPrivatePath(dir);
 
             Type[] asmTypes;
+            var debugCymboldFilePath = path.Replace(".dll", ".pdb");
             try
             {
-                var myAsm = Assembly.LoadFrom(path);
+                Assembly myAsm;
+                if (File.Exists(debugCymboldFilePath))
+                {
+                    var dbgCymboldBytes = File.ReadAllBytes(debugCymboldFilePath);
+                    myAsm = Assembly.Load(File.ReadAllBytes(path), dbgCymboldBytes);
+                }
+                else
+                    myAsm = Assembly.Load(File.ReadAllBytes(path));
+            
                 asmTypes = myAsm.GetTypes();
             }
             catch (BadImageFormatException)
