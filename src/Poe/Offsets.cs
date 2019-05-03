@@ -80,21 +80,21 @@ namespace PoeHUD.Poe
 		}, "xxxxxxxxxxx");
 
 		private static readonly Pattern GameStatePattern = new Pattern(new byte[]
-{
+		{
 			0x48, 0x39, 0x2D, 0x3F, 0xA2, 0x52, 0x01,
-			0x0F, 0x85, 0x02, 0x01, 0x00, 0x00,
-			0xB9, 0x80, 0x00, 0x00, 0x00,
-			0xE8
-		}, "xxx????xxxxxxxxxxxx");
+			0x0F, 0x85, 0x28, 0x01, 0x00, 0x00,
+			0xC7, 0x40, 0x08, 0x80, 0x00, 0x00, 0x00,
+			0x8B,  0xCD
+		}, "xxx????xxxxxxxxxxxxxxx");
 
-        /*
+		/*
         PathOfExile_x64.exe+118FD9 - 4C 8B 35 48255B01     - mov r14,[PathOfExile_x64.exe+16CB528] { [C6151734A0] }<<here
         PathOfExile_x64.exe+118FE0 - 4D 85 F6              - test r14,r14
         PathOfExile_x64.exe+118FE3 - 0F94 C0               - sete al
         PathOfExile_x64.exe+118FE6 - 84 C0                 - test al,al
         */
 
-        public long AreaChangeCount { get; private set; }
+		public long AreaChangeCount { get; private set; }
         public long Base { get; private set; }
         public string ExeName { get; private set; }
         public long FileRoot { get; private set; }
