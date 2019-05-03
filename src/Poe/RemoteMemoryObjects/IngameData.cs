@@ -26,8 +26,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x98);
-                var statPtrEnd = M.ReadLong(Address + 0xA0);
+                var statPtrStart = M.ReadLong(Address + 0xA0);
+                var statPtrEnd = M.ReadLong(Address + 0xA8);
 
                 int key = 0;
                 int value = 0;
