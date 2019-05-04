@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var betrayalStateAddr = M.ReadLong(Address + 0x718, 0x2D0);
+				var betrayalStateAddr = M.ReadLong(Address + 0x2D0);
 				return M.ReadStructsArray<BetrayalSyndicateState>(betrayalStateAddr, betrayalStateAddr + BetrayalSyndicateState.STRUCT_SIZE * 14, BetrayalSyndicateState.STRUCT_SIZE, 20);
 			}
 		}
@@ -19,7 +19,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var addr = M.ReadLong(Address + 0xA50, 0xAD8, 0xB48, 0x7B8);
+				var addr = M.ReadLong(Address + 0x2E8, 0x2F0);
 				return addr == 0 ? null : GetObject<BetrayalEventData>(addr);
 			}
 		}
