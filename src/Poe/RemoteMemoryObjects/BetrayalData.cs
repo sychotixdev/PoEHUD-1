@@ -4,7 +4,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class BetrayalData : RemoteMemoryObject
 	{
-		public BetrayalSyndicateLeadersData SyndicateLeadersData => ReadObjectAt<BetrayalSyndicateLeadersData>(0x9f0);
+		public BetrayalSyndicateLeadersData SyndicateLeadersData => GetObject<BetrayalSyndicateLeadersData>(M.ReadLong(Address + 0x288));
 
 		public List<BetrayalSyndicateState> SyndicateStates
 		{
