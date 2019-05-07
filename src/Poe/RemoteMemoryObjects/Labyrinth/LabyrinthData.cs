@@ -5,6 +5,7 @@ using PoeHUD.Controllers;
 using PoeHUD.Poe.FilesInMemory;
 using System.Collections.Generic;
 using PoeHUD.Framework;
+using PoeHUD.Plugins;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -24,6 +25,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 CachedRoomsDictionary = new Dictionary<long, LabyrinthRoom>();
 
                 int roomIndex = 0;
+
                 for (var addr = firstPtr; addr < lastPtr; addr += 0x60)
                 {
                     //DebugPlug.DebugPlugin.LogMsg($"Room {roomIndex} Addr: {addr.ToString("x")}", 0);
@@ -32,8 +34,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     room.Id = roomIndex++;
                     result.Add(room);
                     CachedRoomsDictionary.Add(addr, room);
+
+                    if (roomIndex > 100)
+                        break;
                 }
-                
+
                 return result;
             }
         }
@@ -56,14 +61,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private Memory M;
         public LabyrinthSecret Secret1 { get; internal set; }
         public LabyrinthSecret Secret2 { get; internal set; }
-        public LabyrinthRoom[] Connections { get; internal set; }   // Length is always 5
+        public LabyrinthRoom[] Connections { get; internal set; } // Length is always 5
         public LabyrinthSection Section { get; internal set; }
-        
 
         internal LabyrinthRoom(Memory m, long address)
         {
             M = m;
             Address = address;
+
             Secret1 = ReadSecret(M.ReadLong(Address + 0x40));
             Secret2 = ReadSecret(M.ReadLong(Address + 0x50));
             Section = ReadSection(M.ReadLong(Address + 0x30));
@@ -74,9 +79,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         internal LabyrinthSection ReadSection(long addr)
         {
-            if (addr == 0) return null;//Should never happens
+            if (addr == 0) return null; //Should never happens
             var section = new LabyrinthSection(M, addr);
-          
 
             return section;
         }
@@ -122,7 +126,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public class LabyrinthSection
         {
             public string SectionType { get; internal set; }
-            public List<LabyrinthSectionOverrides> Overrides { get; internal set; }  = new List<LabyrinthSectionOverrides>();
+            public List<LabyrinthSectionOverrides> Overrides { get; internal set; } = new List<LabyrinthSectionOverrides>();
             public LabyrinthSectionAreas SectionAreas { get; internal set; }
 
             internal LabyrinthSection(Memory M, long addr)
@@ -133,6 +137,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var overridesArrayPtr = M.ReadLong(addr + 0x64);
 
                 var overridePointers = M.ReadSecondPointerArray_Count(overridesArrayPtr, overridesCount);
+
+                if (overridesCount > 50)
+                    overridesCount = 50;
 
                 for (int i = 0; i < overridesCount; i++)
                 {
@@ -164,7 +171,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 SectionAreas.EndgameAreasPtrs = M.ReadSecondPointerArray_Count(endgameArrayPtr, endgameCount);
             }
 
-
             public override string ToString()
             {
                 var overrides = "";
@@ -183,52 +189,58 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             internal List<long> CruelAreasPtrs = new List<long>();
             internal List<long> MercilesAreasPtrs = new List<long>();
             internal List<long> EndgameAreasPtrs = new List<long>();
-
             private List<WorldArea> normalAreas;
+
             public List<WorldArea> NormalAreas
             {
                 get
                 {
                     if (normalAreas == null)
                         normalAreas = NormalAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
+
                     return normalAreas;
                 }
             }
 
             private List<WorldArea> cruelAreas;
+
             public List<WorldArea> CruelAreas
             {
                 get
                 {
                     if (cruelAreas == null)
                         cruelAreas = CruelAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
+
                     return cruelAreas;
                 }
             }
 
             private List<WorldArea> mercilesAreas;
+
             public List<WorldArea> MercilesAreas
             {
                 get
                 {
                     if (mercilesAreas == null)
                         mercilesAreas = MercilesAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
+
                     return mercilesAreas;
                 }
             }
 
             private List<WorldArea> endgameAreas;
+
             public List<WorldArea> EndgameAreas
             {
                 get
                 {
                     if (endgameAreas == null)
                         endgameAreas = EndgameAreasPtrs.Select(x => GameController.Instance.Files.WorldAreas.GetByAddress(x)).ToList();
+
                     return endgameAreas;
                 }
             }
         }
-
 
         public class LabyrinthSectionOverrides
         {
@@ -241,5 +253,4 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
         }
     }
-
 }

@@ -18,7 +18,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x3E0);
         public EntityList EntityList => GetObject<EntityList>(Address + 0x468);
 
-        private long LabDataPtr => M.ReadLong(Address + 0xC0);
+        private long LabDataPtr => M.ReadLong(Address + 0xD0);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
 
 
