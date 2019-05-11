@@ -36,7 +36,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         /// <summary>
         /// Returns true while user pressed down button for casting skill. Returns true even if no mana for casting skill
         /// </summary>
-        public bool IsUsingPressed => (SkillStage & 2) > 0;
+        public bool IsUsingPressed => (SkillStage & 8) > 0;
 
         public string Name
         {

@@ -76,6 +76,35 @@ namespace PoeHUD.Controllers
 	    private UniversalFileWrapper<BetrayalDialogue> _betrayalDialogue;
 	    public UniversalFileWrapper<BetrayalDialogue> BetrayalDialogue => _betrayalDialogue ?? (_betrayalDialogue = new UniversalFileWrapper<BetrayalDialogue>(_mem, FindFile("Data/BetrayalDialogue.dat")));
 
+        #region Bestiary
+
+        private BestiaryCapturableMonsters bestiaryCapturableMonsters;
+        public BestiaryCapturableMonsters BestiaryCapturableMonsters => bestiaryCapturableMonsters != null
+            ? bestiaryCapturableMonsters
+            : bestiaryCapturableMonsters = new BestiaryCapturableMonsters(_mem, FindFile("Data/BestiaryCapturableMonsters.dat"));
+        private UniversalFileWrapper<BestiaryRecipe> bestiaryRecipes;
+        public UniversalFileWrapper<BestiaryRecipe> BestiaryRecipes => bestiaryRecipes != null
+            ? bestiaryRecipes
+            : bestiaryRecipes = new UniversalFileWrapper<BestiaryRecipe>(_mem, FindFile("Data/BestiaryRecipes.dat"));
+        private UniversalFileWrapper<BestiaryRecipeComponent> bestiaryRecipeComponents;
+        public UniversalFileWrapper<BestiaryRecipeComponent> BestiaryRecipeComponents => bestiaryRecipeComponents != null
+            ? bestiaryRecipeComponents
+            : bestiaryRecipeComponents = new UniversalFileWrapper<BestiaryRecipeComponent>(_mem, FindFile("Data/BestiaryRecipeComponent.dat"));
+        private UniversalFileWrapper<BestiaryGroup> bestiaryGroups;
+        public UniversalFileWrapper<BestiaryGroup> BestiaryGroups => bestiaryGroups != null
+            ? bestiaryGroups
+            : bestiaryGroups = new UniversalFileWrapper<BestiaryGroup>(_mem, FindFile("Data/BestiaryGroups.dat"));
+        private UniversalFileWrapper<BestiaryFamily> bestiaryFamilies;
+        public UniversalFileWrapper<BestiaryFamily> BestiaryFamilies => bestiaryFamilies != null
+            ? bestiaryFamilies
+            : bestiaryFamilies = new UniversalFileWrapper<BestiaryFamily>(_mem, FindFile("Data/BestiaryFamilies.dat"));
+        private UniversalFileWrapper<BestiaryGenus> bestiaryGenuses;
+        public UniversalFileWrapper<BestiaryGenus> BestiaryGenuses => bestiaryGenuses != null
+            ? bestiaryGenuses
+            : bestiaryGenuses = new UniversalFileWrapper<BestiaryGenus>(_mem, FindFile("Data/BestiaryGenus.dat"));
+
+        #endregion
+
         public FsController(Memory mem)
         {
             _mem = mem;

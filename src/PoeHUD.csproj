@@ -258,6 +258,7 @@
     <Compile Include="Poe\Elements\SyndicatePanel.cs" />
     <Compile Include="Poe\Elements\WorldMapElement.cs" />
     <Compile Include="Poe\Extensions.cs" />
+    <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\GenericFilesInMemory.cs" />
     <Compile Include="Poe\FilesInMemory\PropheciesDat.cs" />
@@ -268,6 +269,12 @@
     <Compile Include="Poe\RemoteMemoryObjects\ActorVaalSkill.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryCapturableMonster.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryFamily.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryGenus.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryGroup.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipe.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipeComponent.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoice.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoiceAction.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalData.cs" />

@@ -18,6 +18,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
 		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x6090) & 0xF);
 
+        public int GetBeastCapturedAmount(BestiaryCapturableMonster monster)
+        {
+            return M.ReadInt(Address + 0x5120 + monster.Id * 4);
+        }
+
 		public List<ushort> PassiveSkillIds
 		{
 			get
