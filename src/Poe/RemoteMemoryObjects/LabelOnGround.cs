@@ -20,12 +20,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private long GetLabelInfo() { return Label.Address != 0 ? M.ReadLong(Label.Address + 0x3A8) : 0; } // No idea if this is correct, but it's not 0x6A4
 
-        //Probably CanPickUp
-        public int PickTest => M.ReadInt(Address + 0x10c);
-
-        //Probably CanPickUp
-        public int PickTest2 => M.ReadInt(Label.Address + 0x114);
-        
         public bool IsVisible => Label.IsVisible;
 
         public Entity ItemOnGround
@@ -47,8 +41,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
 
-        //Temp solution for pick it, need test PickTest and PickTest2
-        public bool CanPickUp => true; //labelInfo.Value == 0;
+        //Howto find CanPickUp offset:
+        //You need few items on ground rolled to you, other rolled to ur party member.
+        //In dev plugin open IngameUI->ItemOnGroundLabels
+        //Find item that rolled to you (element->Label->Draw this), copy address of this label (element->Label->Address)
+        //Open Structure Spider Advanced (https://github.com/Stridemann/StructureSpiderAdvanced)
+        //Search for: Long
+        //Address - (paste address of that label)
+        //Value: 0 
+        //Compare type: Equal
+        //Do scan. Then do scan again but with address of label that rolled to party member just switch to "Compare type: NotEqual"
+        //Repeat this multiple time with different labels and you get ur offset in 5-7 iterations.
+        public bool CanPickUp => M.ReadLong(Label.Address + 0x420) == 0;
 
         public TimeSpan TimeLeft
         {
@@ -65,8 +69,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
         //Temp solution for pick it
-        public TimeSpan MaxTimeForPickUp =>
-            TimeSpan.Zero; // !CanPickUp ? TimeSpan.FromMilliseconds(M.Read<int>(labelInfo.Value + 0x34)) : new TimeSpan();
+        public TimeSpan MaxTimeForPickUp => TimeSpan.FromMinutes(2);
+            //TimeSpan.Zero; // !CanPickUp ? TimeSpan.FromMilliseconds(M.Read<int>(labelInfo.Value + 0x34)) : new TimeSpan();
 
         public override string ToString() { return debug.Value; }
     }
