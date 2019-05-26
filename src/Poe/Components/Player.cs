@@ -39,7 +39,7 @@ namespace PoeHUD.Poe.Components
 		    get
 		    {
 			    var result = new List<ProphecyDat>();
-			    var readAddr = Address + 0x1EC;
+			    var readAddr = Address + 0x1F4;
 
 			    for (int i = 0; i < 7; i++)
 			    {
@@ -47,7 +47,7 @@ namespace PoeHUD.Poe.Components
 				    //if(prophacyId > 0)//Dunno why it will never be 0 even if there is no prophecy
 				    {
 					    var prophecy = GameController.Instance.Files.Prophecies.GetProphecyById(prophecyId);
-					    if (prophecy != null)
+					    //if (prophecy != null)
 						    result.Add(prophecy);
 				    }
 				    readAddr += 4;//prophecy prophecyId(UShort), Skip index(byte), Skip unknown(byte)

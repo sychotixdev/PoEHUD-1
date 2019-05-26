@@ -1,11 +1,4 @@
-﻿﻿using PoeHUD.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Linq;
-using System.Runtime.InteropServices;
-using PoeHUD.Controllers;
+﻿using PoeHUD.Controllers;
 using PoeHUD.Poe.FilesInMemory;
 using System.Text;
 
@@ -13,8 +6,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class BestiaryRecipeComponent : RemoteMemoryObject
     {
-        public int Id { get; internal set; }
-
         private string recipeId = null;
         public string RecipeId => recipeId != null ? recipeId :
             recipeId = M.ReadStringU(M.ReadLong(Address));
@@ -47,14 +38,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public override string ToString()
         {
             var debugStr = new StringBuilder();
-            debugStr.Append($"Id: {Id}, ");
-
 
             if (MinLevel > 0)
                 debugStr.Append($"MinLevel: {MinLevel}, ");
 
             if (Mod != null)
-                debugStr.Append($"Mod: {Mod.ToString()}, ");
+                debugStr.Append($"Mod: {Mod}, ");
 
             if (BestiaryCapturableMonster != null)
                 debugStr.Append($"MonsterName: {BestiaryCapturableMonster.MonsterName}, ");

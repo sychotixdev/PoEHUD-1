@@ -1,13 +1,4 @@
-﻿using PoeHUD.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Linq;
-using System.Runtime.InteropServices;
-using PoeHUD.Controllers;
-
-namespace PoeHUD.Poe.RemoteMemoryObjects
+﻿namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ProphecyDat : RemoteMemoryObject
     {
@@ -31,8 +22,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public string FlavourText => flavourText != null ? flavourText :
             flavourText = M.ReadStringU(M.ReadLong(Address + 0x1c), 255);
 
-        public long ProphecyChainPtr => M.ReadLong(Address + 0x44);//TODO ProphecyChainDat
-        public int ProphecyChainPosition => M.ReadInt(Address + 0x4c);//TODO ProphecyChainDat
+        public long ProphecyChainPtr => M.ReadLong(Address + 0x44);
+        public string ProphecyChainName => M.ReadStringU(M.ReadLong(M.ReadLong(Address + 0x44)));
+        public int ProphecyChainPosition => M.ReadInt(Address + 0x4c);
 
         public bool IsEnabled => M.ReadByte(Address + 0x50) > 0;
 
@@ -42,6 +34,5 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             return $"{Name}, {PredictionText}";
         }
-        
     }
 }
