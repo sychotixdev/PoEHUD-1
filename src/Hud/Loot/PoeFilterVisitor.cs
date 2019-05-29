@@ -60,6 +60,7 @@ namespace PoeHUD.Hud.Loot
 			var MapTier = 0;
             var isSynthesized = mods.Synthesised;
             var isFractured = mods.FracturedMods > 0;
+            var anyEnchantment = false;
 
 			var isShapedMap = false;
 			var isElderMap = false;
@@ -131,6 +132,8 @@ namespace PoeHUD.Hud.Loot
 				var poeMapTierCondition = true;
                 var poeSynthesizedCondition = true;
                 var poeFracturedCondition = true;
+                var poeAnyEnchantmentCondition = true;
+                var poeHasEnchantmentCondition = true;
 
 				foreach (var statement in statements)
 				{
@@ -335,6 +338,23 @@ namespace PoeHUD.Hud.Loot
                                                                                                                             {
                                                                                                                                 poeFracturedCondition &= isFractured == Convert.ToBoolean(poeIsFracturedContext.Boolean().GetText());
                                                                                                                             }
+                                                                                                                            else
+                                                                                                                            {
+                                                                                                                                var poeAnyEnchantmentContext = statement.poeAnyEnchantment();
+                                                                                                                                if (poeAnyEnchantmentContext != null)
+                                                                                                                                {
+                                                                                                                                    poeAnyEnchantmentCondition &= anyEnchantment == Convert.ToBoolean(poeAnyEnchantmentContext.Boolean().GetText());
+                                                                                                                                }
+                                                                                                                                else
+                                                                                                                                {
+                                                                                                                                    var poeHasEnchantmentContext = statement.poeHasEnchantment();
+                                                                                                                                    if (poeHasEnchantmentContext != null)
+                                                                                                                                    {
+                                                                                                                                        poeHasEnchantmentCondition = poeBaseTypeContext.@params()
+                                                                                                                                            .strValue().Any(y => explicitMods.Contains(GetRawText(y)));
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }
@@ -368,7 +388,8 @@ namespace PoeHUD.Hud.Loot
 					&& poeSocketsCondition && poeLinkedSocketsCondition && poeSocketGroupCondition && poeIdentifiedCondition
 					&& poeCorruptedCondition && poeElderCondition && poeShaperCondition && poeShapedMapCondition
 					&& poeElderMapCondition && poeStackSizeCondition && poeHasExplicitModCondition && poeGemLevelCondition
-					&& poeMapTierCondition && poeSynthesizedCondition && poeFracturedCondition)
+					&& poeMapTierCondition && poeSynthesizedCondition && poeFracturedCondition && poeAnyEnchantmentCondition
+                    && poeHasEnchantmentCondition)
 				{
 					if (!isShow || (filterEnabled && !(settings.WithBorder && borderWidth > 0 || settings.WithSound && sound >= 0)))
 						return null;
