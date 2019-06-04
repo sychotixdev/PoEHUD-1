@@ -247,6 +247,7 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\AnimatedComponents\ClientAnimationController.cs" />
+    <Compile Include="Poe\Components\Magnetic.cs" />
     <Compile Include="Poe\Components\Monolith.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\Components\Prophecy.cs" />

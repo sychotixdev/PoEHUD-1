@@ -56,22 +56,31 @@ namespace PoeHUD.Poe.Components
 			}
 		}
 
-		public bool HasBuff(string buff)
+        public bool HasBuff(string buffName)
+        {
+            return GetBuff(buffName) != null;
+        }
+
+		public Buff GetBuff(string buffName)
 		{
-			long start = BuffStart;
-			long end = BuffEnd;
-			long length = BuffEnd - BuffStart;
-			if (length <= 0 || length >= MaxBuffCount * 8)
-				return false;
-			byte[] buffPointers = M.ReadBytes(start, (int)length);
-			Buff tmp = null;
-			for (int i = 0; i < length; i += 8)
-			{
-				tmp = ReadObject<Buff>(BitConverter.ToInt64(buffPointers, i) + 0x08);
-				if (tmp.Name == buff)
-					return true;
-			}
-			return false;
+            var start = BuffStart;
+            var end = BuffEnd;
+            var length = BuffEnd - BuffStart;
+
+            if (length <= 0 || length >= MaxBuffCount * 8)
+                return null;
+
+            var buffPointers = M.ReadBytes(start, (int) length);
+
+            for (var i = 0; i < length; i += 8)
+            {
+                var buff = ReadObject<Buff>(BitConverter.ToInt64(buffPointers, i) + 0x08);
+
+                if (buff.Name == buffName)
+                    return buff;
+            }
+
+            return null;
 		}
 	}
 }
