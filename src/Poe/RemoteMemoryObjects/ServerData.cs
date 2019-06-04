@@ -57,7 +57,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x60D0);
 		public bool IsInGame => GameStateController.IsInGameState;
 
-		public string League => NativeStringReader.ReadString(Address + 0x60E8);
+		public string League => NativeStringReader.ReadString(Address + 0x6168);
 		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x61b5);
 		public int Latency => M.ReadInt(Address + 0x61d0);
 		#endregion
