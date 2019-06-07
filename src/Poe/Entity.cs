@@ -11,9 +11,9 @@ namespace PoeHUD.Poe
 {
     public sealed class Entity : RemoteMemoryObject, IEntity
     {
-        private long ComponentLookup => M.ReadLong(Address, 0x48, 0x30);
+        private long ComponentLookup => M.ReadLong(Address, 0x40, 0x30);
         private long ComponentList => M.ReadLong(Address + 0x8);
-        public string Path => M.ReadStringU(M.ReadLong(Address, 0x20));
+        public string Path => M.ReadStringU(M.ReadLong(Address, 0x18));
 
         public string Metadata
         {
