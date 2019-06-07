@@ -6,6 +6,8 @@ CURRENTLY DETECTED - USE AT YOUR OWN RISK
 
 Warnings are currently going out for HUD users. Using this can and likely will get you banned.
 
+It is highly recommended that you use the [limited user method explained here](https://www.ownedcore.com/forums/mmo/path-of-exile/poe-bots-programs/676345-run-poe-limited-user.html).
+
 Reads data from Path of Exile client application and displays it on transparent overlay, while you play PoE.
 Without writing to it so no map hack, disabling particles, zoom hack, fullbright.
 
