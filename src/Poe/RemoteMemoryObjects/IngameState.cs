@@ -22,7 +22,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		private ServerData ServerDataReal => ReadObjectAt<ServerData>(0x378 + Offsets.IgsOffset);
 
 		public Element UIRoot => _cache.Enable && _cache.UIRoot != null ? _cache.UIRoot : _cache.Enable ? _cache.UIRoot = UIRootReal : UIRootReal;
-		private Element UIRootReal => ReadObjectAt<Element>(0x4B0 + Offsets.IgsOffset);
+		private Element UIRootReal => ReadObjectAt<Element>(0x4A0 + Offsets.IgsOffset);
 
 		public Element UIHoverTooltip => ReadObjectAt<Element>(0x4D8 + Offsets.IgsOffset);
 

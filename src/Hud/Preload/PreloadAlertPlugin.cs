@@ -322,7 +322,7 @@ namespace PoeHUD.Hud.Preload
                     // address is null, something has gone wrong, start over
                     return;
                 }
-                if (memory.ReadLong(listIterator + 0x10) == 0 || memory.ReadInt(listIterator + 0x18, 0x50) != areaChangeCount)
+                if (memory.ReadLong(listIterator + 0x10) == 0 || memory.ReadInt(listIterator + 0x18, 0x48) != areaChangeCount)
                 {
                     continue;
                 }
