@@ -10,7 +10,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x50);
         public WorldArea CurrentWorldArea => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x50));
         public int CurrentAreaLevel => (int)M.ReadByte(Address + 0x68);
-        public uint CurrentAreaHash => M.ReadUInt(Address + 0xD0);
+        public uint CurrentAreaHash => M.ReadUInt(Address + 0xD8);
 
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer
