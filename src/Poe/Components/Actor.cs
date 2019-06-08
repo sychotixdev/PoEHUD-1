@@ -75,8 +75,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var skillsStartPointer = M.ReadLong(Address + 0x2c0);
-                var skillsEndPointer = M.ReadLong(Address + 0x2c8);
+                var skillsStartPointer = M.ReadLong(Address + 0x3a0);
+                var skillsEndPointer = M.ReadLong(Address + 0x3a8);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
 
                 int stuckCounter = 0;
