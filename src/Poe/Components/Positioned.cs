@@ -17,6 +17,6 @@ namespace PoeHUD.Poe.Components
         public float Rotation => M.ReadFloat(Address + 0x100);
         public float RotationDeg => Rotation * (180 / MathUtil.Pi);
 
-        public byte Reaction => M.ReadByte(Address + 0x39);
+        public byte Reaction => M.ReadByte(Address + 0x3A);
     }
 }
