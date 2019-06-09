@@ -26,7 +26,7 @@ namespace PoeHUD.Poe.Components
 	    public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
 
 	    #region Prophecy
-	    public byte PropheciesCount => M.ReadByte(Address + 0x1EA);
+	    public byte PropheciesCount => M.ReadByte(Address + 0xDA);
 
         //How to fix prophecies:
         //PropheciesCount is ez to find (use Structure Spider Advanced)
@@ -39,7 +39,7 @@ namespace PoeHUD.Poe.Components
 		    get
 		    {
 			    var result = new List<ProphecyDat>();
-			    var readAddr = Address + 0x1F4;
+			    var readAddr = Address + 0xE8;
 
 			    for (int i = 0; i < 7; i++)
 			    {

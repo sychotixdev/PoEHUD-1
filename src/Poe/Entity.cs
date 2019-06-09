@@ -13,7 +13,8 @@ namespace PoeHUD.Poe
     {
         private long ComponentLookup => M.ReadLong(Address, 0x40, 0x30);
         private long ComponentList => M.ReadLong(Address + 0x8);
-        public string Path => M.ReadStringU(M.ReadLong(Address, 0x18));
+        private string _path;
+        public string Path => _path ?? (_path = M.ReadStringU(M.ReadLong(Address, 0x18)));
 
         public string Metadata
         {
