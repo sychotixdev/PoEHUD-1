@@ -30,7 +30,7 @@ namespace PoeHUD.Hud.Loot
         private readonly Dictionary<EntityWrapper, AlertDrawStyle> currentAlerts;
         private readonly HashSet<CraftingBase> craftingBases;
         private readonly HashSet<string> currencyNames;
-        private Dictionary<long, ItemsOnGroundLabelElement> currentLabels;
+        private Dictionary<long, LabelOnGround> currentLabels;
         public static PoeFilterVisitor visitor;
         public static bool holdKey;
         private readonly SettingsHub settingsHub;
@@ -41,10 +41,10 @@ namespace PoeHUD.Hud.Loot
             this.settingsHub = settingsHub;
             playedSoundsCache = new HashSet<long>();
             currentAlerts = new Dictionary<EntityWrapper, AlertDrawStyle>();
-            currentLabels = new Dictionary<long, ItemsOnGroundLabelElement>();
+            currentLabels = new Dictionary<long, LabelOnGround>();
             currencyNames = LoadCurrency();
             craftingBases = LoadCraftingBases();
-            GameController.Area.OnAreaChange += OnAreaChange;
+            GameController.Area.AreaChange += OnAreaChange;
             PoeFilterInit(settings.FilePath);
             settings.FilePath.OnFileChanged += () => PoeFilterInit(settings.FilePath);
         }
@@ -55,6 +55,7 @@ namespace PoeHUD.Hud.Loot
             {
                 if (!string.IsNullOrEmpty(path))
                 {
+                    DebugPlug.DebugPlugin.LogMsg("Loading the Filter File", 4);
                     using (var fileStream = new StreamReader(path))
                     {
                         var input = new AntlrInputStream(fileStream.ReadToEnd());
@@ -90,7 +91,7 @@ namespace PoeHUD.Hud.Loot
 
         public override void Dispose()
         {
-            GameController.Area.OnAreaChange -= OnAreaChange;
+            GameController.Area.AreaChange -= OnAreaChange;
         }
 
         public override void Render()
@@ -109,13 +110,12 @@ namespace PoeHUD.Hud.Loot
 
             if (Settings.Enable)
             {
-                Positioned pos = GameController.Player.GetComponent<Positioned>();
-                if (pos == null)
-                    return;
-                Vector2 playerPos = pos.GridPos;
-                Vector2 position = StartDrawPointFunc();
+                var pos = GameController.Player.GetComponent<Positioned>();
+
+                var playerPos = pos.GridPos;
+                var position = StartDrawPointFunc();
                 const int BOTTOM_MARGIN = 2;
-                bool shouldUpdate = false;
+                var shouldUpdate = false;
 
                 var validAlerts = currentAlerts.ToList().Where(
                     x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid);
@@ -125,7 +125,7 @@ namespace PoeHUD.Hud.Loot
                     if (string.IsNullOrEmpty(kv.Value.Text))
                         continue;
 
-                    ItemsOnGroundLabelElement entityLabel;
+                    LabelOnGround entityLabel;
                     if (!currentLabels.TryGetValue(kv.Key.Address, out entityLabel))
                     {
                         shouldUpdate = true;
@@ -325,7 +325,7 @@ namespace PoeHUD.Hud.Loot
             return hashSet;
         }
 
-        private void DrawBorder(ItemsOnGroundLabelElement entityLabel)
+        private void DrawBorder(LabelOnGround entityLabel)
         {
             IngameUIElements ui = GameController.Game.IngameState.IngameUi;
             if (entityLabel.IsVisible)
@@ -412,22 +412,19 @@ namespace PoeHUD.Hud.Loot
 
         private string GetItemName(KeyValuePair<EntityWrapper, AlertDrawStyle> kv)
         {
-            string text;
-            Entity itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
-            EntityLabel labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
+            var itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
+
+            var labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
             if (labelForEntity == null)
             {
                 if (!itemEntity.IsValid)
                 {
                     return null;
                 }
-                text = kv.Value.Text;
+                labelForEntity = kv.Value.Text;
             }
-            else
-            {
-                text = labelForEntity.Text;
-            }
-            return text;
+
+            return labelForEntity;
         }
 
         private void OnAreaChange(AreaController area)

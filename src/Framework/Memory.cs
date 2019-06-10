@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using PoeHUD.Controllers;
 using System.Runtime.InteropServices;
 using PoeHUD.Poe.RemoteMemoryObjects;
+using SharpDX;
 
 namespace PoeHUD.Framework
 {
@@ -282,25 +283,37 @@ namespace PoeHUD.Framework
             return result;
         }
 
-        public List<T> ReadDoublePtrVectorClasses<T>(long address, bool noNullPointers = false) where T : RemoteMemoryObject, new()
-        {
-            var start = ReadLong(address);
-            //var end = ReadLong(address + 0x8);
-            var last = ReadLong(address + 0x10);
+	    public List<T> ReadDoublePtrVectorClasses<T>(long address, bool noNullPointers = false) where T : RemoteMemoryObject, new()
+	    {
+		    var start = ReadLong(address);
+		    var last = ReadLong(address + 0x10);
 
-            var length = (int)(last - start);
-            var bytes = ReadBytes(start, length);
+		    var length = (int)(last - start);
+		    var bytes = ReadBytes(start, length);
 
-            var result = new List<T>();
-            for (int readOffset = 0; readOffset < length; readOffset += 16)
-            {
-                var pointer = BitConverter.ToInt64(bytes, readOffset);
-                if (pointer == 0 && noNullPointers)
-                    continue;
-                result.Add(GameController.Instance.Game.GetObject<T>(pointer));
-            }
-            return result;
-        }
+		    var result = new List<T>();
+		    for (int readOffset = 0; readOffset < length; readOffset += 16)
+		    {
+			    var pointer = BitConverter.ToInt64(bytes, readOffset);
+			    if (pointer == 0 && noNullPointers)
+				    continue;
+			    result.Add(GameController.Instance.Game.GetObject<T>(pointer));
+		    }
+		    return result;
+	    }
+
+	    public List<T> ReadClassesFromPointerArray<T>(long address, int count) where T : RemoteMemoryObject, new()
+	    {
+		    var result = new List<T>(count);
+
+		    var addr = ReadLong(address);
+		    for (int i = 0; i < count; i++)
+		    {
+			    result.Add(GameController.Instance.Game.GetObject<T>(ReadLong(addr)));
+			    addr += 8;
+		    }
+		    return result;
+	    }
 
         public List<long> ReadPointersArray(long startAddress, long endAddress, int offset = 8)
         {
@@ -352,15 +365,21 @@ namespace PoeHUD.Framework
             var head = ReadLong(address + 0x8);
             ListDoublePointerIntNode node = ReadDoublePointerIntListNode(head);
             list.Add(new Tuple<long, int>(node.Ptr2_Key, node.Value));
-
+            var breakCounter = 10000;
             for (var ptr2 = node.NextPtr; ptr2 != head; ptr2 = node.NextPtr)
             {
                 node = ReadDoublePointerIntListNode(ptr2);
 
                 list.Add(new Tuple<long, int>(node.Ptr2_Key, node.Value));
+
+                if (--breakCounter < 0)
+                {
+                    DebugPlug.DebugPlugin.LogMsg("Freeze fix in ReadDoublePointerIntList. Break after 10000 iterations", 10, Color.Red);
+                    break;
+                }
             }
-            if (list.Count > 0)
-                list.RemoveAt(list.Count - 1);//bug fix, useless reading last element
+
+            list.RemoveAt(list.Count - 1);//bug fix, useless reading last element
             return list;
         }
         private unsafe ListDoublePointerIntNode ReadDoublePointerIntListNode(long pointer)

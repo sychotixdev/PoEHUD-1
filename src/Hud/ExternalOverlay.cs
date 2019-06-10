@@ -119,17 +119,22 @@ namespace PoeHUD.Hud
 			{
 				clientRect = gameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect();
 			}
-			if (gemPanel.IsVisible && Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
-            {
-                // gem panel is visible, add its height
-                clientRect.Height += gemPanelRect.Height;
-            }
-            if (questPanel.IsVisible && Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
-            {
-                // quest panel is visible, add its height
-                clientRect.Height += questPanelRect.Height;
-            }
 
+	        if (Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
+	        {
+		        if (gemPanel.IsVisible)
+		        {
+			        // gem panel is visible, add its height
+			        clientRect.Height += gemPanelRect.Height;
+		        }
+		        if (questPanel.IsVisible)
+		        {
+			        // quest panel is visible, add its height
+			        clientRect.Height += questPanelRect.Height;
+		        }
+	        }
+
+			
             return new Vector2(clientRect.X + clientRect.Width, clientRect.Y + clientRect.Height + 10);
         }
 
@@ -175,10 +180,13 @@ namespace PoeHUD.Hud
             plugins.Add(new AdvancedTooltipPlugin(gameController, graphics, settings.AdvancedTooltipSettings, settings));
             plugins.Add(new MenuPlugin(gameController, graphics, settings));
 
-            //await Task.Run(() =>
-            //{
+            await Task.Run(() =>
+            {
                 plugins.Add(new PluginExtensionPlugin(gameController, graphics)); //Should be after MenuPlugin
-            //});
+            });
+
+            MainMenuWindow.Instance.SelectedPlugin = PluginExtensionPlugin.Plugins.Find(x => x.PluginName == MainMenuWindow.Settings.LastOpenedPlugin);
+
 
             Deactivate += OnDeactivate;
             FormClosing += OnClosing;

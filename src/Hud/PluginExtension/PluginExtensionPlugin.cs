@@ -13,6 +13,8 @@ using System.Diagnostics;
 
 namespace PoeHUD.Hud.PluginExtension
 {
+    using System.Linq;
+
     public class PluginExtensionPlugin : IPlugin
     {
         public readonly GameController GameController;
@@ -30,6 +32,7 @@ namespace PoeHUD.Hud.PluginExtension
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
+            gameController.Area.AreaChange += area => eAreaChange(area);
         }
         
         public event Action eInitialise = delegate { };
@@ -37,6 +40,7 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
+        public event Action<AreaController> eAreaChange = delegate { };
         public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
         private static List<string> PluginUpdateLog = new List<string>();
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
@@ -56,6 +60,8 @@ namespace PoeHUD.Hud.PluginExtension
 
                 LoadPluginFromDirectory(pluginDirectoryInfo.FullName);
             }
+
+            Plugins = Plugins.OrderBy(x => x.PluginName).ToList();
         }
 
         public static void ApplyUpdateFiles(string pluginDirectory)
@@ -204,28 +210,35 @@ namespace PoeHUD.Hud.PluginExtension
             }
 
             AppDomain.CurrentDomain.AppendPrivatePath(dir);
-            var myAsm = Assembly.Load(File.ReadAllBytes(path));
-            if (myAsm == null) return;
 
-            Type[] asmTypes = null;
+            Type[] asmTypes;
+            var debugCymboldFilePath = path.Replace(".dll", ".pdb");
             try
             {
+                Assembly myAsm;
+                if (File.Exists(debugCymboldFilePath))
+                {
+                    var dbgCymboldBytes = File.ReadAllBytes(debugCymboldFilePath);
+                    myAsm = Assembly.Load(File.ReadAllBytes(path), dbgCymboldBytes);
+                }
+                else
+                    myAsm = Assembly.Load(File.ReadAllBytes(path));
+            
                 asmTypes = myAsm.GetTypes();
             }
-            catch (System.Reflection.ReflectionTypeLoadException reflEx)
+            catch (BadImageFormatException)
             {
-                if (reflEx is System.Reflection.ReflectionTypeLoadException)
-                {
-                    var typeLoadException = reflEx as ReflectionTypeLoadException;
-                    var loaderExceptions = typeLoadException.LoaderExceptions;
+                return;
+            }
+            catch (ReflectionTypeLoadException typeLoadException)
+            {
+	            var loaderExceptions = typeLoadException.LoaderExceptions;
 
-                    LogError($"Can't load plugin dll. LoaderExceptions:", 10);
-                    foreach (Exception e in loaderExceptions)
-                    {
-                        LogError(e.Message, 10);
-                    }
-
-                }
+	            LogError($"Can't load plugin {Path.GetFileNameWithoutExtension(path)}. LoaderExceptions:", 10);
+	            foreach (Exception e in loaderExceptions)
+	            {
+		            LogError(e.Message, 10);
+	            }
                 return;
             }
             catch (Exception ex)

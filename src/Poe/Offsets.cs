@@ -8,6 +8,7 @@ namespace PoeHUD.Poe
     public class Offsets
     {
         public static Offsets Regular = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "PathOfExile_x64" };
+        public static Offsets Korean = new Offsets { IgsOffset = 0, IgsDelta = 0, ExeName = "Pathofexile_x64_KG" };
         public static Offsets Steam = new Offsets { IgsOffset = 0x28, IgsDelta = 0, ExeName = "PathOfExile_x64Steam" };
 
         /*
@@ -19,18 +20,21 @@ namespace PoeHUD.Poe
         00007FF7006C78A5  | 48 8B CB                           | mov rcx,rbx                                |
         00007FF7006C78A8  | E8 53 D7 00 00                     | call pathofexile_x64.7FF7006D5000          |
         */
-        //    90 48 8B 1D ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 48 85 DB 74 15 48 8B CB E8
+        //    90 48 03 D8 48 8B 03 48 85 c0 75 ?? 48 8b 1d ?? ?? ?? ?? 48 8b 05 ?? ?? ?? ?? 48 85 c0 74 ?? 66 90
 
         private static readonly Pattern basePtrPattern = new Pattern(new byte[]
         {
-            0x90,
-            0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x89, 0x05, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x85, 0xDB,
-            0x74, 0x15,
-            0x48, 0x8B, 0xCB,
-            0xE8
-        }, "xxxx????xxx????xxxxxxxxx");
+			0x90,
+			0x48, 0x03, 0xD8,
+			0x48, 0x8B, 0x03,
+			0x48, 0x85, 0xC0,
+			0x75, 0x00,
+			0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00,
+			0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00,
+			0x48, 0x85, 0xC0,
+			0X74, 0x00,
+			0x66, 0x90
+		}, "xxxxxxxxxxx?xxx????xxx????xxxx?xx");
 
 		/* FileRoot Pointer
 		00007FF6C47EED01  | 48 8D 0D A8 23 7F 00               | lea rcx,qword ptr ds:[7FF6C4FE10B0]        | <--FileRootPtr
@@ -45,11 +49,10 @@ namespace PoeHUD.Poe
 
 		private static readonly Pattern fileRootPattern = new Pattern(new byte[]
 		{
-			0x48, 0x8D, 0x0D, 0x00, 0x00, 0x00, 0x00,
-			0xE8, 0x00, 0x00, 0x00, 0x00,
-			0x48, 0x8B, 0x3D, 0x00, 0x00, 0x00, 0x00,
-			0x48, 0x8B, 0x1F
-		}, "xxx????x????xxx????xxx");
+			0x48, 0x8D, 0x35, 0x00, 0x00, 0x00, 0x00,
+			0x8B, 0x04, 0x0A,
+			0x39, 0x05
+		}, "xxx????xxxxx");
 
 		/* Area Change
         00007FF63317CE40 | 48 83 EC 58                    | sub rsp,58                                      |
@@ -68,76 +71,56 @@ namespace PoeHUD.Poe
         */
 		// 3.0.3b
 		//     48 83 EC 58 4C 8B C1 41 B9 01 00 00 00 48 8B 49 10
+		// 3.5.0: this pattern matched 4 results but they all are pointing towards same pointer i.e. counter.
+		// 41 8B C2 F0 41 0F C1 40 54 8B 05 ?? ?? ?? ?? 41 89 40 50 48 8B 49 10 49 89 49 08 48 85 C9
 
 		private static readonly Pattern areaChangePattern = new Pattern(new byte[]
 		{
-			0x41, 0x8B, 0xC2, 0xF0, 0x41, 0x0F, 0xC1, 0x40, 0x54, 0x8B, 0x05
-		}, "xxxxxxxxxxx");
-		
-		/*
-        PathOfExile_x64.exe+853E28 - 48 89 05 E9ABC400     - mov [PathOfExile_x64.exe+149EA18],rax { [00000000] }
-        PathOfExile_x64.exe+853E2F - 48 8B 44 24 40        - mov rax,[rsp+40]
-        PathOfExile_x64.exe+853E34 - 48 89 06              - mov [rsi],rax
-        PathOfExile_x64.exe+853E37 - 48 8B C6              - mov rax,rsi
-        PathOfExile_x64.exe+853E3A - 48 83 C4 20           - add rsp,20 { 32 }
-        PathOfExile_x64.exe+853E3E - 5E                    - pop rsi
-        PathOfExile_x64.exe+853E3F - C3                    - ret 
-        */
+			0x41, 0x8B, 0xC2,
+			0xF0, 0x41, 0x0F, 0xC1, 0x40, 0x4C,
+			0x8B, 0x05, 0x00, 0x00, 0x00, 0x00,
+			0x41, 0x89, 0x40, 0x48,
+			0x48, 0x8B, 0x49, 0x10
+		}, "xxxxxxxxxxx????xxxxxxxx");
 
-		private static readonly Pattern isLoadingScreenPattern = new Pattern(new byte[]
-        {
-            0x48, 0x89, 0x05, 0x00, 0x00, 0x00, 0x00,
-            0x48, 0x8B, 0x00, 0x00, 0x00,
-            0x48, 0x89, 0x00,
-            0x48, 0x8B, 0xC6
-        }, "xxx????xx???xx?xxx");
-
+		// 48 39 2D ?? ?? ?? ?? 0F 85 28 01 00 00 C7 40 08 80 00 00 00 8B CD
 		private static readonly Pattern GameStatePattern = new Pattern(new byte[]
-{
+		{
 			0x48, 0x39, 0x2D, 0x3F, 0xA2, 0x52, 0x01,
-			0x0F, 0x85, 0x02, 0x01, 0x00, 0x00,
+			0x0F, 0x85, 0xF9, 0x00, 0x00, 0x00,
 			0xB9, 0x80, 0x00, 0x00, 0x00,
-			0xE8
-		}, "xxx????xxxxxxxxxxxx");
+			0xE8, 0x00, 0x00, 0x00, 0x00,
+			0x48, 0x8B, 0xF8,
+			0x48, 0x89, 0x44, 0x24, 0x70
+		}, "xxx????xxxxxxxxxxxx????xxx?????");
 
-        /*
+		/*
         PathOfExile_x64.exe+118FD9 - 4C 8B 35 48255B01     - mov r14,[PathOfExile_x64.exe+16CB528] { [C6151734A0] }<<here
         PathOfExile_x64.exe+118FE0 - 4D 85 F6              - test r14,r14
         PathOfExile_x64.exe+118FE3 - 0F94 C0               - sete al
         PathOfExile_x64.exe+118FE6 - 84 C0                 - test al,al
         */
 
-        public long AreaChangeCount { get; private set; }
+		public long AreaChangeCount { get; private set; }
         public long Base { get; private set; }
         public string ExeName { get; private set; }
         public long FileRoot { get; private set; }
         public int IgsDelta { get; private set; }
         public int IgsOffset { get; private set; }
         public int IgsOffsetDelta => IgsOffset + IgsDelta;
-        public long isLoadingScreenOffset { get; private set; }
         public long GameStateOffset { get; private set; }
 
         public void DoPatternScans(Memory m)
         {
-            long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern, isLoadingScreenPattern, GameStatePattern);
-            System.Console.WriteLine("Base Pattern: " + (m.AddressOfProcess + array[0]).ToString("x8"));
+            long[] array = m.FindPatterns(fileRootPattern, areaChangePattern, GameStatePattern);
 
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0x4) + array[0] + 0x8;
-            System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-
-            long InGameState = m.ReadLong(Base + m.AddressOfProcess, 0x8, 0xF8, 0x38);
-            System.Console.WriteLine("InGameState: " + InGameState.ToString("x8"));
-
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[0] + 0x3) + array[0] + 0x7;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
 
-			AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xB) + array[2] + 0xF;
+			AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[1] + 0xB) + array[1] + 0xF;
 			System.Console.WriteLine("AreaChangeCount: " + m.ReadInt(AreaChangeCount + m.AddressOfProcess).ToString());
 
-            isLoadingScreenOffset = m.ReadInt(m.AddressOfProcess + array[3] + 0x03) + array[3] + 0x07;
-            System.Console.WriteLine("Is Loading Screen Offset:" + (isLoadingScreenOffset + m.AddressOfProcess).ToString("x8"));
-
-            GameStateOffset = m.ReadInt(m.AddressOfProcess + array[4] + 0x03) + array[4] + 0x07;
+            GameStateOffset = m.ReadInt(m.AddressOfProcess + array[2] + 0x03) + array[2] + 0x07;
             System.Console.WriteLine("Game State Offset:" + (GameStateOffset + m.AddressOfProcess).ToString("x8"));
         }
     }

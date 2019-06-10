@@ -1,244 +1,278 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
-using PoeHUD.Poe.FilesInMemory;
-using PoeHUD.Models;
 using PoeHUD.Poe.Components;
-using PoeHUD.Models.Attributes;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class ServerData : RemoteMemoryObject
-    {
-        //[Obsolete("Obsolete. Use StashTabs instead")]
-        //public StashElement StashPanel => Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x3C8, 0xA0, 0x78)) : null;
+	public class ServerData : RemoteMemoryObject
+	{
+		public BetrayalData BetrayalData => GetObject<BetrayalData>(M.ReadLong(Address + 0x3C8, 0x718));
 
-        public ushort TradeChatChannel => M.ReadUShort(Address + 0x5568);
-        public ushort GlobalChatChannel => M.ReadUShort(Address + 0x5570);
-        public byte MonsterLevel => M.ReadByte(Address + 0x60CC);
+		[Obsolete("Obsolete. Use GameController.Game.IngameState.IngameUi.StashElement instead")]
+		public StashElement StashPanel => GameController.Instance.Game.IngameState.IngameUi.StashElement;// Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null; // needs fixed, but if it's obsolete, just remove it
 
-        //if 51 - more than 50 monsters remaining (no exact number)
-        //if 255 - not supported for current map (town or scenary map)
-        public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x4F90) & 0xF);
-        public byte MonstersRemaining => M.ReadByte(Address + 0x60CD);
+		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x6518);
 
-        #region PlayerData
-        public ushort LastActionId => M.ReadUShort(Address + 0x55C0);
-        public int CharacterLevel => M.ReadInt(Address + 0x4F94);
-        public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x4F98);
-        public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x4F9C);
-		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x4FA0);
-		public int TotalAscendencyPoints => M.ReadInt(Address + 0x4FA4);
-        public int SpentAscendencyPoints => M.ReadInt(Address + 0x4FA8);
-        public string League => GetObject<NativeStringReader>(Address + 0x4FE8).Value;
-        public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x4F08);
-        public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x5021);
-        public bool IsInGame => GameController.UseGameStateController ? GameStateController.IsInGameState : NetworkState == NetworkStateE.Connected;
-        public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x4FD0); // + 0x500
-        public int Latency => M.ReadInt(Address + 0x5050);
-        public List<ushort> SkillBarIds
-        {
-            get
-            {
-                var result = new List<ushort>();
+		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x6310) & 0xF);
 
-                var readAddr = Address + 0x5218;
-                for (int i = 0; i < 8; i++)
-                {
-                    result.Add(M.ReadUShort(readAddr));
-                    readAddr += 2;
-                }
-                return result;
-            }
-        }
-        public List<ushort> PassiveSkillIds
-        {
-            get
-            {
-                var fisrPtr = M.ReadLong(Address + 0x4F20);
-                var endPtr = M.ReadLong(Address + 0x4F28);
-                //var lastPtr = M.ReadLong(Address + 0x47B0);
+		public int GetBeastCapturedAmount(BestiaryCapturableMonster monster)
+		{
+			return M.ReadInt(Address + 0x51a0 + monster.Id * 4);
+		}
 
-                int total_stats = (int)(endPtr - fisrPtr);
-                var bytes = M.ReadBytes(fisrPtr, total_stats);
-                var result = new List<ushort>();
+		public List<ushort> PassiveSkillIds
+		{
+			get
+			{
+				var fisrPtr = M.ReadLong(Address + 0x62a0);
+				var endPtr = M.ReadLong(Address + 0x62a8);
 
-                for (int i = 0; i < bytes.Length; i += 2)
-                {
-                    var id = BitConverter.ToUInt16(bytes, i);
-                    result.Add(id);
-                }
-                return result;
-            }
-        }
-        #endregion
-        public List<Player> NearestPlayers
-        {
-            get
-            {
-                var startPtr = M.ReadLong(Address + 0x5258);
-                var endPtr = M.ReadLong(Address + 0x5260);
-                startPtr += 16;//Don't ask me why. Just skipping first 2
+				int skillIds = (int)(endPtr - fisrPtr);
 
-                var result = new List<Player>();
-                for (var addr = startPtr; addr < endPtr; addr += 16)//16 because we are reading each second pointer (pointer vectors)
-                {
-                    result.Add(ReadObject<Player>(addr));
-                }
-                return result;
-            }
-        }
+				if (Math.Abs(skillIds) > 500)
+					return null;
+				var bytes = M.ReadBytes(fisrPtr, skillIds);
+				var result = new List<ushort>();
 
-        #region Stash Tabs
-        private const int PlayerStashTabsStartOffset = 0x5060;
-        private const int PlayerStashTabsEndOffset = 0x5068;
+				for (int i = 0; i < bytes.Length; i += 2)
+				{
+					var id = BitConverter.ToUInt16(bytes, i);
+					result.Add(id);
+				}
+				return result;
+			}
+		}
+		#region PlayerData
+		public int CharacterLevel => M.ReadInt(Address + 0x6314);
+		public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x6318);
+		public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x631C);
+		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x6320);
+		public int TotalAscendencyPoints => M.ReadInt(Address + 0x6324);
+		public int SpentAscendencyPoints => M.ReadInt(Address + 0x6328);
+		public int TimeInGame => M.ReadInt(Address + 0x63c8);
 
+		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x6350);
+		public bool IsInGame => GameStateController.IsInGameState;
 
-        public List<ServerStashTab> PlayerStashTabs => GetStashTabs(PlayerStashTabsStartOffset, PlayerStashTabsEndOffset);
-        public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x5078, 0x5080);
-        private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
-        {
-            var firstAddr = M.ReadLong(Address + offsetBegin);
-            var lastAddr = M.ReadLong(Address + offsetEnd);
+		public string League => NativeStringReader.ReadString(Address + 0x6368);
+		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x63b5);
+		public int Latency => M.ReadInt(Address + 0x63d0);
+		#endregion
+		#region Stash Tabs
+		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x6400, 0x6408);
+		public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x6418, 0x6420);
+		private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
+		{
+			var firstAddr = M.ReadLong(Address + offsetBegin);
+			var lastAddr = M.ReadLong(Address + offsetEnd);
 
-            var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 5000);
+			var tabs = M.ReadStructsArray<ServerStashTab>(firstAddr, lastAddr, ServerStashTab.StructSize, 5000);//Some players have 300 stash tabs, lol
 
-            //Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
-            tabs.RemoveAll(x => (x.Flags & ServerStashTab.InventoryTabFlags.Hidden) == ServerStashTab.InventoryTabFlags.Hidden);
-            return tabs;
-        }
-        #endregion
-        #region Inventories
-        public List<InventoryHolder> PlayerInventories
-        {
-            get
-            {
-                var firstAddr = M.ReadLong(Address + 0x5338);
-                var lastAddr = M.ReadLong(Address + 0x5340);
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
-            }
-        }
-        public List<InventoryHolder> NPCInventories
-        {
-            get
-            {
-                var firstAddr = M.ReadLong(Address + 0x53E8);
-                var lastAddr = M.ReadLong(Address + 0x53F0);
+			//Skipping hidden tabs of premium maps tab (read notes in StashTabController.cs)
+			tabs.RemoveAll(x => x.IsHidden);
+			return tabs;
+		}
+		#endregion
 
-                if (firstAddr == 0)
-                    return new List<InventoryHolder>();
+		// New Guild is a structure pointed to at 0x6210
+		// 0x10 - Length of Guild Name
+		// 0x00 - Name (either a pointer if length > 8 else Ustring)
+		// public string Guild => NativeStringReader.ReadString(M.ReadLong(Address + 0x5310));//TODO Fixme
 
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
-            }
-        }
+		public List<ushort> SkillBarIds
+		{
+			get
+			{
+				var result = new List<ushort>();
 
-        public List<InventoryHolder> GuildInventories
-        {
-            get
-            {
-                var firstAddr = M.ReadLong(Address + 0x5498);
-                var lastAddr = M.ReadLong(Address + 0x54A0);
-                return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
-            }
-        }
+				var readAddr = Address + 0x65B8;
+				for (var i = 0; i < 8; i++)
+				{
+					result.Add(M.ReadUShort(readAddr));
+					readAddr += 2;
+				}
+				return result;
+			}
+		}
+		public List<Player> NearestPlayers
+		{
+			get
+			{
+				var startPtr = M.ReadLong(Address + 0x64d8);
+				var endPtr = M.ReadLong(Address + 0x64e0);
 
-        #region Utils functions
-        public ServerInventory GetPlayerInventoryBySlot(InventorySlotE slot)
-        {
-            foreach (var inventory in PlayerInventories)
-            {
-                if (inventory.Inventory.InventSlot == slot)
-                {
-                    return inventory.Inventory;
-                }
-            }
-            return null;
-        }
-        public ServerInventory GetPlayerInventoryByType(InventoryTypeE type)
-        {
-            foreach (var inventory in PlayerInventories)
-            {
-                if (inventory.Inventory.InventType == type)
-                {
-                    return inventory.Inventory;
-                }
-            }
-            return null;
-        }
+				if (Math.Abs(endPtr - startPtr) / 8 > 50)
+					return null;
 
-        public ServerInventory GetPlayerInventoryBySlotAndType(InventoryTypeE type, InventorySlotE slot)
-        {
-            foreach (var inventory in PlayerInventories)
-            {
-                if (inventory.Inventory.InventType == type && inventory.Inventory.InventSlot == slot)
-                {
-                    return inventory.Inventory;
-                }
-            }
-            return null;
-        }
+				startPtr += 16;//Don't ask me why. Just skipping first 2
 
-        #endregion
-        #endregion
-        #region Completed Areas
-        public List<WorldArea> CompletedAreas => GetAreas(0x5660);
-        public List<WorldArea> ShapedMaps => GetAreas(0x56A0);
-        public List<WorldArea> BonusCompletedAreas => GetAreas(0x56E0);
-        public List<WorldArea> ElderGuardiansAreas => GetAreas(0x5720);
-        public List<WorldArea> ShaperElderAreas => GetAreas(0x5760);
+				var result = new List<Player>();
+				for (var addr = startPtr; addr < endPtr; addr += 16)//16 because we are reading each second pointer (pointer vectors)
+				{
+					result.Add(ReadObject<Player>(addr));
+				}
+				return result;
+			}
+		}
 
-        private List<WorldArea> GetAreas(int offset)
-        {
-            var result = new List<WorldArea>();
-            var size = M.ReadInt(Address + offset - 0x8);
-            var listStart = M.ReadLong(Address + offset);
+		#region Inventories
+		public List<InventoryHolder> PlayerInventories
+		{
+			get
+			{
+				var firstAddr = M.ReadLong(Address + 0x66E8);
+				var lastAddr = M.ReadLong(Address + 0x66F0);
+				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
+			}
+		}
+		public List<InventoryHolder> NPCInventories
+		{
+			get
+			{
+				var firstAddr = M.ReadLong(Address + 0x67A0);
+				var lastAddr = M.ReadLong(Address + 0x67A8);
 
-            for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
-            {
-                result.Add(GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(addr + 0x18)));
-                if (--size < 0) break;
-            }
-            return result;
-        }
-        #endregion
+				if (firstAddr == 0)
+					return new List<InventoryHolder>();
 
-        public enum NetworkStateE : byte
-        {
-            None,
-            Disconnected,
-            Connecting,
-            Connected
-        }
+				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
+			}
+		}
 
-        public enum PartyStatus
-        {
-            PartyLeader,
-            Invited,
-            PartyMember,
-            None,
-        }
+		public List<InventoryHolder> GuildInventories
+		{
+			get
+			{
+				var firstAddr = M.ReadLong(Address + 0x6858); // double check these
+				var lastAddr = M.ReadLong(Address + 0x6860);
+				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
+			}
+		}
 
-        public enum PartyAllocation : byte
-        {
-            FreeForAll,
-            ShortAllocation,
-            PermanentAllocation,
-            None,
-            NotInParty = 160
-        }
+		#region Utils functions
+		public ServerInventory GetPlayerInventoryBySlot(InventorySlotE slot)
+		{
+			foreach (var inventory in PlayerInventories)
+			{
+				if (inventory.Inventory.InventSlot == slot)
+				{
+					return inventory.Inventory;
+				}
+			}
+			return null;
+		}
+		public ServerInventory GetPlayerInventoryByType(InventoryTypeE type)
+		{
+			foreach (var inventory in PlayerInventories)
+			{
+				if (inventory.Inventory.InventType == type)
+				{
+					return inventory.Inventory;
+				}
+			}
+			return null;
+		}
 
-        public enum CharacterClass
-        {
-            Scion,
-            Marauder,
-            Ranger,
-            Witch,
-            Duelist,
-            Templar,
-            Shadow,
-            None
-        }
-    }
+		public ServerInventory GetPlayerInventoryBySlotAndType(InventoryTypeE type, InventorySlotE slot)
+		{
+			foreach (var inventory in PlayerInventories)
+			{
+				if (inventory.Inventory.InventType == type && inventory.Inventory.InventSlot == slot)
+				{
+					return inventory.Inventory;
+				}
+			}
+			return null;
+		}
+
+		#endregion
+		#endregion
+
+		public ushort TradeChatChannel => M.ReadUShort(Address + 0x6970);
+		public ushort GlobalChatChannel => M.ReadUShort(Address + 0x6978);
+		public ushort LastActionId => M.ReadUShort(Address + 0x69c4);
+
+		#region Completed Areas
+		public List<WorldArea> UnknownAreas => GetAreas(0x6A00);
+		public List<WorldArea> CompletedAreas => GetAreas(0x6A40);
+		public List<WorldArea> ShapedMaps => GetAreas(0x6A80);
+		public List<WorldArea> BonusCompletedAreas => GetAreas(0x6AC0);
+		public List<WorldArea> ElderGuardiansAreas => GetAreas(0x6B00);
+		public List<WorldArea> MasterAreas => GetAreas(0x6B40);
+		public List<WorldArea> ShaperElderAreas => GetAreas(0x6B80);
+
+		private List<WorldArea> GetAreas(int offset)
+		{
+			var result = new List<WorldArea>();
+			var size = M.ReadInt(Address + offset - 0x8);
+
+			if (size == 0 || size > 300)
+				return result;
+			var listStart = M.ReadLong(Address + offset);
+
+			for (var addr = M.ReadLong(listStart); addr != listStart; addr = M.ReadLong(addr))
+			{
+
+				var areaAddr = M.ReadLong(addr + 0x18);
+
+				if (areaAddr != 0)
+				{
+					var area = GameController.Instance.Files.WorldAreas.GetByAddress(areaAddr);
+					if (area != null)
+						result.Add(area);
+				}
+
+				if (--size < 0) break;
+			}
+			return result;
+		}
+		#endregion
+		#region Monster Info
+		public byte MonsterLevel => M.ReadByte(Address + 0x7524);
+		public byte MonstersRemaining => M.ReadByte(Address + 0x7525); // 51 = 50+, 255 = N/A (Town, etc.)
+		#endregion
+		#region Delve Info
+		public int CurrentSulphiteAmount => M.ReadUShort(Address + 0x75BC);
+		public int CurrentAzuriteAmount => M.ReadInt(Address + 0x75C8);
+		#endregion
+		public enum NetworkStateE : byte
+		{
+			None,
+			Disconnected,
+			Connecting,
+			Connected
+		}
+
+		public enum PartyStatus
+		{
+			PartyLeader,
+			Invited,
+			PartyMember,
+			None,
+		}
+
+		public enum PartyAllocation : byte
+		{
+			FreeForAll,
+			ShortAllocation,
+			PermanentAllocation,
+			None,
+			NotInParty = 160
+		}
+
+		public enum CharacterClass
+		{
+			Scion,
+			Marauder,
+			Ranger,
+			Witch,
+			Duelist,
+			Templar,
+			Shadow,
+			None
+		}
+	}
 }

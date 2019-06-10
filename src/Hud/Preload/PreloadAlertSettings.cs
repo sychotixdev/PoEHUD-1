@@ -15,6 +15,9 @@ namespace PoeHUD.Hud.Preload
             Essence = true;
             CorruptedArea = true;
             CorruptedTitle = true;
+
+            ReloadButton = new HotkeyNode(System.Windows.Forms.Keys.F5);
+
             TextSize = new RangeNode<int>(16, 10, 50);
             BackgroundColor = new ColorBGRA(0, 0, 0, 255);
             DefaultTextColor = new ColorBGRA(210, 210, 210, 255);
@@ -68,8 +71,12 @@ namespace PoeHUD.Hud.Preload
             PerandusManorDivinationCardsChest = new ColorBGRA(153, 255, 51, 255);
             PerandusManorLostTreasureChest = new ColorBGRA(153, 255, 51, 255);
 
-            MasterZana = new ColorBGRA(255, 2550, 0, 255);
-            MasterCatarina = new ColorBGRA(100, 255, 255, 255);
+            MasterZana = new ColorBGRA(255, 255, 0, 255);
+			MasterNiko = new ColorBGRA(100, 255, 255, 255);
+			MasterEinhar = new ColorBGRA(100, 255, 255, 255);
+			MasterAlva = new ColorBGRA(100, 255, 255, 255);
+			MasterJun = new ColorBGRA(100, 255, 255, 255);
+			MasterCatarina = new ColorBGRA(100, 255, 255, 255);
             MasterTora = new ColorBGRA(100, 255, 255, 255);
             MasterVorici = new ColorBGRA(100, 255, 255, 255);
             MasterHaku = new ColorBGRA(100, 255, 255, 255);
@@ -122,6 +129,8 @@ namespace PoeHUD.Hud.Preload
             AurelioVoidsinger = new ColorBGRA(254, 192, 118, 255);
         }
 
+	    public ToggleNode DumpPreloads { get; set; } = false;
+        public HotkeyNode ReloadButton { get; set; }
         public ColorNode CadiroTrader { get; set; }
 
         public ToggleNode Essence { get; set; }
@@ -182,7 +191,11 @@ namespace PoeHUD.Hud.Preload
         public ColorNode AreaTextColor { get; set; }
         public ColorNode CorruptedAreaColor { get; set; }
         public ColorNode MasterZana { get; set; }
-        public ColorNode MasterCatarina { get; set; }
+		public ColorNode MasterNiko { get; set; }
+		public ColorNode MasterEinhar { get; set; }
+		public ColorNode MasterAlva { get; set; }
+		public ColorNode MasterJun { get; set; }
+		public ColorNode MasterCatarina { get; set; }
         public ColorNode MasterTora { get; set; }
         public ColorNode MasterVorici { get; set; }
         public ColorNode MasterHaku { get; set; }

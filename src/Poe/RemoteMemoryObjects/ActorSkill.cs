@@ -15,13 +15,28 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public bool CanBeUsedWithWeapon => M.ReadByte(Address + 0x46) > 0;
         public bool CanBeUsed => M.ReadByte(Address + 0x47) == 0;
-        public int Cost => M.ReadByte(Address + 0x48);
+        public int Cost => M.ReadByte(Address + 0x4C);
         //public int Unknown_Old_MaxUses => M.ReadInt(Address + 0x4c);
         public int TotalUses => M.ReadInt(Address + 0x50);
-        public float Cooldown => M.ReadInt(Address + 0x54) / 100f; //Converted milliseconds to seconds
+        public float Cooldown => M.ReadInt(Address + 0x58) / 100f; //Converted milliseconds to seconds
 
         public int SoulsPerUse => M.ReadInt(Address + 0x68);
         public int TotalVaalUses => M.ReadInt(Address + 0x6c);
+        public bool IsOnSkillBar => SkillBarSlot != -1;
+        public int SkillBarSlot => GameController.Instance.Game.IngameState.ServerData.SkillBarIds.IndexOf(Id);
+ 
+        public byte SkillUseStage => M.ReadByte(Address + 0x8);//Default value is 2, but increasing while skill casting (for repeating skills)
+        
+        /// <summary>
+        /// Use carefully. Returns true while skill is actually casting. Maybe you are looking for a IsUsingPressed
+        /// </summary>
+        public bool IsUsing => SkillUseStage > 2;
+        public byte SkillStage => M.ReadByte(Address + 0xC);
+
+        /// <summary>
+        /// Returns true while user pressed down button for casting skill. Returns true even if no mana for casting skill
+        /// </summary>
+        public bool IsUsingPressed => (SkillStage & 8) > 0;
 
         public string Name
         {
@@ -88,11 +103,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         internal int SlotIdentifier => ((Id >> 8) & 0xff);
         public int SocketIndex => ((SlotIdentifier >> 2) & 15);
         public bool IsUserSkill => (SlotIdentifier & 0x80) > 0;
-
         public bool AllowedToCast => CanBeUsedWithWeapon && CanBeUsed;
-
-        public byte SkillUseStage => M.ReadByte(Address + 0x8);
-        public bool IsUsing => SkillUseStage > 2; //GetStat(PlayerStats.CastingSpell) > 0;
 
         public TimeSpan CastTime => TimeSpan.FromMilliseconds((double)((int)Math.Ceiling((double)(1000f / (((float)HundredTimesAttacksPerSecond) / 100f)))));
         public float Dps => GetStat(GameStat.HundredTimesDamagePerSecond + (IsUsing ? 4 : 0)) / 100f;

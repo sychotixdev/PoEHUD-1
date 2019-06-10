@@ -33,18 +33,21 @@ namespace PoeHUD.Hud
         private string CurrentSelected = "";
         private int CurrentSelectedInt = 0;
         private ImGuiVector2 newcontentRegionArea;
-        private PluginHolder SelectedPlugin;
+        public PluginHolder SelectedPlugin;
         private float PluginNameWidth = 100;
 
         private InbuildPluginMenu CoreMenu;
         public static CoreSettings Settings;
+        public static MainMenuWindow Instance;
         private readonly SettingsHub SettingsHub;
         private string PoeHUDVersion;
+
         public MainMenuWindow(CoreSettings settings, SettingsHub settingsHub)
         {
             Settings = settings;
             SettingsHub = settingsHub;
-            
+            Instance = this;
+
             //https://stackoverflow.com/questions/826777/how-to-have-an-auto-incrementing-version-number-visual-studio
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             //DateTime buildDate = new DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.Revision * 2);
@@ -97,10 +100,11 @@ namespace PoeHUD.Hud
 
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Xph & area", settingsHub.XpRateSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Preload alert", settingsHub.PreloadAlertSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster alert", settingsHub.MonsterTrackerSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster alert", settingsHub.MonsterTrackerSettings) });  
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster kills", settingsHub.KillCounterSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Show dps", settingsHub.DpsMeterSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons", settingsHub.MapIconsSettings) });
+	        CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons Size", settingsHub.PoiTrackerSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Perfomance", settingsHub.PerformanceSettings) });
 
 
@@ -186,10 +190,11 @@ namespace PoeHUD.Hud
                     {
                         foreach (var plugin in PluginExtensionPlugin.Plugins)
                         {
-                            
                             if (Settings.DeveloperMode.Value && Settings.ShowPluginsMS.Value)
                             {
                                 var extPlugin = (plugin as ExternalPluginHolder).BPlugin;
+	                            if (extPlugin == null)//This can happen while plugin update (using plugin updator) or recompile
+		                            continue;
                                 ImGuiExtension.Label(extPlugin.AwerageMs.ToString());
                                 ImGui.SameLine();
                             }
@@ -219,7 +224,7 @@ namespace PoeHUD.Hud
                     if (Settings.DeveloperMode.Value && extPlugin != null)
                     {
                         if (ImGuiExtension.Button("Reload Plugin"))
-                            extPlugin.ReloadPlugin();
+                            extPlugin.ReloadPlugin(true);
 
                         if (extPlugin.BPlugin != null)
                         {
@@ -276,6 +281,7 @@ namespace PoeHUD.Hud
                 {
                     SelectedPlugin = plugin;
                     SelectedPlugin.OnPluginSelectedInMenu();
+                    Settings.LastOpenedPlugin = plugin.PluginName;
                 }   
             }
         }

@@ -23,9 +23,9 @@ namespace PoeHUD.Framework
         public static Rectangle GetClientRectangle(IntPtr handle)
         {
             Rect rect;
-            Point point;
+            Point point = new Point(0, 0);
             GetClientRect(handle, out rect);
-            ClientToScreen(handle, out point);
+            ClientToScreen(handle, ref point);
             return rect.ToRectangle(point);
         }
 
@@ -93,7 +93,7 @@ namespace PoeHUD.Framework
         public static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
 
         [DllImport("user32.dll")]
-        private static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
+        public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
         [DllImport("dwmapi.dll")]
         private static extern IntPtr DwmExtendFrameIntoClientArea(IntPtr hWnd, ref Margins pMarInset);

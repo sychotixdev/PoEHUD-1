@@ -38,13 +38,9 @@ namespace PoeHUD.Controllers
             InGame = InGameReal;
             IsForeGroundCache = WinApi.IsForegroundWindow(Window.Process.MainWindowHandle);
             MainTimer = Stopwatch.StartNew();
-
         }
 
         public GameStateController GameStateController { get; private set; }
-        //BETA, temporary
-        public static bool UseGameStateController => PoeHUD.Hud.MainMenuWindow.Settings != null ? PoeHUD.Hud.MainMenuWindow.Settings.UseStateController.Value : false;
-
         public EntityListWrapper EntityListWrapper { get; }
         public GameWindow Window { get; private set; }
         public TheGame Game { get; }

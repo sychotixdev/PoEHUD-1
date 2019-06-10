@@ -33,7 +33,7 @@ namespace PoeHUD.Hud.Dps
             Settings.ClearNode.OnPressed += Clear;
 
             lastTime = DateTime.Now;
-            GameController.Area.OnAreaChange += area =>
+            GameController.Area.AreaChange += area =>
             {
                 Clear();
             };
@@ -139,7 +139,7 @@ namespace PoeHUD.Hud.Dps
         {
             aoeDamage = 0;
             singleDamage = 0;
-            foreach (var monster in CachedMonsters)
+            foreach (var monster in CachedMonsters.ToArray())
             {
                 var life = monster.GetComponent<Life>();
                 if(!monster.IsAlive && Settings.HasCullingStrike.Value)
@@ -156,6 +156,9 @@ namespace PoeHUD.Hud.Dps
                         if (lastHP != hp)
                         {
                             int dmg = lastHP - hp;
+	                        if (dmg > life.MaxHP + life.MaxES)
+		                        dmg = life.MaxHP + life.MaxES;
+
                             aoeDamage += dmg;
                             singleDamage = Math.Max(singleDamage, dmg);
                         }

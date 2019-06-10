@@ -26,20 +26,26 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             M = m;
             Instance = this;
             Address = m.ReadLong(Offsets.GameStateOffset + m.AddressOfProcess);
-
             AllGameStates = ReadHashMap(Address + 0x48);
-
+			foreach (var _state in AllGameStates)
+			{
+				System.Console.WriteLine(_state.Key + ": 0x" + _state.Value.Address.ToString("x8"));
+			}
             PreGameStatePtr = AllGameStates["PreGameState"].Address;
             LoginStatePtr = AllGameStates["LoginState"].Address;
-            SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
-            WaitingStatePtr = AllGameStates["WaitingState"].Address;
-            InGameStatePtr = AllGameStates["InGameState"].Address;
-            LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
-            IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
-        }
+			SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
+			WaitingStatePtr = AllGameStates["WaitingState"].Address;
+			InGameStatePtr = AllGameStates["InGameState"].Address;
+			LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
+			IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
+		}
 
-        //I hope this caching will works fine
-        private static long PreGameStatePtr = -1;
+        //How to reversing it
+        //you should search for string of current active state, something like "IngameState" then you should search who using it (maybe on area change)..
+        //then after few scans you will got the green address. Then you know what to do..
+
+		//I hope this caching will works fine
+		private static long PreGameStatePtr = -1;
         private static long LoginStatePtr = -1;
         private static long SelectCharacterStatePtr = -1;
         private static long WaitingStatePtr = -1;
@@ -61,7 +67,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public static bool IsLoginState => GameStateActive(LoginStatePtr);
         public static bool IsSelectCharacterState => GameStateActive(SelectCharacterStatePtr);
         public static bool IsWaitingState => GameStateActive(WaitingStatePtr);//This happens after selecting character, maybe other cases
-        public static bool IsInGameState => GameStateActive(InGameStatePtr);//In game, with selected character
+        public static bool IsInGameState => GameStateActive(InGameStatePtr) && !IsLoading;//In game, with selected character
         public static bool IsLoading => LoadingState.IsLoading;
 
         private static bool GameStateActive(long stateAddress)
@@ -69,7 +75,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var M = GameController.Instance.Memory;
             var address = Instance.Address + 0x20;
             var start = M.ReadLong(address);
-            //var end = ReadLong(address + 0x8);
             var last = M.ReadLong(address + 0x10);
 
             var length = (int)(last - start);
@@ -92,11 +97,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var item = startNode.Root;
             stack.Push(item);
 
-            while (stack.Count != 0)
+            var stuckCounter = 100;
+            while (stack.Count != 0 && stuckCounter-- > 0)
             {
                 GameStateHashNode node = stack.Pop();
                 if (!node.IsNull)
-                    result.Add(node.Key, node.Value1);
+                    result[node.Key] = node.Value1;
 
                 GameStateHashNode prev = node.Previous;
                 if (!prev.IsNull)
@@ -114,7 +120,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public GameStateHashNode Root => ReadObject<GameStateHashNode>(Address + 0x8);
             public GameStateHashNode Next => ReadObject<GameStateHashNode>(Address + 0x10);
             //public readonly byte Unknown;
-            public bool IsNull => M.ReadByte(Address + 0x19) != 0;
+            public bool IsNull => Address != 0 && M.ReadByte(Address + 0x19) != 0;
             //private readonly byte byte_0;
             //private readonly byte byte_1;
             public string Key => M.ReadNativeString(Address + 0x20);
@@ -127,8 +133,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class GameState : RemoteMemoryObject
     {
         private string stateName;
-        public string StateName => stateName != null ? stateName :
-            stateName = M.ReadNativeString(Address + 0x10);
+        public string StateName => stateName ?? (stateName = M.ReadNativeString(Address + 0x10));
 
         public override string ToString()
         {
@@ -139,8 +144,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
-        public bool IsLoading => M.ReadLong(Address + 0xBD0) != 0;
-        public string AreaName => M.ReadString(Address + 0xBE8);
+        //UPDATE: This is a byte.
+        public bool IsLoading => M.ReadLong(Address + 0xD8) == 1; 
+        public string AreaName => M.ReadStringU(M.ReadLong(Address + 0x1F0));
 
         public override string ToString()
         {

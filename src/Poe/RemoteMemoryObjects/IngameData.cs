@@ -1,7 +1,5 @@
 using System;
-using System.Text;
 using PoeHUD.Controllers;
-using PoeHUD.Poe.FilesInMemory;
 using System.Collections.Generic;
 using PoeHUD.Models.Enums;
 
@@ -9,18 +7,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class IngameData : RemoteMemoryObject
     {
-        public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x28);
-        public WorldArea CurrentWorldArea => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x28));
-        public int CurrentAreaLevel => (int)M.ReadByte(Address + 0x40);
-        public uint CurrentAreaHash => M.ReadUInt(Address + 0xB0);
+        public AreaTemplate CurrentArea => ReadObject<AreaTemplate>(Address + 0x50);
+        public WorldArea CurrentWorldArea => GameController.Instance.Files.WorldAreas.GetByAddress(M.ReadLong(Address + 0x50));
+        public int CurrentAreaLevel => (int)M.ReadByte(Address + 0x68);
+        public uint CurrentAreaHash => M.ReadUInt(Address + 0xCC);
 
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer
             : GameController.Instance.Cache.Enable ? GameController.Instance.Cache.LocalPlayer = LocalPlayerReal : LocalPlayerReal;
-        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x370);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x3F8);
+        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x408);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x490);
 
-        private long LabDataPtr => M.ReadLong(Address + 0xB8);
+        private long LabDataPtr => M.ReadLong(Address + 0x11C);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
 
 
@@ -28,8 +26,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x320);
-                var statPtrEnd = M.ReadLong(Address + 0x328);
+                var statPtrStart = M.ReadLong(Address + 0xE0);
+                var statPtrEnd = M.ReadLong(Address + 0xE8);
 
                 int key = 0;
                 int value = 0;
@@ -50,8 +48,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x468);
-                var statPtrEnd = M.ReadLong(Address + 0x470);
+                var statPtrStart = M.ReadLong(Address + 0x4B4);
+                var statPtrEnd = M.ReadLong(Address + 0x4BC);
 
                 return M.ReadStructsArray<PortalObject>(statPtrStart, statPtrEnd, PortalObject.StructSize, 20);
             }
@@ -61,7 +59,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public const int StructSize = 0x38;
 
             public string PlayerOwner => GetObject<NativeStringReader>(Address + 0x08).Value;
-            public WorldArea Area => GameController.Instance.Files.WorldAreas.GetAreaByAreaId(M.ReadInt(Address + 0x28));
+            public WorldArea Area => GameController.Instance.Files.WorldAreas.GetAreaByAreaId(M.ReadInt(Address + 0x50));
 
             public override string ToString()
             {

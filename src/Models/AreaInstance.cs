@@ -11,19 +11,25 @@ namespace PoeHUD.Models
         public bool IsTown { get; }
         public bool IsHideout { get; }
         public bool HasWaypoint { get; }
+        public bool IsMap { get; }
         public uint Hash { get; }
+        public bool IsCombatArea => !IsTown && !IsHideout;
 
         public DateTime TimeEntered = DateTime.Now;
 
+		public AreaTemplate Area { get; }
+
         public AreaInstance(AreaTemplate area, uint hash, int realLevel)
         {
+	        Area = area;
             Hash = hash;
             RealLevel = realLevel;
             Name = area.Name;
             Act = area.Act;
             IsTown = area.IsTown;
             HasWaypoint = area.HasWaypoint;
-            IsHideout = Name.Contains("Hideout");
+            IsMap = area.IsMap;
+            IsHideout = area.RawName.ToLower().Contains("hideout");
         }
 
         public override string ToString()

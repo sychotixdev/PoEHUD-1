@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace PoeHUD.Hud.Preload
@@ -18,7 +19,7 @@ namespace PoeHUD.Hud.Preload
     public class PreloadAlertPlugin : SizedPlugin<PreloadAlertSettings>
     {
         public static event Action<List<string>> OnPreloadReceived = delegate { };
-        private readonly HashSet<PreloadConfigLine> alerts;
+        public static HashSet<PreloadConfigLine> alerts;
         private readonly Dictionary<string, PreloadConfigLine> alertStrings;
         private readonly Dictionary<string, PreloadConfigLine> personalAlertStrings;
         private bool foundSpecificPerandusChest = false;
@@ -52,10 +53,10 @@ namespace PoeHUD.Hud.Preload
             }
             else
             {
-                File.Create(PRELOAD_ALERTS_PERSONAL);
+                File.WriteAllText(PRELOAD_ALERTS_PERSONAL, string.Empty);
             }
 
-            GameController.Area.OnAreaChange += OnAreaChange;
+            GameController.Area.AreaChange += OnAreaChange;
             AreaNameColor = Settings.AreaTextColor;
             SetupPredefinedConfigs();
         }
@@ -150,7 +151,11 @@ namespace PoeHUD.Hud.Preload
 
             Preload = new Dictionary<string, PreloadConfigLine>
             {
-                {"Wild/StrDexInt", new PreloadConfigLine { Text = "Zana, Master Cartographer", FastColor = () => Settings.MasterZana }},
+				{"Metadata/NPC/League/DelveMiner", new PreloadConfigLine {Text = "Niko the Mad", FastColor = () => Settings.MasterNiko }},
+				{"Metadata/NPC/League/Einhar", new PreloadConfigLine {Text = "Einhar Frey", FastColor = () => Settings.MasterEinhar}},
+				{"Metadata/NPC/League/TreasureHunter", new PreloadConfigLine {Text = "Alva Valai", FastColor = () => Settings.MasterAlva }},
+				{"Metadata/NPC/League/BetrayalNinja", new PreloadConfigLine {Text = "Jun Ortoi", FastColor = () => Settings.MasterJun }},
+				{"Wild/StrDexInt", new PreloadConfigLine { Text = "Zana, Master Cartographer", FastColor = () => Settings.MasterZana }},
                 {"Wild/Int", new PreloadConfigLine { Text = "Catarina, Master of the Dead", FastColor = () => Settings.MasterCatarina }},
                 {"Wild/Dex", new PreloadConfigLine { Text = "Tora, Master of the Hunt", FastColor = () => Settings.MasterTora }},
                 {"Wild/DexInt", new PreloadConfigLine { Text = "Vorici, Master Assassin", FastColor = () => Settings.MasterVorici }},
@@ -206,8 +211,9 @@ namespace PoeHUD.Hud.Preload
 
         public override void Render()
         {
-            if (WinApi.IsKeyDown(Keys.F5)) // do a full refresh if F5 is hit
+            if (Settings.ReloadButton.PressedOnce()) // do a full refresh if F5 is hit
             {
+                DebugPlug.DebugPlugin.LogMsg("Looking for new preloads.", 1);
                 ResetArea();
                 Parse();
             }
@@ -293,7 +299,7 @@ namespace PoeHUD.Hud.Preload
         IEnumerator ParseCoroutine()
         {
             yield return new WaitFunction(() => { return GameController.Game.IsGameLoading; });
-            yield return new WaitTime(300);
+            //yield return new WaitTime(300);
             Parse();
         }
         private void Parse()
@@ -316,7 +322,7 @@ namespace PoeHUD.Hud.Preload
                     // address is null, something has gone wrong, start over
                     return;
                 }
-                if (memory.ReadLong(listIterator + 0x10) == 0 || memory.ReadInt(listIterator + 0x18, 0x50) != areaChangeCount)
+                if (memory.ReadLong(listIterator + 0x10) == 0 || memory.ReadInt(listIterator + 0x18, 0x48) != areaChangeCount)
                 {
                     continue;
                 }
@@ -330,7 +336,8 @@ namespace PoeHUD.Hud.Preload
             }
 
             preloadStrings.Sort();
-
+			if(Settings.DumpPreloads.Value)
+				File.WriteAllLines(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "DumpPreloads.txt"), preloadStrings);
             OnPreloadReceived(preloadStrings);
 
             foreach (var strings in preloadStrings)

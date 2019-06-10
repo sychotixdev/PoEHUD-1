@@ -8,9 +8,10 @@ namespace PoeHUD.Poe.Components
 {
     public class Mods : Component
     {
-        public string UniqueName => Address != 0 ? M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4)) : string.Empty;
-        public bool Identified => Address != 0 && M.ReadByte(Address + 0x88) == 1;
-        public ItemRarity ItemRarity => Address != 0 ? (ItemRarity)M.ReadInt(Address + 0x8C) : ItemRarity.Normal;
+        public string UniqueName => M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4));
+        public bool Identified => M.ReadByte(Address + 0x88) == 1;
+        public ItemRarity ItemRarity => (ItemRarity) M.ReadInt(Address + 0x8C);
+
         public List<ItemMod> ItemMods
         {
             get
@@ -20,20 +21,27 @@ namespace PoeHUD.Poe.Components
                 return implicitMods.Concat(explicitMods).ToList();
             }
         }
-        public int ItemLevel => Address != 0 ? M.ReadInt(Address + 0x374) : 1;
-        public int RequiredLevel => Address != 0 ? M.ReadInt(Address + 0x378) : 1;
+
+        public int FracturedMods => M.ReadByte(Address + 0x89);
+        public bool Synthesised => M.ReadByte(Address + 0x437) == 1;
+        
+        public int ItemLevel => M.ReadInt(Address + 0x434);
+        public int RequiredLevel => M.ReadInt(Address + 0x438);
+        public bool IsUsable => M.ReadByte(Address + 0x370) != 0;
+        public bool IsMirrored => M.ReadByte(Address + 0x371) != 0;
         public ItemStats ItemStats => new ItemStats(Owner);
 
         private List<ItemMod> GetMods(int startOffset, int endOffset)
         {
             var list = new List<ItemMod>();
+
             if (Address == 0)
                 return list;
 
             long begin = M.ReadLong(Address + startOffset);
             long end = M.ReadLong(Address + endOffset);
             long count = (end - begin) / 0x28;
-            
+
             if (count > 12)
                 return list;
 

@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using PoeHUD.Controllers;
+using PoeHUD.Models.Enums;
+using PoeHUD.Poe.Components;
+using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ServerInventory : RemoteMemoryObject
     {
-        public InventoryTypeE InventType => (InventoryTypeE)M.ReadByte(Address);
-        public InventorySlotE InventSlot => (InventorySlotE)M.ReadByte(Address + 0x1);
+        public InventoryTypeE InventType => (InventoryTypeE) M.ReadByte(Address);
+        public InventorySlotE InventSlot => (InventorySlotE) M.ReadByte(Address + 0x1);
         public int Columns => M.ReadInt(Address + 0xc);
         public int Rows => M.ReadInt(Address + 0x10);
         public bool IsRequested => M.ReadByte(Address + 0x4) == 1;
@@ -27,36 +31,45 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var item = startNode.Root;
             stack.Push(item);
 
-            while (stack.Count != 0)
+            var stuckCounter = 500;
+            while (stack.Count != 0 && stuckCounter-- > 0)
             {
                 HashNode node = stack.Pop();
+
                 if (!node.IsNull)
-                    result.Add(node.Key, node.Value1);
+                    result[node.Key] = node.Value1;
 
                 HashNode prev = node.Previous;
+
                 if (!prev.IsNull)
                     stack.Push(prev);
 
                 HashNode next = node.Next;
+
                 if (!next.IsNull)
                     stack.Push(next);
             }
+
             return result;
         }
 
-   
+
         public class HashNode : RemoteMemoryObject
         {
             public HashNode Previous => ReadObject<HashNode>(Address);
             public HashNode Root => ReadObject<HashNode>(Address + 0x8);
             public HashNode Next => ReadObject<HashNode>(Address + 0x10);
+
             //public readonly byte Unknown;
-            public bool IsNull => M.ReadByte(Address + 0x19) != 0;
+            public bool IsNull => Address != 0 && M.ReadByte(Address + 0x19) != 0;
+
             //private readonly byte byte_0;
             //private readonly byte byte_1;
             public int Key => M.ReadInt(Address + 0x20);
+
             //public readonly int Useless;
             public InventSlotItem Value1 => ReadObject<InventSlotItem>(Address + 0x28);
+
             //public readonly long Value2;
         }
 
@@ -65,13 +78,30 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public Entity Item => ReadObject<Entity>(Address);
             public int PosX => M.ReadInt(Address + 0x8);
             public int PosY => M.ReadInt(Address + 0xc);
-         
+
+            //for debug plugin
+            private RectangleF ClientRect => GetClientRect();
+
+            public RectangleF GetClientRect()
+            {
+                var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
+                var inventClientRect = playerInventElement.GetClientRect();
+                var cellSize = inventClientRect.Width / 12;
+
+                var baseComp = Item.GetComponent<Base>();
+             
+                return new RectangleF(
+                    inventClientRect.X + cellSize * PosX,
+                    inventClientRect.Y + cellSize * PosY,
+                    baseComp.ItemCellsSizeX * cellSize, 
+                    baseComp.ItemCellsSizeY * cellSize);
+            }
+
             public override string ToString()
             {
                 return $"InventSlotItem. PosX: {PosX}, PosY: {PosY}, Item: {Item}";
             }
         }
-
     }
 
     public enum InventorySlotE
@@ -124,7 +154,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         PassiveTree = 13,
         RightHand = 3,
         Rings = 6,
+        Unknown1 = 14,
         Stash = 15,
-        Trade = 0x12
+        Unknown2 = 17,
+        Trade = 18,
+        TinysTrialCraftTableCurrency_undefined = 24,
+
+        /// <summary>
+        /// Transmute, alter, regal, exalts
+        /// </summary>
+        TinysTrialCraftTableCurrency = 25,
+        TinysTrialCraftTableItem = 26
     }
 }
