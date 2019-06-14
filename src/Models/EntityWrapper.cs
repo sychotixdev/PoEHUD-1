@@ -60,6 +60,10 @@ namespace PoeHUD.Models
         public Vector3 Pos => internalEntity.Pos;
         public Vector3 BoundsCenterPos => internalEntity.PosEntityCenter;
 
+        // Legion
+        public bool IsLegion => Path.StartsWith("Metadata/Monsters/LegionLeague") || Path.StartsWith("Metadata/Chests/LegionChests");
+        public bool IsFrozenInTime => HasComponent<Monster>() && GetComponent<Life>().HasBuff("frozen_in_time");
+
         private int GetDistanceFromPlayer()
         {
             var p        = GetComponent<Render>();

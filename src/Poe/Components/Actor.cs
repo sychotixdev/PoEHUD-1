@@ -14,9 +14,9 @@ namespace PoeHUD.Poe.Components
         ///     running = 2178 = bit 11 & 7
         ///     Maybe Bit-field : Bit 7 set = running
         /// </summary>
-        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xD8) : 1;
+        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xF0) : 1;
 
-        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xD8) : ActionFlags.None;
+        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xF0) : ActionFlags.None;
         public bool isMoving => (Action & ActionFlags.Moving) > 0;
         public bool isAttacking => (Action & ActionFlags.UsingAbility) > 0;
 
@@ -26,8 +26,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            long num = M.ReadLong(Address + 0x328);
-            long num2 = M.ReadLong(Address + 0x330);
+            long num = M.ReadLong(Address + 0x420);
+            long num2 = M.ReadLong(Address + 0x428);
             for (long i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);
@@ -39,15 +39,15 @@ namespace PoeHUD.Poe.Components
             return false;
         }
 
+		// Needs fixed
+        // public float TimeSinseLastMove => -M.ReadFloat(Address + 0x110);
+        // public float TimeSinseLastAction => -M.ReadFloat(Address + 0x114);
 
-        public float TimeSinseLastMove => -M.ReadFloat(Address + 0x110);
-        public float TimeSinseLastAction => -M.ReadFloat(Address + 0x114);
-
-        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x60) : null;
+        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x78) : null;
 
         // e.g minions, mines
-        private long DeployedObjectStart => M.ReadLong(Address + 0x328);
-        private long DeployedObjectEnd => M.ReadLong(Address + 0x330);
+        private long DeployedObjectStart => M.ReadLong(Address + 0x420);
+        private long DeployedObjectEnd => M.ReadLong(Address + 0x428);
         public long DeployedObjectsCount => (DeployedObjectEnd - DeployedObjectStart) / 8;
         public List<DeployedObject> DeployedObjects
         {
@@ -75,8 +75,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var skillsStartPointer = M.ReadLong(Address + 0x3a0);
-                var skillsEndPointer = M.ReadLong(Address + 0x3a8);
+                var skillsStartPointer = M.ReadLong(Address + 0x3B8);
+                var skillsEndPointer = M.ReadLong(Address + 0x3C0);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
 
                 int stuckCounter = 0;
@@ -96,8 +96,8 @@ namespace PoeHUD.Poe.Components
 			get
 			{
 				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
-				var skillsStartPointer = M.ReadLong(Address + 0x2F0);
-				var skillsEndPointer = M.ReadLong(Address + 0x2F8);
+				var skillsStartPointer = M.ReadLong(Address + 0x3E8);
+				var skillsEndPointer = M.ReadLong(Address + 0x3F0);
 
 				int stuckCounter = 0;
 				var result = new List<ActorVaalSkill>();

@@ -106,13 +106,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public bool AllowedToCast => CanBeUsedWithWeapon && CanBeUsed;
 
         public TimeSpan CastTime => TimeSpan.FromMilliseconds((double)((int)Math.Ceiling((double)(1000f / (((float)HundredTimesAttacksPerSecond) / 100f)))));
-        public float Dps => GetStat(GameStat.HundredTimesDamagePerSecond + (IsUsing ? 4 : 0)) / 100f;
-        public int HundredTimesAttacksPerSecond => GetStat(IsUsing ? GameStat.HundredTimesCastsPerSecond : GameStat.HundredTimesAttacksPerSecond);
-        public bool IsTotem => GetStat(GameStat.IsTotem) == 1 || GetStat(GameStat.SkillIsTotemified) == 1;
-        public bool IsTrap => GetStat(GameStat.IsTrap) == 1 || GetStat(GameStat.SkillIsTrapped) == 1;
+        public float Dps => GetStat((GameStat)GameController.Instance.Files.Stats.records["hundred_times_damage_per_second"].ID + (IsUsing ? 4 : 0)) / 100f;
+        public int HundredTimesAttacksPerSecond => GetStat(IsUsing ? (GameStat)GameController.Instance.Files.Stats.records["hundred_times_casts_per_second"].ID : (GameStat)GameController.Instance.Files.Stats.records["hundred_times_attacks_per_second"].ID);
+        public bool IsTotem => GetStat((GameStat)GameController.Instance.Files.Stats.records["is_totem"].ID) == 1 || GetStat((GameStat)GameController.Instance.Files.Stats.records["skill_is_totemified"].ID) == 1;
+        public bool IsTrap => GetStat((GameStat)GameController.Instance.Files.Stats.records["is_trap"].ID) == 1 || GetStat((GameStat)GameController.Instance.Files.Stats.records["skill_is_trapped"].ID) == 1;
         public bool IsVaalSkill => (SoulsPerUse >= 1) && (TotalVaalUses >= 1);
 
-        private bool IsMine => true;//TODO
+        private bool IsMine => GetStat((GameStat)GameController.Instance.Files.Stats.records["is_remote_mine"].ID) == 1 || GetStat((GameStat)GameController.Instance.Files.Stats.records["skill_is_mined"].ID) == 1;
+        //TODO
         /*
         public int UsesAvailable
         {
@@ -202,12 +203,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         internal void ReadStats(Dictionary<GameStat, int> stats, long address)
         {
-            var statPtrStart = M.ReadLong(address + 0x20);
-            var statPtrEnd = M.ReadLong(address + 0x28);
+            var statPtrStart = M.ReadLong(address + 0x38);
+            var statPtrEnd = M.ReadLong(address + 0x40);
 
             int key = 0;
             int value = 0;
             int total_stats = (int)(statPtrEnd - statPtrStart);
+
+            if (total_stats == 0)
+                return;
+
             var bytes = M.ReadBytes(statPtrStart, total_stats);
 
             for (int i = 0; i < bytes.Length; i += 8)
