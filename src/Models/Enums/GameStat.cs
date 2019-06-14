@@ -49867,5 +49867,10 @@ namespace PoeHUD.Models.Enums
 		/// </summary>
 		DarknessDamageTakenPerMinuteTowardsManaDamagingEs = 9973,
 
+		/// <summary>
+		/// triggered_by_shockwave_support
+		/// </summary>
+		TriggeredByShockwaveSupport = 9974,
+
 	}
 }
