@@ -258,6 +258,7 @@ namespace PoeHUD.Hud.XpRate
             yield return  new WaitFunction(()=> {return GameController.Game.IsGameLoading;});
             //yield return new WaitTime(300);
             startTime = lastTime = DateTime.Now;
+            LocalPlayer = GameController.Player.GetComponent<Player>();
             startXp = LocalPlayer.XP;
             levelXpPenalty = LevelXpPenalty();
         }
