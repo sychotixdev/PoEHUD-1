@@ -4,6 +4,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace PoeHUD.Hud.UI.Renderers
@@ -20,9 +21,24 @@ namespace PoeHUD.Hud.UI.Renderers
             sprite = new Sprite(device);
             textures = new Dictionary<string, Texture>();
 
+			LoadTextures();
         }
 
-        public void Begin()
+		public void LoadTextures()
+		{
+			string[] TextureFiles = System.IO.Directory.GetFiles("textures", "*.png");
+			string[] StrongBoxFiles = System.IO.Directory.GetFiles("textures/strongboxes", "*.png");
+			for (int x = 0; x < TextureFiles.Length; x++)
+			{
+				GetTexture(TextureFiles[x]);
+			}
+			for (int x = 0; x < StrongBoxFiles.Length; x++)
+			{
+				GetTexture(StrongBoxFiles[x]);
+			}
+		}
+
+		public void Begin()
         {
             sprite.Begin();
         }
