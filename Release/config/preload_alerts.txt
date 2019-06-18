@@ -476,3 +476,10 @@ Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockVaal; Crafting Recipe; ff9
 
 # HIDEOUTS
 Metadata/NPC/Missions/HelenaClaim; Unlockable Hideout; ffff0000
+
+# LEGION
+Metadata/Monsters/LegionLeague/LegionKaruiGeneral; Queen Hyrri Ngamaku [Karui]
+Metadata/Monsters/LegionLeague/LegionMarakethGeneral; Aukuna, the Black Sekhema [Maraketh]
+Metadata/Monsters/LegionLeague/LegionEternalEmpireGeneral; General Marceus Lioneye [Eternal]
+Metadata/Monsters/LegionLeague/LegionVaalGeneral; Viper Napuatzi [Vaal]
+Metadata/Monsters/LegionLeague/LegionTemplarGeneral; Cardinal Sanctus Vox [Templar]
