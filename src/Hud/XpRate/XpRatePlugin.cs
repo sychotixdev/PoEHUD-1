@@ -26,6 +26,7 @@ namespace PoeHUD.Hud.XpRate
         private readonly SettingsHub settingsHub;
         private bool autoHide = false;
         private int DelveSulphiteCapacityID = 0;
+        private Player LocalPlayer;
 
         public XpRatePlugin(GameController gameController, Graphics graphics, XpRateSettings settings, SettingsHub settingsHub)
             : base(gameController, graphics, settings)
@@ -86,6 +87,7 @@ namespace PoeHUD.Hud.XpRate
                 }
                 if (!Settings.Enable) { return; }
 
+                LocalPlayer = GameController.Player.GetComponent<Player>();
                 DateTime nowTime = DateTime.Now;
                 TimeSpan elapsedTime = nowTime - lastTime;
                 if (elapsedTime.TotalSeconds > 1)
@@ -190,7 +192,7 @@ namespace PoeHUD.Hud.XpRate
 
         private void CalculateXp(DateTime nowTime)
         {
-            int level = GameController.Player.GetComponent<Player>().Level;
+            int level = LocalPlayer.Level;
             if (level >= 100)
             {
                 // player can't level up, just show fillers
@@ -198,7 +200,7 @@ namespace PoeHUD.Hud.XpRate
                 timeLeft = "--h--m--s";
                 return;
             }
-            long currentXp = GameController.Player.GetComponent<Player>().XP;
+            long currentXp = LocalPlayer.XP;
             getXp = currentXp - startXp;
             double rate = (currentXp - startXp) / (nowTime - startTime).TotalHours;
             xpRate = $"{ConvertHelper.ToShorten(rate, "0.00")} xp/h";
@@ -214,7 +216,7 @@ namespace PoeHUD.Hud.XpRate
         private double LevelXpPenalty()
         {
             int arenaLevel = GameController.Area.CurrentArea.RealLevel;
-            int characterLevel = GameController.Player.GetComponent<Player>().Level;
+            int characterLevel = LocalPlayer.Level;
 
             float effectiveArenaLevel = arenaLevel < 71 ? arenaLevel : ArenaEffectiveLevels[arenaLevel];
             double safeZone = Math.Floor(Convert.ToDouble(characterLevel) / 16) + 3;
@@ -233,8 +235,15 @@ namespace PoeHUD.Hud.XpRate
 
         private double PartyXpPenalty()
         {
-            var levels = GameController.Entities.Where(y => y.HasComponent<Player>()).Select(y => y.GetComponent<Player>().Level).ToList();
-            int characterLevel = GameController.Player.GetComponent<Player>().Level;
+            List<int> levels = new List<int>();
+            foreach (var entity in GameController.Entities)
+            {
+                if (entity.HasComponent<Player>())
+                {
+                    levels.Add(entity.GetComponent<Player>().Level);
+                }
+            }
+            int characterLevel = LocalPlayer.Level;
             double partyXpPenalty = Math.Pow(characterLevel + 10, 2.71) / levels.Sum(level => Math.Pow(level + 10, 2.71));
             return partyXpPenalty * levels.Count;
         }
@@ -249,7 +258,8 @@ namespace PoeHUD.Hud.XpRate
             yield return  new WaitFunction(()=> {return GameController.Game.IsGameLoading;});
             //yield return new WaitTime(300);
             startTime = lastTime = DateTime.Now;
-            startXp = GameController.Player.GetComponent<Player>().XP;
+            LocalPlayer = GameController.Player.GetComponent<Player>();
+            startXp = LocalPlayer.XP;
             levelXpPenalty = LevelXpPenalty();
         }
         private void AreaChange()
