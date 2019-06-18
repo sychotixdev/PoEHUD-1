@@ -88,6 +88,10 @@ namespace PoeHUD.Hud.Health
         {
             return !isHostile ? Settings.Enable.Value : Settings.Enable && showEnemy && isHostile;
         }
+        public bool IsLegionAndHidden(EntityWrapper entity)
+        {
+            return entity.Path.Contains("LegionLeague") && !entity.IsActive;
+        }
 
         public LinkedList<int> DpsQueue { get; } = new LinkedList<int>();
 
