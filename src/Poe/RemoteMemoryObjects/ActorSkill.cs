@@ -203,12 +203,16 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         internal void ReadStats(Dictionary<GameStat, int> stats, long address)
         {
-            var statPtrStart = M.ReadLong(address + 0x20);
-            var statPtrEnd = M.ReadLong(address + 0x28);
+            var statPtrStart = M.ReadLong(address + 0x38);
+            var statPtrEnd = M.ReadLong(address + 0x40);
 
             int key = 0;
             int value = 0;
             int total_stats = (int)(statPtrEnd - statPtrStart);
+
+            if (total_stats == 0)
+                return;
+
             var bytes = M.ReadBytes(statPtrStart, total_stats);
 
             for (int i = 0; i < bytes.Length; i += 8)
