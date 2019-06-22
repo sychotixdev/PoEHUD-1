@@ -18,6 +18,7 @@ namespace PoeHUD.Framework
 {
     public class Memory : IDisposable
     {
+        public static Memory Instance;
         public readonly long AddressOfProcess;
         private readonly Dictionary<string, int> modules;
         private bool closed;
@@ -33,6 +34,7 @@ namespace PoeHUD.Framework
                 AddressOfProcess = Process.MainModule.BaseAddress.ToInt64();
                 procHandle = WinApi.OpenProcess(Process, ProcessAccessFlags.All);
                 modules = new Dictionary<string, int>();
+                Instance = this;
             }
             catch (Win32Exception ex)
             {

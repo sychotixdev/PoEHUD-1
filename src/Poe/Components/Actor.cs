@@ -113,8 +113,8 @@ namespace PoeHUD.Poe.Components
 
 		public class ActionWrapper : RemoteMemoryObject
         {
-            public float DestinationX => M.ReadInt(Address + 0x48);
-            public float DestinationY => M.ReadInt(Address + 0x4C);
+            public float DestinationX => M.ReadInt(Address + 0x60);
+            public float DestinationY => M.ReadInt(Address + 0x64);
 
             public Vector2 CastDestination => new Vector2(DestinationX, DestinationY);
 

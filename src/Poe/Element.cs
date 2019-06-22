@@ -1,7 +1,6 @@
 using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
-using PoeHUD.Controllers;
 using PoeHUD.Poe.Elements;
 
 namespace PoeHUD.Poe

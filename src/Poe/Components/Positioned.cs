@@ -14,7 +14,7 @@ namespace PoeHUD.Poe.Components
         public float WorldY => M.ReadFloat(Address + 0x58);
         public Vector2 WorldPos => new Vector2(WorldX, WorldY);
 
-        public float Rotation => M.ReadFloat(Address + 0xDC);
+        public float Rotation => M.ReadFloat(Address + 0x130);
         public float RotationDeg => Rotation * (180 / MathUtil.Pi);
 
         public byte Reaction => M.ReadByte(Address + 0x62);
