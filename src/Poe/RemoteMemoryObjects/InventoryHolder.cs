@@ -8,7 +8,8 @@
 
         public override string ToString()
         {
-            return $"InventoryType: {Inventory.InventType}, InventorySlot: {Inventory.InventSlot}, IsRequested: {Inventory.IsRequested}, ItemsCount: {Inventory.Items.Count}";
+            return $"InventoryType: {Inventory.InventType}, InventorySlot: {Inventory.InventSlot}, Columns: {Inventory.Columns}, Rows: {Inventory.Rows}," +
+                $"ItemsCount: {Inventory.TotalItemsCounts}, ServerRequestsCounter: {Inventory.ServerRequestCounter}";
         }
     }
 }

@@ -175,24 +175,5 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return list;
             }
         }
-
-        // Works even if inventory is currently not in view.
-        // As long as game have fetched inventory data from Server.
-        // Will return the item based on x,y format.
-        // Give more controll to user what to do with
-        // dublicate items (items taking more than 1 slot)
-        // or slots where items doesn't exists (return null).
-        public Entity this[int x, int y, int xLength]
-        {
-            get
-            {
-                long invAddr = M.ReadLong(Address + 0x410, 0x640, 0x30);
-                y = y * xLength;
-                long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
-                if (itmAddr <= 0)
-                    return null;
-                return ReadObject<Entity>(itmAddr);
-            }
-        }
     }
 }

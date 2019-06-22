@@ -13,14 +13,41 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class ServerInventory : RemoteMemoryObject
     {
-        public InventoryTypeE InventType => (InventoryTypeE) M.ReadByte(Address);
-        public InventorySlotE InventSlot => (InventorySlotE) M.ReadByte(Address + 0x1);
-        public int Columns => M.ReadInt(Address + 0xc);
+        public InventoryTypeE InventType => (InventoryTypeE) M.ReadInt(Address);
+        public InventorySlotE InventSlot => (InventorySlotE) M.ReadInt(Address + 0x04);
+        public int Columns => M.ReadInt(Address + 0x0C);
         public int Rows => M.ReadInt(Address + 0x10);
-        public bool IsRequested => M.ReadByte(Address + 0x4) == 1;
 
         public List<InventSlotItem> InventorySlotItems => ReadHashMap(Address + 0x48).Values.ToList();
         public List<Entity> Items => ReadHashMap(Address + 0x48).Values.Select(x => x.Item).ToList();
+
+        public int TotalItemsCounts => M.ReadInt(Address + 0x50);
+
+        public int ServerRequestCounter => M.ReadInt(Address + 0xA8);
+
+        /// <summary>
+        /// Will return the item based on x,y format.
+        /// Give more controll to caller on what to do with
+        /// dublicate items (items taking more than 1 slot)
+        /// or slots where items doesn't exists (return null).
+        /// 
+        /// NOTE: currently this won't work for currency type stashes.
+        /// </summary>
+        /// <param name="x">Inventory slot X axis</param>
+        /// <param name="y">Inventory slot Y axis</param>
+        /// <returns>InventSlotItem</returns>
+        public InventSlotItem this[int x, int y]
+        {
+            get
+            {
+                long invAddr = M.ReadLong(Address + 0x30);
+                y = y * Columns;
+                long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
+                if (itmAddr <= 0)
+                    return null;
+                return GetObject<InventSlotItem>(itmAddr);
+            }
+        }
 
         public Dictionary<int, InventSlotItem> ReadHashMap(long pointer)
         {
@@ -78,6 +105,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public Entity Item => ReadObject<Entity>(Address);
             public int PosX => M.ReadInt(Address + 0x8);
             public int PosY => M.ReadInt(Address + 0xc);
+            public int SizeX => M.ReadInt(Address + 0x10);
+            public int SizeY => M.ReadInt(Address + 0x14);
+            //public byte UnknownCounter => M.ReadByte(Address + 0x18);
+            //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
             //for debug plugin
             private RectangleF ClientRect => GetClientRect();
@@ -87,14 +118,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
                 var inventClientRect = playerInventElement.GetClientRect();
                 var cellSize = inventClientRect.Width / 12;
-
-                var baseComp = Item.GetComponent<Base>();
-             
                 return new RectangleF(
                     inventClientRect.X + cellSize * PosX,
                     inventClientRect.Y + cellSize * PosY,
-                    baseComp.ItemCellsSizeX * cellSize, 
-                    baseComp.ItemCellsSizeY * cellSize);
+                    SizeX * cellSize, 
+                    SizeY * cellSize);
             }
 
             public override string ToString()
@@ -104,66 +132,83 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
     }
 
+    /// <summary>
+    /// Copied from GGPK -> Inventories.dat file
+    /// Possible improvement -> read it from the in memory dad file
+    /// </summary>
     public enum InventorySlotE
     {
-        ArmourersWorkbench = 0x10,
-        ArtisansBench = 0x13,
-        Belt = 10,
-        BlessingFont = 0x15,
-        Boots = 9,
-        BowmakersTools = 0x12,
-        Chest = 1,
-        Cursor = 12,
-        DarkShrine = 0x1c,
-        Divination = 0x1b,
-        Flasks = 11,
-        Gloves = 8,
-        Head = 4,
-        Headstones = 20,
-        Leaguestone = 30,
-        LeftHand = 2,
-        LeftRing = 6,
-        Main = 0,
-        MapDevice = 13,
-        Neck = 5,
-        Npc = 0x1f,
-        OffLeftHand = 14,
-        OffRightHand = 15,
-        PassiveTreeJewels = 0x17,
-        RightHand = 3,
-        RightRing = 7,
-        SharpeningWheel = 0x11,
-        Stash = 0x1a,
-        Talisman = 0x1d
+        MainInventory1,
+        BodyArmour1,
+        Weapon1,
+        Offhand1,
+        Helm1,
+        Amulet1,
+        Ring1,
+        Ring2,
+        Gloves1,
+        Boots1,
+        Belt1,
+        Flask1,
+        Cursor1,
+        Map1,
+        Weapon2,
+        Offhand2,
+        StrMasterCrafting,
+        StrDexMasterCrafting,
+        DexMasterCrafting,
+        DexIntMasterCrafting,
+        IntMasterCrafting,
+        StrIntMasterCrafting,
+        PVPMasterCrafting,
+        PassiveJewels1,
+        AnimatedArmour1,
+        GuildTag1,
+        StashInventoryId,
+        DivinationCardTrade,
+        Darkshrine,
+        TalismanTrade,
+        Leaguestone1,
+        BestiaryCrafting,
+        IncursionSacrifice,
+        BetrayalUnveiling,
+        ItemSynthesisInput,
+        ItemSynthesisOutput,
     }
 
+    /// <summary>
+    /// Copied from GGPK -> InventoryType.dat file
+    /// Possible improvement -> read it from the in memory dad file
+    /// </summary>
     public enum InventoryTypeE
     {
-        Belt = 9,
-        Boots = 8,
-        Chest = 1,
-        Cursor = 11,
-        Flasks = 10,
-        Gloves = 7,
-        Head = 4,
-        Leaguestone = 0x10,
-        LeftHand = 2,
-        Main = 0,
-        MapDevice = 12,
-        Neck = 5,
-        PassiveTree = 13,
-        RightHand = 3,
-        Rings = 6,
-        Unknown1 = 14,
-        Stash = 15,
-        Unknown2 = 17,
-        Trade = 18,
-        TinysTrialCraftTableCurrency_undefined = 24,
-
-        /// <summary>
-        /// Transmute, alter, regal, exalts
-        /// </summary>
-        TinysTrialCraftTableCurrency = 25,
-        TinysTrialCraftTableItem = 26
+        MainInventory = 0x00,
+        BodyArmour,
+        Weapon,
+        Offhand,
+        Helm,
+        Amulet,
+        Ring,
+        Gloves,
+        Boots,
+        Belt,
+        Flask,
+        Cursor,
+        Map,
+        PassiveJewels,
+        AnimatedArmour,
+        Crafting,
+        Leaguestone,
+        Unused,
+        Currency,
+        Offer,
+        Divination,
+        Essence,
+        Fragment,
+        MapStashInv,
+        UniqueStashInv,
+        CraftingSpreeCurrency,
+        CraftingSpreeItem,
+        NormalOrQuad
     }
 }
