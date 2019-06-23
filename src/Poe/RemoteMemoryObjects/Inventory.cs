@@ -61,8 +61,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     case InventoryType.FragmentStash:
                         return this.AsObject<Element>().Parent;
                     case InventoryType.DivinationStash:
-                        // There are many children  but we are only interested in one of them i.e. Owned Cards
-                        return GetObject<Element>(M.ReadLong(Address + Element.OffsetBuffers + 0x24, 0x08));
+                        return GetObject<Element>(M.ReadLong(Address + Element.OffsetBuffers + 0x20, 0x08));
                     case InventoryType.MapStash:
                         return this.AsObject<Element>().Parent;
                     default:
@@ -82,12 +81,19 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var list = new List<NormalInventoryItem>();
                 var InvRoot = InventoryUiElement;
                 if (InvRoot == null || InvRoot.Address == 0x00)
-                    //throw new InvalidOperationException("InventoryUiElement is incorrect (address is '0')");
+                {
+                    // Don't remove this log, it will help us understand why are VisibleInventoryItems are null.
+                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement is incorrect!", 1);
                     return null;
+                }
+
                 if (!InvRoot.IsVisible)
-                    //throw new InvalidOperationException("InventoryUiElement is not visible");
-                return null;
-           
+                {
+                    // Don't remove this log, it will help us understand why are VisibleInventoryItems are null.
+                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement is not Visiable", 1);
+                    return null;
+
+                }
 
                 switch (InvType)
                 {
