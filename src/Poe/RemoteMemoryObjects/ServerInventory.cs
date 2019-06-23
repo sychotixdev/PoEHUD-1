@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
-using PoeHUD.Poe.Components;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
@@ -27,8 +22,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         /// <summary>
         /// Will return the item based on x,y format.
-        /// Give more controll to caller on what to do with
-        /// dublicate items (items taking more than 1 slot)
+        /// Give more control to caller on what to do with
+        /// duplicate items (items taking more than 1 slot)
         /// or slots where items doesn't exists (return null).
         /// 
         /// NOTE: currently this won't work for currency type stashes.

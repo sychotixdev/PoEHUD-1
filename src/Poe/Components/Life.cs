@@ -41,7 +41,6 @@ namespace PoeHUD.Poe.Components
 			{
 				var list = new List<Buff>();
 				long start = BuffStart;
-				long end = BuffEnd;
 				long length = BuffEnd - BuffStart;
 				if (length <= 0 || length >= MaxBuffCount * 8) // * 8 as we buff pointer takes 8 bytes.
 					return list;

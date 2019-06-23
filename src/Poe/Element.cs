@@ -10,12 +10,14 @@ namespace PoeHUD.Poe
     public class Element : RemoteMemoryObject
     {
         public const int OffsetBuffers = 0;//0x6EC;
+        const int ChildOffset = 0x38;
+
         // dd id
         // dd (something zero)
         // 16 dup <128-bytes structure>
         // then the rest is
         
-        public long ChildCount => (M.ReadLong(Address + 0x40 + OffsetBuffers) - M.ReadLong(Address + 0x38 + OffsetBuffers)) / 8;
+        public long ChildCount => (M.ReadLong(Address + ChildOffset + 8 + OffsetBuffers) - M.ReadLong(Address + ChildOffset + OffsetBuffers)) / 8;
         public bool IsVisibleLocal => (M.ReadByte(Address + 0x111) & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
         public Element Root => GetObject<Element>(M.ReadLong(Address + 0x88 + OffsetBuffers, 0xE8));
         public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
@@ -38,16 +40,16 @@ namespace PoeHUD.Poe
         public List<Element> Children => GetChildren<Element>();
 
         protected List<T> GetChildren<T>() where T : Element, new() {
-            const int listOffset = 0x38;
+           
             var list = new List<T>();
-            if (M.ReadLong(Address + listOffset + 8) == 0 || M.ReadLong(Address + listOffset) == 0 ||
+            if (M.ReadLong(Address + ChildOffset + 8) == 0 || M.ReadLong(Address + ChildOffset) == 0 ||
                 ChildCount > 1000)
             {
                 return list;
             }
             for (int i = 0; i < ChildCount; i++)
             {
-                list.Add(GetObject<T>(M.ReadLong(Address + listOffset, i * 8)));
+                list.Add(GetObject<T>(M.ReadLong(Address + ChildOffset, i * 8)));
             }
             return list;
         }
