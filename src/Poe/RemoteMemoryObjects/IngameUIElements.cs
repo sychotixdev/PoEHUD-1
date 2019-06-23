@@ -8,6 +8,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class IngameUIElements : RemoteMemoryObject
 	{
+        public Element FlaskBar => GetObject<Element>(M.ReadLong(Address + 0x278, 0x1B0));
 		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0x388);
 		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0x390);
 		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0x410, 0x2D0, 0xF80));
