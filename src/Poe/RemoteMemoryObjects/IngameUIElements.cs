@@ -30,7 +30,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5C0));
+                // when updating this Offset, copy paste it in file: Poe->Elements->HoverItemIcon.cs
+                //            line 63 ( Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x5C0); )
+                var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5C0));
 				return itemsOnGroundLabelRoot.LabelsOnGround;
 			}
 		}
