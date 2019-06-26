@@ -34,6 +34,10 @@ namespace PoeHUD.Framework
             return GetForegroundWindow() == handle;
         }
 
+        //used before SetForegroundWindow to focus the window and bring window to top of other windows
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         public static bool IsKeyDown(Keys key)
         {
             return (GetAsyncKeyState(key) & 0x8000) != 0;
