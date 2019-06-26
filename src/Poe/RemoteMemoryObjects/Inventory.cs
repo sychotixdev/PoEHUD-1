@@ -83,16 +83,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 if (InvRoot == null || InvRoot.Address == 0x00)
                 {
                     // Don't remove this log, it will help us understand why are VisibleInventoryItems are null.
-                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement is incorrect!", 1);
+                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement offset is broken/incorrect!", 1);
                     return null;
                 }
 
                 if (!InvRoot.IsVisible)
                 {
-                    // Don't remove this log, it will help us understand why are VisibleInventoryItems are null.
-                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement is not Visiable", 1);
                     return null;
-
                 }
 
                 switch (InvType)
