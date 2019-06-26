@@ -46,8 +46,8 @@ namespace PoeHUD.Poe.Components
         public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x78) : null;
 
         // e.g minions, mines
-        private long DeployedObjectStart => M.ReadLong(Address + 0x420);
-        private long DeployedObjectEnd => M.ReadLong(Address + 0x428);
+        private long DeployedObjectStart => M.ReadLong(Address + 0x428);
+        private long DeployedObjectEnd => M.ReadLong(Address + 0x430);
         public long DeployedObjectsCount => (DeployedObjectEnd - DeployedObjectStart) / 8;
         public List<DeployedObject> DeployedObjects
         {
@@ -95,8 +95,8 @@ namespace PoeHUD.Poe.Components
 			get
 			{
 				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
-				var skillsStartPointer = M.ReadLong(Address + 0x3E8);
-				var skillsEndPointer = M.ReadLong(Address + 0x3F0);
+				var skillsStartPointer = M.ReadLong(Address + 0x3F0);
+				var skillsEndPointer = M.ReadLong(Address + 0x3F8);
 
 				int stuckCounter = 0;
 				var result = new List<ActorVaalSkill>();
