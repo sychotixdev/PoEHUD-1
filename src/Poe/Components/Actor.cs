@@ -75,23 +75,22 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var skillsStartPointer = M.ReadLong(Address + 0x3B8);
-                var skillsEndPointer = M.ReadLong(Address + 0x3C0);
+                var skillsStartPointer = M.ReadLong(Address + 0x3C0);
+                var skillsEndPointer = M.ReadLong(Address + 0x3C8);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
+                if ((skillsEndPointer - skillsStartPointer) / 16 > 50)
+                    return new List<ActorSkill>();
 
-                int stuckCounter = 0;
                 var result = new List<ActorSkill>();
                 for (var addr = skillsStartPointer; addr < skillsEndPointer; addr += 16)//16 because we are reading each second pointer (pointer vectors)
                 {
                     result.Add(ReadObject<ActorSkill>(addr));
-                    if (stuckCounter++ > 50)
-                        return new List<ActorSkill>();
                 }
                 return result;
             }
         }
 
-		public List<ActorVaalSkill> ActorVaalSkills
+        public List<ActorVaalSkill> ActorVaalSkills
 		{
 			get
 			{
