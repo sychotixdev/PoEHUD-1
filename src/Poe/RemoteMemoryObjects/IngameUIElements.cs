@@ -26,16 +26,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7A8);
 	    public IncursionWindow IncursionWindow => GameController.Instance.Game.IngameState.UIRoot.GetChildFromIndices(1, 58).AsObject<IncursionWindow>();
 
-		public IEnumerable<LabelOnGround> ItemsOnGroundLabels
-		{
-			get
-			{
-                // when updating this Offset, copy paste it in file: Poe->Elements->HoverItemIcon.cs
-                //            line 63 ( Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x5C0); )
-                var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5B8));
-				return itemsOnGroundLabelRoot.LabelsOnGround;
-			}
-		}
+		public ItemsOnGroundLabelElement itemOnGroundLabelElement => ReadObjectAt<ItemsOnGroundLabelElement>(0x5A8);
+		public IEnumerable<LabelOnGround> ItemsOnGroundLabels => itemOnGroundLabelElement.LabelsOnGround;
+
 		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x8C0);
 		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x940);//or 0x250
 
