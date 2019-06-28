@@ -4,17 +4,17 @@ using PoeHUD.Controllers;
 using PoeHUD.Models;
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-	public class IngameState : RemoteMemoryObject
+	public class InGameState : RemoteMemoryObject
 	{
         private Cache _cache => GameController.Instance.Cache;
 
-		public IngameUIElements IngameUi => _cache.Enable && _cache.IngameUi != null ? _cache.IngameUi : _cache.Enable ? _cache.IngameUi = IngameUiReal : IngameUiReal;
-		private IngameUIElements IngameUiReal => ReadObjectAt<IngameUIElements>(0x78); // also at 0xF8...
+		public InGameUIElements InGameUi => _cache.Enable && _cache.InGameUi != null ? _cache.InGameUi : _cache.Enable ? _cache.InGameUi = InGameUiReal : InGameUiReal;
+		private InGameUIElements InGameUiReal => ReadObjectAt<InGameUIElements>(0x78); // also at 0xF8...
 
 		public long EntityLabelMap => M.ReadLong(Address + 0x98, 0x2A0);
 
-		public IngameData Data => _cache.Enable && _cache.Data != null ? _cache.Data : _cache.Enable ? _cache.Data = DataReal : DataReal;
-		private IngameData DataReal => ReadObject<IngameData>(Address + 0x370 + Offsets.IgsOffset);
+		public InGameData Data => _cache.Enable && _cache.Data != null ? _cache.Data : _cache.Enable ? _cache.Data = DataReal : DataReal;
+		private InGameData DataReal => ReadObject<InGameData>(Address + 0x370 + Offsets.IgsOffset);
 
 		public bool InGame => ServerDataReal.IsInGame;
 

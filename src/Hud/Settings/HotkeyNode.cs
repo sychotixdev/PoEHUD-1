@@ -36,7 +36,7 @@ namespace PoeHUD.Hud.Settings
                     }
                     catch
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: HotkeyNode.OnValueChanged", 10, SharpDX.Color.Red);
+                        DebugPlugin.DebugPlugin.LogMsg("Error in function that subscribed for: HotkeyNode.OnValueChanged", 10, SharpDX.Color.Red);
                     }
                 }
             }

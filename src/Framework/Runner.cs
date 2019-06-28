@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Hud.DebugPlugin;
 using SharpDX;
 
 namespace PoeHUD.Framework
@@ -92,7 +93,7 @@ namespace PoeHUD.Framework
                                 if (_coroutines[i].MoveNext()) continue;
                                 _coroutines[i].Done();
                             }
-                            catch (Exception e) { DebugPlug.DebugPlugin.LogMsg($"Coroutine {_coroutines[i].Name} error: {e}", 10, Color.Red); }
+                            catch (Exception e) { DebugPlugin.LogMsg($"Coroutine {_coroutines[i].Name} error: {e}", 10, Color.Red); }
                         }
                             
                     }

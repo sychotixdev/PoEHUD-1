@@ -82,7 +82,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
             {
                 Hotkey.Value = oldValue;
                 try { Hotkey.OnValueChanged?.Invoke(); }
-                catch (Exception ex) { DebugPlug.DebugPlugin.LogMsg("Error while invoking OnValueChanged in HotkeyNode", 5); }
+                catch (Exception ex) { DebugPlugin.DebugPlugin.LogMsg("Error while invoking OnValueChanged in HotkeyNode", 5); }
             }
         }
     }
@@ -134,7 +134,7 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
             }
             catch (Exception e)
             {
-                DebugPlug.DebugPlugin.LogMsg("Error in CustomSettingsDrawer.DrawDelegate: " + e.Message, 5, SharpDX.Color.Red);
+                DebugPlugin.DebugPlugin.LogMsg("Error in CustomSettingsDrawer.DrawDelegate: " + e.Message, 5, SharpDX.Color.Red);
             }
         }
     }

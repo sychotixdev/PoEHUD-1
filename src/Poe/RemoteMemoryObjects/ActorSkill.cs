@@ -23,7 +23,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public int SoulsPerUse => M.ReadInt(Address + 0x68);
         public int TotalVaalUses => M.ReadInt(Address + 0x6c);
         public bool IsOnSkillBar => SkillBarSlot != -1;
-        public int SkillBarSlot => GameController.Instance.Game.IngameState.ServerData.SkillBarIds.IndexOf(Id);
+        public int SkillBarSlot => GameController.Instance.Game.InGameState.ServerData.SkillBarIds.IndexOf(Id);
  
         public byte SkillUseStage => M.ReadByte(Address + 0x8);//Default value is 2, but increasing while skill casting (for repeating skills)
         
@@ -38,10 +38,14 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         /// </summary>
         public bool IsUsingPressed => (SkillStage & 8) > 0;
 
+        private string _name;
         public string Name
         {
             get
             {
+                if (!string.IsNullOrEmpty(_name))
+                    return _name;
+
                 var id = Id;
                 var effects = EffectsPerLevel;
                 if (effects != null)
@@ -56,7 +60,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                         if (string.IsNullOrEmpty(name))
                             name = Id.ToString(CultureInfo.InvariantCulture);
                     }
-                    return name;
+                    return _name = name;
                 }
                 else
                 {
@@ -78,7 +82,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                                 name = "WashedUp";
                             break;
                     }
-                    return name;
+                    return _name = name;
                 }
             }
         }
@@ -87,7 +91,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                List<ushort> skillBarIds = Game.IngameState.ServerData.SkillBarIds;
+                List<ushort> skillBarIds = Game.InGameState.ServerData.SkillBarIds;
                 var id = Id;
                 for (int i = 0; i < 8; i++)
                 {
@@ -203,8 +207,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         internal void ReadStats(Dictionary<GameStat, int> stats, long address)
         {
-            var statPtrStart = M.ReadLong(address + 0x38);
-            var statPtrEnd = M.ReadLong(address + 0x40);
+            var statPtrStart = M.ReadLong(address + 0x68);
+            var statPtrEnd = M.ReadLong(address + 0x70);
 
             int key = 0;
             int value = 0;

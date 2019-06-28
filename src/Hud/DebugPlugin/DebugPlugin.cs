@@ -3,13 +3,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using PoeHUD.Controllers;
-using PoeHUD.Hud;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.UI;
 using SharpDX;
 using SharpDX.Direct3D9;
 
-namespace PoeHUD.DebugPlug
+namespace PoeHUD.Hud.DebugPlugin
 {
     public class DebugPlugin : SizedPlugin<DebugPluginSettings>
     {

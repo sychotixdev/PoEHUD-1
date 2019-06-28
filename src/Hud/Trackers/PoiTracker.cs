@@ -1,13 +1,19 @@
 using PoeHUD.Controllers;
 using PoeHUD.Hud.UI;
-using PoeHUD.Models;
 using PoeHUD.Poe.Components;
 using System.Collections.Generic;
+using PoeHUD.EntitiesCache.CacheControllers;
+using PoeHUD.EntitiesCache.CachedEntities;
+using PoeHUD.EntitiesCache.CachedEntities.Base;
+using PoeHUD.Hud.Icons.MapIcons;
+using PoeHUD.Hud.Interfaces;
+using PoeHUD.Models.Attributes;
 
 namespace PoeHUD.Hud.Trackers
 {
-    public class PoiTracker : PluginWithMapIcons<PoiTrackerSettings>
+    public class PoiTracker : Plugin<PoiTrackerSettings>, IPluginWithMapIcons
     {
+        private PoiIconsAreaCache _iconsCache;
         private static readonly List<string> masters = new List<string>
         {
             "Metadata/NPC/Missions/Wild/Dex",
@@ -47,132 +53,233 @@ namespace PoeHUD.Hud.Trackers
             "Metadata/Chests/PerandusChests/PerandusManorLostTreasureChest"
         };
 
-        private static readonly List<string> masters_without_npc_component = new List<string>
-        {
-            "Metadata/Terrain/Leagues/Incursion/Objects/IncursionPortal1"
-        };
-
         public PoiTracker(GameController gameController, Graphics graphics, PoiTrackerSettings settings)
             : base(gameController, graphics, settings)
-        { }
+        {
+            EntityCache<ChestEntity>.OnEntityAdded += OnChestAdded;
+            EntityCache<StrongboxEntity>.OnEntityAdded += OnStrongboxAdded;
+            EntityCache<NpcEntity>.OnEntityAdded += OnNPCAdded;
+
+            EntityCache<ChestEntity>.OnEntityRemoved += EntityRemoved;
+            EntityCache<StrongboxEntity>.OnEntityRemoved += EntityRemoved;
+            EntityCache<NpcEntity>.OnEntityRemoved += EntityRemoved;
+
+            GameController.Area.AreaChange += delegate { _iconsCache = GameController.Area.CurrentArea.GetOrCreateDataContainer<PoiIconsAreaCache>(); };
+        }
+
+        private void EntityRemoved<T>(EntityRemovedArgs<T> entityRemovedArgs) where T : BaseWorldEntity
+        {
+            if (entityRemovedArgs.Destroyed)
+            {
+                _iconsCache.CurrentIcons.Remove(entityRemovedArgs.Entity);
+            }
+        }
+
+        private void OnStrongboxAdded(EntityAddedArgs<StrongboxEntity> entityAddedArgs)
+        {
+            if (!Settings.Enable.Value)
+            {
+                return;
+            }
+
+            if (!Settings.Strongboxes.Value)
+            {
+                return;
+            }
+
+            if (!entityAddedArgs.IsNewEntity) //we gonna show it through all map
+                return;
+
+            var entity = entityAddedArgs.Entity;
+            var icon = GetChestIcon(entity);
+
+            if (null != icon)
+            {
+                _iconsCache.CurrentIcons[entity] = icon;
+            }
+        }
+
+        private void OnNPCAdded(EntityAddedArgs<NpcEntity> npcAddedArgs)
+        {
+            if (!Settings.Masters.Value)
+            {
+                return;
+            }
+
+            if (!Settings.Enable.Value)
+            {
+                return;
+            }
+
+            if (!npcAddedArgs.IsNewEntity) //we gonna show it through all map
+                return;
+
+            var entity = npcAddedArgs.Entity;
+            var icon = GetNpcIcon(entity);
+
+            if (null != icon)
+            {
+                _iconsCache.CurrentIcons[entity] = icon;
+            }
+        }
+
+        private MapIcon GetNpcIcon(NpcEntity entity)
+        {
+            if (masters.Contains(entity.Metadata))
+            {
+                return new NpcIcon(entity, "ms-cyan.png", () => Settings.Masters, Settings.MastersIcon);
+            }
+
+            if (cadiro.Contains(entity.Metadata))
+            {
+                return new NpcIcon(entity, "ms-green.png", () => Settings.Cadiro, Settings.CadiroIcon);
+            }
+
+            return null;
+        }
+
+        private void OnChestAdded(EntityAddedArgs<ChestEntity> chestAddedArgs)
+        {
+            if (!Settings.Enable.Value)
+            {
+                return;
+            }
+
+            if (!Settings.Chests.Value)
+            {
+                return;
+            }
+
+            if (!chestAddedArgs.IsNewEntity) //we gonna show it through all map
+                return;
+
+            var entity = chestAddedArgs.Entity;
+            var icon = GetChestIcon(entity);
+
+            if (null != icon)
+            {
+                _iconsCache.CurrentIcons[entity] = icon;
+            }
+        }
+
+        [LegionLeagueAttribute] //LegionChests
+        private ChestMapIcon GetChestIcon(ChestEntity entity)
+        {
+            Chest chest = entity.GetComponent<Chest>();
+            var metadata = entity.Metadata;
+
+            if (perandus.Contains(metadata))
+            {
+                return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.PerandusChestColor), () => Settings.PerandusChest,
+                    Settings.PerandusChestIconSize);
+            }
+
+            if (!chest.IsOpened)
+            {
+                if (metadata.Contains("BreachChest"))
+                {
+                    return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.BreachChestColor), () => Settings.BreachChest,
+                        Settings.BreachChestIcon);
+                }
+
+                if (metadata.StartsWith("Metadata/Chests/LegionChests"))
+                {
+                    // Parse Legion Chests
+                    if (metadata.Contains("EpicNoCrystal"))
+                    {
+                        // epic Legion chests with no crystal
+                        return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.LegionEpicNoCrystalChestColor),
+                            () => Settings.LegionChest, Settings.LegionEpicNoCrystalChestIcon);
+                    }
+
+                    if (metadata.Contains("Epic"))
+                    {
+                        // Epic Legion chests (with a crystal?)
+                        return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.LegionEpicChestColor), () => Settings.LegionChest,
+                            Settings.LegionEpicChestIcon);
+                    }
+
+                    if (metadata.Contains("NoCrystal"))
+                    {
+                        // Legion chests with no crystal
+                        return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.LegionNoCrystalChestColor),
+                            () => Settings.LegionChest,
+                            Settings.LegionNoCrystalChestIcon);
+                    }
+
+                    // Legion chests (with a crystal?)
+                    return new ChestMapIcon(entity, new HudTexture("strongbox.png", Settings.LegionChestColor), () => Settings.LegionChest,
+                        Settings.LegionChestIcon);
+                }
+
+                if (metadata == "Metadata/Chests/Prophecy/Divination") //From prophecy The Fortune Teller's Collection
+                {
+                    return new ChestMapIcon(entity, new HudTexture("strongboxes/chest_divination.png",
+                        entity.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIconSize);
+                }
+
+                if (chest.IsStrongbox)
+                {
+                    var chestIcon = "chest.png";
+
+                    switch (metadata)
+                    {
+                        case "Metadata/Chests/StrongBoxes/StrongboxDivination":
+                            chestIcon = "chest_divination.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Ornate":
+                            chestIcon = "chest_ornate.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Large":
+                            chestIcon = "chest_large.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Jeweller":
+                            chestIcon = "chest_jewelers.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Gemcutter":
+                            chestIcon = "chest_gemscutter.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Artisan":
+                            chestIcon = "chest_quality.png";
+                            break;
+                        case "Metadata/Chests/StrongBoxes/Armory":
+                            chestIcon = "chest_weapon.png";
+                            break;
+                        default:
+
+                            if (metadata.StartsWith("Metadata/Chests/StrongBoxes/Cartographer"))
+                                chestIcon = "chest_map.png";
+                            else if (metadata.StartsWith("Metadata/Chests/StrongBoxes/Arcanist"))
+                                chestIcon = "chest_no_quality.png";
+
+                            break;
+                    }
+
+                    return new ChestMapIcon(entity, new HudTexture("strongboxes/" + chestIcon,
+                        entity.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIconSize);
+                }
+
+                return new ChestMapIcon(entity, new HudTexture("chest.png"), () => Settings.Chests, Settings.ChestsIcon);
+            }
+
+            return null;
+        }
 
         public override void Render()
         {
-            if (!Settings.Enable) { }
+            
         }
 
-        protected override void OnEntityAdded(EntityWrapper entity)
+        public IEnumerable<MapIcon> GetIcons()
         {
-            if (!Settings.Enable) { return; }
-
-            MapIcon icon = GetMapIcon(entity);
-            if (null != icon)
-            {
-                CurrentIcons[entity] = icon;
-            }
+            return _iconsCache.CurrentIcons.Values;
         }
+    }
 
-        private MapIcon GetMapIcon(EntityWrapper e)
-        {
-            var ePath = e.Path;
-
-            if (e.HasComponent<NPC>())
-            {
-                if (masters.Contains(ePath))
-                {
-                    return new CreatureMapIcon(e, "ms-cyan.png", () => Settings.Masters, Settings.MastersIcon);
-                }
-                if (cadiro.Contains(ePath))
-                {
-                    return new CreatureMapIcon(e, "ms-green.png", () => Settings.Cadiro, Settings.CadiroIcon);
-                }
-            }
-            if (masters_without_npc_component.Contains(ePath))
-            {
-                return new CreatureMapIcon(e, "ms-cyan.png", () => Settings.Masters, Settings.MastersIcon);
-            }
-            if (e.HasComponent<Chest>())
-            {
-                Chest chest = e.GetComponent<Chest>();
-                if (perandus.Contains(ePath))
-                {
-                    return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.PerandusChestColor), () => Settings.PerandusChest, Settings.PerandusChestIconSize);
-                }
-                if (!chest.IsOpened)
-                {
-                    if (ePath.Contains("BreachChest"))
-                    {
-                        return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.BreachChestColor), () => Settings.BreachChest, Settings.BreachChestIcon);
-                    }
-
-                    if (ePath.StartsWith("Metadata/Chests/LegionChests"))
-                    {
-                        // Parse Legion Chests
-                        if (ePath.Contains("EpicNoCrystal"))
-                        {
-                            // epic Legion chests with no crystal
-                            return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.LegionEpicNoCrystalChestColor), () => Settings.LegionChest, Settings.LegionEpicNoCrystalChestIcon);
-                        }
-                        if (ePath.Contains("Epic"))
-                        {
-                            // Epic Legion chests (with a crystal?)
-                            return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.LegionEpicChestColor), () => Settings.LegionChest, Settings.LegionEpicChestIcon);
-                        }
-                        if (ePath.Contains("NoCrystal"))
-                        {
-                            // Legion chests with no crystal
-                            return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.LegionNoCrystalChestColor), () => Settings.LegionChest, Settings.LegionNoCrystalChestIcon);
-                        }
-                        // Legion chests (with a crystal?)
-                        return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.LegionChestColor), () => Settings.LegionChest, Settings.LegionChestIcon);
-                    }
-
-                    if (ePath == "Metadata/Chests/Prophecy/Divination")//From prophecy The Fortune Teller's Collection
-                    {
-                        return new ChestMapIcon(e, new HudTexture("strongboxes/chest_divination.png",
-                                                                  e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIconSize);
-                    }
-                    if (chest.IsStrongbox)
-                    {
-                        var chestIcon = "chest.png";
-                        switch (ePath)
-                        {
-                            case "Metadata/Chests/StrongBoxes/StrongboxDivination":
-                                chestIcon = "chest_divination.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Ornate":
-                                chestIcon = "chest_ornate.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Large":
-                                chestIcon = "chest_large.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Jeweller":
-                                chestIcon = "chest_jewelers.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Gemcutter":
-                                chestIcon = "chest_gemscutter.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Artisan":
-                                chestIcon = "chest_quality.png"; break;
-                            case "Metadata/Chests/StrongBoxes/Armory":
-                                chestIcon = "chest_weapon.png"; break;
-                            default:
-                                if (ePath.StartsWith("Metadata/Chests/StrongBoxes/Cartographer"))
-                                    chestIcon = "chest_map.png";
-                                else if (ePath.StartsWith("Metadata/Chests/StrongBoxes/Arcanist"))
-                                    chestIcon = "chest_no_quality.png";
-                                break;
-                        }
-
-
-                        return new ChestMapIcon(e, new HudTexture("strongboxes/" + chestIcon,
-                                e.GetComponent<ObjectMagicProperties>().Rarity), () => Settings.Strongboxes, Settings.StrongboxesIconSize);
-                    }
-
-                    return new ChestMapIcon(e, new HudTexture("chest.png"), () => Settings.Chests, Settings.ChestsIcon);
-                }
-            }
-
-            if (ePath == "Metadata/Terrain/Leagues/Synthesis/Objects/SynthesisAirlockController")
-            {
-                return new ChestMapIcon(e, new HudTexture("strongbox.png", Settings.BreachChestColor), () => Settings.BreachChest, Settings.BreachChestIcon);
-            }
-            return null;
-        }
+    //this class have identical content with all classes related to icons caching..
+    //buw we cannot use it for all of them due to better performance (each plugin should have own class to not put all entities to the same collection)
+    public class PoiIconsAreaCache
+    {
+        public Dictionary<BaseWorldEntity, MapIcon> CurrentIcons = new Dictionary<BaseWorldEntity, MapIcon>();
     }
 }

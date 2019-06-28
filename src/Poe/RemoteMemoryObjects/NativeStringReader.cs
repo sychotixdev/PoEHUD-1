@@ -6,8 +6,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
     public class NativeStringReader : RemoteMemoryObject
     {
-        [Obsolete(@"Use Text property instead. 'Value' property will be removed later (Reason: bad name ¯\_(ツ)_/¯)")]
-        public string Value => ReadString(Address);
         public string Text => ReadString(Address);
 
         public static string ReadString(long address)

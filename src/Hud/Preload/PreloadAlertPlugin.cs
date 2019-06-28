@@ -213,13 +213,13 @@ namespace PoeHUD.Hud.Preload
         {
             if (Settings.ReloadButton.PressedOnce()) // do a full refresh if F5 is hit
             {
-                DebugPlug.DebugPlugin.LogMsg("Looking for new preloads.", 1);
+                DebugPlugin.DebugPlugin.LogMsg("Looking for new preloads.", 1);
                 ResetArea();
                 Parse();
             }
 
-            var UIHover = GameController.Game.IngameState.UIHover;
-            var miniMap = GameController.Game.IngameState.IngameUi.Map.SmallMinimap;
+            var UIHover = GameController.Game.InGameState.UIHover;
+            var miniMap = GameController.Game.InGameState.InGameUi.Map.SmallMinimap;
 
             if (Settings.Enable.Value && UIHover.Address != 0x00 && UIHover.Tooltip.Address != 0x00 &&
                 UIHover.Tooltip.IsVisible && UIHover.Tooltip.GetClientRect().Intersects(miniMap.GetClientRect()))

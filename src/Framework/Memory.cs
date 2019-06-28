@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PoeHUD.Controllers;
 using System.Runtime.InteropServices;
+using PoeHUD.Hud.DebugPlugin;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using SharpDX;
 
@@ -275,8 +277,8 @@ namespace PoeHUD.Framework
             var range = endAddress - startAddress;
             if (range < 0 || range / structSize > maxCountLimit)
             {
-                if (PoeHUD.Hud.MainMenuWindow.Settings.DeveloperMode.Value)
-                    DebugPlug.DebugPlugin.LogMsg($"Fixed possible memory leak while reading array of struct '{typeof(T).Name}'", 1, SharpDX.Color.Yellow);
+                if (MainMenuWindow.Settings.DeveloperMode.Value)
+                    DebugPlugin.LogMsg($"Fixed possible memory leak while reading array of struct '{typeof(T).Name}'", 1, SharpDX.Color.Yellow);
                 return result;
             }
 
@@ -376,7 +378,7 @@ namespace PoeHUD.Framework
 
                 if (--breakCounter < 0)
                 {
-                    DebugPlug.DebugPlugin.LogMsg("Freeze fix in ReadDoublePointerIntList. Break after 10000 iterations", 10, Color.Red);
+                    DebugPlugin.LogMsg("Freeze fix in ReadDoublePointerIntList. Break after 10000 iterations", 10, Color.Red);
                     break;
                 }
             }

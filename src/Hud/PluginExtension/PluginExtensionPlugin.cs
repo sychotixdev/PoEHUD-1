@@ -30,15 +30,13 @@ namespace PoeHUD.Hud.PluginExtension
             Graphics = graphics;
             SearchPlugins();
             InitPlugins();
-            gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
-            gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
+            //gameController.EntityListWrapper.EntityAdded += OnEntityAdded;//TODO
+            //gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
             gameController.Area.AreaChange += area => eAreaChange(area);
         }
         
         public event Action eInitialise = delegate { };
         public event Action eRender = delegate { };
-        public event Action<EntityWrapper> eEntityAdded = delegate { };
-        public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
         public event Action<AreaController> eAreaChange = delegate { };
         public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
@@ -291,14 +289,7 @@ namespace PoeHUD.Hud.PluginExtension
         {
             eRender();
         }
-        private void OnEntityAdded(EntityWrapper entityWrapper)
-        {
-            eEntityAdded(entityWrapper);
-        }
-        private void OnEntityRemoved(EntityWrapper entityWrapper)
-        {
-            eEntityRemoved(entityWrapper);
-        }
+
         public void Dispose()
         {
             eClose();
@@ -307,11 +298,11 @@ namespace PoeHUD.Hud.PluginExtension
         #region Logging
         public void LogError(object message, float displayTime)
         {
-            DebugPlug.DebugPlugin.LogMsg(message, displayTime, SharpDX.Color.Red);
+            DebugPlugin.DebugPlugin.LogMsg(message, displayTime, SharpDX.Color.Red);
         }
         public void LogMessage(object message, float displayTime)
         {
-            DebugPlug.DebugPlugin.LogMsg(message, displayTime);
+            DebugPlugin.DebugPlugin.LogMsg(message, displayTime);
         }
         #endregion
     }

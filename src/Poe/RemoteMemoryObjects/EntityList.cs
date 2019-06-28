@@ -1,23 +1,22 @@
 using System.Collections.Generic;
+using PoeHUD.Hud.DebugPlugin;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
     public class EntityList : RemoteMemoryObject
     {
-        public IEnumerable<Entity> Entities => EntitiesAsDictionary.Values;
-
-        public Dictionary<uint, Entity> EntitiesAsDictionary
+        public Dictionary<uint, long> EntitiesDictionary
         {
             get
             {
-                var dictionary = new Dictionary<uint, Entity>();
+                var dictionary = new Dictionary<uint, long>();
                 CollectEntities(M.ReadLong(Address), dictionary);
                 return dictionary;
             }
         }
 
-        private void CollectEntities(long addr, Dictionary<uint, Entity> list)
+        private void CollectEntities(long addr, Dictionary<uint, long> list)
         {
             long num = addr;
             addr = M.ReadLong(addr + 0x8);
@@ -38,8 +37,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     if (!list.ContainsKey(EntityID))
                     {
                         long address = M.ReadLong(nextAddr + 0x28);
-                        var entity = GetObject<Entity>(address);
-                        list.Add(EntityID, entity);
+                        list.Add(EntityID, address);
                     }
                     queue.Enqueue(M.ReadLong(nextAddr));
                     queue.Enqueue(M.ReadLong(nextAddr + 0x10));
@@ -47,7 +45,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
                 if (loopcount++ > 10000)
                 {
-                    DebugPlug.DebugPlugin.LogMsg("Entities processing limit reached (10k)", 10, Color.Yellow);
+                    DebugPlugin.LogMsg("Entities processing limit reached (10k)", 10, Color.Yellow);
 					break;
                 }
             }

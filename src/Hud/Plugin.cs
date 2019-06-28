@@ -11,10 +11,12 @@ using System.Linq;
 
 namespace PoeHUD.Hud
 {
+    /// <summary>
+    /// Base class for all internal plugins (inside hud).
+    /// </summary>
     public abstract class Plugin<TSettings> : IPlugin where TSettings : SettingsBase
     {
         protected readonly GameController GameController;
-
         protected readonly Graphics Graphics;
 
         protected Plugin(GameController gameController, Graphics graphics, TSettings settings)
@@ -22,8 +24,6 @@ namespace PoeHUD.Hud
             GameController = gameController;
             Graphics = graphics;
             Settings = settings;
-            gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
-            gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
         }
 
         protected TSettings Settings { get; private set; }
@@ -58,36 +58,6 @@ namespace PoeHUD.Hud
             return File.ReadAllLines(path)
                 .Where(line => !string.IsNullOrWhiteSpace(line) && line.IndexOf(';') >= 0 && !line.StartsWith("#"))
                 .Select(line => line.Split(new[] { ';' }, columnsCount).Select(parts => parts.Trim()).ToArray());
-        }
-
-        /// <summary>
-        /// Loads a Comma separated file into a list of Strings
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        protected static Dictionary<string, List<string>> LoadConfigList(string path)
-        {
-            var result = new Dictionary<string, List<string>>();
-
-            string[] lines = File.ReadAllLines(path);
-            foreach (string line in lines.Select(a => a.Trim()))
-            {
-                if (string.IsNullOrWhiteSpace(line) || line.IndexOf(',') < 0 || line.StartsWith("#")) // Ignore empty lines, those without , and comments
-                    continue;
-                List<string> Values = line.Split(',').Select(s => s.Trim()).ToList(); // Split comma separated Values into the List of strings
-                string name = Values[0];  // Key Value for the Dictionary
-                Values.RemoveAt(0); // remove the key-Value from the List
-                result.Add(name, Values);
-            }
-            return result;
-        }
-
-        protected virtual void OnEntityAdded(EntityWrapper entityWrapper)
-        {
-        }
-
-        protected virtual void OnEntityRemoved(EntityWrapper entityWrapper)
-        {
         }
     }
 }

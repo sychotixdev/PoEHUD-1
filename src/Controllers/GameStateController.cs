@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using PoeHUD.DebugPlug;
 using PoeHUD.Framework;
-using PoeHUD.Framework.Helpers;
-using PoeHUD.Hud.Performance;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Models;
+using PoeHUD.Poe;
 using PoeHUD.Poe.RemoteMemoryObjects;
-using PoeHUD.Controllers;
 
-namespace PoeHUD.Poe.RemoteMemoryObjects
+namespace PoeHUD.Controllers
 {
     public class GameStateController : RemoteMemoryObject
     {
@@ -37,11 +25,11 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			WaitingStatePtr = AllGameStates["WaitingState"].Address;
 			InGameStatePtr = AllGameStates["InGameState"].Address;
 			LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
-			IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
+			InGameState = AllGameStates["InGameState"].AsObject<InGameState>();
 		}
 
         //How to reversing it
-        //you should search for string of current active state, something like "IngameState" then you should search who using it (maybe on area change)..
+        //you should search for string of current active state, something like "InGameState" then you should search who using it (maybe on area change)..
         //then after few scans you will got the green address. Then you know what to do..
 
 		//I hope this caching will works fine
@@ -54,9 +42,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public readonly Dictionary<string, GameState> AllGameStates;
         public static AreaLoadingState LoadingState { get; private set; }
-        public static IngameState IngameState { get; private set; }
-        public static List<GameState> CurrentGameStates => Instance.M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x8);
-        public static List<GameState> ActiveGameStates => Instance.M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x20, true);
+        public static InGameState InGameState { get; private set; }
+        public static List<GameState> CurrentGameStates => M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x8);
+        public static List<GameState> ActiveGameStates => M.ReadDoublePtrVectorClasses<GameState>(Instance.Address + 0x20, true);
 
         //For debug
         public List<GameState> _CurrentGameStates => CurrentGameStates;

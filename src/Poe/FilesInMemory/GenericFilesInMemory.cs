@@ -1,4 +1,5 @@
 ﻿using PoeHUD.Framework;
+using PoeHUD.Poe.FilesInMemory.Base;
 using PoeHUD.Poe.RemoteMemoryObjects;
 
 namespace PoeHUD.Poe.FilesInMemory

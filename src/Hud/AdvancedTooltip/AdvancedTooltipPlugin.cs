@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using PoeHUD.EntitiesCache.CachedEntities;
 using Color = SharpDX.Color;
 using Graphics = PoeHUD.Hud.UI.Graphics;
 using RectangleF = SharpDX.RectangleF;
@@ -25,7 +26,7 @@ namespace PoeHUD.Hud.AdvancedTooltip
         private Color TColor;
         private bool holdKey;
         private readonly SettingsHub settingsHub;
-        private Entity itemEntity;
+        private ItemEntity itemEntity;
         private List<ModValue> mods = new List<ModValue>();
 
         public AdvancedTooltipPlugin(GameController gameController, Graphics graphics, AdvancedTooltipSettings settings, SettingsHub settingsHub)
@@ -51,30 +52,28 @@ namespace PoeHUD.Hud.AdvancedTooltip
                 {
                     holdKey = false;
                 }
-                Element uiHover = GameController.Game.IngameState.UIHover;
+                Element uiHover = GameController.Game.InGameState.UIHover;
                 var inventoryItemIcon = uiHover.AsObject<HoverItemIcon>();
 
-                Element tooltip = inventoryItemIcon.Tooltip;
-                Entity poeEntity = inventoryItemIcon.Item;
+                var tooltip = inventoryItemIcon.Tooltip;
+                var poeEntity = inventoryItemIcon.Item;
 
-                if (tooltip == null || poeEntity.Address == 0 || !poeEntity.IsValid) { return; }
-                RectangleF tooltipRect = tooltip.GetClientRect();
-
-               
+                if (tooltip == null || poeEntity.Address == 0/* || !poeEntity.IsValid*/) { return; }//TODO: Test this
+                var tooltipRect = tooltip.GetClientRect();
 
                 var modsComponent = poeEntity.GetComponent<Mods>();
                 long id = 0;
-                if (inventoryItemIcon.ToolTipType == ToolTipType.InventoryItem)
-                {
-               
-                    id = poeEntity.InventoryId;
-                }
-                else
-                {
-                    id = poeEntity.Id;
-                }
 
-                if (itemEntity == null || itemEntity.Id != id)
+                //if (inventoryItemIcon.ToolTipType == ToolTipType.InventoryItem)
+                //{
+                    id = poeEntity.InventoryId;//TODO test this
+                //}
+                //else
+                //{
+                //    id = poeEntity.Id;
+                //}
+
+                if (itemEntity == null || itemEntity.InventoryId != id)
                 {
                     List<ItemMod> itemMods = modsComponent.ItemMods;
                     mods = itemMods.Select(item => new ModValue(item, GameController.Files, modsComponent.ItemLevel,

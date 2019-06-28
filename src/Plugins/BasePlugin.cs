@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using PoeHUD.Controllers;
-using PoeHUD.DebugPlug;
+using PoeHUD.EntitiesCache.CachedEntities;
 using PoeHUD.Framework;
 using PoeHUD.Hud;
+using PoeHUD.Hud.DebugPlugin;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Hud.Menu.SettingsDrawers;
 using PoeHUD.Hud.PluginExtension;
 using PoeHUD.Hud.Settings;
@@ -37,14 +39,14 @@ namespace PoeHUD.Plugins
         public string PluginDirectory { get; internal set; }
         public string LocalPluginDirectory { get; private set; }
 
-        //For modification of default rendering of settings
+        /// <summary>
+        /// For modification of default rendering of settings
+        /// </summary>
         public List<BaseSettingsDrawer> SettingsDrawers => _ExternalPluginData.SettingPropertyDrawers;
         public GameController GameController => API.GameController;
-        public IngameState IngameState => GameController.Game.IngameState;
-        public ServerData ServerData => IngameState.ServerData;
-        public IngameUIElements IngameUi => IngameState.IngameUi;
-        public EntityWrapper Player => GameController.Player;
-
+        public InGameState InGameState => GameController.Game.InGameState;
+        public ServerData ServerData => InGameState.ServerData;
+        public InGameUIElements InGameUi => InGameState.InGameUi;
         public Graphics Graphics => API.Graphics;
         public Memory Memory => GameController.Memory;
         public event Action<AreaController> OnAreaChange = delegate { };
@@ -59,7 +61,9 @@ namespace PoeHUD.Plugins
             DiagnosticTimer = new Stopwatch();
         }
 
-        //For creating own SettingDrawers
+        /// <summary>
+        /// For creating own SettingDrawers
+        /// </summary>
         public int GetUniqDrawerId()
         {
             return _ExternalPluginData.GetUniqDrawerId();
@@ -70,14 +74,6 @@ namespace PoeHUD.Plugins
         }
 
         public virtual void Render()
-        {
-        }
-
-        public virtual void EntityAdded(EntityWrapper entityWrapper)
-        {
-        }
-
-        public virtual void EntityRemoved(EntityWrapper entityWrapper)
         {
         }
 
@@ -193,46 +189,6 @@ namespace PoeHUD.Plugins
                 CurrentMs = DiagnosticTimer.ElapsedMilliseconds;
                 AwerageMs += (CurrentMs - AwerageMs) / 10;
                 TopMs = Math.Max(TopMs, CurrentMs);
-            }
-        }
-
-        internal void _EntityAdded(EntityWrapper entityWrapper)
-        {
-            if (_disableDueToError) return;
-
-            if (!_initialized || !_allowRender)
-                return;
-
-            try
-            {
-                EntityAdded(entityWrapper);
-            }
-            catch (MissingMemberException me)
-            {
-                ProcessMissingMemberException(me, "EntityAdded");
-            }
-            catch (Exception e)
-            {
-                HandlePluginError("EntityAdded", e);
-            }
-        }
-
-        internal void _EntityRemoved(EntityWrapper entityWrapper)
-        {
-            if (_disableDueToError) return;
-            if (!_initialized || !_allowRender) return;
-
-            try
-            {
-                EntityRemoved(entityWrapper);
-            }
-            catch (MissingMemberException me)
-            {
-                ProcessMissingMemberException(me, "EntityRemoved");
-            }
-            catch (Exception e)
-            {
-                HandlePluginError("EntityRemoved", e);
             }
         }
 

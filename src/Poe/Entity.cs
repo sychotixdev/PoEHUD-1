@@ -1,15 +1,11 @@
 using System;
-using PoeHUD.Models.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using PoeHUD.Controllers;
-using PoeHUD.Models.Enums;
 using PoeHUD.Poe.Components;
 using SharpDX;
 
 namespace PoeHUD.Poe
 {
-    public sealed class Entity : RemoteMemoryObject, IEntity
+    public sealed class Entity : RemoteMemoryObject
     {
         private long ComponentLookup => M.ReadLong(Address, 0x40, 0x30);
         private long ComponentList => M.ReadLong(Address + 0x8);
@@ -50,42 +46,6 @@ namespace PoeHUD.Poe
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers
 
         public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
-
-        public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
-        public bool IsAlive => GetComponent<Life>().CurHP > 0;
-        public bool IsTargetable => GetComponent<Targetable>().isTargetable;
-        public bool CannotDieAura => HasBuff("monster_aura_cannot_die");
-        public bool BestiaryMonsterCaptured => HasBuff("capture_monster_trapped");
-        public bool IsHidden => HasStat((GameStat)GameController.Instance.Files.Stats.records["is_hidden_monster"].ID, out var stat) && stat == 1;
-        public bool CannotBeDamagedStat => HasStat((GameStat)GameController.Instance.Files.Stats.records["cannot_be_damaged"].ID, out var stat) && stat == 1;
-        public bool Invincible => CannotDieAura || CannotBeDamagedStat;
-        public bool IsMapBoss => GetComponent<ObjectMagicProperties>().Mods.Any(a => a == "MonsterMapBoss");
-        public bool IsEmerging
-        {
-            get
-            {
-                if (IsHidden)
-                    return false;
-
-                var m = Path;
-                return 
-                    //m.Contains("/SandSpitterEmerge/") ||//was ignoring this guys https://dl.dropboxusercontent.com/s/qgxl189iieu4dm2/PoeHUD_2019-03-30_13-43-00.png
-                       //   m.Contains("/WaterElemental/") ||//https://dl.dropboxusercontent.com/s/d3qb1c0tg3mo1p6/PoeHUD_2019-03-24_23-04-01.png
-                       m.Contains("/RootSpiders/") ||
-                       m.Contains("ZombieMiredGraspEmerge") ||
-                       m.Contains("ReliquaryMonsterEmerge");
-            }
-        }
-
-        public bool HasStat(GameStat statType, out int value)
-        {
-            return GetComponent<Stats>().GameStatDictionary.TryGetValue(statType, out value);
-        }
-
-        public bool IsActive => IsHostile && IsAlive && IsTargetable && !IsHidden;
-        public bool HasBuff(string buff) => GetComponent<Life>().Buffs.Any(x => x.Name == buff);
-        public bool HasBuff(List<string> buffs) => !GetComponent<Life>().Buffs.TrueForAll(x => !buffs.Contains(x.Name));
-        public float Distance => Vector2.Distance(GameController.Instance.Player.PositionedComp.GridPos, PositionedComp.GridPos);
 
         public Vector3 Pos
         {
@@ -129,8 +89,7 @@ namespace PoeHUD.Poe
 
         public T GetComponent<T>() where T : Component, new()
         {
-            long addr;
-            return HasComponent<T>(out addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0x18) * 8) : GetObject<T>(0);
+            return HasComponent<T>(out var addr) ? ReadObject<T>(ComponentList + M.ReadInt(addr + 0x18) * 8) : GetObject<T>(0);
         }
 
         public Dictionary<string, long> GetComponents()

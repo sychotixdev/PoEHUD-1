@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using PoeHUD.Poe.Elements;
 using PoeHUD.Controllers;
 using PoeHUD.Poe.Components;
 
@@ -10,10 +8,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class ServerData : RemoteMemoryObject
     {
         public BetrayalData BetrayalData => GetObject<BetrayalData>(M.ReadLong(Address + 0x3C8, 0x718));
-
-        [Obsolete("Obsolete. Use GameController.Game.IngameState.IngameUi.StashElement instead")]
-        public StashElement StashPanel => GameController.Instance.Game.IngameState.IngameUi.StashElement;// Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null; // needs fixed, but if it's obsolete, just remove it
-
         public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x6390) & 0xF);
 
         public int GetBeastCapturedAmount(BestiaryCapturableMonster monster)
@@ -89,7 +83,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var result = new List<ushort>();
 
-                var readAddr = Address + 0x6658;
+                var readAddr = Address + 0x6638;
                 for (var i = 0; i < 8; i++)
                 {
                     result.Add(M.ReadUShort(readAddr));
@@ -98,6 +92,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 return result;
             }
         }
+
         public List<Player> NearestPlayers
         {
             get

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using PoeHUD.Controllers;
-using PoeHUD.Poe.FilesInMemory;
-using System.Collections.Generic;
 using PoeHUD.Framework;
-using PoeHUD.Plugins;
 
-namespace PoeHUD.Poe.RemoteMemoryObjects
+namespace PoeHUD.Poe.RemoteMemoryObjects.Labyrinth
 {
     /// <summary>
     /// We going to read all information here to get all data cached

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Runtime.InteropServices;
 using PoeHUD.Controllers;
+using PoeHUD.Hud.DebugPlugin;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -54,7 +55,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     var connectionsCount = M.ReadInt(Address + 0x16);
                     if (connectionsCount > 10)
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Error reading WorldArea.Connections. Exceeded limit (5): " + connectionsCount, 1);
+                        DebugPlugin.LogMsg("Error reading WorldArea.Connections. Exceeded limit (5): " + connectionsCount, 1);
                         return connections;
                     }
 
@@ -83,7 +84,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     var corruptedAreasCount = M.ReadInt(Address + 0xfb);
                     if (corruptedAreasCount > 10)
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Error reading WorldArea.CorruptedAreas. Exceeded limit (5): " + corruptedAreasCount, 1);
+                        DebugPlugin.LogMsg("Error reading WorldArea.CorruptedAreas. Exceeded limit (5): " + corruptedAreasCount, 1);
                         return connections;
                     }
                     var corruptedAreasPtr = M.ReadLong(Address + 0x103);

@@ -1,5 +1,7 @@
 using PoeHUD.Poe.Components;
 using System;
+using PoeHUD.EntitiesCache.CachedEntities;
+using PoeHUD.EntitiesCache.CachedEntities.Base;
 
 namespace PoeHUD.Poe.Elements
 {
@@ -16,7 +18,7 @@ namespace PoeHUD.Poe.Elements
         public int InventPosY => M.ReadInt(Address + 0x394);
 		public Element InventoryItemTooltip =>ReadObject<Element>(Address + 0x338);
 		public Element ItemInChatTooltip => ReadObject<Element>(Address + 0x1A8);
-		public ItemOnGroundTooltip ToolTipOnGround => Game.IngameState.IngameUi.ItemOnGroundTooltip;
+		public ItemOnGroundTooltip ToolTipOnGround => Game.InGameState.InGameUi.ItemOnGroundTooltip;
 	    public ToolTipType ToolTipType => GetToolTipType();
 
         public Element Tooltip
@@ -52,20 +54,20 @@ namespace PoeHUD.Poe.Elements
             }
         }
 
-        public Entity Item
+        public ItemEntity Item
         {
             get
             {
                 switch (ToolTipType)
                 {
                     case ToolTipType.ItemOnGround:
-                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.itemOnGroundLabelElement;
+                        ItemsOnGroundLabelElement le = Game.InGameState.InGameUi.itemOnGroundLabelElement;
                         Entity e = le.ItemOnHover;
                         if (e == null)
                             return null;
                         return e.GetComponent<WorldItem>().ItemEntity;
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0x388);
+                        return new ItemEntity(M.ReadLong(Address + 0x388));
                     case ToolTipType.ItemInChat:
                         // currently cannot find it.
                         return null;

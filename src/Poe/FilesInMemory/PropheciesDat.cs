@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Runtime.InteropServices;
 using PoeHUD.Controllers;
+using PoeHUD.Poe.FilesInMemory.Base;
 using PoeHUD.Poe.RemoteMemoryObjects;
 
 

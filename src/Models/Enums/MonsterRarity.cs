@@ -5,6 +5,7 @@ namespace PoeHUD.Models.Enums
         White,
         Magic,
         Rare,
-        Unique
+        Unique,
+        Ally
     }
 }

@@ -1,6 +1,6 @@
 using SharpDX;
 
-namespace PoeHUD.Poe.Elements
+namespace PoeHUD.Poe.Elements.InventoryElements
 {
     public class CurrencyInventoryItem : NormalInventoryItem
     {

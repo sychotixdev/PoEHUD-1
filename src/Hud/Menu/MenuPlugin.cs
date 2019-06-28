@@ -75,7 +75,7 @@ namespace PoeHUD.Hud.Menu
         }
         private bool PoeIsHoveringInventoryStashTradeItem()
         {
-            return GameController.Game.IngameState.UIHoverTooltip.Address != 0x00;
+            return GameController.Game.InGameState.UIHoverTooltip.Address != 0x00;
         }
 
 

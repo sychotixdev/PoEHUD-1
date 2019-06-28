@@ -1,14 +1,8 @@
-﻿using PoeHUD.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using PoeHUD.Controllers;
-using PoeHUD.Poe.RemoteMemoryObjects;
+using PoeHUD.Framework;
 
-namespace PoeHUD.Poe.FilesInMemory
+namespace PoeHUD.Poe.FilesInMemory.Base
 {
     public class UniversalFileWrapper<RecordType> : FileInMemory where RecordType : RemoteMemoryObject, new()
     {
@@ -46,7 +40,7 @@ namespace PoeHUD.Poe.FilesInMemory
             {
                 if (!EntriesAddressDictionary.ContainsKey(addr))
                 {
-                    var r = GameController.Instance.Game.IngameState.GetObject<RecordType>(addr);
+                    var r = GameController.Instance.Game.InGameState.GetObject<RecordType>(addr);
                     EntriesAddressDictionary.Add(addr, r);
                     EntriesList.Add(r);
                     EntryAdded(addr, r);

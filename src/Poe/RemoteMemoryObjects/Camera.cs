@@ -3,7 +3,6 @@ using PoeHUD.Poe.Components;
 using System;
 using System.Numerics;
 using PoeHUD.Controllers;
-using PoeHUD.Models.Attributes;
 using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
 using Vector4 = System.Numerics.Vector4;
@@ -18,30 +17,28 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Vector3 Position => new Vector3(M.ReadFloat(Address + 0xD4), M.ReadFloat(Address + 0xD8), M.ReadFloat(Address + 0xDC));
         //cameraarray 0x17c
 
-        private static Vector2 oldplayerCord;
-
-
-        public unsafe Vector2 WorldToScreen(Vector3 vec3, EntityWrapper entityWrapper)
-        {
-            Entity localPlayer = Game.IngameState.Data.LocalPlayer;
-            var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
-            bool isMoving = false;
-            isMoving = GameController.Instance.Cache.Enable ? GameController.Instance.Cache.Player.Actor.isMoving : localPlayer.GetComponent<Actor>().isMoving;
-            var playerMoving = isplayer && isMoving;
-            var resultCord = WorldToScreen(vec3);
-            if (playerMoving)
-            {
-                if (Math.Abs(oldplayerCord.X - resultCord.X) < 40 || (Math.Abs(oldplayerCord.X - resultCord.Y) < 40))
-                    resultCord = oldplayerCord;
-                else
-                    oldplayerCord = resultCord;
-            }
-            else if (isplayer)
-            {
-                oldplayerCord = resultCord;
-            }
-            return resultCord;
-        }
+        //private static Vector2 oldplayerCord;
+        //internal Vector2 WorldToScreen(Vector3 vec3, long address)//no idea the fuck this this
+        //{
+        //    var localPlayerAddress = Game.InGameState.Data.LocalPlayerAddress;
+        //    var isplayer = localPlayerAddress == address;
+        //    bool isMoving = false;
+        //    isMoving = GameController.Instance.Cache.Enable ? GameController.Instance.Cache.Player.Actor.isMoving : localPlayer.GetComponent<Actor>().isMoving;
+        //    var playerMoving = isplayer && isMoving;
+        //    var resultCord = WorldToScreen(vec3);
+        //    if (playerMoving)
+        //    {
+        //        if (Math.Abs(oldplayerCord.X - resultCord.X) < 40 || (Math.Abs(oldplayerCord.X - resultCord.Y) < 40))
+        //            resultCord = oldplayerCord;
+        //        else
+        //            oldplayerCord = resultCord;
+        //    }
+        //    else if (isplayer)
+        //    {
+        //        oldplayerCord = resultCord;
+        //    }
+        //    return resultCord;
+        //}
 
         public unsafe Vector2 WorldToScreen(Vector3 vec3)
         {

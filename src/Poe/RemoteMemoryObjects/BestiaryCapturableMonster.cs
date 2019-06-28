@@ -35,7 +35,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public BestiaryGenus BestiaryGenus => bestiaryGenus != null ? bestiaryGenus :
             bestiaryGenus = GameController.Instance.Files.BestiaryGenuses.GetByAddress(M.ReadLong(Address + 0x61));
 
-        public int AmountCaptured => GameController.Instance.Game.IngameState.ServerData.GetBeastCapturedAmount(this);
+        public int AmountCaptured => GameController.Instance.Game.InGameState.ServerData.GetBeastCapturedAmount(this);
 
         public override string ToString()
         {

@@ -45,8 +45,6 @@ namespace PoeHUD.Poe.Components
             if (count > 12)
                 return list;
 
-            //System.Windows.Forms.MessageBox.Show(begin.ToString("x"));
-
             for (long i = begin; i < end; i += 0x28)
                 list.Add(GetObject<ItemMod>(i));
 

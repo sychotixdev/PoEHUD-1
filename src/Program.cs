@@ -1,6 +1,5 @@
 using PoeHUD.Controllers;
 using PoeHUD.Framework;
-using PoeHUD.Framework.Tools;
 using PoeHUD.Hud;
 using PoeHUD.Poe;
 using System;
@@ -89,23 +88,23 @@ namespace PoeHUD
                 sb.Append("TheGame: " + gameController.Game.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("IngameState: " + gameController.Game.IngameState.Address.ToString("X"));
+                sb.Append("InGameState: " + gameController.Game.InGameState.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
 
-                sb.Append("IngameData: " + gameController.Game.IngameState.Data.Address.ToString("X"));
+                sb.Append("InGameData: " + gameController.Game.InGameState.Data.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("IngameUi: " + gameController.Game.IngameState.IngameUi.Address.ToString("X"));
+                sb.Append("InGameUi: " + gameController.Game.InGameState.InGameUi.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("InventoryPanel: " + gameController.Game.IngameState.IngameUi.InventoryPanel.Address.ToString("X"));
+                sb.Append("InventoryPanel: " + gameController.Game.InGameState.InGameUi.InventoryPanel.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("UIRoot: " + gameController.Game.IngameState.UIRoot.Address.ToString("X"));
+                sb.Append("UIRoot: " + gameController.Game.InGameState.UIRoot.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("ServerData: " + gameController.Game.IngameState.ServerData.Address.ToString("X"));
+                sb.Append("ServerData: " + gameController.Game.InGameState.ServerData.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
 

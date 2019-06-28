@@ -1,5 +1,4 @@
 ﻿using PoeHUD.Controllers;
-using PoeHUD.DebugPlug;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.AdvancedTooltip;
@@ -24,6 +23,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PoeHUD.EntitiesCache.CachedEntities;
+using PoeHUD.Hud.DebugPlugin;
+using PoeHUD.Hud.Icons.MapIcons;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
@@ -84,8 +86,8 @@ namespace PoeHUD.Hud
 
         private Vector2 GetLeftCornerMap()
         {
-            var ingameState = gameController.Game.IngameState;
-            RectangleF clientRect = ingameState.IngameUi.Map.SmallMinimap.GetClientRect();
+            var ingameState = gameController.Game.InGameState;
+            RectangleF clientRect = ingameState.InGameUi.Map.SmallMinimap.GetClientRect();
             var diagnosticElement = ingameState.LatencyRectangle;
             switch (ingameState.DiagnosticInfoType)
             {
@@ -105,19 +107,19 @@ namespace PoeHUD.Hud
         private Vector2 GetUnderCornerMap()
         {
             const int EPSILON = 1;
-            Element questPanel = gameController.Game.IngameState.IngameUi.QuestTracker;
-            Element gemPanel = gameController.Game.IngameState.IngameUi.GemLvlUpPanel;
+            Element questPanel = gameController.Game.InGameState.InGameUi.QuestTracker;
+            Element gemPanel = gameController.Game.InGameState.InGameUi.GemLvlUpPanel;
             RectangleF questPanelRect = questPanel.GetClientRect();
             RectangleF gemPanelRect = gemPanel.GetClientRect();
 			RectangleF clientRect;
-			if (gameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible)
+			if (gameController.Game.InGameState.InGameUi.Map.LargeMap.IsVisible)
 			{
 				// large map is visible, use orange words' parent
-				clientRect = gameController.Game.IngameState.IngameUi.Map.OrangeWords.Parent.GetClientRect();
+				clientRect = gameController.Game.InGameState.InGameUi.Map.OrangeWords.Parent.GetClientRect();
 			}
 			else
 			{
-				clientRect = gameController.Game.IngameState.IngameUi.Map.SmallMinimap.GetClientRect();
+				clientRect = gameController.Game.InGameState.InGameUi.Map.SmallMinimap.GetClientRect();
 			}
 
 	        if (Math.Abs(gemPanelRect.Right - clientRect.Right) < EPSILON)
@@ -167,7 +169,7 @@ namespace PoeHUD.Hud
             leftPanel.AddChildren(new PreloadAlertPlugin(gameController, graphics, settings.PreloadAlertSettings, settings));
             leftPanel.AddChildren(new KillCounterPlugin(gameController, graphics, settings.KillCounterSettings));
             leftPanel.AddChildren(new DpsMeterPlugin(gameController, graphics, settings.DpsMeterSettings));
-            leftPanel.AddChildren(new DebugPlugin(gameController, graphics, new DebugPluginSettings(), settings));
+            leftPanel.AddChildren(new DebugPlugin.DebugPlugin(gameController, graphics, new DebugPluginSettings(), settings));
 
             var horizontalPanel = new PluginPanel(Direction.Left);
             leftPanel.AddChildren(horizontalPanel);
@@ -196,6 +198,7 @@ namespace PoeHUD.Hud
             graphics.Render += () => plugins.ForEach(x => x.Render());
             gameController.Clear += graphics.Clear;
             gameController.Render += graphics.TryRender;
+            AreaController.Instance.TriggerAreaChange();
             await Task.Run(() => gameController.WhileLoop());
         }
     }

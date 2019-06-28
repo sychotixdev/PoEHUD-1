@@ -43,7 +43,7 @@ namespace PoeHUD.Hud.Settings
                     catch (Exception)
                     {
 
-                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: TextNode.OnValueChanged", 10, SharpDX.Color.Red);
+                        DebugPlugin.DebugPlugin.LogMsg("Error in function that subscribed for: TextNode.OnValueChanged", 10, SharpDX.Color.Red);
                     }
                 }
             }

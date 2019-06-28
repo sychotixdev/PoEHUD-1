@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using PoeHUD.Controllers;
+using PoeHUD.Hud.Menu;
 using PoeHUD.Plugins;
 using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
@@ -92,8 +92,6 @@ namespace PoeHUD.Hud.PluginExtension
                 BPlugin._OnClose(); //saving settings, closing opened threads (on plugin side)
 
                 API.eRender -= BPlugin._Render;
-                API.eEntityAdded -= BPlugin._EntityAdded;
-                API.eEntityRemoved -= BPlugin._EntityRemoved;
                 API.eClose -= BPlugin._OnClose;
                 API.eAreaChange -= BPlugin._AreaChange;
                 API.eInitialise -= BPlugin._Initialise;
@@ -153,8 +151,6 @@ namespace PoeHUD.Hud.PluginExtension
                 PluginName = BPlugin.PluginName;
 
             API.eRender += BPlugin._Render;
-            API.eEntityAdded += BPlugin._EntityAdded;
-            API.eEntityRemoved += BPlugin._EntityRemoved;
             API.eClose += BPlugin._OnClose;
             API.eInitialise += BPlugin._Initialise;
             API.eAreaChange += BPlugin._AreaChange;
@@ -164,10 +160,10 @@ namespace PoeHUD.Hud.PluginExtension
             if (actualyReload)
                 BPlugin._AreaChange(GameController.Instance.Area);
 
-            foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())
-            {
-                BPlugin._EntityAdded(entity);
-            }
+            //foreach (var entity in GameController.Instance.EntityListWrapper.Entities.ToList())//TODO
+            //{
+            //    BPlugin._EntityAdded(entity);
+            //}
         }
 
         internal override void OnPluginSelectedInMenu()

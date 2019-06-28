@@ -31,7 +31,7 @@ namespace PoeHUD.Hud.Settings
                     }
                     catch
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Error in function that subscribed for: ListNode.OnValueSelectedPre", 10, SharpDX.Color.Red);
+                        DebugPlugin.DebugPlugin.LogMsg("Error in function that subscribed for: ListNode.OnValueSelectedPre", 10, SharpDX.Color.Red);
                     }
 
                     this.value = value;
@@ -42,7 +42,7 @@ namespace PoeHUD.Hud.Settings
                     }
                     catch (Exception ex)
                     {
-                        DebugPlug.DebugPlugin.LogMsg($"Error in function that subscribed for: ListNode.OnValueSelected. Error: {ex.Message}", 10, SharpDX.Color.Red);
+                        DebugPlugin.DebugPlugin.LogMsg($"Error in function that subscribed for: ListNode.OnValueSelected. Error: {ex.Message}", 10, SharpDX.Color.Red);
                     }
                 }
             }

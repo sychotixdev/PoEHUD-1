@@ -1,32 +1,15 @@
 using System;
-using SharpDX.Direct3D9;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using PoeHUD.Hud.Menu;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Models.Enums;
-using PoeHUD.Plugins;
-using PoeHUD.Poe;
-using PoeHUD.Models;
-using PoeHUD.Poe.Components;
-using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.EntityComponents;
-using PoeHUD.Poe.RemoteMemoryObjects;
-using PoeHUD.Poe.FilesInMemory;
-using System.Windows.Forms;
 using ImGuiNET;
-using ImGuiVector2 = System.Numerics.Vector2;
-using ImGuiVector4 = System.Numerics.Vector4;
-using Vector2 = System.Numerics.Vector2;
-using PoeHUD.Hud.PluginExtension;
 using PoeHUD.Controllers;
-using PoeHUD.Hud.UI;
+using PoeHUD.Hud.PluginExtension;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Hud.Themes;
+using PoeHUD.Hud.UI;
+using ImGuiVector2 = System.Numerics.Vector2;
+using Vector2 = System.Numerics.Vector2;
 
-namespace PoeHUD.Hud
+namespace PoeHUD.Hud.Menu
 {
     public class MainMenuWindow
     {

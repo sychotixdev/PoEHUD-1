@@ -7,13 +7,7 @@ namespace PoeHUD.Poe.Elements
     public class InventoryElement : Element
     {
         private InventoryList AllInventories => GetObjectAt<InventoryList>(0x340);
-        public Inventory this[InventoryIndex k]
-        {
-            get
-            {
-                return AllInventories[k];
-            }
-        }
+        public Inventory this[InventoryIndex k] => AllInventories[k];
 
         //for debug
         [Obsolete("This property is for debug only, use indexer [InventoryIndex.PlayerInventory] instead")]

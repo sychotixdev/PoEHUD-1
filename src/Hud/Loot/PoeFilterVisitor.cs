@@ -3,12 +3,12 @@ using Antlr4.Runtime.Tree;
 using PoeFilterParser.Model;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
-using PoeHUD.Models.Interfaces;
 using PoeHUD.Poe.Components;
 using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.EntitiesCache.CachedEntities;
 
 namespace PoeHUD.Hud.Loot
 {
@@ -17,7 +17,7 @@ namespace PoeHUD.Hud.Loot
 		private readonly GameController gameController;
 		private readonly IParseTree tree;
 		private readonly ItemAlertSettings settings;
-		private IEntity entity;
+		private ItemEntity entity;
 
 		public PoeFilterVisitor(IParseTree tree, GameController gameController, ItemAlertSettings settings)
 		{
@@ -26,7 +26,7 @@ namespace PoeHUD.Hud.Loot
 			this.settings = settings;
 		}
 
-		public AlertDrawStyle Visit(IEntity entity)
+		public AlertDrawStyle Visit(ItemEntity entity)
 		{
 			this.entity = entity;
 			return base.Visit(tree);
@@ -37,7 +37,7 @@ namespace PoeHUD.Hud.Loot
 			if (entity == null || gameController == null || gameController.Files == null || gameController.Files.BaseItemTypes == null)
 				return null;
 			var filterEnabled = settings.WithBorder || settings.WithSound;
-			var baseItemType = gameController.Files.BaseItemTypes.Translate(entity.Path);
+			var baseItemType = gameController.Files.BaseItemTypes.Translate(entity.Metadata);
 			if (baseItemType == null)
 				return null;
 			var basename = baseItemType.BaseName;
@@ -52,21 +52,28 @@ namespace PoeHUD.Hud.Loot
 			var width = baseItemType.Width;
 			var height = baseItemType.Height;
 			var blocks = context.block();
-			var mods = entity.GetComponent<Mods>();
+		
 			var isSkillHGem = entity.HasComponent<SkillGem>();
 			var SkillGemLevel = isSkillHGem ? entity.GetComponent<SkillGem>().GemLevel : 0;
-			var isMap = entity.HasComponent<Map>();
-			var stackSize = entity.GetComponent<Stack>().Size;
+	
+
+            var stack = entity.GetComponent<Stack>();
+			var stackSize = stack?.Size ?? 0;
 			var MapTier = 0;
-            var isSynthesized = mods.Synthesised;
-            var isFractured = mods.FracturedMods > 0;
+
+            var mods = entity.GetComponent<Mods>();
+            var isSynthesized = mods?.Synthesised ?? false;
+            var isFractured = (mods?.FracturedMods ?? 0) > 0;
             var anyEnchantment = false;
 
 			var isShapedMap = false;
 			var isElderMap = false;
+
+            var mapComponent = entity.GetComponent<Map>();
+            var isMap = mapComponent != null;
 			if (isMap)
 			{
-				MapTier = entity.GetComponent<Map>().Tier;
+				MapTier = mapComponent.Tier;
 				foreach (var mod in mods.ItemMods)
 					if (mod.Name == "MapElder")
 						isElderMap = (mod.Value1 == 1);
@@ -75,20 +82,24 @@ namespace PoeHUD.Hud.Loot
 			}
 
 			List<string> explicitMods = new List<string>();
-			foreach (var mod in mods.ItemMods)
-			{
-				explicitMods.Add(mod.Name);
-			}
 
-			var itemRarity = mods.ItemRarity;
+            if (mods != null)
+            {
+                foreach (var mod in mods.ItemMods)
+                {
+                    explicitMods.Add(mod.Name);
+                }
+            }
+
+			var itemRarity = mods?.ItemRarity ?? ItemRarity.Normal;
 			var quality = 0;
 			if (entity.HasComponent<Quality>()) { quality = entity.GetComponent<Quality>().ItemQuality; }
 			var text = string.Concat(quality > 0 ? "Superior " : string.Empty, basename);
 			var sockets = entity.GetComponent<Sockets>();
-			var numberOfSockets = sockets.NumberOfSockets;
-			var largestLinkSize = sockets.LargestLinkSize;
-			var socketGroup = sockets.SocketGroup;
-			var path = entity.Path;
+			var numberOfSockets = sockets?.NumberOfSockets ?? 0;
+			var largestLinkSize = sockets?.LargestLinkSize ?? 0;
+			var socketGroup = sockets?.SocketGroup ?? new List<string>();
+			var path = entity.Metadata;
 
 			Color defaultTextColor;
 			//if (basename.Contains("Portal") || basename.Contains("Wisdom")) { return null; }
@@ -140,7 +151,7 @@ namespace PoeHUD.Hud.Loot
 					var poeItemLevelContext = statement.poeItemLevel();
 					if (poeItemLevelContext != null)
 					{
-						itemLevelCondition &= CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(),
+						itemLevelCondition &= mods != null && CalculateDigitsCondition(poeItemLevelContext.compareOpNullable(),
 							poeItemLevelContext.digitsParams(), mods.ItemLevel);
 					}
                     else {

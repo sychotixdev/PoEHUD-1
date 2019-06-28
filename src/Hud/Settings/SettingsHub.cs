@@ -12,7 +12,6 @@ using PoeHUD.Hud.Trackers;
 using PoeHUD.Hud.XpRate;
 using System;
 using System.IO;
-using PoeHUD.Hud.Performance;
 
 namespace PoeHUD.Hud.Settings
 {

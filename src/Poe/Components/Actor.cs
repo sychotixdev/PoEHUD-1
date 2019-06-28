@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using PoeHUD.Hud.DebugPlugin;
 using PoeHUD.Models;
 using SharpDX;
 
@@ -63,7 +64,7 @@ namespace PoeHUD.Poe.Components
 
                     if (--LIMIT < 0)
                     {
-                        DebugPlug.DebugPlugin.LogMsg("Fixed stuck in Actor.DeployedObjects", 2);
+                        DebugPlugin.LogMsg("Fixed stuck in Actor.DeployedObjects", 2);
                         break;
                     }
                 }
@@ -78,7 +79,8 @@ namespace PoeHUD.Poe.Components
                 var skillsStartPointer = M.ReadLong(Address + 0x3D8);
                 var skillsEndPointer = M.ReadLong(Address + 0x3E0);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
-                if ((skillsEndPointer - skillsStartPointer) / 16 > 50)
+                var numSkills = (skillsEndPointer - skillsStartPointer) / 16;
+                if (numSkills > 50 || numSkills <= 0)
                     return new List<ActorSkill>();
 
                 var result = new List<ActorSkill>();

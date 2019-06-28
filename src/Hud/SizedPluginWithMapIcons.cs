@@ -7,7 +7,7 @@ using System;
 
 namespace PoeHUD.Hud
 {
-    public abstract class SizedPluginWithMapIcons<TSettings> : PluginWithMapIcons<TSettings>, IPanelChild
+    public abstract class SizedPluginWithMapIcons<TSettings> : Plugin<TSettings>, IPanelChild
         where TSettings : SettingsBase
     {
         protected SizedPluginWithMapIcons(GameController gameController, Graphics graphics, TSettings settings)

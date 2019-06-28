@@ -1,4 +1,4 @@
-﻿namespace PoeHUD.Poe.EntityComponents
+﻿namespace PoeHUD.Poe.Components
 {
     public class AttributeRequirements : Component
     {

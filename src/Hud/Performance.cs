@@ -1,6 +1,6 @@
 ﻿using PoeHUD.Hud.Settings;
 
-namespace PoeHUD.Hud.Performance
+namespace PoeHUD.Hud
 {
     public sealed class  PerformanceSettings: SettingsBase
     {

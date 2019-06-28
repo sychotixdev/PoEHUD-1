@@ -4,7 +4,8 @@ using System.Linq;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using SharpDX;
-using PoeHUD.Hud;
+using PoeHUD.Hud.DebugPlugin;
+using PoeHUD.Hud.Menu;
 
 namespace PoeHUD.Controllers
 {
@@ -12,7 +13,7 @@ namespace PoeHUD.Controllers
     {
         public static Action<StashTabNode, int> OnStashTabMoveRegistered = delegate { };
         public static Action<StashTabNode, string> OnStashTabRenameRegistered = delegate { };
-        private static List<StashTabNode> CachedStashTabs = new List<StashTabNode>();
+        private static readonly List<StashTabNode> CachedStashTabs = new List<StashTabNode>();
         internal static string[] StashTabNames = new string[0];
         private bool StashTabsIsInitialized;
 
@@ -35,7 +36,7 @@ namespace PoeHUD.Controllers
         //so we skipping them when reading in ServerData.PlayerStashTabs
         private void CheckCacheStashTabs()
         {
-            CacheStashTabs(GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs);
+            CacheStashTabs(GameController.Instance.Game.InGameState.ServerData.PlayerStashTabs);
 
             foreach (var node in SubscribedNodes)
             {
@@ -64,17 +65,17 @@ namespace PoeHUD.Controllers
                 if (upgradeStashTabFix)
                 {
                     //upgradeStashTabFixName = serverTabName;
-                    DebugPlug.DebugPlugin.LogMsg($"StashTabController: You just purchased a stash tab {serverTabName}. " +
+                    DebugPlugin.LogMsg($"StashTabController: You just purchased a stash tab {serverTabName}. " +
                                                  "Move any tab once to some other position to fix poe bug with stash tab.", 20, Color.Yellow);
                 }
                 else
                 {
 					if(serverTabVisibleIndex >= StashTabNames.Length)//Should never happen
-						DebugPlug.DebugPlugin.LogMsg("StashTabController: Index of new tab is out of range. (Fix: Move any tab once to some other position). " +
+						DebugPlugin.LogMsg("StashTabController: Index of new tab is out of range. (Fix: Move any tab once to some other position). " +
 						                             $"Tab index: {serverTabVisibleIndex}, Name: {serverTabName}, Total amount: {StashTabNames.Length}.", 10, Color.Red);
                     
 	                if(StashTabNames[serverTabVisibleIndex] != null)
-		                DebugPlug.DebugPlugin.LogMsg("StashTabController: Move any tab once to some other position to fix poe bug with stash tab.", 10, Color.Yellow);
+		                DebugPlugin.LogMsg("StashTabController: Move any tab once to some other position to fix poe bug with stash tab.", 10, Color.Yellow);
 	                else
 						StashTabNames[serverTabVisibleIndex] = serverTabName;	
                 }
@@ -106,13 +107,13 @@ namespace PoeHUD.Controllers
         {
             if (node == null)
             {
-                DebugPlug.DebugPlugin.LogMsg($"StashTabController: You are trying to register null StashTabNode", 4, Color.Yellow);
+                DebugPlugin.LogMsg($"StashTabController: You are trying to register null StashTabNode", 4, Color.Yellow);
                 return;
             }
 
             if (SubscribedNodes.Contains(node))
             {
-                DebugPlug.DebugPlugin.LogMsg($"StashTabController: StashTabNode is already registered (TabName: {node.Name}, VisibleIndex: {node.VisibleIndex})", 4, Color.Yellow);
+                DebugPlugin.LogMsg($"StashTabController: StashTabNode is already registered (TabName: {node.Name}, VisibleIndex: {node.VisibleIndex})", 4, Color.Yellow);
                 return;
             }
             SubscribedNodes.Add(node);
@@ -133,7 +134,7 @@ namespace PoeHUD.Controllers
             if (!GameController.Instance.Area.CurrentArea.IsHideout && !GameController.Instance.Area.CurrentArea.IsTown)
                 return;
 
-            if (!GameController.Instance.Game.IngameState.IngameUi.StashElement.IsVisible)
+            if (!GameController.Instance.Game.InGameState.InGameUi.StashElement.IsVisible)
                 return;
 
             if(!StashTabsIsInitialized)
@@ -143,7 +144,7 @@ namespace PoeHUD.Controllers
                 StashTabsIsInitialized = true;
             }
 
-            var serverStashTabs = GameController.Instance.Game.IngameState.ServerData.PlayerStashTabs;
+            var serverStashTabs = GameController.Instance.Game.InGameState.ServerData.PlayerStashTabs;
             var serverTabsCount = serverStashTabs.Count;
             var cachedTabsCount = CachedStashTabs.Count;
 
@@ -180,27 +181,27 @@ namespace PoeHUD.Controllers
         private void StashTabMoveRegistered(StashTabNode tab, int newVisibleIndex)
         {
             if(MainMenuWindow.Settings.DeveloperMode.Value)
-                DebugPlug.DebugPlugin.LogMsg($"StashTabMoveRegistered: Name: {tab.Name} ({tab.VisibleIndex} -> {newVisibleIndex})", 2);
+                DebugPlugin.LogMsg($"StashTabMoveRegistered: Name: {tab.Name} ({tab.VisibleIndex} -> {newVisibleIndex})", 2);
 
             SubscribedNodes.Where(x => x.Exist && x.Id == tab.Id).ToList().ForEach(x => x.VisibleIndex = newVisibleIndex);
 
             try { OnStashTabMoveRegistered(tab, newVisibleIndex); }
             catch (Exception ex)
             {
-                DebugPlug.DebugPlugin.LogMsg($"StashTabController: Error in OnStashTabMoveRegistered event: {ex.Message}", 5);
+                DebugPlugin.LogMsg($"StashTabController: Error in OnStashTabMoveRegistered event: {ex.Message}", 5);
             }
         }
         private void StashTabRenameRegistered(StashTabNode tab, string newName)
         {
             if (MainMenuWindow.Settings.DeveloperMode.Value)
-                DebugPlug.DebugPlugin.LogMsg($"StashTabRenameRegistered: Name: {tab.Name} {tab.Name} -> {newName}", 2);
+                DebugPlugin.LogMsg($"StashTabRenameRegistered: Name: {tab.Name} {tab.Name} -> {newName}", 2);
 
            SubscribedNodes.Where(x => x.Exist && x.Id == tab.Id).ToList().ForEach(x => x.Name = newName);
 
             try { OnStashTabRenameRegistered(tab, newName); }
             catch (Exception ex)
             {
-                DebugPlug.DebugPlugin.LogMsg($"StashTabController: Error in OnStashTabRenameRegistered event: {ex.Message}", 5);
+                DebugPlugin.LogMsg($"StashTabController: Error in OnStashTabRenameRegistered event: {ex.Message}", 5);
             }
         }
 
@@ -254,9 +255,9 @@ namespace PoeHUD.Controllers
             if (node.Name != StashTabNode.EMPTYNAME)
             {
                 if(foundMulptiple)
-                    DebugPlug.DebugPlugin.LogMsg($"StashTabController: Found multiple stash tabs ({searchResults.Count}) with name: {node.Name}. Can't select single one due to differend positions. It will be ignored in all plugins using this tab.", 5);
+                    DebugPlugin.LogMsg($"StashTabController: Found multiple stash tabs ({searchResults.Count}) with name: {node.Name}. Can't select single one due to differend positions. It will be ignored in all plugins using this tab.", 5);
                 else
-                    DebugPlug.DebugPlugin.LogMsg($"StashTabController: Can't find stash tab with name: {node.Name}. It will be ignored in all plugins using this tab.", 5);
+                    DebugPlugin.LogMsg($"StashTabController: Can't find stash tab with name: {node.Name}. It will be ignored in all plugins using this tab.", 5);
             }
             node.Id = -1;
             node.Exist = false;

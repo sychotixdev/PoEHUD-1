@@ -1,6 +1,7 @@
 using PoeHUD.Models.Enums;
-using PoeHUD.Poe.Elements;
 using System.Collections.Generic;
+using PoeHUD.Hud.DebugPlugin;
+using PoeHUD.Poe.Elements.InventoryElements;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -18,7 +19,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 // http://www.ownedcore.com/forums/mmo/path-of-exile/poe-bots-programs/511580-poehud-overlay-updated-362.html#post3718876
                 // Orriginal Value of ChildCount should be 0x18
                 for (int j = 1; j < InventoryList.InventoryCount; j++)
-                    if (Game.IngameState.IngameUi.InventoryPanel[(InventoryIndex)j].Address == Address)
+                    if (Game.InGameState.InGameUi.InventoryPanel[(InventoryIndex)j].Address == Address)
                         return InventoryType.PlayerInventory;
 
                 switch (this.AsObject<Element>().Parent.ChildCount)
@@ -83,7 +84,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 if (InvRoot == null || InvRoot.Address == 0x00)
                 {
                     // Don't remove this log, it will help us understand why are VisibleInventoryItems are null.
-                    DebugPlug.DebugPlugin.LogMsg("Warning: InventoryUiElement offset is broken/incorrect!", 1);
+                    DebugPlugin.LogMsg("Warning: InventoryUiElement offset is broken/incorrect!", 1);
                     return null;
                 }
 

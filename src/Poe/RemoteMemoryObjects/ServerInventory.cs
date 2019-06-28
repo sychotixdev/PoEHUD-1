@@ -110,7 +110,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
             public RectangleF GetClientRect()
             {
-                var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
+                var playerInventElement = GameController.Instance.Game.InGameState.InGameUi.InventoryPanel[InventoryIndex.PlayerInventory];
                 var inventClientRect = playerInventElement.GetClientRect();
                 var cellSize = inventClientRect.Width / 12;
                 return new RectangleF(

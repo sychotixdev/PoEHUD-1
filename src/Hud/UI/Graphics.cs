@@ -22,6 +22,7 @@ namespace PoeHUD.Hud.UI
         private bool resized;
         private bool running = true;
         private readonly ManualResetEventSlim renderLocker = new ManualResetEventSlim(false);
+        public event Action Render = delegate { };
 
         public Graphics(RenderForm form, int width, int height)
         {
@@ -54,7 +55,7 @@ namespace PoeHUD.Hud.UI
             renderLocker.Reset();
         }
 
-        public event Action Render;
+ 
 
 	    public DeviceEx Device => device;
 
@@ -81,7 +82,7 @@ namespace PoeHUD.Hud.UI
                 try
                 {
                     imguiRenderer.GetNewFrame();
-                    Render.SafeInvoke();
+                    Render();
                     imguiRenderer.Draw();
                 }
                 finally

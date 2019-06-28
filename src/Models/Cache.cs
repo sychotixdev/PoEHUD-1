@@ -1,5 +1,4 @@
 ﻿using PoeHUD.Controllers;
-using PoeHUD.Models.CacheComponent;
 using PoeHUD.Poe;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using SharpDX;
@@ -9,28 +8,26 @@ namespace PoeHUD.Models
     public class Cache
     {
         private readonly GameController _gameController;
-        private IngameState _ingameState = null;
+        private InGameState _inGameState = null;
         private Camera _camera;
         private Element _uiRoot;
-        private IngameUIElements _ingameUi;
+        private InGameUIElements _inGameUi;
         private ServerData _serverData;
-        private IngameData _data;
+        private InGameData _data;
         private DiagnosticElement _fpsRectangle;
         private DiagnosticElement _latencyRectangle;
-        private Entity _localPlayer;
         private RectangleF _window;
-        private PlayerCache _player;
         private bool _enable = true;
 
         private static Cache _instance;
 
-        public IngameState IngameState
+        public InGameState InGameState
         {
-            get => _ingameState;
+            get => _inGameState;
             set
             {
-                if (_ingameState == null)
-                    _ingameState = value;
+                if (_inGameState == null)
+                    _inGameState = value;
             }
         }
 
@@ -54,13 +51,13 @@ namespace PoeHUD.Models
             }
         }
 
-        public IngameUIElements IngameUi
+        public InGameUIElements InGameUi
         {
-            get => _ingameUi;
+            get => _inGameUi;
             set
             {
-                if (_ingameUi == null)
-                    _ingameUi = value;
+                if (_inGameUi == null)
+                    _inGameUi = value;
             }
         }
 
@@ -74,7 +71,7 @@ namespace PoeHUD.Models
             }
         }
     
-        public IngameData Data
+        public InGameData Data
         {
             get => _data;
             set
@@ -104,17 +101,6 @@ namespace PoeHUD.Models
             }
         }
 
-        public Entity LocalPlayer
-        {
-            get => _localPlayer;
-            set
-            {
-                if (_localPlayer == null)
-                    _localPlayer = value;
-            }
-        }
-
-        public PlayerCache Player => _player ?? (_player = new PlayerCache(_gameController.Game.IngameState.Data.LocalPlayer));
 
         public RectangleF Window => _window.IsEmpty ? (_window= _gameController.Window.GetWindowRectangleReal()) :_window;
 
@@ -139,16 +125,14 @@ namespace PoeHUD.Models
         public void UpdateCache()
         {
             _gameController.Game.RefreshTheGameState();
-            _ingameState = null;
+            _inGameState = null;
             _camera = null;
             _uiRoot = null;
-            _ingameUi = null;
+            _inGameUi = null;
             _serverData = null;
             _data = null;
             _fpsRectangle = null;
             _latencyRectangle = null;
-            _localPlayer = null;
-            Player.UpdateCache(_gameController.Game.IngameState.Data.LocalPlayer);
             _window = _gameController.Window.GetWindowRectangleReal();
         }
 

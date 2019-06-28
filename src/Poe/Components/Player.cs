@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using PoeHUD.Poe.FilesInMemory;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using PoeHUD.Hud.DebugPlugin;
 using PoeHUD.Models.Attributes;
 
 namespace PoeHUD.Poe.Components
 {
     public class Player : Component
     {
-        public string PlayerName => GetObject<NativeStringReader>(Address + 0x58).Value;
+        public string PlayerName => GetObject<NativeStringReader>(Address + 0x58).Text;
 
         public uint XP => Address != 0 ? M.ReadUInt(Address + 0x80) : 0;
 		public int Strength => Address != 0 ? M.ReadInt(Address + 0x84) : 0;
@@ -62,14 +63,14 @@ namespace PoeHUD.Poe.Components
 		    get
 		    {
 			    var result = new List<PassiveSkill>();
-			    var passiveIds = GameController.Instance.Game.IngameState.ServerData.PassiveSkillIds;
+			    var passiveIds = GameController.Instance.Game.InGameState.ServerData.PassiveSkillIds;
 
 			    foreach(var id in passiveIds)
 			    {
 				    var passive = GameController.Instance.Files.PassiveSkills.GetPassiveSkillByPassiveId(id);
 				    if(passive == null)
 				    {
-					    DebugPlug.DebugPlugin.LogMsg($"Can't find passive with id: {id}", 10, SharpDX.Color.Red);
+					    DebugPlugin.LogMsg($"Can't find passive with id: {id}", 10, SharpDX.Color.Red);
 					    continue;
 				    }
 				    result.Add(passive);

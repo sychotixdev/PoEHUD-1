@@ -13,7 +13,6 @@ using PoeHUD.Poe;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.EntityComponents;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Poe.FilesInMemory;
 using System.Windows.Forms;

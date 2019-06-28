@@ -67,6 +67,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <Optimize>false</Optimize>
     <WarningLevel>0</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -137,12 +138,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntitiesCache\CacheControllers\DataContainer.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\EntityAddedArgs.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\EntityCollectionFilter.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\EntityCache.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\EntityRemovedArgs.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\IEntitiesController.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\MonstersController.cs" />
+    <Compile Include="EntitiesCache\CacheControllers\WorldItemsController.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Base\BaseAliveEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Base\BaseWorldEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\AreaTransitionEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\ChestEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\DangerEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\DelveVeinEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\DoorEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Base\BaseEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IAliveEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IMonsterEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IMovableEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IPlayerEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Interfaces\IWorldEntityCachedData.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\MonsterEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Base\BaseMovableEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\NpcEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\PlayerEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\PortalEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\ShrineEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\Base\BaseStaticEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\StrongboxEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\UnknownCachedEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\WorldItemEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\ItemEntity.cs" />
+    <Compile Include="EntitiesCache\CachedEntities\PlayerInfo.cs" />
+    <Compile Include="EntitiesCache\ComponentsCache\EntityComponentOffsetsHolder.cs" />
+    <Compile Include="EntitiesCache\ComponentsCache\EntityComponentsHolder.cs" />
+    <Compile Include="EntitiesCache\ComponentsCache\AreaEntityComponentsCache.cs" />
+    <Compile Include="EntitiesCache\EntitiesAreaCache.cs" />
     <Compile Include="Controllers\FsController.cs" />
     <Compile Include="Controllers\GameStateController.cs" />
+    <Compile Include="EntitiesCache\Extensions\LocalizationConstants.cs" />
     <Compile Include="Framework\Aero.cs" />
     <Compile Include="Framework\ChooseColor.cs" />
     <Compile Include="Framework\Coroutine.cs" />
-    <Compile Include="Framework\Helpers\ActionHelper.cs" />
     <Compile Include="Framework\Helpers\CoroutineExtension.cs" />
     <Compile Include="Framework\Helpers\LinqHelper.cs" />
     <Compile Include="Framework\Helpers\MathHepler.cs" />
@@ -168,6 +207,7 @@
     <Compile Include="Hud\Icons\MapIconsSettings.cs" />
     <Compile Include="Hud\Interfaces\IPanelChild.cs" />
     <Compile Include="Hud\Interfaces\IPlugin.cs" />
+    <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Hud\Loot\BorderSettings.cs" />
     <Compile Include="Hud\KillCounter\KillCounterSettings.cs" />
     <Compile Include="Hud\KillCounter\KillCounterPlugin.cs" />
@@ -177,6 +217,9 @@
     <Compile Include="Hud\Loot\QualityItemSettings.cs" />
     <Compile Include="Hud\Loot\QualityItemsSettings.cs" />
     <Compile Include="Hud\AdvancedTooltip\ItemModsSettings.cs" />
+    <Compile Include="Hud\Icons\MapIcons\ChestMapIcon.cs" />
+    <Compile Include="Hud\Icons\MapIcons\CreatureMapIcon.cs" />
+    <Compile Include="Hud\Icons\MapIcons\NpcIcon.cs" />
     <Compile Include="Hud\Menu\CoreSettings.cs" />
     <Compile Include="Hud\Menu\SettingsDrawers\BaseSettingsDrawer.cs" />
     <Compile Include="Hud\Performance.cs" />
@@ -185,7 +228,6 @@
     <Compile Include="Hud\PluginExtension\FileOperationAPIWrapper.cs" />
     <Compile Include="Hud\PluginExtension\PluginExtensionPlugin.cs" />
     <Compile Include="Hud\PluginPanel.cs" />
-    <Compile Include="Hud\PluginWithMapIcons.cs" />
     <Compile Include="Hud\Settings\ButtonNode.cs" />
     <Compile Include="Hud\Settings\ColorNode.cs" />
     <Compile Include="Hud\Settings\Converters\FileNodeConverter.cs" />
@@ -204,10 +246,10 @@
     <Compile Include="Hud\UI\Renderers\ImGuiRender.cs" />
     <Compile Include="Hud\UI\Vertexes\GuiVertex.cs" />
     <Compile Include="Models\Attributes\HideInReflectionAttibute.cs" />
+    <Compile Include="Models\Attributes\LegionLeagueAttribute.cs" />
     <Compile Include="Models\Attributes\StaticOffsetFieldDebugAttribute.cs" />
     <Compile Include="Models\BaseItemType.cs" />
     <Compile Include="Models\Cache.cs" />
-    <Compile Include="Models\CacheComponent\PlayerCache.cs" />
     <Compile Include="Models\ConfigLineBase.cs" />
     <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
     <Compile Include="Models\Enums\GameStat.cs" />
@@ -240,7 +282,6 @@
     <Compile Include="Hud\Health\HealthBar.cs" />
     <Compile Include="Hud\Health\HealthBarPlugin.cs" />
     <Compile Include="Hud\Health\CreatureType.cs" />
-    <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Models\AreaInstance.cs" />
     <Compile Include="Plugins\BasePlugin.cs" />
     <Compile Include="Plugins\BaseSettingsPlugin.cs" />
@@ -349,8 +390,6 @@
     <Compile Include="Poe\FilesInMemory\BaseItemTypes.cs" />
     <Compile Include="Poe\Components\Chest.cs" />
     <Compile Include="Poe\Component.cs" />
-    <Compile Include="Models\EntityWrapper.cs" />
-    <Compile Include="Models\EntityListWrapper.cs" />
     <Compile Include="Models\Enums\ItemRarity.cs" />
     <Compile Include="Models\Enums\ItemStatEnum.cs" />
     <Compile Include="Models\ItemStats.cs" />
@@ -362,7 +401,6 @@
     <Compile Include="Poe\Components\NPC.cs" />
     <Compile Include="Poe\Components\ObjectMagicProperties.cs" />
     <Compile Include="Poe\FilesInMemory\TagsDat.cs" />
-    <Compile Include="Models\Interfaces\IEntity.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GrantedEffectsPerLevel.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\HideoutWrapper.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ServerInventory.cs" />
@@ -380,9 +418,9 @@
     <Compile Include="Poe\RemoteMemoryObjects\NativeStringReader.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ServerStashTab.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\TheGame.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\IngameData.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\IngameState.cs" />
-    <Compile Include="Poe\RemoteMemoryObjects\IngameUIElements.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\InGameData.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\InGameState.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\InGameUIElements.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Inventory.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\InventoryList.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ItemMod.cs" />
@@ -405,7 +443,7 @@
     <Compile Include="Hud\Trackers\MonsterTracker.cs" />
     <Compile Include="Hud\Loot\ItemAlertPlugin.cs" />
     <Compile Include="Hud\Menu\MenuPlugin.cs" />
-    <Compile Include="Hud\MapIcon.cs" />
+    <Compile Include="Hud\Icons\MapIcons\MapIcon.cs" />
     <Compile Include="Hud\Icons\LargeMapPlugin.cs" />
     <Compile Include="Hud\Preload\PreloadAlertPlugin.cs" />
     <Compile Include="Poe\Elements\EntityLabel.cs" />
@@ -446,6 +484,7 @@
     <Compile Include="Hud\Menu\MainMenuWindow.cs" />
     <Content Include="poehud.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

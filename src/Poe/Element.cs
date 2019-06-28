@@ -73,7 +73,7 @@ namespace PoeHUD.Poe
         {
             float num = 0;
             float num2 = 0;
-	        var rootScale = Game.IngameState.UIRoot.Scale;
+	        var rootScale = Game.InGameState.UIRoot.Scale;
             foreach (var current in GetParentChain())
             {
                 num += current.X * current.Scale / rootScale;
@@ -85,13 +85,13 @@ namespace PoeHUD.Poe
         public virtual RectangleF GetClientRect()
         {
             var vPos = GetParentPos();
-            float width = Game.IngameState.Camera.Width;
-            float height = Game.IngameState.Camera.Height;
+            float width = Game.InGameState.Camera.Width;
+            float height = Game.InGameState.Camera.Height;
             float ratioFixMult = width / height / 1.6f;
             float xScale = width / 2560f / ratioFixMult;
             float yScale = height / 1600f;
 
-	        var rootScale = Game.IngameState.UIRoot.Scale;
+	        var rootScale = Game.InGameState.UIRoot.Scale;
 
             float num = (vPos.X + X * Scale / rootScale) * xScale;
             float num2 = (vPos.Y + Y * Scale / rootScale) * yScale;

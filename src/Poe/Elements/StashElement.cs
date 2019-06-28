@@ -18,7 +18,7 @@ namespace PoeHUD.Poe.Elements
  
         public Element ViewAllStashButton => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0x2D8, 0x440)) : null;
 
-        //Not easy to find it, coz it like a tooltipe element. Use IngameState.UIHoverTooltip instead IngameState.UIHover. Use it's address and StructureSpiderAdvanced to find it's offset fast.
+        //Not easy to find it, coz it like a tooltip element. Use InGameState.UIHoverTooltip instead InGameState.UIHover. Use it's address and StructureSpiderAdvanced to find it's offset fast.
         public Element ViewAllStashPanel => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0x2D8, 0x448)) : null;
 
         public Element MoveStashTabLabelsLeft_Button => Address != 0 ? GetObject<Element>(M.ReadLong(Address + 0x2D8, 0x450)) : null;
