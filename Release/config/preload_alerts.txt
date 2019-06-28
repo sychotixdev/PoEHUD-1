@@ -478,8 +478,27 @@ Metadata/Terrain/Missions/CraftingUnlocks/RecipeUnlockVaal; Crafting Recipe; ff9
 Metadata/NPC/Missions/HelenaClaim; Unlockable Hideout; ffff0000
 
 # LEGION
+# generals
 Metadata/Monsters/LegionLeague/LegionKaruiGeneral; Queen Hyrri Ngamaku [Karui]
 Metadata/Monsters/LegionLeague/LegionMarakethGeneral; Aukuna, the Black Sekhema [Maraketh]
 Metadata/Monsters/LegionLeague/LegionEternalEmpireGeneral; General Marceus Lioneye [Eternal]
 Metadata/Monsters/LegionLeague/LegionVaalGeneral; Viper Napuatzi [Vaal]
 Metadata/Monsters/LegionLeague/LegionTemplarGeneral; Cardinal Sanctus Vox [Templar]
+# chests
+
+# generic
+Metadata/Monsters/LegionLeague/LegionKaruiArcher; Legion Karui; ff964DF1
+Metadata/Monsters/LegionLeague/LegionKaruiMelee; Legion Karui; ff964DF1
+Metadata/Monsters/LegionLeague/LegionKaruiSergeant; Legion Karui; ff964DF1
+Metadata/Monsters/LegionLeague/LegionVaalCultistArcher; Legion Vaal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionVaalCultistMelee; Legion Vaal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionVaalCultistSergeant; Legion Vaal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionMarakethArcher; Legion Maraketh; ff964DF1
+Metadata/Monsters/LegionLeague/LegionMarakethMelee; Legion Maraketh; ff964DF1
+Metadata/Monsters/LegionLeague/LegionMarakethSergeant; Legion Maraketh; ff964DF1
+Metadata/Monsters/LegionLeague/LegionEternalEmpireArcher; Legion Eternal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionEternalEmpireMelee; Legion Eternal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionEternalEmpireSergeant; Legion Eternal; ff964DF1
+Metadata/Monsters/LegionLeague/LegionTemplarArcher; Legion Templar; ff964DF1
+Metadata/Monsters/LegionLeague/LegionTemplarMelee1; Legion Templar; ff964DF1
+Metadata/Monsters/LegionLeague/LegionTemplarSergeant; Legion Templar; ff964DF1

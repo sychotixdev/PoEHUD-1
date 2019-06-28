@@ -352,7 +352,10 @@ namespace PoeHUD.Hud.Preload
         {
             if (alertStrings.ContainsKey(text))
             {
-                alerts.Add(alertStrings[text]);
+				if (!alerts.Contains(alertStrings[text]))
+				{
+					alerts.Add(alertStrings[text]);
+				}
                 return;
             }
             if (text.Contains("Metadata/Terrain/Doodads/vaal_sidearea_effects/soulcoaster.ao"))
