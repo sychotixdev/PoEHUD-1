@@ -14,9 +14,9 @@ namespace PoeHUD.Poe.Components
         ///     running = 2178 = bit 11 & 7
         ///     Maybe Bit-field : Bit 7 set = running
         /// </summary>
-        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xF0) : 1;
+        public int ActionId => Address != 0 ? M.ReadInt(Address + 0xF8) : 1;
 
-        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xF0) : ActionFlags.None;
+        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xF8) : ActionFlags.None;
         public bool isMoving => (Action & ActionFlags.Moving) > 0;
         public bool isAttacking => (Action & ActionFlags.UsingAbility) > 0;
 

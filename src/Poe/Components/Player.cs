@@ -10,23 +10,23 @@ namespace PoeHUD.Poe.Components
 {
     public class Player : Component
     {
-        public string PlayerName => GetObject<NativeStringReader>(Address + 0x20).Value;
+        public string PlayerName => GetObject<NativeStringReader>(Address + 0x58).Value;
 
-        public uint XP => Address != 0 ? M.ReadUInt(Address + 0x48) : 0;
-		public int Strength => Address != 0 ? M.ReadInt(Address + 0x4c) : 0;
-		public int Dexterity => Address != 0 ? M.ReadInt(Address + 0x50) : 0;
-		public int Intelligence => Address != 0 ? M.ReadInt(Address + 0x54) : 0;
-        public int Level => Address != 0 ? M.ReadByte(Address + 0x58) : 1;
-        public int AllocatedLootId => Address != 0 ? M.ReadByte(Address + 0x44) : 1;
+        public uint XP => Address != 0 ? M.ReadUInt(Address + 0x80) : 0;
+		public int Strength => Address != 0 ? M.ReadInt(Address + 0x84) : 0;
+		public int Dexterity => Address != 0 ? M.ReadInt(Address + 0x88) : 0;
+		public int Intelligence => Address != 0 ? M.ReadInt(Address + 0x8C) : 0;
+        public int Level => Address != 0 ? M.ReadByte(Address + 0x90) : 1;
+        public int AllocatedLootId => Address != 0 ? M.ReadByte(Address + 0x7C) : 1;
 
-        public int HideoutLevel => M.ReadByte(Address + 0x256);
-	    public HideoutWrapper Hideout => ReadObject<HideoutWrapper>(Address + 0x230);
+        public int HideoutLevel => M.ReadByte(Address + 0x28E);
+	    public HideoutWrapper Hideout => ReadObject<HideoutWrapper>(Address + 0x268);
 
-	    public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
-	    public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
+	    public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x93);
+	    public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x94);
 
 	    #region Prophecy
-	    public byte PropheciesCount => M.ReadByte(Address + 0xDA);
+	    public byte PropheciesCount => M.ReadByte(Address + 0x112);
 
         //How to fix prophecies:
         //PropheciesCount is ez to find (use Structure Spider Advanced)
@@ -39,7 +39,7 @@ namespace PoeHUD.Poe.Components
 		    get
 		    {
 			    var result = new List<ProphecyDat>();
-			    var readAddr = Address + 0xE8;
+			    var readAddr = Address + 0x114;
 
 			    for (int i = 0; i < 7; i++)
 			    {
