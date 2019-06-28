@@ -51,7 +51,7 @@ namespace PoeHUD.Poe
 
         public Positioned PositionedComp => ReadObject<Positioned>(Address + 0x50);
 
-        public bool IsHostile => (PositionedComp.Reaction & 0x1) != 1;
+        public bool IsHostile => (PositionedComp.Reaction & 0x7f) != 1;
         public bool IsAlive => GetComponent<Life>().CurHP > 0;
         public bool IsTargetable => GetComponent<Targetable>().isTargetable;
         public bool CannotDieAura => HasBuff("monster_aura_cannot_die");

@@ -138,7 +138,7 @@ namespace PoeHUD.Poe.Components
 		*/
 
         //[StaticOffsetFieldDebugAttribute]
-        public static int DebugPlayerTrialStates = 0x17E;
+        public static int DebugPlayerTrialStates = 0x1B4;
 
         [HideInReflection]//Comment this attribute to see it in "Qvin Debug Tree" plugin.
         private BitArray TrialPassStates
