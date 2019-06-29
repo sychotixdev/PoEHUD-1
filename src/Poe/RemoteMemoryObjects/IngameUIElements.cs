@@ -8,10 +8,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class IngameUIElements : RemoteMemoryObject
 	{
-        public Element FlaskBar => GetObject<Element>(M.ReadLong(Address + 0x278, 0x1B0));
-		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0x388);
-		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0x390);
-		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0x410, 0x2D0, 0xF80));
+        public Element FlaskBar => GetObject<Element>(M.ReadLong(Address + 0x260, 0x1B0));
+		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0x370);
+		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0x378);
+		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0x3F8, 0x2D0, 0xF80));
 		public Element QuestTracker => ReadObjectAt<Element>(0x478);
 		public Element OpenLeftPanel => ReadObjectAt<Element>(0x4E0/*508*/);
 		public Element OpenRightPanel => ReadObjectAt<Element>(0x4E8/*510 */);
