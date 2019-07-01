@@ -60,7 +60,7 @@ namespace PoeHUD.Poe.Elements
                 {
                     case ToolTipType.ItemOnGround:
                         // This offset is same as Game.IngameState.IngameUi.ItemsOnGroundLabels offset.
-                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x5C0);
+                        ItemsOnGroundLabelElement le = Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x5D8);
                         Entity e = le.ItemOnHover;
                         if (e == null)
                             return null;
