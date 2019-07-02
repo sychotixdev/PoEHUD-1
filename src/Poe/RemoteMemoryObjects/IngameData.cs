@@ -15,8 +15,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer
             : GameController.Instance.Cache.Enable ? GameController.Instance.Cache.LocalPlayer = LocalPlayerReal : LocalPlayerReal;
-        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x408);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x490);
+        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x488);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x510);
 
         private long LabDataPtr => M.ReadLong(Address + 0x11C);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
@@ -48,8 +48,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x4B4);
-                var statPtrEnd = M.ReadLong(Address + 0x4BC);
+                var statPtrStart = M.ReadLong(Address + 0x534);
+                var statPtrEnd = M.ReadLong(Address + 0x53C);
 
                 return M.ReadStructsArray<PortalObject>(statPtrStart, statPtrEnd, PortalObject.StructSize, 20);
             }

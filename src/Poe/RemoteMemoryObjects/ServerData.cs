@@ -14,7 +14,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		[Obsolete("Obsolete. Use GameController.Game.IngameState.IngameUi.StashElement instead")]
 		public StashElement StashPanel => GameController.Instance.Game.IngameState.IngameUi.StashElement;// Address != 0 ? GetObject<StashElement>(M.ReadLong(Address + 0x4C8, 0xA0, 0x78)) : null; // needs fixed, but if it's obsolete, just remove it
 
-		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x63B0) & 0xF);
+		public CharacterClass PlayerClass => (CharacterClass)(M.ReadByte(Address + 0x6830) & 0xF);
 
 		public int GetBeastCapturedAmount(BestiaryCapturableMonster monster)
 		{
@@ -25,8 +25,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var fisrPtr = M.ReadLong(Address + 0x6340);
-				var endPtr = M.ReadLong(Address + 0x6348);
+				var fisrPtr = M.ReadLong(Address + 0x67C0);
+				var endPtr = M.ReadLong(Address + 0x67C8);
 
 				int skillIds = (int)(endPtr - fisrPtr);
 
@@ -44,24 +44,24 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			}
 		}
 		#region PlayerData
-		public int CharacterLevel => M.ReadInt(Address + 0x63B4);
-		public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x63B8);
-		public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x63BC);
-		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x63D0);
-		public int TotalAscendencyPoints => M.ReadInt(Address + 0x63D4);
-		public int SpentAscendencyPoints => M.ReadInt(Address + 0x63D8);
-		public int TimeInGame => M.ReadInt(Address + 0x6488);
+		public int CharacterLevel => M.ReadInt(Address + 0x6834);
+		public int PassiveRefundPointsLeft => M.ReadInt(Address + 0x6838);
+		public int QuestPassiveSkillPoints => M.ReadInt(Address + 0x683C);
+		public int FreePassiveSkillPointsLeft => M.ReadInt(Address + 0x6840);
+		public int TotalAscendencyPoints => M.ReadInt(Address + 0x6844);
+		public int SpentAscendencyPoints => M.ReadInt(Address + 0x6848);
+		public int TimeInGame => M.ReadInt(Address + 0x6908);
 
-		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x63F0);
+		public NetworkStateE NetworkState => (NetworkStateE)M.ReadByte(Address + 0x6870);
 		public bool IsInGame => GameStateController.IsInGameState;
 
-		public string League => NativeStringReader.ReadString(Address + 0x6408);
-		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x6455);
-		public int Latency => M.ReadInt(Address + 0x6490);
+		public string League => NativeStringReader.ReadString(Address + 0x6888);
+		public PartyAllocation PartyAllocationType => (PartyAllocation)M.ReadByte(Address + 0x68D5);
+		public int Latency => M.ReadInt(Address + 0x6910);
 		#endregion
 		#region Stash Tabs
-		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x64A0, 0x64A8);
-		public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x64B8, 0x64C0);
+		public List<ServerStashTab> PlayerStashTabs => GetStashTabs(0x6920, 0x6928);
+		public List<ServerStashTab> GuildStashTabs => GetStashTabs(0x6938, 0x6940);
 		private List<ServerStashTab> GetStashTabs(int offsetBegin, int offsetEnd)
 		{
 			var firstAddr = M.ReadLong(Address + offsetBegin);
@@ -75,12 +75,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		}
 		#endregion
 
-		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x65B8);
+		public PartyStatus PartyStatusType => (PartyStatus)M.ReadByte(Address + 0x6A38);
 
 		// New Guild is a structure pointed to at 0x65D0
 		// 0x10 - Length of Guild Name
 		// 0x00 - Name (either a pointer if length > 8 else Ustring)
-		public string GuildName => NativeStringReader.ReadString(M.ReadLong(Address + 0x6650));//TODO Fixme
+		public string GuildName => NativeStringReader.ReadString(M.ReadLong(Address + 0x6AD0));//TODO Fixme
 
 		public List<ushort> SkillBarIds
 		{
@@ -88,7 +88,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 			{
 				var result = new List<ushort>();
 
-				var readAddr = Address + 0x6658;
+				var readAddr = Address + 0x6AD8;
 				for (var i = 0; i < 8; i++)
 				{
 					result.Add(M.ReadUShort(readAddr));
@@ -101,8 +101,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var startPtr = M.ReadLong(Address + 0x66A8);
-				var endPtr = M.ReadLong(Address + 0x66B0);
+				var startPtr = M.ReadLong(Address + 0x6B28);
+				var endPtr = M.ReadLong(Address + 0x6B30);
 
 				if (Math.Abs(endPtr - startPtr) / 8 > 50)
 					return null;
@@ -123,8 +123,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x6788);
-				var lastAddr = M.ReadLong(Address + 0x6790);
+				var firstAddr = M.ReadLong(Address + 0x6C08);
+				var lastAddr = M.ReadLong(Address + 0x6C10);
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 400);
 			}
 		}
@@ -132,8 +132,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x6840);
-				var lastAddr = M.ReadLong(Address + 0x6848);
+				var firstAddr = M.ReadLong(Address + 0x6CC0);
+				var lastAddr = M.ReadLong(Address + 0x6CC8);
 
 				if (firstAddr == 0)
 					return new List<InventoryHolder>();
@@ -146,8 +146,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		{
 			get
 			{
-				var firstAddr = M.ReadLong(Address + 0x68F8); // double check these
-				var lastAddr = M.ReadLong(Address + 0x6900);
+				var firstAddr = M.ReadLong(Address + 0x6D78); // double check these
+				var lastAddr = M.ReadLong(Address + 0x6D80);
 				return M.ReadStructsArray<InventoryHolder>(firstAddr, lastAddr, InventoryHolder.StructSize, 100);
 			}
 		}
@@ -191,9 +191,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 		#endregion
 		#endregion
 
-		public ushort TradeChatChannel => M.ReadUShort(Address + 0x6A10);
-		public ushort GlobalChatChannel => M.ReadUShort(Address + 0x6A18);
-		public ushort LastActionId => M.ReadUShort(Address + 0x6A64);
+		public ushort TradeChatChannel => M.ReadUShort(Address + 0x6E90);
+		public ushort GlobalChatChannel => M.ReadUShort(Address + 0x6E98);
+		public ushort LastActionId => M.ReadUShort(Address + 0x6EE4);
 
 		#region Completed Areas
 		public List<WorldArea> UnknownAreas => GetAreas(0x6AA0);
