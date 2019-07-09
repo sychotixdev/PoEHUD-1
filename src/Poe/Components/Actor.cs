@@ -26,8 +26,8 @@ namespace PoeHUD.Poe.Components
             {
                 return false;
             }
-            long num = M.ReadLong(Address + 0x420);
-            long num2 = M.ReadLong(Address + 0x428);
+            long num = M.ReadLong(Address + 0x438);
+            long num2 = M.ReadLong(Address + 0x440);
             for (long i = num; i < num2; i += 8)
             {
                 int num3 = M.ReadInt(i);
@@ -43,11 +43,11 @@ namespace PoeHUD.Poe.Components
         // public float TimeSinseLastMove => -M.ReadFloat(Address + 0x110);
         // public float TimeSinseLastAction => -M.ReadFloat(Address + 0x114);
 
-        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x78) : null;
+        public ActionWrapper CurrentAction => (Action & ActionFlags.UsingAbility) > 0 ? ReadObject<ActionWrapper>(Address + 0x98) : null;
 
         // e.g minions, mines
-        private long DeployedObjectStart => M.ReadLong(Address + 0x428);
-        private long DeployedObjectEnd => M.ReadLong(Address + 0x430);
+        private long DeployedObjectStart => M.ReadLong(Address + 0x440);
+        private long DeployedObjectEnd => M.ReadLong(Address + 0x448);
         public long DeployedObjectsCount => (DeployedObjectEnd - DeployedObjectStart) / 8;
         public List<DeployedObject> DeployedObjects
         {
@@ -75,8 +75,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var skillsStartPointer = M.ReadLong(Address + 0x3C0);
-                var skillsEndPointer = M.ReadLong(Address + 0x3C8);
+                var skillsStartPointer = M.ReadLong(Address + 0x3D8);
+                var skillsEndPointer = M.ReadLong(Address + 0x3E0);
                 skillsStartPointer += 8;//Don't ask me why. Just skipping first one
                 if ((skillsEndPointer - skillsStartPointer) / 16 > 50)
                     return new List<ActorSkill>();
@@ -95,8 +95,8 @@ namespace PoeHUD.Poe.Components
 			get
 			{
 				const int ACTOR_VAAL_SKILLS_SIZE = 0x20;
-				var skillsStartPointer = M.ReadLong(Address + 0x3F0);
-				var skillsEndPointer = M.ReadLong(Address + 0x3F8);
+				var skillsStartPointer = M.ReadLong(Address + 0x408);
+				var skillsEndPointer = M.ReadLong(Address + 0x410);
 
 				int stuckCounter = 0;
 				var result = new List<ActorVaalSkill>();
