@@ -19,29 +19,34 @@ namespace PoeHUD.Hud.Icons.MapIcons
 
         public override bool IsVisible()
         {
-            if (!base.IsVisible())// || !_cachedMonster.IsAlive)//actually all non alive entities is already removed by PoiTracker plugin
+            if (!base.IsVisible()) //all non alive entities is already removed by PoiTracker plugin
                 return false;
 
-            if (_cachedMonster.IsVisible && CheckHiddenMonster)
+            if (_cachedMonster.IsVisible)
             {
-                if (!_cachedMonster.HasBuff("hidden_monster"))
+                //if (_cachedMonster.IsLegion)
+                //{
+                //    var rarity = CachedEntity.GetComponent<ObjectMagicProperties>().Rarity;
+
+                //    if (rarity < MonsterRarity.Rare && (_cachedMonster.IsFrozenInTime || !_cachedMonster.IsActive))
+                //        return false;
+
+                //    if (rarity == MonsterRarity.Rare && !_cachedMonster.IsFrozenInTime && !_cachedMonster.IsActive)
+                //        return false;
+
+                //    if (Math.Abs(Math.Round(CachedEntity.GetComponent<Life>().HPPercentage, 2) - 0.01) < float.Epsilon)
+                //        return false;
+                //}
+
+                if (CheckHiddenMonster)
                 {
-                    CheckHiddenMonster = false;
-                    TextureIcon = new HudTexture(TextureIcon.FileName.Replace("-gray", string.Empty));
-                    BasePlugin.LogWarning("Entity appear!", 4);
+                    if (!_cachedMonster.HasBuff("hidden_monster") && _cachedMonster.IsVisible)
+                    {
+                        CheckHiddenMonster = false;
+                        TextureIcon = new HudTexture(TextureIcon.FileName.Replace("-gray", string.Empty));
+                        BasePlugin.LogWarning("Entity appear!", 4);
+                    }
                 }
-            }
-
-            if (_cachedMonster.IsLegion)
-            {
-                var rarity = CachedEntity.GetComponent<ObjectMagicProperties>().Rarity;
-                if (rarity < MonsterRarity.Rare && (_cachedMonster.IsFrozenInTime || !_cachedMonster.IsActive))
-                    return false;
-
-                if (rarity == MonsterRarity.Rare && !_cachedMonster.IsFrozenInTime && !_cachedMonster.IsActive)
-                    return false;
-                if (Math.Abs(Math.Round(CachedEntity.GetComponent<Life>().HPPercentage, 2) - 0.01) < float.Epsilon)
-                    return false;
             }
 
             return true;

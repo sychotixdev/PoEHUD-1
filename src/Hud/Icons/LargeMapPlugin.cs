@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PoeHUD.Controllers;
 using PoeHUD.EntitiesCache.CachedEntities;
 using PoeHUD.Framework.Helpers;
@@ -51,7 +52,7 @@ namespace PoeHUD.Hud.Icons
                 var k = camera.Width < 1024f ? 1120f : 1024f;
                 var scale = k / camera.Height * camera.Width * 3f / 4f / mapWindow.LargeMapZoom;
 
-                foreach (var icon in getIcons())//.Where(x => x.IsVisible()))
+                foreach (var icon in getIcons().Where(x => x.IsVisible()))
                 {
                     var iconZ = icon.CachedEntity.WorldPos.Z;
                     var point = screenCenter + MapIcon.DeltaInWorldToMinimapDelta(icon.WorldPosition - playerPos, diag, scale,

@@ -195,7 +195,17 @@ namespace PoeHUD.Hud
 
             CheckGameWindow();
             CheckGameState();
-            graphics.Render += () => plugins.ForEach(x => x.Render());
+            graphics.Render += () => plugins.ForEach(x =>
+            {
+                try
+                {
+                    x.Render();
+                }
+                catch (Exception exception)
+                {
+                    DebugPlugin.DebugPlugin.LogMsg($"Error while rendering plugin {x}: {e}", 5);
+                }
+            });
             gameController.Clear += graphics.Clear;
             gameController.Render += graphics.TryRender;
             AreaController.Instance.TriggerAreaChange();

@@ -6,6 +6,7 @@ using PoeHUD.EntitiesCache.CachedEntities;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.Icons.MapIcons;
 using PoeHUD.Hud.UI;
+using PoeHUD.Plugins;
 using PoeHUD.Poe.Components;
 using SharpDX;
 
