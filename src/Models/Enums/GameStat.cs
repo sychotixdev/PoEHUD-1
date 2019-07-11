@@ -49872,5 +49872,25 @@ namespace PoeHUD.Models.Enums
 		/// </summary>
 		TriggeredByShockwaveSupport = 9974,
 
+		/// <summary>
+		/// attack_is_melee_override
+		/// </summary>
+		AttackIsMeleeOverride = 9975,
+
+		/// <summary>
+		/// secondary_imp_variation
+		/// </summary>
+		SecondaryImpVariation = 9976,
+
+		/// <summary>
+		/// virtual_imp_variation
+		/// </summary>
+		VirtualImpVariation = 9977,
+
+		/// <summary>
+		/// corpse_can_explode_on_death
+		/// </summary>
+		CorpseCanExplodeOnDeath = 9978,
+
 	}
 }

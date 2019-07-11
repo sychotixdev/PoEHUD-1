@@ -8,36 +8,29 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 {
 	public class IngameUIElements : RemoteMemoryObject
 	{
-        public Element FlaskBar => GetObject<Element>(M.ReadLong(Address + 0x288, 0x1B0));
-		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0x398);
-		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0x3A0);
-		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0x420, 0x2D0, 0xF80));
-		public Element QuestTracker => ReadObjectAt<Element>(0x4A0);
-		public Element OpenLeftPanel => ReadObjectAt<Element>(0x508/*508*/);
-		public Element OpenRightPanel => ReadObjectAt<Element>(0x510/*510 */);
-		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0x540);
-		public StashElement StashElement => ReadObjectAt<StashElement>(0x548); //This element was in serverdata
-		public Element TreePanel => ReadObjectAt<Element>(0x570);
-		public Element AtlasPanel => ReadObjectAt<Element>(0x578);
-		public Map Map => ReadObjectAt<Map>(0x5D0);
+        public Element FlaskBar => GetObject<Element>(M.ReadLong(Address + 0x270, 0x1B0));
+		public SkillBarElement SkillBar => ReadObjectAt<SkillBarElement>(0x380);
+		public SkillBarElement HiddenSkillBar => ReadObjectAt<SkillBarElement>(0x388);
+		public PoeChatElement ChatBox => GetObject<PoeChatElement>(M.ReadLong(Address + 0x408, 0x2D0, 0xF80));
+		public Element QuestTracker => ReadObjectAt<Element>(0x488);
+		public Element OpenLeftPanel => ReadObjectAt<Element>(0x4F0/*508*/);
+		public Element OpenRightPanel => ReadObjectAt<Element>(0x4F8/*510 */);
+		public InventoryElement InventoryPanel => ReadObjectAt<InventoryElement>(0x528);
+		public StashElement StashElement => ReadObjectAt<StashElement>(0x530); //This element was in serverdata
+		public Element TreePanel => ReadObjectAt<Element>(0x558);
+		public Element AtlasPanel => ReadObjectAt<Element>(0x560);
+		public Map Map => ReadObjectAt<Map>(0x5B8);
         public SyndicatePanel SyndicatePanel => GameController.Instance.Game.IngameState.UIRoot.GetChildFromIndices(1, 64).AsObject<SyndicatePanel>();
-        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x728/*0xED8*/);
-		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xD08);
-		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7D8);
+        public SubterraneanChart MineMap => ReadObjectAt<SubterraneanChart>(0x710/*0xED8*/);
+		public WorldMapElement WorldMap => ReadObjectAt<WorldMapElement>(0xCF0);
+		public WorldMapElement AreaInstanceUi => ReadObjectAt<WorldMapElement>(0x7C0);
 	    public IncursionWindow IncursionWindow => GameController.Instance.Game.IngameState.UIRoot.GetChildFromIndices(1, 58).AsObject<IncursionWindow>();
 
-		public IEnumerable<LabelOnGround> ItemsOnGroundLabels
-		{
-			get
-			{
-                // when updating this Offset, copy paste it in file: Poe->Elements->HoverItemIcon.cs
-                //            line 63 ( Game.IngameState.IngameUi.ReadObjectAt<ItemsOnGroundLabelElement>(0x5C0); )
-                var itemsOnGroundLabelRoot = GetObject<ItemsOnGroundLabelElement>(M.ReadLong(Address + 0x5D8));
-				return itemsOnGroundLabelRoot.LabelsOnGround;
-			}
-		}
-		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x8F0);
-		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x988);//or 0x250
+		public ItemsOnGroundLabelElement itemOnGroundLabelElement => ReadObjectAt<ItemsOnGroundLabelElement>(0x5C0);
+		public IEnumerable<LabelOnGround> ItemsOnGroundLabels => itemOnGroundLabelElement.LabelsOnGround;
+
+		public Element GemLvlUpPanel => ReadObjectAt<Element>(0x8D8);
+		public ItemOnGroundTooltip ItemOnGroundTooltip => ReadObjectAt<ItemOnGroundTooltip>(0x970);//or 0x250
 
 		//public bool IsDndEnabled => M.ReadByte(Address + 0xf92) == 1;
 		//public string DndMessage => M.ReadStringU(M.ReadLong(Address + 0xf98));

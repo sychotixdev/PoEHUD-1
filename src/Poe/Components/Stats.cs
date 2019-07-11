@@ -11,8 +11,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x68);
-                var statPtrEnd = M.ReadLong(Address + 0x70);
+                var statPtrStart = M.ReadLong(Address + 0x98);
+                var statPtrEnd = M.ReadLong(Address + 0xA0);
 
 	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
 	            {
@@ -38,8 +38,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x68);
-                var statPtrEnd = M.ReadLong(Address + 0x70);
+                var statPtrStart = M.ReadLong(Address + 0x98);
+                var statPtrEnd = M.ReadLong(Address + 0xA0);
 
 	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
 	            {
