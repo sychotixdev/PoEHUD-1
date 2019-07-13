@@ -292,7 +292,7 @@ namespace PoeHUD.Plugins
             HandlePluginError(functionName, me, false);
         }
 
-        public float PluginErrorDisplayTime = 3;
+        public float PluginErrorDisplayTime = 5;
         private readonly string LogFileName = "ErrorLog.txt";
         private string logPath => PluginDirectory + "\\" + LogFileName;
 

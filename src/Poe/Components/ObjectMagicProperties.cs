@@ -1,5 +1,5 @@
-using PoeHUD.Models.Enums;
 using System.Collections.Generic;
+using PoeHUD.Models.Enums;
 
 namespace PoeHUD.Poe.Components
 {
@@ -10,9 +10,8 @@ namespace PoeHUD.Poe.Components
             get
             {
                 if (Address != 0)
-                {
-                    return (MonsterRarity)M.ReadInt(Address + 0x7C);
-                }
+                    return (MonsterRarity) M.ReadInt(Address + 0x7C);
+
                 return MonsterRarity.White;
             }
         }
@@ -22,21 +21,25 @@ namespace PoeHUD.Poe.Components
             get
             {
                 if (Address == 0)
-                {
                     return new List<string>();
-                }
-                long begin = M.ReadLong(Address + 0x98);
-                long end = M.ReadLong(Address + 0xA0);
+
+                var begin = M.ReadLong(Address + 0x98);
+                var end = M.ReadLong(Address + 0xA0);
                 var list = new List<string>();
+
                 if (begin == 0 || end == 0)
-                {
                     return list;
-                }
-                for (long i = begin; i < end; i += 0x28)
+
+                var stuckCounter = 0;
+                for (var i = begin; i < end; i += 0x28)
                 {
-                    string mod = M.ReadStringU(M.ReadLong(i + 0x20, 0));
+                    var mod = M.ReadStringU(M.ReadLong(i + 0x20, 0));
                     list.Add(mod);
+
+                    if (stuckCounter++ > 100)
+                        break;
                 }
+
                 return list;
             }
         }

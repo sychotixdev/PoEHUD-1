@@ -84,7 +84,6 @@ namespace PoeHUD.Hud.Trackers
 
             MonstersController.OnEntityAdded += OnOnEntityAdded;
             MonstersController.OnEntityRemoved += OnOnEntityRemoved;
-            MonstersController.OnMonsterDeath += OnOnMonsterDeath;
             GameController.Area.AreaChange += delegate { _iconsCache = GameController.Area.CurrentArea.GetOrCreateDataContainer<MonsterIconsAreaCache>(); };
         }
 
@@ -176,7 +175,7 @@ namespace PoeHUD.Hud.Trackers
             if (!Settings.Enable)
                 return;
 
-            if (!entityAddedArgs.IsNewEntity)
+            if (!entityAddedArgs.IsNewEntity && !entityAddedArgs.Revived)
                 return;
 
             var entity = entityAddedArgs.Entity;
@@ -216,18 +215,9 @@ namespace PoeHUD.Hud.Trackers
             }
         }
 
-        private void OnOnMonsterDeath(MonsterDeathArgs monsterDeathArgs)
-        {
-            alertTexts.Remove(monsterDeathArgs.Entity);
-            if (_iconsCache.CurrentIcons.Remove(monsterDeathArgs.Entity))
-            {
-                //BasePlugin.LogMessage($"removed icon: {monsterDeathArgs.Entity.Name}", 4);  //I'll leave it for debug
-            }
-        }
-
         private void OnOnEntityRemoved(EntityRemovedArgs<MonsterEntity> entityRemovedArgs)
         {
-            if (entityRemovedArgs.Destroyed)
+            if (entityRemovedArgs.Destroyed || entityRemovedArgs.Killed)
             {
                 alertTexts.Remove(entityRemovedArgs.Entity);
                 _iconsCache.CurrentIcons.Remove(entityRemovedArgs.Entity);

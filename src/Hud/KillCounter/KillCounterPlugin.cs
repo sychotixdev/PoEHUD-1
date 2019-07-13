@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using PoeHUD.Controllers;
 using PoeHUD.EntitiesCache.CacheControllers;
+using PoeHUD.EntitiesCache.CachedEntities;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
 using PoeHUD.Hud.UI;
@@ -23,23 +24,12 @@ namespace PoeHUD.Hud.KillCounter
             : base(gameController, graphics, settings)
         {
             GameController.Area.AreaChange += OnAreaChange;
-            MonstersController.OnMonsterDeath += OnMonsterDeath;
+            MonstersController.OnEntityRemoved += MonstersControllerOnEntityRemoved;
         }
 
-        private void OnAreaChange(AreaController areaController)
-        {
-            if (!Settings.Enable)
-                return;
-
-            GetStatisticsFromCache();
-        }
-
-        private void OnMonsterDeath(MonsterDeathArgs deathInfo)
+        private void MonstersControllerOnEntityRemoved(EntityRemovedArgs<MonsterEntity> deathInfo)
         {
             if (!Settings.Enable.Value)
-                return;
-
-            if (deathInfo.KilledByOtherPlayer) //if we want to include info that s1 killed an enemy
                 return;
 
             GetStatisticsFromCache();
@@ -51,6 +41,14 @@ namespace PoeHUD.Hud.KillCounter
             _statistics.Counters[rarity]++;
             _statistics.AreaCounter++;
             SummaryCounter++;
+        }
+
+        private void OnAreaChange(AreaController areaController)
+        {
+            if (!Settings.Enable)
+                return;
+
+            GetStatisticsFromCache();
         }
 
         public override void Render()

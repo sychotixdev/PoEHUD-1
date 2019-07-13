@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PoeHUD.EntitiesCache.CachedEntities;
-using PoeHUD.Plugins;
 
 namespace PoeHUD.EntitiesCache.CacheControllers
 {
@@ -49,25 +48,12 @@ namespace PoeHUD.EntitiesCache.CacheControllers
             VisibleAliveEnemyMonsters = new EntityCollectionFilter<MonsterEntity>(_allEntities, x => x.IsVisible && x.IsAlive && !x.IsAlly);
         }
 
-        public static event Action<MonsterDeathArgs> OnMonsterDeath = delegate { };
-
-        internal override void AddNewEntity(MonsterEntity cachedEntity)
-        {
-            base.AddNewEntity(cachedEntity);
-
-            //New entity and already killed? Probably this is not our kill
-            if (!cachedEntity.IsAlive)
-            {
-                OnMonsterDeath(new MonsterDeathArgs(cachedEntity, killedByOtherPlayer: true));
-            }
-        }
-
         internal void UpdateMonsters()
         {
             //we are not going to use VisibleMonsters for case it could be fucked
             //We do .ToList() coz sometimes "CollectionWasChanged" exception appears,
             //I think in case when monster corpse is destroyed on kill and we call EntityDestroyed in this func to remove it from _allEntities
-            foreach (var monsterEntity in _allEntities.ToList()) 
+            foreach (var monsterEntity in _allEntities.ToList())
             {
                 if (monsterEntity.IsVisible)
                 {
@@ -76,13 +62,16 @@ namespace PoeHUD.EntitiesCache.CacheControllers
                         if (!monsterEntity.IsDeathRegistered)
                         {
                             monsterEntity.IsDeathRegistered = true;
+
                             //this is more likely we killed the enemy
-                            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(monsterEntity, killedByOtherPlayer: false), nameof(OnMonsterDeath));
+                            SafeInvokeEntityRemoved(new EntityRemovedArgs<MonsterEntity>(monsterEntity, destroyed: false, killed: true));
                         }
                     }
-                    else if(monsterEntity.IsDeathRegistered)
-                    {//Here entity is back to life (necromanser or what). Also this can fix some bugs
+                    else if (monsterEntity.IsDeathRegistered)
+                    {
+                        //Here entity is back to life (necromanser or what). Also this can fix some bugs
                         monsterEntity.IsDeathRegistered = false;
+                        SafeInvokeEntityAdded(new EntityAddedArgs<MonsterEntity>(monsterEntity, isNewEntity: false, revived: true));
                     }
 
                     //We killed a monster that destroy it's corpse after death
@@ -102,7 +91,7 @@ namespace PoeHUD.EntitiesCache.CacheControllers
                     //Case when monster destroy it's corpse after death
                     //monster exist only in cache (not in game) but close than 100. Seems we were seen this monster (was cached) once and then it was killed by someone while out of range
                     //So, remove monsters that were close to us, but now are null (corpse exploded, shattered etc)
-                  
+
                     //Probably this is not our kill, but I'm not 100% sure
                     MonsterEntityDestroyed(monsterEntity);
                 }
@@ -117,27 +106,6 @@ namespace PoeHUD.EntitiesCache.CacheControllers
             monsterEntity.IsVisible = false;
             EntitiesAreaCache.Current.AllEntities.Remove(monsterEntity.Id);
             EntityDestroyed(monsterEntity);
-            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(monsterEntity, killedByOtherPlayer: true), nameof(OnMonsterDeath));
-        }
-    }
-
-    public class MonsterDeathArgs
-    {
-        public MonsterDeathArgs(MonsterEntity entity, bool killedByOtherPlayer)
-        {
-            Entity = entity;
-            KilledByOtherPlayer = killedByOtherPlayer;
-        }
-
-        public MonsterEntity Entity { get; }
-        /// <summary>
-        /// Probably killed by some other player or was out of checking range
-        /// </summary>
-        public bool KilledByOtherPlayer { get; }
-
-        public override string ToString()
-        {
-            return $"MonsterDeathParams. Entity: {Entity}, KilledByOtherPlayer: {KilledByOtherPlayer}";
         }
     }
 }

@@ -115,13 +115,7 @@ namespace PoeHUD.Hud.PluginExtension
             else
                 asmToLoad = Assembly.Load(File.ReadAllBytes(_dllPath));
 
-            if (asmToLoad == null)
-            {
-                State = PluginState.Reload_DllNotFound;
-                return;
-            }
-
-            var pluginType = asmToLoad.GetType(_fullTypeName);
+             var pluginType = asmToLoad.GetType(_fullTypeName);
 
             if (pluginType == null)
             {

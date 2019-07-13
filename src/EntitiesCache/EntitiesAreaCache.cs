@@ -413,6 +413,9 @@ namespace PoeHUD.EntitiesCache
                 return false;
             }
 
+            if (cachedMonster.Metadata == "Metadata/Monsters/LegionLeague/LegionSandTornadoDaemon")
+                return false;
+            //
             //if (entity.CannotDieAura)
             //{
             //    if (!cachedMonster.FilterOutCannotDie)
