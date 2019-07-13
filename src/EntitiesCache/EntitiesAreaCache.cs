@@ -76,11 +76,9 @@ namespace PoeHUD.EntitiesCache
                 _scanNumber = 0;
 
             PlayerInfo.UpdateInfo();
-            
-            Monsters.UpdateMonsters();
-            WorldItems.UpdateItems();
 
             var game = GameController.Instance.Game;
+
             foreach (var keyValuePair in game.InGameState.Data.EntityList.EntitiesDictionary)
             {
                 var entityAddress = keyValuePair.Value;
@@ -115,7 +113,9 @@ namespace PoeHUD.EntitiesCache
                     if (!cachedEntity.IsRemovedFromSpecialCachedCollections && cachedEntity.RemoveFromSpecialCachedCollections())
                     {
                         cachedEntity.IsRemovedFromSpecialCachedCollections = true;
-                        cachedEntity.OwnerEntityController?.EntityDestroyed(cachedEntity);//OwnerEntityController can be null for filtered out entities
+
+                        cachedEntity.OwnerEntityController
+                            ?.EntityDestroyed(cachedEntity); //OwnerEntityController can be null for filtered out entities
                     }
                     else
                     {
@@ -222,7 +222,7 @@ namespace PoeHUD.EntitiesCache
 
                                 //LogWarning($"Found VOLATILE!!!: {volatileMonster.Metadata}");
                                 DangerEntities.AddNewEntity(volatileMonster);
-                                AllEntities.Add(volatileMonster.Id, volatileMonster);
+                                AllEntities[volatileMonster.Id] = volatileMonster;
                             }
                             else
                             {
@@ -344,6 +344,9 @@ namespace PoeHUD.EntitiesCache
             Strongboxes.CheckVisibility(_scanNumber);
             Players.CheckVisibility(_scanNumber);
             WorldItems.CheckVisibility(_scanNumber);
+
+            Monsters.UpdateMonsters();
+            WorldItems.UpdateItems();
         }
 
         #region WorldItems

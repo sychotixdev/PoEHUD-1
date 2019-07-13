@@ -19,7 +19,7 @@ namespace PoeHUD.EntitiesCache.CachedEntities
         }
 
         public MonsterRarity Rarity { get; }
-        internal bool IsValid => true;// Address != 0 && Memory.Instance.ReadInt(Address, 0x18, 0) == 0x65004D;//sometimes it gives a false when entity appear or.. randomly
+        //internal bool IsValid => true;// Address != 0 && Memory.Instance.ReadInt(Address, 0x18, 0) == 0x65004D;//sometimes it gives a false when entity appear or.. randomly
         [LegionLeague]
         public bool IsLegion { get; }
         public string Name => _name ?? (_name = GetMonsterName());

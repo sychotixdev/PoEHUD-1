@@ -67,52 +67,57 @@ namespace PoeHUD.EntitiesCache.CacheControllers
             //we are not going to use VisibleMonsters for case it could be fucked
             //We do .ToList() coz sometimes "CollectionWasChanged" exception appears,
             //I think in case when monster corpse is destroyed on kill and we call EntityDestroyed in this func to remove it from _allEntities
-            foreach (var cachedMonsterEntity in _allEntities.ToList()) 
+            foreach (var monsterEntity in _allEntities.ToList()) 
             {
-                if (cachedMonsterEntity.IsVisible)
+                if (monsterEntity.IsVisible)
                 {
-                    if (!cachedMonsterEntity.IsAliveReal)
+                    if (!monsterEntity.IsAliveReal)
                     {
-                        if (!cachedMonsterEntity.IsDeathRegistered)
+                        if (!monsterEntity.IsDeathRegistered)
                         {
-                            cachedMonsterEntity.IsDeathRegistered = true;
+                            monsterEntity.IsDeathRegistered = true;
                             //this is more likely we killed the enemy
-                            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(cachedMonsterEntity, killedByOtherPlayer: false), nameof(OnMonsterDeath));
+                            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(monsterEntity, killedByOtherPlayer: false), nameof(OnMonsterDeath));
                         }
+                    }
+                    else if(monsterEntity.IsDeathRegistered)
+                    {//Here entity is back to life (necromanser or what). Also this can fix some bugs
+                        monsterEntity.IsDeathRegistered = false;
                     }
 
                     //We killed a monster that destroy it's corpse after death
                     //actually we can not do this, because the next IF with distance check will do the stuff
-                    if (!cachedMonsterEntity.IsValid)
-                    {
-                        MonsterEntityDestroyed(cachedMonsterEntity);
-                    }
+                    //if (!monsterEntity.IsValid)//commented out because works buggy
+                    //{
+                    //    MonsterEntityDestroyed(monsterEntity);
+                    //}
 
                     continue; //normal visible monster
                 }
 
                 //Here we will try to handle non standard situations
                 //mean cached entity in range but it doesn't exist in poe memory, only in our cache, so it was destroyed
-                if (cachedMonsterEntity.Distance <= ENTITY_DESTROY_CHECK_DISTANCE)
+                if (monsterEntity.Distance <= ENTITY_DESTROY_CHECK_DISTANCE)
                 {
                     //Case when monster destroy it's corpse after death
                     //monster exist only in cache (not in game) but close than 100. Seems we were seen this monster (was cached) once and then it was killed by someone while out of range
                     //So, remove monsters that were close to us, but now are null (corpse exploded, shattered etc)
                   
                     //Probably this is not our kill, but I'm not 100% sure
-                    MonsterEntityDestroyed(cachedMonsterEntity);
+                    MonsterEntityDestroyed(monsterEntity);
                 }
             }
         }
 
-        private void MonsterEntityDestroyed(MonsterEntity entity)
+        private void MonsterEntityDestroyed(MonsterEntity monsterEntity)
         {
-            entity.IsDestroyed = true;
-            entity.IsDeathRegistered = true;
-            entity.IsVisible = false;
-            EntitiesAreaCache.Current.AllEntities.Remove(entity.Id);
-            EntityDestroyed(entity);
-            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(entity, killedByOtherPlayer: true), nameof(OnMonsterDeath));
+            monsterEntity.IsDestroyed = true;
+            monsterEntity.IsDeathRegistered = true;
+            monsterEntity.FilterOutReason = "MonsterEntityDestroyed (not valid or not found in poe memory)";
+            monsterEntity.IsVisible = false;
+            EntitiesAreaCache.Current.AllEntities.Remove(monsterEntity.Id);
+            EntityDestroyed(monsterEntity);
+            SafeEventCall(OnMonsterDeath, new MonsterDeathArgs(monsterEntity, killedByOtherPlayer: true), nameof(OnMonsterDeath));
         }
     }
 
