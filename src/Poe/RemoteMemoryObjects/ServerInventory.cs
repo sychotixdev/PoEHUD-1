@@ -2,6 +2,7 @@
 using System.Linq;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
+using PoeHUD.Poe.Components;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
@@ -113,11 +114,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var playerInventElement = GameController.Instance.Game.InGameState.InGameUi.InventoryPanel[InventoryIndex.PlayerInventory];
                 var inventClientRect = playerInventElement.GetClientRect();
                 var cellSize = inventClientRect.Width / 12;
+                var baseComp = Item.GetComponent<Base>();
+
                 return new RectangleF(
                     inventClientRect.X + cellSize * PosX,
                     inventClientRect.Y + cellSize * PosY,
-                    SizeX * cellSize, 
-                    SizeY * cellSize);
+                    baseComp.ItemCellsSizeX * cellSize, 
+                    baseComp.ItemCellsSizeY * cellSize);
             }
 
             public override string ToString()

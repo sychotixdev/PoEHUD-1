@@ -1,3 +1,4 @@
+using System;
 using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace PoeHUD.Poe
         public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
         public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
         public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
+      
+        [Obsolete("This is for debug purposes. Use GetClientRect() function instead")]
+        public RectangleF ClientRect => GetClientRect();  //this is for debug tool
 
         // Always fix EntityLabel offset in a new patch. Don't change the line over here
         public string Text => this.AsObject<EntityLabel>().Text;
