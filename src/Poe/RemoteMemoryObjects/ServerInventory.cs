@@ -2,6 +2,7 @@
 using System.Linq;
 using PoeHUD.Controllers;
 using PoeHUD.Models.Enums;
+using PoeHUD.Poe.Components;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
@@ -100,8 +101,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public Entity Item => ReadObject<Entity>(Address);
             public int PosX => M.ReadInt(Address + 0x8);
             public int PosY => M.ReadInt(Address + 0xc);
-            public int SizeX => M.ReadInt(Address + 0x10);
-            public int SizeY => M.ReadInt(Address + 0x14);
+            //public int SizeX => M.ReadInt(Address + 0x10);//are not correct at all, there is no such data
+            //public int SizeY => M.ReadInt(Address + 0x14);
             //public byte UnknownCounter => M.ReadByte(Address + 0x18);
             //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
@@ -113,11 +114,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
                 var inventClientRect = playerInventElement.GetClientRect();
                 var cellSize = inventClientRect.Width / 12;
+                var baseComp = Item.GetComponent<Base>();
+
                 return new RectangleF(
                     inventClientRect.X + cellSize * PosX,
                     inventClientRect.Y + cellSize * PosY,
-                    SizeX * cellSize, 
-                    SizeY * cellSize);
+                    baseComp.ItemCellsSizeX * cellSize, 
+                    baseComp.ItemCellsSizeY * cellSize);
             }
 
             public override string ToString()
