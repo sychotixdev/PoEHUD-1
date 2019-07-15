@@ -100,8 +100,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public Entity Item => ReadObject<Entity>(Address);
             public int PosX => M.ReadInt(Address + 0x8);
             public int PosY => M.ReadInt(Address + 0xc);
-            public int SizeX => M.ReadInt(Address + 0x10);
-            public int SizeY => M.ReadInt(Address + 0x14);
+            public int SizeX => M.ReadInt(Address + 0x10) - PosX;
+            public int SizeY => M.ReadInt(Address + 0x14) - PosY;
             //public byte UnknownCounter => M.ReadByte(Address + 0x18);
             //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
