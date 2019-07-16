@@ -56,7 +56,7 @@ namespace PoeHUD.Poe
         public bool IsTargetable => GetComponent<Targetable>().isTargetable;
         public bool CannotDieAura => HasBuff("monster_aura_cannot_die");
         public bool BestiaryMonsterCaptured => HasBuff("capture_monster_trapped");
-        public bool IsHidden => HasStat((GameStat)GameController.Instance.Files.Stats.records["is_hidden_monster"].ID, out var stat) && stat == 1;
+        public bool IsHidden => HasStat((GameStat)GameController.Instance.Files.Stats.records["is_hidden_monster"].ID, out var stat) && stat > 0;
         public bool CannotBeDamagedStat => HasStat((GameStat)GameController.Instance.Files.Stats.records["cannot_be_damaged"].ID, out var stat) && stat == 1;
         public bool Invincible => CannotDieAura || CannotBeDamagedStat;
         public bool IsMapBoss => GetComponent<ObjectMagicProperties>().Mods.Any(a => a == "MonsterMapBoss");

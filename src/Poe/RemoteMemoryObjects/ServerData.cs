@@ -89,7 +89,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var result = new List<ushort>();
 
-                var readAddr = Address + 0x6658;
+                var readAddr = Address + 0x6638;
                 for (var i = 0; i < 8; i++)
                 {
                     result.Add(M.ReadUShort(readAddr));
