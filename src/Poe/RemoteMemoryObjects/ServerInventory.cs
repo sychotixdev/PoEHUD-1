@@ -97,15 +97,36 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         public class InventSlotItem : RemoteMemoryObject
         {
+            private struct ItemMinMaxLocation
+            {
+                private int XMin;
+                private int YMin;
+                private int XMax;
+                private int YMax;
+
+                public RectangleF GetItemRect(float invStartX, float invStartY, float cellsize)
+                {
+                    return new RectangleF(
+                        invStartX + cellsize * XMin,
+                        invStartY + cellsize * YMin,
+                        (XMax - XMin) * cellsize,
+                        (YMax - YMin) * cellsize);
+                }
+
+                public override string ToString()
+                {
+                    return $"({XMin}, {YMin}, {XMax}, {YMax})";
+                }
+            };
+
             public Entity Item => ReadObject<Entity>(Address);
-            public int PosX => M.ReadInt(Address + 0x8);
-            public int PosY => M.ReadInt(Address + 0xc);
-            public int SizeX => M.ReadInt(Address + 0x10) - PosX;
-            public int SizeY => M.ReadInt(Address + 0x14) - PosY;
+
+            private ItemMinMaxLocation Location => M.IntptrToStruct<ItemMinMaxLocation>(
+                M.ReadBytes(Address + 0x08, 0x0C * sizeof(int)));
+
             //public byte UnknownCounter => M.ReadByte(Address + 0x18);
             //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
-            //for debug plugin
             private RectangleF ClientRect => GetClientRect();
 
             public RectangleF GetClientRect()
@@ -113,16 +134,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
                 var inventClientRect = playerInventElement.GetClientRect();
                 var cellSize = inventClientRect.Width / 12;
-                return new RectangleF(
-                    inventClientRect.X + cellSize * PosX,
-                    inventClientRect.Y + cellSize * PosY,
-                    SizeX * cellSize, 
-                    SizeY * cellSize);
+                return Location.GetItemRect(inventClientRect.X, inventClientRect.Y, cellSize);
             }
 
             public override string ToString()
             {
-                return $"InventSlotItem. PosX: {PosX}, PosY: {PosY}, Item: {Item}";
+                return $"InventSlotItem: {Location}, Item: {Item}";
             }
         }
     }
