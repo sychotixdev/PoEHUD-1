@@ -113,6 +113,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                         (YMax - YMin) * cellsize);
                 }
 
+                public Vector2 InventoryPosition => new Vector2(XMin, YMin);
+
                 public override string ToString()
                 {
                     return $"({XMin}, {YMin}, {XMax}, {YMax})";
@@ -128,6 +130,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
             private RectangleF ClientRect => GetClientRect();
+
+            public Vector2 InventoryPosition => Location.InventoryPosition;
 
             public RectangleF GetClientRect()
             {
