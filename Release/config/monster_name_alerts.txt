@@ -34,28 +34,28 @@ Metadata/Monsters/Exiles/ExileWitch4; Exile Dena Lorenni;attention.wav; ffFEC076
 Metadata/Monsters/Exiles/ExileScion4; Exile Vanth Agiel;attention.wav; ffFEC076; ms-orange.png
 Metadata/Monsters/Exiles/ExileScion3; Exile Lael Furia;attention.wav; ffFEC076; ms-orange.png
 
-Metadata/Monsters/Spirit/TormentedArsonist; Tormented Arsonist; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedFreezer; Tormented Aurora Cultist; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedBlasphemer; Tormented Blasphemer; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedCannibal; Tormented Cannibal; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedCharlatan; Tormented Charlatan; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedCutthroat; Tormented Cutthroat; ; ff99FF99; ms-ghost.png
 Metadata/Monsters/Spirit/TormentedEmbezzler; Tormented Embezzler; ; ffFF00FF;ms-ghost.png
-Metadata/Monsters/Spirit/TormentedCounterfeiter; Tormented Forger; ; ff99FF99; ms-ghost.png
 Metadata/Monsters/Spirit/TormentedMartyr; Tormented Martyr; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedMutilator; Tormented Mutilator; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedNecromancer; Tormented Necromancer; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedPoisoner; Tormented Poisoner; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedRogue; Tormented Rogue; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedLibrarian; Tormented Seditionist; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedSmuggler; Tormented Smuggler; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedSpy; Tormented Spy; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedExperimenter; Tormented Storm Cultist; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedThief; Tormented Thief; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedThug; Tormented Thug; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedCorrupter; Tormented Vaal Cultist; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedWarlord; Tormented Warlord; ; ff99FF99; ms-ghost.png
-Metadata/Monsters/Spirit/TormentedFisherman; Tormented Illegal Fisherman; ; ffFF00FF;ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedArsonist; Tormented Arsonist; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedFreezer; Tormented Aurora Cultist; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedBlasphemer; Tormented Blasphemer; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedCannibal; Tormented Cannibal; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedCharlatan; Tormented Charlatan; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedCutthroat; Tormented Cutthroat; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedCounterfeiter; Tormented Forger; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedMutilator; Tormented Mutilator; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedNecromancer; Tormented Necromancer; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedPoisoner; Tormented Poisoner; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedRogue; Tormented Rogue; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedLibrarian; Tormented Seditionist; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedSmuggler; Tormented Smuggler; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedSpy; Tormented Spy; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedExperimenter; Tormented Storm Cultist; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedThief; Tormented Thief; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedThug; Tormented Thug; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedCorrupter; Tormented Vaal Cultist; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedWarlord; Tormented Warlord; ; ff99FF99; ms-ghost.png
+# Metadata/Monsters/Spirit/TormentedFisherman; Tormented Illegal Fisherman; ; ffFF00FF;ms-ghost.png
 
 Metadata/Monsters/Squid/SquidBossSideArea; The All-seeing Eye
 Metadata/Monsters/Goatman/GoatmanLeapBossSideArea; Konu, Maker of Wind
