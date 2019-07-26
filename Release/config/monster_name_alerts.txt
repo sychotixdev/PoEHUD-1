@@ -36,6 +36,9 @@ Metadata/Monsters/Exiles/ExileScion3; Exile Lael Furia;attention.wav; ffFEC076; 
 
 Metadata/Monsters/Spirit/TormentedEmbezzler; Tormented Embezzler; ; ffFF00FF;ms-ghost.png
 Metadata/Monsters/Spirit/TormentedMartyr; Tormented Martyr; ; ff99FF99; ms-ghost.png
+Metadata/Monsters/Spirit/TormentedTrespasser; Tormented Heretic; ; ff99FF99; ms-ghost.png
+Metadata/Monsters/Spirit/TormentedBetrayer; Tormented Betrayer; ; ff99FF99; ms-ghost.png
+Metadata/Monsters/Spirit/TormentedFelon; Tormented Graverobber; ; ff99FF99; ms-ghost.png
 # Metadata/Monsters/Spirit/TormentedArsonist; Tormented Arsonist; ; ff99FF99; ms-ghost.png
 # Metadata/Monsters/Spirit/TormentedFreezer; Tormented Aurora Cultist; ; ff99FF99; ms-ghost.png
 # Metadata/Monsters/Spirit/TormentedBlasphemer; Tormented Blasphemer; ; ff99FF99; ms-ghost.png
