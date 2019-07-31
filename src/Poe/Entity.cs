@@ -15,8 +15,7 @@ namespace PoeHUD.Poe
         private long ComponentLookup => GetObject<EntityComponentLookupPart2>((long)GetObject<EntityInternal>((long)Structure.entityInternal).ComponentLookupPart1).ComponentLookupPart2;
         private long ComponentList => (long)Structure.componentList;
         private string _path;
-        public string Path => _path = M.ReadStringU((long)GetObject<EntityInternal>((long)Structure.entityInternal).Path);
-        //public string Path => _path ?? (_path = M.ReadStringU(M.ReadLong(Address, 0x18)));
+        public string Path => _path ?? (_path = M.ReadStringU((long)GetObject<EntityInternal>((long)Structure.entityInternal).Path));
 
         public string Metadata
         {
@@ -44,9 +43,9 @@ namespace PoeHUD.Poe
         /// <summary>
         /// 0x65004D = "Me"(4 bytes) from word Metadata
         /// </summary>
-        public bool IsValid => Address != 0 && M.ReadInt((long)GetObject<EntityInternal>((long)Structure.entityInternal).Path) == 0x65004D;
+        public bool IsValid => Address != 0 && Path.StartsWith("Met");
 
-        public uint Id => (uint)Structure.componentList;// << 32 ^ Address;
+        public uint Id => (uint)Structure.id;// << 32 ^ Address;
         public int InventoryId => Structure.inventoryId;
 
         /// if you want to find parent(child) of Entity (for essence mobs) - it will be at 0x48 in a deph of 2-3 in first pointers

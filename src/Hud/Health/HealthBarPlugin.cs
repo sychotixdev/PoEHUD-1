@@ -9,6 +9,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -63,6 +64,7 @@ namespace PoeHUD.Hud.Health
                     Vector2 mobScreenCoords = camera.WorldToScreen(worldCoords.Translate(0, 0, -170), healthBar.Entity);
                     if (mobScreenCoords != new Vector2())
                     {
+                        Debug.WriteLine($"mobScreenCoords {mobScreenCoords}", 5);
                         float scaledWidth = healthBar.Settings.Width * windowSize.Width;
                         float scaledHeight = healthBar.Settings.Height * windowSize.Height;
                         Color color = healthBar.Settings.Color;
@@ -74,7 +76,10 @@ namespace PoeHUD.Hud.Health
                         var windowRect = GameController.Window.GetWindowRectangle();
                         var fixNotFullscreen = new RectangleF(windowRect.X + bg.X, windowRect.Y + bg.Y, bg.Width, bg.Height);
                         if (!windowRect.Intersects(fixNotFullscreen))
+                        {
+                            Debug.WriteLine($"Not Intersect thing", 5);
                             continue;
+                        }
                         if (hpPercent <= 0.1f)
                         {
                             color = healthBar.Settings.Under10Percent;
