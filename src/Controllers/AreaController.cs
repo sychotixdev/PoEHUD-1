@@ -22,7 +22,6 @@ namespace PoeHUD.Controllers
             if (!_gController.InGame)
                 return;
 
-            _gController.Cache.UpdateCache();
             var ingameData = _gController.Game.IngameState.Data;
             var curAreaHash = ingameData.CurrentAreaHash;
 

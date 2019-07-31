@@ -39,7 +39,7 @@ namespace PoeHUD.Hud.Health
             (new Coroutine(() => {foreach (var healthBar in healthBars)
                 {
                     healthBar.Value.RemoveAll(hp => !hp.Entity.IsValid);
-                } }, new WaitRender(10), nameof(HealthBarPlugin), "RemoveAll"))
+                } }, new WaitRender(1), nameof(HealthBarPlugin), "RemoveAll"))
                 .AutoRestart(GameController.CoroutineRunner).Run();
         }
 
@@ -64,7 +64,6 @@ namespace PoeHUD.Hud.Health
                     Vector2 mobScreenCoords = camera.WorldToScreen(worldCoords.Translate(0, 0, -170), healthBar.Entity);
                     if (mobScreenCoords != new Vector2())
                     {
-                        Debug.WriteLine($"mobScreenCoords {mobScreenCoords}", 5);
                         float scaledWidth = healthBar.Settings.Width * windowSize.Width;
                         float scaledHeight = healthBar.Settings.Height * windowSize.Height;
                         Color color = healthBar.Settings.Color;

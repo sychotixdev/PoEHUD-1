@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace PoeHUD.Hud
@@ -56,7 +57,7 @@ namespace PoeHUD.Hud
             [FieldOffset(0x370)] public readonly IntPtr ingameData;
             [FieldOffset(0x378)] public readonly IntPtr serverData;
             [FieldOffset(0x4A0)] public readonly IntPtr uiRoot;
-            [FieldOffset(0xF4C)] public readonly IntPtr camera;
+            [FieldOffset(0xF4C)] public readonly Camera camera;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -64,6 +65,7 @@ namespace PoeHUD.Hud
         {
             [FieldOffset(0x4)] public readonly int width;
             [FieldOffset(0x8)] public readonly int height;
+            [FieldOffset(0x5C)] public readonly Matrix4x4 worldToScreenMatrix;
             [FieldOffset(0xD4)] public readonly float positionX;
             [FieldOffset(0xD8)] public readonly float positionY;
             [FieldOffset(0xDC)] public readonly float positionZ;

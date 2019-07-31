@@ -21,10 +21,6 @@ namespace PoeHUD.Framework
 
         public RectangleF GetWindowRectangle()
         {
-            if (GameController.Instance.Cache.Enable)
-            {
-                return GameController.Instance.Cache.Window;
-            }
             return GetWindowRectangleReal();
         }
         public RectangleF GetWindowRectangleReal()

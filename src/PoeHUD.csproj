@@ -191,8 +191,6 @@
     <Compile Include="Models\Attributes\HideInReflectionAttibute.cs" />
     <Compile Include="Models\Attributes\StaticOffsetFieldDebugAttribute.cs" />
     <Compile Include="Models\BaseItemType.cs" />
-    <Compile Include="Models\Cache.cs" />
-    <Compile Include="Models\CacheComponent\PlayerCache.cs" />
     <Compile Include="Models\ConfigLineBase.cs" />
     <Compile Include="Models\Enums\DiagnosticInfoType.cs" />
     <Compile Include="Models\Enums\GameStat.cs" />
@@ -340,6 +338,9 @@
   <ItemGroup>
     <Compile Include="Hud\Menu\MainMenuWindow.cs" />
     <Content Include="poehud.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\CacheComponent\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

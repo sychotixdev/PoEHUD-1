@@ -31,7 +31,6 @@ namespace PoeHUD.Controllers
             Area = new AreaController(this);
             EntityListWrapper = new EntityListWrapper(this);
             Window = new GameWindow(memory.Process);
-            Cache = new Cache();
           
             Files = new FsController(memory);
             InGame = InGameReal;
@@ -44,7 +43,6 @@ namespace PoeHUD.Controllers
         public GameWindow Window { get; private set; }
         public TheGame Game { get; }
         public AreaController Area { get; }
-        public Cache Cache { get; private set; } 
         public Memory Memory { get; private set; }
         public Stopwatch MainTimer { get; }
         public IEnumerable<EntityWrapper> Entities => EntityListWrapper.Entities;
@@ -166,7 +164,6 @@ namespace PoeHUD.Controllers
             var updateGameState = (new Coroutine(() => { 
                InGame = InGameReal;
                 IsForeGroundCache = Performance.AlwaysForeground || WinApi.IsForegroundWindow(Window.Process.MainWindowHandle); 
-               Cache.ForceUpdateWindowCache();
                IsLoading = Game.IsGameLoading;
            }, updateIngameState, nameof(GameController), "Update Game State"){Priority = CoroutinePriority.Critical}).Run();
             
@@ -175,7 +172,6 @@ namespace PoeHUD.Controllers
             {
                 loopLimit = Performance.LoopLimit;
                 skipTicksRender = 1000f/Performance.RenderLimit;
-                Cache.Enable = Performance.Cache;
                 updateAreaLimit = Performance.UpdateAreaLimit;
                 updateEntityLimit = Performance.UpdateEntityDataLimit;
                 updateIngameState = Performance.UpdateIngemeStateLimit;
@@ -190,7 +186,6 @@ namespace PoeHUD.Controllers
                     ?.UpdateCondtion(new WaitTime(Performance.UpdateAreaLimit));};
                 Performance.UpdateIngemeStateLimit.OnValueChanged += () =>{     CoroutineRunner.Coroutines.Concat(CoroutineRunnerParallel.Coroutines).FirstOrDefault(x => x.Name == "Update Entity")
                     ?.UpdateCondtion(new WaitTime(Performance.UpdateIngemeStateLimit));};
-                Performance.Cache.OnValueChanged += () => { Cache.Enable = Performance.Cache; };
                 Performance.DpsUpdateTime.OnValueChanged += () =>
                 {
                     CoroutineRunner.Coroutines.Concat(CoroutineRunnerParallel.Coroutines).FirstOrDefault(x=>x.Name == "Calculate DPS")?.UpdateCondtion(new WaitTime(Performance.DpsUpdateTime));

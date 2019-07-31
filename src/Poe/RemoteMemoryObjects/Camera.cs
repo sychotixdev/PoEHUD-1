@@ -1,6 +1,7 @@
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
 using System;
+using System.Diagnostics;
 using System.Numerics;
 using PoeHUD.Controllers;
 using PoeHUD.Hud;
@@ -11,8 +12,16 @@ using Vector4 = System.Numerics.Vector4;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class Camera : StructuredRemoteMemoryObject<EnumOffsets.Camera>
+    public class Camera
     {
+        protected EnumOffsets.Camera Structure { get; set; }
+        protected TheGame Game { get; set; }
+        public Camera(TheGame game, EnumOffsets.Camera structure)
+        {
+            this.Structure = structure;
+            this.Game = game;
+        }
+
         public int Width => Structure.width;
         public int Height => Structure.height;
         public float ZFar => Structure.zFar;
@@ -27,7 +36,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             Entity localPlayer = Game.IngameState.Data.LocalPlayer;
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;
             bool isMoving = false;
-            isMoving = GameController.Instance.Cache.Enable ? GameController.Instance.Cache.Player.Actor.isMoving : localPlayer.GetComponent<Actor>().isMoving;
+            isMoving = localPlayer.GetComponent<Actor>().isMoving;
             var playerMoving = isplayer && isMoving;
             var resultCord = WorldToScreen(vec3);
             if (playerMoving)
@@ -44,20 +53,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             return resultCord;
         }
 
-        public unsafe Vector2 WorldToScreen(Vector3 vec3)
+        public Vector2 WorldToScreen(Vector3 vec3)
         {
             float x, y;
-            long addr = Address + 0x5C;
-            fixed (byte* numRef = M.ReadBytes(addr, 0x40))
-            {
-                Matrix4x4 matrix = *(Matrix4x4*)numRef;
-                Vector4 cord = *(Vector4*)&vec3;
-                cord.W = 1;
-                cord = Vector4.Transform(cord, matrix);
-                cord = Vector4.Divide(cord, cord.W);
-                x = (cord.X + 1.0f) * 0.5f * Width;
-                y = (1.0f - cord.Y) * 0.5f * Height;
-            }
+            Matrix4x4 matrix = Structure.worldToScreenMatrix;
+            Vector4 cord = new Vector4(vec3.X, vec3.Y, vec3.Z, 0);
+            cord.W = 1;
+            cord = Vector4.Transform(cord, matrix);
+            cord = Vector4.Divide(cord, cord.W);
+            Debug.WriteLine($"Width {Width} Height {Height}");
+            x = (cord.X + 1.0f) * 0.5f * Width;
+            y = (1.0f - cord.Y) * 0.5f * Height;
             return new Vector2(x, y);
         }
     }
