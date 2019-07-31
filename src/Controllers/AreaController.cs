@@ -24,13 +24,12 @@ namespace PoeHUD.Controllers
 
             _gController.Cache.UpdateCache();
             var ingameData = _gController.Game.IngameState.Data;
-            var areaTemplate = ingameData.CurrentArea;
             var curAreaHash = ingameData.CurrentAreaHash;
 
             if (CurrentArea != null && curAreaHash == CurrentArea.Hash)
                 return;
 
-            CurrentArea = new AreaInstance(areaTemplate, curAreaHash, ingameData.CurrentAreaLevel);
+            CurrentArea = new AreaInstance(curAreaHash);
             AreaChange?.Invoke(this);
             OnAreaChange?.Invoke(this);
         }

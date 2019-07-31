@@ -13,7 +13,6 @@ using PoeHUD.Poe;
 using PoeHUD.Models;
 using PoeHUD.Poe.Components;
 using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.EntityComponents;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Poe.FilesInMemory;
 using System.Windows.Forms;
@@ -74,40 +73,11 @@ namespace PoeHUD.Hud
                 }
             });
 
-            CoreMenu.Childs.Add(new InbuildPluginMenu()
-            {
-                Plugin = new PluginHolder("Advanced Tooltip", settingsHub.AdvancedTooltipSettings),
-                Childs = new List<InbuildPluginMenu>()
-                {
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Item level", settingsHub.AdvancedTooltipSettings.ItemLevel) },
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Item mods", settingsHub.AdvancedTooltipSettings.ItemMods) },
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Weapon Dps", settingsHub.AdvancedTooltipSettings.WeaponDps) },
-                }
-            });
-
-            CoreMenu.Childs.Add(new InbuildPluginMenu()
-            {
-                Plugin = new PluginHolder("Item alert", settingsHub.ItemAlertSettings),
-                Childs = new List<InbuildPluginMenu>()
-                {
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Border Settings", settingsHub.ItemAlertSettings.BorderSettings) },
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Armour Settings", settingsHub.ItemAlertSettings.QualityItems.Armour)},
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Flask", settingsHub.ItemAlertSettings.QualityItems.Flask) },
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality SkillGem", settingsHub.ItemAlertSettings.QualityItems.SkillGem) },
-                    new InbuildPluginMenu(){ Plugin = new PluginHolder("Quality Weapon", settingsHub.ItemAlertSettings.QualityItems.Weapon) }
-                }
-            });
-
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Xph & area", settingsHub.XpRateSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Preload alert", settingsHub.PreloadAlertSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster alert", settingsHub.MonsterTrackerSettings) });  
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster kills", settingsHub.KillCounterSettings) });
-            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Show dps", settingsHub.DpsMeterSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons", settingsHub.MapIconsSettings) });
 	        CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons Size", settingsHub.PoiTrackerSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Perfomance", settingsHub.PerformanceSettings) });
-
-
 
             var themeEditorDraw = new ThemeEditor();
             themeEditorDraw.CanBeEnabledInOptions = false;
@@ -184,30 +154,6 @@ namespace PoeHUD.Hud
                     else
                     {
                         Settings.CorePluginsTreeState = TreeNodeFlags.OpenOnArrow;
-                    }             
-                 
-                    if (ImGui.TreeNodeEx("Installed Plugins", Settings.InstalledPluginsTreeNode))
-                    {
-                        foreach (var plugin in PluginExtensionPlugin.Plugins)
-                        {
-                            if (Settings.DeveloperMode.Value && Settings.ShowPluginsMS.Value)
-                            {
-                                var extPlugin = (plugin as ExternalPluginHolder).BPlugin;
-	                            if (extPlugin == null)//This can happen while plugin update (using plugin updator) or recompile
-		                            continue;
-                                ImGuiExtension.Label(extPlugin.AwerageMs.ToString());
-                                ImGui.SameLine();
-                            }
-                            
-                            DrawPlugin(plugin, 20);
-                        }
-
-                        ImGui.TreePop();
-                        Settings.InstalledPluginsTreeNode = TreeNodeFlags.DefaultOpen;
-                    }
-                    else
-                    {
-                        Settings.InstalledPluginsTreeNode = (TreeNodeFlags)0;
                     }
                 }
 
@@ -220,22 +166,6 @@ namespace PoeHUD.Hud
                     ImGuiNative.igGetContentRegionAvail(out newcontentRegionArea);
                     ImGui.BeginChild("PluginOptions", new Vector2(newcontentRegionArea.X, newcontentRegionArea.Y), true, WindowFlags.Default);
 
-                    var extPlugin = SelectedPlugin as ExternalPluginHolder;
-                    if (Settings.DeveloperMode.Value && extPlugin != null)
-                    {
-                        if (ImGuiExtension.Button("Reload Plugin"))
-                            extPlugin.ReloadPlugin(true);
-
-                        if (extPlugin.BPlugin != null)
-                        {
-                            ImGui.SameLine();
-                            ImGuiExtension.Label("CurrentMS: " + extPlugin.BPlugin.CurrentMs);
-                            ImGui.SameLine();
-                            ImGuiExtension.Label("AwerageMS: " + extPlugin.BPlugin.AwerageMs);
-                            ImGui.SameLine();
-                            ImGuiExtension.Label("TopMS: " + extPlugin.BPlugin.TopMs);
-                        }
-                    }
                     SelectedPlugin.DrawSettingsMenu();
 
                     ImGui.EndChild();

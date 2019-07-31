@@ -21,7 +21,6 @@ namespace PoeHUD.Hud.Menu
 
         public bool IsCollapsed = false;
         public TreeNodeFlags CorePluginsTreeState;
-        public TreeNodeFlags InstalledPluginsTreeNode;
 
         [Menu("Key Settings", 0)]
         public EmptyNode KeyMenuRoot { get; set; } = new EmptyNode();

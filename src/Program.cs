@@ -99,9 +99,6 @@ namespace PoeHUD
                 sb.Append("IngameUi: " + gameController.Game.IngameState.IngameUi.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 
-                sb.Append("InventoryPanel: " + gameController.Game.IngameState.IngameUi.InventoryPanel.Address.ToString("X"));
-                sb.Append(System.Environment.NewLine);
-
                 sb.Append("UIRoot: " + gameController.Game.IngameState.UIRoot.Address.ToString("X"));
                 sb.Append(System.Environment.NewLine);
 

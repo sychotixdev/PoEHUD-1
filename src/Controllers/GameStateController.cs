@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using PoeHUD.DebugPlug;
 using PoeHUD.Framework;
-using PoeHUD.Framework.Helpers;
-using PoeHUD.Hud.Performance;
-using PoeHUD.Hud.Settings;
-using PoeHUD.Models;
-using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using PoeHUD.Hud;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class GameStateController : RemoteMemoryObject
+    public class GameStateController : StructuredRemoteMemoryObject<EnumOffsets.GameStateController>
     {
         public GameStateController(Memory m, TheGame game)
         {
@@ -26,7 +14,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             M = m;
             Instance = this;
             Address = m.ReadLong(Offsets.GameStateOffset + m.AddressOfProcess);
-            AllGameStates = ReadHashMap(Address + 0x48);
+            AllGameStates = ReadHashMap((long)Structure.allGameStates);
 			foreach (var _state in AllGameStates)
 			{
 				System.Console.WriteLine(_state.Key + ": 0x" + _state.Value.Address.ToString("x8"));
@@ -73,9 +61,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private static bool GameStateActive(long stateAddress)
         {
             var M = GameController.Instance.Memory;
-            var address = Instance.Address + 0x20;
-            var start = M.ReadLong(address);
-            var last = M.ReadLong(address + 0x10);
+            var start = (long)Instance.Structure.activeGameStatesStart;
+            var last = (long)Instance.Structure.activeGameStatesEnd;
 
             var length = (int)(last - start);
             var bytes = M.ReadBytes(start, length);
@@ -93,7 +80,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var result = new Dictionary<string, GameState>();
 
             Stack<GameStateHashNode> stack = new Stack<GameStateHashNode>();
-            var startNode = ReadObject<GameStateHashNode>(pointer);
+            var startNode = GetObject<GameStateHashNode>(pointer);
             var item = startNode.Root;
             stack.Push(item);
 
@@ -114,18 +101,18 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             }
             return result;
         }
-        private class GameStateHashNode : RemoteMemoryObject
+        private class GameStateHashNode : StructuredRemoteMemoryObject<EnumOffsets.GameStateHashNode>
         {
-            public GameStateHashNode Previous => ReadObject<GameStateHashNode>(Address);
-            public GameStateHashNode Root => ReadObject<GameStateHashNode>(Address + 0x8);
-            public GameStateHashNode Next => ReadObject<GameStateHashNode>(Address + 0x10);
+            public GameStateHashNode Previous => GetObject<GameStateHashNode>((long)Structure.previous);
+            public GameStateHashNode Root => GetObject<GameStateHashNode>((long)Structure.root);
+            public GameStateHashNode Next => GetObject<GameStateHashNode>((long)Structure.next);
             //public readonly byte Unknown;
-            public bool IsNull => Address != 0 && M.ReadByte(Address + 0x19) != 0;
+            public bool IsNull => Address != 0 && Structure.IsNull != 0;
             //private readonly byte byte_0;
             //private readonly byte byte_1;
             public string Key => M.ReadNativeString(Address + 0x20);
             //public readonly int Useless;
-            public GameState Value1 => ReadObject<GameState>(Address + 0x40);
+            public GameState Value1 => GetObject<GameState>((long)Structure.value1);
             //public readonly long Value2;
         }
     }
@@ -146,11 +133,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
         //UPDATE: This is a byte.
         public bool IsLoading => M.ReadLong(Address + 0xD8) == 1; 
-        public string AreaName => M.ReadStringU(M.ReadLong(Address + 0x1F0));
 
         public override string ToString()
         {
-            return $"{AreaName}, IsLoading: {IsLoading}";
+            return $"IsLoading: {IsLoading}";
         }
     }
 }

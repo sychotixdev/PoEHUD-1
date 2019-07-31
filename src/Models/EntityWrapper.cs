@@ -46,8 +46,6 @@ namespace PoeHUD.Models
         public long Address => internalEntity.Address;
         public uint Id => cachedId;
         public bool IsHostile => internalEntity.IsHostile;
-        public bool IsTargetable => internalEntity.IsTargetable;
-        public bool CannotDie => internalEntity.CannotDieAura;
         public bool IsHidden => internalEntity.IsHidden;
         public bool CannotBeDamaged => internalEntity.CannotBeDamagedStat;
         public bool Invincible => internalEntity.CannotBeDamagedStat;
@@ -55,10 +53,8 @@ namespace PoeHUD.Models
         public bool IsActive => internalEntity.IsActive;
         public long LongId { get; }
         public bool IsAlive => internalEntity.IsAlive;
-        public int DistanceFromPlayer => GetDistanceFromPlayer();
         public Positioned PositionedComp => internalEntity.PositionedComp;
         public Vector3 Pos => internalEntity.Pos;
-        public Vector3 BoundsCenterPos => internalEntity.PosEntityCenter;
 
         // Legion
         public bool IsLegion => Path.StartsWith("Metadata/Monsters/LegionLeague") || Path.StartsWith("Metadata/Chests/LegionChests");

@@ -3,6 +3,7 @@ using PoeHUD.Poe.Components;
 using System;
 using System.Numerics;
 using PoeHUD.Controllers;
+using PoeHUD.Hud;
 using PoeHUD.Models.Attributes;
 using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
@@ -10,12 +11,12 @@ using Vector4 = System.Numerics.Vector4;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class Camera : RemoteMemoryObject
+    public class Camera : StructuredRemoteMemoryObject<EnumOffsets.Camera>
     {
-        public int Width => M.ReadInt(Address + 0x4);
-        public int Height => M.ReadInt(Address + 0x8);
-        public float ZFar => M.ReadFloat(Address + 0x1C8);
-        public Vector3 Position => new Vector3(M.ReadFloat(Address + 0xD4), M.ReadFloat(Address + 0xD8), M.ReadFloat(Address + 0xDC));
+        public int Width => Structure.width;
+        public int Height => Structure.height;
+        public float ZFar => Structure.zFar;
+        public Vector3 Position => new Vector3(Structure.positionX, Structure.positionY, Structure.positionZ);
         //cameraarray 0x17c
 
         private static Vector2 oldplayerCord;

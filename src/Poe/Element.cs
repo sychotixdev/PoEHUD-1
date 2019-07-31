@@ -1,13 +1,15 @@
+using System;
 using SharpDX;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Hud;
 using PoeHUD.Poe.Elements;
 
 namespace PoeHUD.Poe
 {
     using RemoteMemoryObjects;
 
-    public class Element : RemoteMemoryObject
+    public class Element : StructuredRemoteMemoryObject<EnumOffsets.Element>
     {
         public const int OffsetBuffers = 0;//0x6EC;
         const int ChildOffset = 0x38;
@@ -17,20 +19,15 @@ namespace PoeHUD.Poe
         // 16 dup <128-bytes structure>
         // then the rest is
         
-        public long ChildCount => (M.ReadLong(Address + ChildOffset + 8 + OffsetBuffers) - M.ReadLong(Address + ChildOffset + OffsetBuffers)) / 8;
-        public bool IsVisibleLocal => (M.ReadByte(Address + 0x111) & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
-        public Element Root => GetObject<Element>(M.ReadLong(Address + 0x88 + OffsetBuffers, 0xE8));
-        public Element Parent => ReadObject<Element>(Address + 0x90 + OffsetBuffers);
-        public float X => M.ReadFloat(Address + 0x98 + OffsetBuffers);
-        public float Y => M.ReadFloat(Address + 0x9c + OffsetBuffers);
-        public Element Tooltip => ReadObject<Element>(Address + 0x338); //0x7F0
-        public float Scale => M.ReadFloat(Address + 0x108 + OffsetBuffers);
-        public float Width => M.ReadFloat(Address + 0x130 + OffsetBuffers);
-        public float Height => M.ReadFloat(Address + 0x134 + OffsetBuffers);
-
-        // Always fix EntityLabel offset in a new patch. Don't change the line over here
-        public string Text => this.AsObject<EntityLabel>().Text;
-        public bool isHighlighted => M.ReadByte(Address + 0x178) > 0;
+        public long ChildCount => ((long)Structure.childEnd -  (long)Structure.childStart) / 8;
+        public bool IsVisibleLocal => (Structure.isVisibleLocal & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
+        public Element Root => GetObject<Element>((long)GetObjectAt<ElementRootPart2>((long)Structure.rootPart1).RootPart2);
+        public Element Parent => GetObject<Element>((long)Structure.parent);
+        public float X => Structure.x;
+        public float Y => Structure.y;
+        public float Scale => Structure.scale;
+        public float Width => Structure.width;
+        public float Height => Structure.height;
 
         public bool IsVisible
         {
@@ -42,7 +39,7 @@ namespace PoeHUD.Poe
         protected List<T> GetChildren<T>() where T : Element, new() {
            
             var list = new List<T>();
-            if (M.ReadLong(Address + ChildOffset + 8) == 0 || M.ReadLong(Address + ChildOffset) == 0 ||
+            if ((long)Structure.childEnd == 0 || (long)Structure.childStart == 0 ||
                 ChildCount > 1000)
             {
                 return list;
@@ -118,5 +115,10 @@ namespace PoeHUD.Poe
         }
 
 	    public Element this[int index] => GetChildAtIndex(index);
+    }
+
+    public class ElementRootPart2 : StructuredRemoteMemoryObject<EnumOffsets.ElementRootPart2>
+    {
+        public IntPtr RootPart2 => Structure.rootPart2;
     }
 }

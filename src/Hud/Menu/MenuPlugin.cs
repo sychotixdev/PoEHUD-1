@@ -73,10 +73,6 @@ namespace PoeHUD.Hud.Menu
                 return io.GetNativePointer()->WantTextInput == 1 && isPoeGameVisible;
             }
         }
-        private bool PoeIsHoveringInventoryStashTradeItem()
-        {
-            return GameController.Game.IngameState.UIHoverTooltip.Address != 0x00;
-        }
 
 
 
@@ -209,7 +205,7 @@ namespace PoeHUD.Hud.Menu
             }
             unsafe
             {
-                if (ImGuiWantCaptureMouse(io) && PoeIsHoveringInventoryStashTradeItem())
+                if (ImGuiWantCaptureMouse(io))
                 {
                     e.Handled = true;
                 }

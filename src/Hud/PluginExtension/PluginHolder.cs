@@ -18,10 +18,8 @@ namespace PoeHUD.Hud.PluginExtension
     /// </summary>
     public class PluginHolder
     {
-        private readonly List<StashTabNode> _stashTabNodesToUnload = new List<StashTabNode>();
         internal readonly List<BaseSettingsDrawer> SettingPropertyDrawers = new List<BaseSettingsDrawer>();
         private int _childUniqId;
-        protected PluginExtensionPlugin API;
 
         public PluginHolder(string pluginName)
         {
@@ -123,7 +121,7 @@ namespace PoeHUD.Hud.PluginExtension
                     result.Add(drawer);
                 else
                 {
-                    BasePlugin.LogError($"{PluginName}: Possible staskoverflow or duplicating drawers detected while generating menu. " +
+                    PluginLogger.LogError($"{PluginName}: Possible staskoverflow or duplicating drawers detected while generating menu. " +
                                         $"Drawer SettingName: {drawer.SettingName}, Id: {drawer.SettingId}", 5);
                 }
             }
@@ -134,8 +132,6 @@ namespace PoeHUD.Hud.PluginExtension
         internal void InitializeSettingsMenu(bool ignoreAttribute = false) //ignoreAttribute - for Core plugins
         {
             SettingPropertyDrawers.Clear();
-            _stashTabNodesToUnload.ForEach(StashTabController.UnregisterStashNode);
-            _stashTabNodesToUnload.Clear();
 
             var settingsProps = Settings.GetType().GetProperties();
 
@@ -157,7 +153,7 @@ namespace PoeHUD.Hud.PluginExtension
 
                     if (DrawersIds.Contains(drawerId))
                     {
-                        BasePlugin.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. " +
+                        PluginLogger.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. " +
                                             $"Fixed by giving a new uniq ID. Property: {property.Name}", 5);
                     }
 
@@ -179,13 +175,6 @@ namespace PoeHUD.Hud.PluginExtension
                         drawer = new ComboBoxSettingDrawer(property.GetValue(Settings) as ListNode, menuAttrib.MenuName, drawerId);
                     else if (propType == typeof(FileNode) || propType.IsSubclassOf(typeof(FileNode)))
                         drawer = new FilePickerDrawer(property.GetValue(Settings) as FileNode, menuAttrib.MenuName, drawerId);
-                    else if (propType == typeof(StashTabNode) || propType.IsSubclassOf(typeof(StashTabNode)))
-                    {
-                        var stashNode = property.GetValue(Settings) as StashTabNode;
-                        _stashTabNodesToUnload.Add(stashNode);
-                        StashTabController.RegisterStashNode(stashNode);
-                        drawer = new StashTabNodeSettingDrawer(stashNode, menuAttrib.MenuName, drawerId);
-                    }
                     else if (propType.IsGenericType)
                     {
                         var genericType = propType.GetGenericTypeDefinition();
@@ -282,7 +271,7 @@ namespace PoeHUD.Hud.PluginExtension
                                 }
                                 else
                                 {
-                                    BasePlugin.LogError(
+                                    PluginLogger.LogError(
                                         $"{PluginName}: Generic node argument for range node '{argType.Name}' is not defined in code. Range node type: " +
                                         propType.Name, 5);
                                 }
@@ -290,13 +279,13 @@ namespace PoeHUD.Hud.PluginExtension
                                 drawer = valueDrawer;
                             }
                             else
-                                BasePlugin.LogError($"{PluginName}: Can't get GenericTypeArguments from option type: {propType.Name}", 5);
+                                PluginLogger.LogError($"{PluginName}: Can't get GenericTypeArguments from option type: {propType.Name}", 5);
                         }
                         else
-                            BasePlugin.LogError($"{PluginName}: Generic option node is not defined in code: {genericType.Name}", 5);
+                            PluginLogger.LogError($"{PluginName}: Generic option node is not defined in code: {genericType.Name}", 5);
                     }
                     else
-                        BasePlugin.LogError($"{PluginName}: Type of option node is not defined: {propType.Name}", 5);
+                        PluginLogger.LogError($"{PluginName}: Type of option node is not defined: {propType.Name}", 5);
 
                     if (drawer != null)
                     {
@@ -312,14 +301,14 @@ namespace PoeHUD.Hud.PluginExtension
                                 continue;
                             }
 
-                            BasePlugin.LogError(
+                            PluginLogger.LogError(
                                 $"{PluginName}: Can't find child with id {menuAttrib.parentIndex} to parent node. Property {property.Name}", 5);
                         }
 
                         SettingPropertyDrawers.Add(drawer);
                     }
                     else
-                        BasePlugin.LogError($"{PluginName}: Type of option node is not defined: {propType.Name}", 5);
+                        PluginLogger.LogError($"{PluginName}: Type of option node is not defined: {propType.Name}", 5);
                 }
             }
         }

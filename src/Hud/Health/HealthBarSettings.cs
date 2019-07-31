@@ -7,7 +7,6 @@ namespace PoeHUD.Hud.Health
         public HealthBarSettings()
         {
             Enable = false;
-            ShowInTown = false;
             ShowES = true;
             ShowIncrements = true;
             ShowEnemies = true;
@@ -21,7 +20,6 @@ namespace PoeHUD.Hud.Health
             DebuffPanelIconSize = new RangeNode<int>(20, 15, 40);
         }
 
-        public ToggleNode ShowInTown { get; set; }
         public ToggleNode ShowES { get; set; }
         public ToggleNode ShowIncrements { get; set; }
         public ToggleNode ShowEnemies { get; set; }

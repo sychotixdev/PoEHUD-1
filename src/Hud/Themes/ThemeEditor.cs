@@ -1,48 +1,15 @@
 ﻿using System;
-using SharpDX.Direct3D9;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using PoeHUD.Hud.Menu;
 using PoeHUD.Hud.Settings;
-using PoeHUD.Models.Enums;
-using PoeHUD.Plugins;
-using PoeHUD.Poe;
-using PoeHUD.Models;
-using PoeHUD.Poe.Components;
-using PoeHUD.Poe.Elements;
-using PoeHUD.Poe.EntityComponents;
-using PoeHUD.Poe.RemoteMemoryObjects;
-using PoeHUD.Poe.FilesInMemory;
-using System.Windows.Forms;
 using ImGuiNET;
 using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
 using Vector2 = System.Numerics.Vector2;
 using PoeHUD.Hud.PluginExtension;
-using PoeHUD.Controllers;
 using PoeHUD.Hud.UI;
-using PoeHUD.Plugins;
-using PoeHUD.Hud.Menu.SettingsDrawers;
 using System.Text.RegularExpressions;
-using System.Linq;
 using Newtonsoft.Json;
-using PoeHUD.Hud.Menu;
-using PoeHUD.Hud.Settings;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using SharpDX;
-using PoeHUD.Controllers;
-using PoeHUD.Framework;
-using PoeHUD.Hud.Menu;
-using PoeHUD.Hud.PluginExtension;
-using PoeHUD.Models;
-using System;
-using System.IO;
-using Graphics = PoeHUD.Hud.UI.Graphics;
 
 namespace PoeHUD.Hud.Themes
 {
@@ -86,7 +53,7 @@ namespace PoeHUD.Hud.Themes
         {
             #region
             var newSelectedTheme = ImGuiExtension.ComboBox("Select Theme", "Themes", SelectedThemeName, MainMenuWindow.Settings.Theme.Values);
-            if(SelectedThemeName != newSelectedTheme)
+            if (SelectedThemeName != newSelectedTheme)
             {
                 SelectedThemeName = newSelectedTheme;
                 LoadedTheme = LoadTheme(newSelectedTheme, false);
@@ -100,7 +67,7 @@ namespace PoeHUD.Hud.Themes
 
             ImGui.Text("");
             NewThemeName = ImGuiExtension.InputText("New theme name", NewThemeName, 200, InputTextFlags.Default);
-           
+
             if (ImGuiExtension.Button("Create new theme from current"))
             {
                 if (!string.IsNullOrEmpty(NewThemeName))
@@ -117,7 +84,7 @@ namespace PoeHUD.Hud.Themes
             }
             #endregion
             ImGui.Text("");
-            
+
             var style = ImGui.GetStyle();
 
             if (ImGui.TreeNode("Theme settings"))
@@ -156,7 +123,7 @@ namespace PoeHUD.Hud.Themes
             #region ColorsDraw
             ImGui.Text("Colors:");
             ImGui.Columns(2, "Columns", true);
-      
+
             var colorTypes = Enum.GetValues(typeof(ColorTarget)).Cast<ColorTarget>();
             var count = colorTypes.Count() / 2;
 
@@ -195,13 +162,13 @@ namespace PoeHUD.Hud.Themes
         {
             var theme = LoadTheme(fileName, true);
 
-            if(theme == null)
+            if (theme == null)
             {
-                BasePlugin.LogMessage($"Can't find theme file {fileName}, loading default.", 3);
+                PluginLogger.LogMessage($"Can't find theme file {fileName}, loading default.", 3);
                 theme = LoadTheme(DefaultThemeName, true);
-                if(theme == null)
+                if (theme == null)
                 {
-                    BasePlugin.LogMessage($"Can't find default theme file {DefaultThemeName}, Generating default and saving...", 3);
+                    PluginLogger.LogMessage($"Can't find default theme file {DefaultThemeName}, Generating default and saving...", 3);
                     theme = GenerateDefaultTheme();
                     SaveTheme(theme, DefaultThemeName);
                 }
@@ -210,7 +177,7 @@ namespace PoeHUD.Hud.Themes
         }
 
         public static void ApplyTheme(ThemeConfig theme)
-        {  
+        {
             var style = ImGui.GetStyle();
 
             style.AntiAliasedLines = theme.AntiAliasedLines;
@@ -224,7 +191,7 @@ namespace PoeHUD.Hud.Themes
             style.IndentSpacing = theme.IndentSpacing;
             style.TouchExtraPadding = theme.TouchExtraPadding;
             style.ItemInnerSpacing = theme.ItemInnerSpacing;
-         
+
             style.ItemSpacing = theme.ItemSpacing;
             style.FrameRounding = theme.FrameRounding;
             style.FramePadding = theme.FramePadding;
@@ -237,16 +204,16 @@ namespace PoeHUD.Hud.Themes
             style.AntiAliasedFill = theme.AntiAliasedFill;
             style.CurveTessellationTolerance = theme.CurveTessellationTolerance;
 
-       
+
             foreach (var color in theme.Colors)
             {
                 try
                 {
-                    if(color.Key == ColorTarget.Count)//This shit made a crash
+                    if (color.Key == ColorTarget.Count)//This shit made a crash
                         continue;
                     style.SetColor(color.Key, color.Value);
                 }
-                catch (Exception ex) { BasePlugin.LogError(ex.Message, 5); }
+                catch (Exception ex) { PluginLogger.LogError(ex.Message, 5); }
 
             }
         }
@@ -353,7 +320,7 @@ namespace PoeHUD.Hud.Themes
             }
             catch (Exception ex)
             {
-                BasePlugin.LogError($"Error while loading theme {fileName}: {ex.Message}, Generating default one", 3);
+                PluginLogger.LogError($"Error while loading theme {fileName}: {ex.Message}, Generating default one", 3);
             }
             if (nullIfNotFound)
                 return null;
@@ -377,7 +344,7 @@ namespace PoeHUD.Hud.Themes
             }
             catch (Exception ex)
             {
-                BasePlugin.LogError($"Error while loading theme: {ex.Message}", 3);
+                PluginLogger.LogError($"Error while loading theme: {ex.Message}", 3);
             }
         }
         #endregion

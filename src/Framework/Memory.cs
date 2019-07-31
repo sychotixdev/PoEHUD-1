@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PoeHUD.Controllers;
 using System.Runtime.InteropServices;
+using PoeHUD.Hud;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using SharpDX;
 

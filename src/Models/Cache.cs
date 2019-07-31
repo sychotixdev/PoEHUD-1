@@ -15,8 +15,6 @@ namespace PoeHUD.Models
         private IngameUIElements _ingameUi;
         private ServerData _serverData;
         private IngameData _data;
-        private DiagnosticElement _fpsRectangle;
-        private DiagnosticElement _latencyRectangle;
         private Entity _localPlayer;
         private RectangleF _window;
         private PlayerCache _player;
@@ -84,26 +82,6 @@ namespace PoeHUD.Models
             }
         }
 
-        public DiagnosticElement FPSRectangle
-        {
-            get => _fpsRectangle;
-            set
-            {
-                if (_fpsRectangle == null)
-                    _fpsRectangle = value;
-            }
-        }
-
-        public DiagnosticElement LatencyRectangle
-        {
-            get => _latencyRectangle;
-            set
-            {
-                if (_latencyRectangle == null)
-                    _latencyRectangle = value;
-            }
-        }
-
         public Entity LocalPlayer
         {
             get => _localPlayer;
@@ -145,8 +123,6 @@ namespace PoeHUD.Models
             _ingameUi = null;
             _serverData = null;
             _data = null;
-            _fpsRectangle = null;
-            _latencyRectangle = null;
             _localPlayer = null;
             Player.UpdateCache(_gameController.Game.IngameState.Data.LocalPlayer);
             _window = _gameController.Window.GetWindowRectangleReal();

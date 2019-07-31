@@ -8,9 +8,6 @@ namespace PoeHUD.Poe.Components
 {
     public class Mods : Component
     {
-        public string UniqueName => M.ReadStringU(M.ReadLong(Address + 0x30, 0x8, 0x4)) + M.ReadStringU(M.ReadLong(Address + 0x30, 0x18, 4));
-        public bool Identified => M.ReadByte(Address + 0x88) == 1;
-        public ItemRarity ItemRarity => (ItemRarity) M.ReadInt(Address + 0x8C);
 
         public List<ItemMod> ItemMods
         {
@@ -21,15 +18,6 @@ namespace PoeHUD.Poe.Components
                 return implicitMods.Concat(explicitMods).ToList();
             }
         }
-
-        public int FracturedMods => M.ReadByte(Address + 0x89);
-        public bool Synthesised => M.ReadByte(Address + 0x437) == 1;
-        
-        public int ItemLevel => M.ReadInt(Address + 0x434);
-        public int RequiredLevel => M.ReadInt(Address + 0x438);
-        public bool IsUsable => M.ReadByte(Address + 0x370) != 0;
-        public bool IsMirrored => M.ReadByte(Address + 0x371) != 0;
-        public ItemStats ItemStats => new ItemStats(Owner);
 
         private List<ItemMod> GetMods(int startOffset, int endOffset)
         {

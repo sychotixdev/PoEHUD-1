@@ -218,21 +218,7 @@ namespace PoeHUD.Hud.Preload
                 Parse();
             }
 
-            var UIHover = GameController.Game.IngameState.UIHover;
             var miniMap = GameController.Game.IngameState.IngameUi.Map.SmallMinimap;
-
-            if (Settings.Enable.Value && UIHover.Address != 0x00 && UIHover.Tooltip.Address != 0x00 &&
-                UIHover.Tooltip.IsVisible && UIHover.Tooltip.GetClientRect().Intersects(miniMap.GetClientRect()))
-            {
-                autoHide = true;
-                Settings.Enable.Value = false;
-            }
-            if (autoHide && (UIHover.Address == 0x00 || UIHover.Tooltip.Address == 0x00 ||
-                !UIHover.Tooltip.IsVisible))
-            {
-                autoHide = false;
-                Settings.Enable.Value = true;
-            }
 
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
@@ -244,7 +230,7 @@ namespace PoeHUD.Hud.Preload
             {
                 holdKey = false;
             }
-            if (!Settings.Enable || GameController.Area.CurrentArea.IsTown)
+            if (!Settings.Enable)
             {
                 Size = new Size2F();
                 return;

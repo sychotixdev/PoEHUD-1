@@ -46,16 +46,14 @@ namespace PoeHUD.Hud.Health
         {
             try
             {
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame ||
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsTown ||
-                !Settings.ShowInTown && GameController.Area.CurrentArea.IsHideout)
+                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame)
                 { return; }
 
                 RectangleF windowRectangle = GameController.Window.GetWindowRectangle();
                 var windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
 
                 Camera camera = GameController.Game.IngameState.Camera;
-                Func<HealthBar, bool> showHealthBar = x => x.IsShow(Settings.ShowEnemies) && !x.IsLegionAndHidden(x.Entity);
+                Func<HealthBar, bool> showHealthBar = x => x.IsShow(Settings.ShowEnemies);
                 //Not Parallel better for performance
                 //Parallel.ForEach(healthBars, x => x.Value.RemoveAll(hp => !hp.Entity.IsValid));
 

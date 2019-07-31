@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PoeHUD.Controllers;
+using PoeHUD.Hud;
 using PoeHUD.Models.Enums;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class ServerInventory : RemoteMemoryObject
+    public class ServerInventory : StructuredRemoteMemoryObject<EnumOffsets.ServerInventory>
     {
-        public InventoryTypeE InventType => (InventoryTypeE) M.ReadInt(Address);
-        public InventorySlotE InventSlot => (InventorySlotE) M.ReadInt(Address + 0x04);
-        public int Columns => M.ReadInt(Address + 0x0C);
-        public int Rows => M.ReadInt(Address + 0x10);
+        public InventoryTypeE InventType => (InventoryTypeE) Structure.inventoryType;
+        public InventorySlotE InventSlot => (InventorySlotE) Structure.inventorySlot;
+        public int Columns => Structure.columns;
+        public int Rows => Structure.rows;
 
-        public List<InventSlotItem> InventorySlotItems => ReadHashMap(Address + 0x48).Values.ToList();
-        public List<Entity> Items => ReadHashMap(Address + 0x48).Values.Select(x => x.Item).ToList();
+        public List<InventSlotItem> InventorySlotItems => ReadHashMap((long)Structure.inventorySlotItems).Values.ToList();
+        public List<Entity> Items => InventorySlotItems.Select(x => x.Item).ToList();
 
-        public int TotalItemsCounts => M.ReadInt(Address + 0x50);
-
-        public int ServerRequestCounter => M.ReadInt(Address + 0xA8);
+        public int TotalItemsCounts => Structure.totalItemsCount;
 
         /// <summary>
         /// Will return the item based on x,y format.
@@ -35,7 +34,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                long invAddr = M.ReadLong(Address + 0x30);
+                long invAddr = (long)Structure.inventoryAddress;
                 y = y * Columns;
                 long itmAddr = M.ReadLong(invAddr + ((x + y) * 8));
                 if (itmAddr <= 0)
@@ -49,7 +48,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             var result = new Dictionary<int, InventSlotItem>();
 
             Stack<HashNode> stack = new Stack<HashNode>();
-            var startNode = ReadObject<HashNode>(pointer);
+            var startNode = GetObject<HashNode>(pointer);
             var item = startNode.Root;
             stack.Push(item);
 
@@ -76,26 +75,26 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         }
 
 
-        public class HashNode : RemoteMemoryObject
+        public class HashNode : StructuredRemoteMemoryObject<EnumOffsets.HashNode>
         {
-            public HashNode Previous => ReadObject<HashNode>(Address);
-            public HashNode Root => ReadObject<HashNode>(Address + 0x8);
-            public HashNode Next => ReadObject<HashNode>(Address + 0x10);
+            public HashNode Previous => GetObject<HashNode>((long)Structure.previous);
+            public HashNode Root => GetObject<HashNode>((long)Structure.root);
+            public HashNode Next => GetObject<HashNode>((long)Structure.next);
 
             //public readonly byte Unknown;
-            public bool IsNull => Address != 0 && M.ReadByte(Address + 0x19) != 0;
+            public bool IsNull => Address != 0 && Structure.isNull != 0;
 
             //private readonly byte byte_0;
             //private readonly byte byte_1;
-            public int Key => M.ReadInt(Address + 0x20);
+            public int Key => Structure.key;
 
             //public readonly int Useless;
-            public InventSlotItem Value1 => ReadObject<InventSlotItem>(Address + 0x28);
+            public InventSlotItem Value1 => GetObject<InventSlotItem>(Structure.value1);
 
             //public readonly long Value2;
         }
 
-        public class InventSlotItem : RemoteMemoryObject
+        public class InventSlotItem : StructuredRemoteMemoryObject<EnumOffsets.InventorySlotItem>
         {
             private struct ItemMinMaxLocation
             {
@@ -121,7 +120,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 }
             };
 
-            public Entity Item => ReadObject<Entity>(Address);
+            public Entity Item => GetObject<Entity>((long)Structure.item);
 
             private ItemMinMaxLocation Location => M.IntptrToStruct<ItemMinMaxLocation>(
                 M.ReadBytes(Address + 0x08, 0x0C * sizeof(int)));
@@ -129,17 +128,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             //public byte UnknownCounter => M.ReadByte(Address + 0x18);
             //public byte UnnknownInventoryID => M.ReadByte(Address + 0x19);
 
-            private RectangleF ClientRect => GetClientRect();
 
             public Vector2 InventoryPosition => Location.InventoryPosition;
-
-            public RectangleF GetClientRect()
-            {
-                var playerInventElement = GameController.Instance.Game.IngameState.IngameUi.InventoryPanel[InventoryIndex.PlayerInventory];
-                var inventClientRect = playerInventElement.GetClientRect();
-                var cellSize = inventClientRect.Width / 12;
-                return Location.GetItemRect(inventClientRect.X, inventClientRect.Y, cellSize);
-            }
 
             public override string ToString()
             {

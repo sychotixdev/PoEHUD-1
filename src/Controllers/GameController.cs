@@ -34,7 +34,6 @@ namespace PoeHUD.Controllers
             Cache = new Cache();
           
             Files = new FsController(memory);
-            StashController = new StashTabController();
             InGame = InGameReal;
             IsForeGroundCache = WinApi.IsForegroundWindow(Window.Process.MainWindowHandle);
             MainTimer = Stopwatch.StartNew();
@@ -66,7 +65,6 @@ namespace PoeHUD.Controllers
         public readonly Runner CoroutineRunner;
         public readonly Runner CoroutineRunnerParallel;
         public PerformanceSettings Performance;
-        private StashTabController StashController;
         public bool IsForeGroundLast = false;
         public static event Action<bool> eIsForegroundChanged = delegate { };
 
@@ -163,8 +161,6 @@ namespace PoeHUD.Controllers
            //Coroutine for update entity list
             var updateEntity = (new Coroutine(() => { EntityListWrapper.RefreshState(); }, updateEntityLimit,nameof(GameController), "Update Entity"){Priority = CoroutinePriority.High});
 
-            var checkTabs = (new Coroutine(() => { StashController.CheckStashTabsLoop(); }, updateStashTabs, nameof(StashTabController), "Stash Tab Controller") { Priority = CoroutinePriority.Normal });
-
             //
             //Control cache for game status
             var updateGameState = (new Coroutine(() => { 
@@ -209,7 +205,6 @@ namespace PoeHUD.Controllers
                 updateEntity.AutoRestart(CoroutineRunner).Run();
             sw.Restart();
             updateCoroutine.Run();
-            checkTabs.Run();
             while (true)
             {
                 if (!InGame)

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
+using PoeHUD.Hud;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class EntityList : RemoteMemoryObject
+    public class EntityList : StructuredRemoteMemoryObject<EnumOffsets.EntityList>
     {
         public IEnumerable<Entity> Entities => EntitiesAsDictionary.Values;
 
@@ -12,7 +14,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             get
             {
                 var dictionary = new Dictionary<uint, Entity>();
-                CollectEntities(M.ReadLong(Address), dictionary);
+                CollectEntities((long)Structure.entities, dictionary);
                 return dictionary;
             }
         }
@@ -34,15 +36,15 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 hashSet.Add(nextAddr);
                 if (nextAddr != num && nextAddr != 0)
                 {
-                    var EntityID = M.ReadUInt(M.ReadLong(nextAddr + 0x28) + 0x40);
+                    EntityListEntry entry = GetObject<EntityListEntry>(nextAddr);
+                    var entity = GetObject<Entity>((long)entry.Entity);
+                    var EntityID = entity.Id;
                     if (!list.ContainsKey(EntityID))
                     {
-                        long address = M.ReadLong(nextAddr + 0x28);
-                        var entity = GetObject<Entity>(address);
                         list.Add(EntityID, entity);
                     }
-                    queue.Enqueue(M.ReadLong(nextAddr));
-                    queue.Enqueue(M.ReadLong(nextAddr + 0x10));
+                    queue.Enqueue((long)entry.Previous);
+                    queue.Enqueue((long)entry.Next);
                 }
 
                 if (loopcount++ > 10000)
@@ -52,5 +54,12 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                 }
             }
         }
+    }
+
+    public class EntityListEntry : StructuredRemoteMemoryObject<EnumOffsets.EntityListEntry>
+    {
+        public IntPtr Previous => Structure.previous;
+        public IntPtr Next => Structure.next;
+        public IntPtr Entity => Structure.entity;
     }
 }

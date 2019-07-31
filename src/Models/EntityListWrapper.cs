@@ -123,27 +123,5 @@ namespace PoeHUD.Models
             EntityWrapper result;
             return entityCache.TryGetValue(id, out result) ? result : null;
         }
-
-        public string GetLabelForEntity(Entity entity)
-        {
-            var hashSet = new HashSet<long>();
-            long entityLabelMap = gameController.Game.IngameState.EntityLabelMap;
-            long num = entityLabelMap;
-            
-            while (true)
-            {
-                hashSet.Add(num);
-                if (gameController.Memory.ReadLong(num + 0x10) == entity.Address)
-                {
-                    break;
-                }
-                num = gameController.Memory.ReadLong(num);
-                if (hashSet.Contains(num) || num == 0 || num == -1)
-                {
-                    return null;
-                }
-            }
-            return gameController.Game.ReadObject<EntityLabel>(num + 0x18).Text;
-        }
     }
 }

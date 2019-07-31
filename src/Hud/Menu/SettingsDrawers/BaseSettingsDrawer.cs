@@ -182,53 +182,6 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
         }
     }
 
-    public class StashTabNodeSettingDrawer : BaseSettingsDrawer
-    {
-        public StashTabNode StashNode;
-        public StashTabNodeSettingDrawer(StashTabNode stashNode, string settingName, int settingId) : base(settingName, settingId) => StashNode = stashNode;
-
-        public override void Draw()
-        {
-            var selectedIndex = StashNode.Exist ? StashNode.VisibleIndex : -1;
-
-            if (ImGui.Button($"x##{SettingName}{SettingId}ClearButton"))
-            {
-                StashNode.Name = StashTabNode.EMPTYNAME;
-                StashNode.VisibleIndex = -1;
-                StashNode.Id = -1;
-                StashNode.Exist = false;
-            }
-            ImGui.SameLine();
-
-            if (MainMenuWindow.Settings.DeveloperMode.Value)
-            {
-                ImGuiExtension.Label($"(Debug: Exist:{StashNode.Exist}, Index:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name})");
-                ImGui.SameLine();
-            }
-
-            //Tryna fix possible null values that crash imgui
-            var names = StashTabController.StashTabNames;
-            for (var i = 0; i < names.Length; i++)
-            {
-                if (names[i] == null)
-                    names[i] = "%ERROR. NULL VALUE%";
-            }
-
-            if (selectedIndex >= names.Length)
-                selectedIndex = -1;
-
-            if (ImGui.Combo(ImguiUniqLabel, ref selectedIndex, names, names.Length * 20))
-            {
-                var node = StashTabController.GetStashTabNodeByVisibleIndex(selectedIndex);
-                StashNode.Name = node.Name;
-                StashNode.VisibleIndex = node.VisibleIndex;
-                StashNode.Id = node.Id;
-                StashNode.Exist = true;
-                StashNode.IsRemoveOnly = node.IsRemoveOnly;
-            }
-        }
-    }
-
     public class FilePickerDrawer : BaseSettingsDrawer
     {
         public FileNode FNode;

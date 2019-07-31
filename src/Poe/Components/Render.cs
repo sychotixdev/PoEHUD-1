@@ -12,8 +12,6 @@ namespace PoeHUD.Poe.Components
 
         public string Name => GetObject<NativeStringReader>(Address + 0x98).Text;
         public Vector3 Bounds => new Vector3(M.ReadFloat(Address + 0x84), M.ReadFloat(Address + 0x88), M.ReadFloat(Address + 0x8C));
-        public Vector3 MeshRoration => new Vector3(M.ReadFloat(Address + 0xB8), M.ReadFloat(Address + 0xBC), M.ReadFloat(Address + 0xC0));
 
-        public float TerrainHeight => M.ReadFloat(Address + 0xD4);
     }
 }
