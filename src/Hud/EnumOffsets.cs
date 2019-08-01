@@ -169,8 +169,8 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct ServerData
         {
-            [FieldOffset(0x6670)] public readonly IntPtr playerInventoriesFirstAddress;
-            [FieldOffset(0x6678)] public readonly IntPtr playerInventoriesLastAddress;
+            [FieldOffset(0x6770)] public readonly IntPtr playerInventoriesFirstAddress;
+            [FieldOffset(0x6778)] public readonly IntPtr playerInventoriesLastAddress;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -208,6 +208,122 @@ namespace PoeHUD.Hud
             [FieldOffset(0x30)] public readonly IntPtr inventoryAddress;
             [FieldOffset(0x48)] public readonly IntPtr inventorySlotItems;
             [FieldOffset(0x50)] public readonly int totalItemsCount;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ItemMods
+        {
+            [FieldOffset(0x0)] public readonly IntPtr modsInternal;
+            [FieldOffset(0x20)] public readonly IntPtr pathPart1;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ItemModsInternal
+        {
+            [FieldOffset(0x0)] public readonly int value1;
+            [FieldOffset(0x4)] public readonly int value2;
+            [FieldOffset(0x8)] public readonly int value3;
+            [FieldOffset(0xC)] public readonly int value4;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Component
+        {
+            [FieldOffset(0x8)] public readonly int owner;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Actor
+        {
+            [FieldOffset(0xF8)] public readonly int action;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Charges
+        {
+            [FieldOffset(0x10)] public readonly IntPtr chargesInternal;
+            [FieldOffset(0x18)] public readonly int numCharges;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ChargesInternal
+        {
+            [FieldOffset(0x10)] public readonly int chargesMax;
+            [FieldOffset(0x14)] public readonly int chargesPerUse;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Chest
+        {
+            [FieldOffset(0x58)] public readonly byte isOpened;
+            [FieldOffset(0x98)] public readonly int isStrongbox;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Life
+        {
+            [FieldOffset(0x80)] public readonly IntPtr buffsStart;
+            [FieldOffset(0x88)] public readonly IntPtr buffsEnd;
+            [FieldOffset(0xBC)] public readonly int maxMana;
+            [FieldOffset(0xC0)] public readonly int reservedFlatMana;
+            [FieldOffset(0xC4)] public readonly int curMana;
+            [FieldOffset(0xC8)] public readonly int reservedPercentMana;
+            [FieldOffset(0xF4)] public readonly int maxES;
+            [FieldOffset(0xFC)] public readonly int curES;
+            [FieldOffset(0x154)] public readonly int maxHP;
+            [FieldOffset(0x158)] public readonly int reservedFlatHp;
+            [FieldOffset(0x15C)] public readonly int curHp;
+            [FieldOffset(0x160)] public readonly int reservedPercentHP;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Mods
+        {
+            [FieldOffset(0x90)] public readonly IntPtr implicitModsStart;
+            [FieldOffset(0x98)] public readonly IntPtr implicitModsEnd;
+            [FieldOffset(0xA8)] public readonly IntPtr explicitModsStart;
+            [FieldOffset(0xB0)] public readonly IntPtr explicitModsEnd;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ObjectMagicProperties
+        {
+            [FieldOffset(0x7C)] public readonly int monsterRarity;
+            [FieldOffset(0x98)] public readonly IntPtr modsStart;
+            [FieldOffset(0xA0)] public readonly IntPtr modsEnd;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Positioned
+        {
+            [FieldOffset(0x58)] public readonly byte reach;
+            [FieldOffset(0xE8)] public readonly int gridX;
+            [FieldOffset(0xEC)] public readonly int gridY;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Render
+        {
+            [FieldOffset(0x78)] public readonly float x;
+            [FieldOffset(0x7C)] public readonly float y;
+            [FieldOffset(0x80)] public readonly float z;
+            [FieldOffset(0x84)] public readonly float boundX;
+            [FieldOffset(0x88)] public readonly float boundY;
+            [FieldOffset(0x8C)] public readonly float boundZ;
+            [FieldOffset(0x98)] public readonly IntPtr name;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Stats
+        {
+            [FieldOffset(0x98)] public readonly IntPtr statStart;
+            [FieldOffset(0xA0)] public readonly IntPtr statEnd;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct Target
+        {
+            [FieldOffset(0x30)] public readonly byte isTargetable;
         }
 
 

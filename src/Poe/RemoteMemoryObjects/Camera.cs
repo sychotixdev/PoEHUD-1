@@ -31,7 +31,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private static Vector2 oldplayerCord;
 
 
-        public unsafe Vector2 WorldToScreen(Vector3 vec3, EntityWrapper entityWrapper)
+        public Vector2 WorldToScreen(Vector3 vec3, EntityWrapper entityWrapper)
         {
             Entity localPlayer = Game.IngameState.Data.LocalPlayer;
             var isplayer = localPlayer.Address == entityWrapper.Address && localPlayer.IsValid;

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using PoeHUD.Hud;
 using PoeHUD.Models.Enums;
 
 namespace PoeHUD.Poe.Components
 {
     public class Stats : Component
     {
+        public StatsRMO StatsStructure => GetObject<StatsRMO>(Address);
+
         //Stats goes as sequence of 2 values, 4 byte each. First goes stat ID then goes stat value
         public Dictionary<int, int> StatDictionary
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x98);
-                var statPtrEnd = M.ReadLong(Address + 0xA0);
+                var statPtrStart = StatsStructure.StatStart;
+                var statPtrEnd = StatsStructure.StatEnd;
 
 	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
 	            {
@@ -38,8 +41,8 @@ namespace PoeHUD.Poe.Components
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x98);
-                var statPtrEnd = M.ReadLong(Address + 0xA0);
+                var statPtrStart = StatsStructure.StatStart;
+                var statPtrEnd = StatsStructure.StatEnd;
 
 	            if (Math.Abs(statPtrEnd - statPtrStart) / 8 > 3000)
 	            {
@@ -58,5 +61,11 @@ namespace PoeHUD.Poe.Components
                 return result;
             }
         }
+    }
+
+    public class StatsRMO : StructuredRemoteMemoryObject<EnumOffsets.Stats>
+    {
+        public long StatStart => (long)Structure.statStart;
+        public long StatEnd => (long)Structure.statEnd;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using PoeHUD.Controllers;
+using PoeHUD.Hud;
 using PoeHUD.Models;
 using SharpDX;
 
@@ -9,7 +10,9 @@ namespace PoeHUD.Poe.Components
 {
     public partial class Actor : Component
     {
-        public ActionFlags Action => Address != 0 ? (ActionFlags)M.ReadInt(Address + 0xF8) : ActionFlags.None;
+        public ActorRMO ActorStructure => GetObject<ActorRMO>(Address);
+
+        public ActionFlags Action => Address != 0 ? (ActionFlags)ActorStructure.Action : ActionFlags.None;
         public bool isMoving => (Action & ActionFlags.Moving) > 0;
         public bool isAttacking => (Action & ActionFlags.UsingAbility) > 0;
 
@@ -28,5 +31,10 @@ namespace PoeHUD.Poe.Components
             WashedUpState = 256,
             HasMines = 2048
         }
+    }
+
+    public class ActorRMO : StructuredRemoteMemoryObject<EnumOffsets.Actor>
+    {
+        public int Action => Structure.action;
     }
 }

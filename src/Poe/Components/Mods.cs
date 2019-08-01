@@ -1,33 +1,35 @@
+using System;
 using PoeHUD.Models;
 using PoeHUD.Models.Enums;
 using PoeHUD.Poe.RemoteMemoryObjects;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Hud;
 
 namespace PoeHUD.Poe.Components
 {
     public class Mods : Component
     {
 
+        private ModsRMO ModsStructure => GetObject<ModsRMO>(Address);
+
         public List<ItemMod> ItemMods
         {
             get
             {
-                var implicitMods = GetMods(0x90, 0x98);
-                var explicitMods = GetMods(0xA8, 0xB0);
+                var implicitMods = GetMods(ModsStructure.ImplicitModsStart, ModsStructure.ImplicitModsEnd);
+                var explicitMods = GetMods(ModsStructure.ExplicitModsStart, ModsStructure.ExplicitModsEnd);
                 return implicitMods.Concat(explicitMods).ToList();
             }
         }
 
-        private List<ItemMod> GetMods(int startOffset, int endOffset)
+        private List<ItemMod> GetMods(long begin, long end)
         {
             var list = new List<ItemMod>();
 
             if (Address == 0)
                 return list;
 
-            long begin = M.ReadLong(Address + startOffset);
-            long end = M.ReadLong(Address + endOffset);
             long count = (end - begin) / 0x28;
 
             if (count > 12)
@@ -40,5 +42,13 @@ namespace PoeHUD.Poe.Components
 
             return list;
         }
+    }
+
+    public class ModsRMO : StructuredRemoteMemoryObject<EnumOffsets.Mods>
+    {
+        public long ImplicitModsStart => (long)Structure.implicitModsStart;
+        public long ImplicitModsEnd => (long)Structure.implicitModsEnd;
+        public long ExplicitModsStart => (long)Structure.explicitModsStart;
+        public long ExplicitModsEnd => (long)Structure.explicitModsEnd;
     }
 }

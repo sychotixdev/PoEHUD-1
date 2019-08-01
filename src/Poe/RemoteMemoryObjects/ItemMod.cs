@@ -1,16 +1,21 @@
+using System;
+using PoeHUD.Hud;
+
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class ItemMod : RemoteMemoryObject
+    public class ItemMod : StructuredRemoteMemoryObject<EnumOffsets.ItemMods>
     {
+        private ItemModInternalRMO ItemModInternalRmo => GetObject<ItemModInternalRMO>((long)Structure.modsInternal);
+
         private int level;
         private string name;
         private string rawName;
         private string displayName;
 
-        public int Value1 => M.ReadInt(Address, 0);
-        public int Value2 => M.ReadInt(Address, 4);
-        public int Value3 => M.ReadInt(Address, 8);
-        public int Value4 => M.ReadInt(Address, 0xC);
+        public int Value1 => ItemModInternalRmo.Value1;
+        public int Value2 => ItemModInternalRmo.Value2;
+        public int Value3 => ItemModInternalRmo.Value3;
+        public int Value4 => ItemModInternalRmo.Value4;
 
         public string RawName
         {
@@ -54,7 +59,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 
         private void ParseName()
         {
-            long addr = M.ReadLong(Address + 0x20, 0);
+            long addr = M.ReadLong((long)Structure.pathPart1);
             rawName = M.ReadStringU(addr);
             displayName = M.ReadStringU(addr + ((rawName.Length + 2)*2));
             name = rawName.Replace("_", ""); // Master Crafted mod can have underscore on the end, need to ignore
@@ -73,5 +78,13 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             return $"{Name} ({Value1}, {Value2}, {Value3}, {Value4}";
         }
+    }
+
+    public class ItemModInternalRMO : StructuredRemoteMemoryObject<EnumOffsets.ItemModsInternal>
+    {
+        public int Value1 => Structure.value1;
+        public int Value2 => Structure.value2;
+        public int Value3 => Structure.value3;
+        public int Value4 => Structure.value4;
     }
 }

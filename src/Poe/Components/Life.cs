@@ -1,21 +1,24 @@
 using PoeHUD.Poe.RemoteMemoryObjects;
 using System;
 using System.Collections.Generic;
+using PoeHUD.Hud;
 
 namespace PoeHUD.Poe.Components
 {
 	public class Life : Component
-	{
-		public int MaxHP => Address != 0 ? M.ReadInt(Address + 0x154) : 1;
-		public int ReservedFlatHP => Address != 0 ? M.ReadInt(Address + 0x158) : 0;
-		public int CurHP => Address != 0 ? M.ReadInt(Address + 0x15C) : 1;
-		public int ReservedPercentHP => Address != 0 ? M.ReadInt(Address + 0x160) : 0;
-		public int MaxMana => Address != 0 ? M.ReadInt(Address + 0xBC) : 1;
-		public int ReservedFlatMana => Address != 0 ? M.ReadInt(Address + 0xC0) : 0;
-		public int CurMana => Address != 0 ? M.ReadInt(Address + 0xC4) : 1;
-		public int ReservedPercentMana => Address != 0 ? M.ReadInt(Address + 0xC8) : 0;
-		public int MaxES => Address != 0 ? M.ReadInt(Address + 0xF4) : 0;
-		public int CurES => Address != 0 ? M.ReadInt(Address + 0xFC) : 0;
+    {
+        private LifeRMO LifeStructure => GetObject<LifeRMO>(Address);
+
+		public int MaxHP => Address != 0 ? LifeStructure.MaxHP : 1;
+		public int ReservedFlatHP => Address != 0 ? LifeStructure.ReservedFlatHp : 0;
+		public int CurHP => Address != 0 ? LifeStructure.CurHp : 1;
+		public int ReservedPercentHP => Address != 0 ? LifeStructure.ReservedPercentHP : 0;
+		public int MaxMana => Address != 0 ? LifeStructure.MaxMana : 1;
+		public int ReservedFlatMana => Address != 0 ? LifeStructure.ReservedFlatMana : 0;
+		public int CurMana => Address != 0 ? LifeStructure.CurMana : 1;
+		public int ReservedPercentMana => Address != 0 ? LifeStructure.ReservedPercentMana : 0;
+		public int MaxES => Address != 0 ? LifeStructure.MaxES : 0;
+		public int CurES => Address != 0 ? LifeStructure.CurES : 0;
 		public float HPPercentage => CurHP / (float)(MaxHP - ReservedFlatHP - Math.Round(ReservedPercentHP * 0.01 * MaxHP));
 		public float MPPercentage => CurMana / (float)(MaxMana - ReservedFlatMana - Math.Round(ReservedPercentMana * 0.01 * MaxMana));
 
@@ -32,8 +35,8 @@ namespace PoeHUD.Poe.Components
 		}
 
 		//public bool CorpseUsable => M.ReadBytes(Address + 0x90, 1)[0] == 1; // Total guess, didn't verify
-		private long BuffStart => M.ReadLong(Address + 0x80);
-		private long BuffEnd => M.ReadLong(Address + 0x88);
+		private long BuffStart => (long)LifeStructure.BuffsStart;
+		private long BuffEnd => (long)LifeStructure.BuffsEnd;
 		private long MaxBuffCount => 512; // Randomly bumping to 512 from 32 buffs... no idea what real value is.
 		public List<Buff> Buffs
 		{
@@ -82,4 +85,20 @@ namespace PoeHUD.Poe.Components
 			return null;
 		}
 	}
+
+    public class LifeRMO : StructuredRemoteMemoryObject<EnumOffsets.Life>
+    {
+        public IntPtr BuffsStart => Structure.buffsStart;
+        public IntPtr BuffsEnd => Structure.buffsEnd;
+        public int MaxMana => Structure.maxMana;
+        public int ReservedFlatMana => Structure.reservedFlatMana;
+        public int CurMana => Structure.curMana;
+        public int ReservedPercentMana => Structure.reservedPercentMana;
+        public int MaxES => Structure.maxES;
+        public int CurES => Structure.curES;
+        public int MaxHP => Structure.maxHP;
+        public int ReservedFlatHp => Structure.reservedFlatHp;
+        public int CurHp => Structure.curHp;
+        public int ReservedPercentHP => Structure.reservedPercentHP;
+    }
 }

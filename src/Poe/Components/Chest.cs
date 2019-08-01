@@ -1,8 +1,19 @@
+using System;
+using PoeHUD.Hud;
+
 namespace PoeHUD.Poe.Components
 {
     public class Chest : Component
     {
-        public bool IsOpened => Address != 0 && M.ReadByte(Address + 0x58) == 1;
-        public bool IsStrongbox => Address != 0 && M.ReadLong(Address + 0x98) > 0;
+        public ChestRMO ChestStructure => GetObject<ChestRMO>(Address);
+        public bool IsOpened => Address != 0 && ChestStructure.IsOpened == 1;
+        public bool IsStrongbox => Address != 0 && ChestStructure.IsStrongbox > 0;
+    }
+
+    public class ChestRMO : StructuredRemoteMemoryObject<EnumOffsets.Chest>
+    {
+        public byte IsOpened => Structure.isOpened;
+        public int IsStrongbox => Structure.isStrongbox;
+
     }
 }
