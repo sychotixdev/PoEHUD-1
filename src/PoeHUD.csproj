@@ -158,6 +158,12 @@
     <Compile Include="Hud\ExternalOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Hud\Flasker\FlaskActions.cs" />
+    <Compile Include="Hud\Flasker\FlaskerPlugin.cs" />
+    <Compile Include="Hud\Flasker\FlaskerSettings.cs" />
+    <Compile Include="Hud\Flasker\FlaskInformation.cs" />
+    <Compile Include="Hud\Flasker\MiscBuffInfo.cs" />
+    <Compile Include="Hud\Flasker\PlayerFlask.cs" />
     <Compile Include="Hud\Health\DebuffPanelConfig.cs" />
     <Compile Include="Hud\Health\HealthBarSettings.cs" />
     <Compile Include="Hud\Health\UnitSettings.cs" />
@@ -224,6 +230,7 @@
     <Compile Include="Hud\Interfaces\IPluginWithMapIcons.cs" />
     <Compile Include="Models\AreaInstance.cs" />
     <Compile Include="Plugins\MenuAttribute.cs" />
+    <Compile Include="Poe\Components\Base.cs" />
     <Compile Include="Poe\Extensions.cs" />
     <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\GenericFilesInMemory.cs" />

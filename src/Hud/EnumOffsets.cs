@@ -51,6 +51,12 @@ namespace PoeHUD.Hud
         }
 
         [StructLayout(LayoutKind.Explicit)]
+        public struct Base
+        {
+            [FieldOffset(0x10)] public readonly int namePointer;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
         public struct IngameState
         {
             [FieldOffset(0x78)] public readonly IntPtr ingameUi;
