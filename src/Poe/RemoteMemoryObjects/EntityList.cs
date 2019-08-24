@@ -1,12 +1,22 @@
 using System;
 using System.Collections.Generic;
+using PoeHUD.Framework;
 using PoeHUD.Hud;
 using SharpDX;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
-    public class EntityList : StructuredRemoteMemoryObject<EnumOffsets.EntityList>
+    public class EntityList : RemoteMemoryObject
     {
+        protected EnumOffsets.EntityList Structure { get; set; }
+
+        public EntityList(TheGame game, Memory m, EnumOffsets.EntityList structure)
+        {
+            this.Structure = structure;
+            this.M = m;
+            this.Game = game;
+        }
+
         public IEnumerable<Entity> Entities => EntitiesAsDictionary.Values;
 
         public Dictionary<uint, Entity> EntitiesAsDictionary

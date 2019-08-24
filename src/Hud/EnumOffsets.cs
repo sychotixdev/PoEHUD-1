@@ -77,6 +77,7 @@ namespace PoeHUD.Hud
         {
             [FieldOffset(0xCC)] public readonly uint currentAreaHash;
             [FieldOffset(0x408)] public readonly IntPtr localPlayer;
+            [FieldOffset(0x490)] public readonly EntityList entityList;
         }
 
         [StructLayout(LayoutKind.Explicit)]
