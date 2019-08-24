@@ -51,12 +51,6 @@ namespace PoeHUD.Hud
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct Base
-        {
-            [FieldOffset(0x10)] public readonly int namePointer;
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
         public struct IngameState
         {
             [FieldOffset(0x78)] public readonly IntPtr ingameUi;
@@ -240,6 +234,12 @@ namespace PoeHUD.Hud
         }
 
         [StructLayout(LayoutKind.Explicit)]
+        public struct Base
+        {
+            [FieldOffset(0x10)] public readonly int namePointer;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
         public struct Actor
         {
             [FieldOffset(0xF8)] public readonly int action;
@@ -304,8 +304,8 @@ namespace PoeHUD.Hud
         public struct Positioned
         {
             [FieldOffset(0x58)] public readonly byte reach;
-            [FieldOffset(0xE8)] public readonly int gridX;
-            [FieldOffset(0xEC)] public readonly int gridY;
+            [FieldOffset(0xEC)] public readonly int gridX;
+            [FieldOffset(0xF0)] public readonly int gridY;
         }
 
         [StructLayout(LayoutKind.Explicit)]

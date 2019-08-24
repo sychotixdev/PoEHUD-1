@@ -30,7 +30,7 @@ namespace PoeHUD.Hud.Health
         public FlaskerPlugin(GameController gameController, Graphics graphics, FlaskerSettings settings)
             : base(gameController, graphics, settings)
         {
-            CreatureType[] types = Enum.GetValues(typeof(CreatureType)).Cast<CreatureType>().ToArray();
+            /*CreatureType[] types = Enum.GetValues(typeof(CreatureType)).Cast<CreatureType>().ToArray();
             healthBars = new Dictionary<CreatureType, List<HealthBar>>(types.Length);
             foreach (CreatureType type in types)
             {
@@ -43,12 +43,12 @@ namespace PoeHUD.Hud.Health
                 {
                     healthBar.Value.RemoveAll(hp => !hp.Entity.IsValid);
                 } }, new WaitRender(1), nameof(HealthBarPlugin), "RemoveAll"))
-                .AutoRestart(GameController.CoroutineRunner).Run();
+                .AutoRestart(GameController.CoroutineRunner).Run();*/
         }
 
         public override void Render()
         {
-            try
+           /* try
             {
                 if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame)
                 { return; }
@@ -98,7 +98,7 @@ namespace PoeHUD.Hud.Health
             catch
             {
                 // do nothing
-            }
+            }*/
         }
 
         protected virtual void LoadSettingsFiles()
@@ -186,7 +186,7 @@ namespace PoeHUD.Hud.Health
         private void ProcessFlaskBase(string flaskBaseName, PlayerFlask playerFlask)
         {
             MiscBuffInfo.flaskNameToBuffConversion.TryGetValue(
-                flaskBaseName, out string flaskBuffOut1));
+                flaskBaseName, out string flaskBuffOut1);
             MiscBuffInfo.flaskNameToBuffConversion2.TryGetValue(flaskBaseName, out string flaskBuffOut2);
 
             if (flaskBaseName.Contains("Life"))
