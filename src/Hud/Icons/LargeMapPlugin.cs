@@ -29,6 +29,7 @@ namespace PoeHUD.Hud.Icons
                 if (!Settings.Enable || !GameController.InGame || !Settings.IconsOnLargeMap
                     || !GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible)
                 {
+                    PluginLogger.LogError("Large Map Plugin returned at the top!", 5);
                     return;
                 }
 
@@ -55,9 +56,10 @@ namespace PoeHUD.Hud.Icons
                     texture.Draw(Graphics, new RectangleF(point.X - size / 2f, point.Y - size / 2f, size, size));
                 }
             }
-            catch
+            catch (Exception e)
             {
                 // do nothing
+                PluginLogger.LogError($"Large Map Plugin Exception: {e.ToString()}", 5);
             }
         }
     }

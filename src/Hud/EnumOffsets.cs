@@ -126,10 +126,16 @@ namespace PoeHUD.Hud
             [FieldOffset(0x90)] public readonly IntPtr parent;
             [FieldOffset(0x98)] public readonly float x;
             [FieldOffset(0x9C)] public readonly float y;
-            [FieldOffset(0x108)] public readonly float scale;
+            [FieldOffset(0xD8)] public readonly ElementScale scaleStruct;
             [FieldOffset(0x110)] public readonly int isVisibleLocal;
             [FieldOffset(0x130)] public readonly float width;
             [FieldOffset(0x134)] public readonly float height;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ElementScale
+        {
+            [FieldOffset(0x30)] public readonly float scale;
         }
 
         [StructLayout(LayoutKind.Explicit)]

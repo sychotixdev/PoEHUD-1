@@ -25,7 +25,7 @@ namespace PoeHUD.Poe
         public Element Parent => GetObject<Element>((long)Structure.parent);
         public float X => Structure.x;
         public float Y => Structure.y;
-        public float Scale => Structure.scale;
+        public float Scale => Structure.scaleStruct.scale;
         public float Width => Structure.width;
         public float Height => Structure.height;
 
