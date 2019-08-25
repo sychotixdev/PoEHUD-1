@@ -53,11 +53,11 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct IngameState
         {
-            [FieldOffset(0x78)] public readonly IntPtr ingameUi;
             [FieldOffset(0x370)] public readonly IntPtr ingameData;
             [FieldOffset(0x378)] public readonly IntPtr serverData;
             [FieldOffset(0x4A0)] public readonly IntPtr uiRoot;
             [FieldOffset(0xF4C)] public readonly Camera camera;
+            [FieldOffset(0x1388)] public readonly IntPtr ingameUi;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -84,7 +84,7 @@ namespace PoeHUD.Hud
         public struct Entity
         {
             [FieldOffset(0x0)] public readonly IntPtr entityInternal;
-            [FieldOffset(0x8)] public readonly IntPtr componentList;
+            [FieldOffset(0x10)] public readonly IntPtr componentList;
             [FieldOffset(0x40)] public readonly uint id;
             [FieldOffset(0x50)] public readonly IntPtr positionedComp;
             [FieldOffset(0x58)] public readonly int inventoryId;
@@ -127,7 +127,7 @@ namespace PoeHUD.Hud
             [FieldOffset(0x98)] public readonly float x;
             [FieldOffset(0x9C)] public readonly float y;
             [FieldOffset(0x108)] public readonly float scale;
-            [FieldOffset(0x111)] public readonly byte isVisibleLocal;
+            [FieldOffset(0x110)] public readonly int isVisibleLocal;
             [FieldOffset(0x130)] public readonly float width;
             [FieldOffset(0x134)] public readonly float height;
         }
@@ -286,6 +286,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Mods
         {
+            [FieldOffset(0x8C)] public readonly int itemRarity;
             [FieldOffset(0x90)] public readonly IntPtr implicitModsStart;
             [FieldOffset(0x98)] public readonly IntPtr implicitModsEnd;
             [FieldOffset(0xA8)] public readonly IntPtr explicitModsStart;

@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PoeHUD.Hud.Flasker;
+using PoeHUD.Models.Enums;
 using PoeHUD.Poe;
 using Color = SharpDX.Color;
 using Graphics = PoeHUD.Hud.UI.Graphics;
@@ -48,57 +49,35 @@ namespace PoeHUD.Hud.Health
 
         public override void Render()
         {
-           /* try
+            try
             {
-                if (!Settings.Enable || WinApi.IsKeyDown(Keys.F10) || !GameController.InGame)
+                if (!Settings.Enable || !GameController.InGame)
                 { return; }
 
-                RectangleF windowRectangle = GameController.Window.GetWindowRectangle();
-                var windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
+                var playerLifeComponent = GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Life>();
 
-                Camera camera = GameController.Game.IngameState.Camera;
-                Func<HealthBar, bool> showHealthBar = x => x.IsShow(Settings.ShowEnemies);
-                //Not Parallel better for performance
-                //Parallel.ForEach(healthBars, x => x.Value.RemoveAll(hp => !hp.Entity.IsValid));
+                // Is player dead
+                if (playerLifeComponent.CurHP <= 0)
+                    return;
 
-                foreach (HealthBar healthBar in healthBars.SelectMany(x => x.Value).Where(hp => showHealthBar(hp) && hp.Entity.IsAlive))
+                // If we are under the grace period, don't do anything
+                var playerBuffs = playerLifeComponent.Buffs;
+                if (playerBuffs.Any(x => x.Name == "grace_period"))
+                    return;
+
+                // Grab flasks
+                var playerFlasks = GetFlasks();
+
+                // First, check for life stuff
+                if (playerLifeComponent.HPPercentage * 100 < Settings.InstantHPPotion)
                 {
-                    Vector3 worldCoords = healthBar.Entity.Pos;
-                    Vector2 mobScreenCoords = camera.WorldToScreen(worldCoords.Translate(0, 0, -170), healthBar.Entity);
-                    if (mobScreenCoords != new Vector2())
-                    {
-                        float scaledWidth = healthBar.Settings.Width * windowSize.Width;
-                        float scaledHeight = healthBar.Settings.Height * windowSize.Height;
-                        Color color = healthBar.Settings.Color;
-                        float hpPercent = healthBar.Life.HPPercentage;
-                        float esPercent = healthBar.Life.ESPercentage;
-                        float hpWidth = hpPercent * scaledWidth;
-                        float esWidth = esPercent * scaledWidth;
-                        var bg = new RectangleF(mobScreenCoords.X - scaledWidth / 2, mobScreenCoords.Y - scaledHeight / 2, scaledWidth, scaledHeight);
-                        var windowRect = GameController.Window.GetWindowRectangle();
-                        var fixNotFullscreen = new RectangleF(windowRect.X + bg.X, windowRect.Y + bg.Y, bg.Width, bg.Height);
-                        if (!windowRect.Intersects(fixNotFullscreen))
-                        {
-                            Debug.WriteLine($"Not Intersect thing", 5);
-                            continue;
-                        }
-                        if (hpPercent <= 0.1f)
-                        {
-                            color = healthBar.Settings.Under10Percent;
-                        }
-                        bg.Y = DrawFlatLifeAmount(healthBar.Life, hpPercent, healthBar.Settings, bg);
-                        var yPosition = DrawFlatESAmount(healthBar, bg);
-                        yPosition = DrawDebuffPanel(new Vector2(bg.Left, yPosition), healthBar, healthBar.Life);
-                        ShowDps(healthBar, new Vector2(bg.Center.X, yPosition));
-                        DrawPercents(healthBar.Settings, hpPercent, bg);
-                        DrawBackground(color, healthBar.Settings.Outline, bg, hpWidth, esWidth);
-                    }
+
                 }
             }
             catch
             {
                 // do nothing
-            }*/
+            }
         }
 
         protected virtual void LoadSettingsFiles()
@@ -120,15 +99,15 @@ namespace PoeHUD.Hud.Health
             return JsonConvert.DeserializeObject<TSettingType>(File.ReadAllText(fileName));
         }
 
-        private void GetFlasks()
+        private List<PlayerFlask> GetFlasks()
         {
             var flaskInventoryItems = GameController.Game.IngameState.ServerData.PlayerInventories
                 .FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems;
 
             if (flaskInventoryItems == null)
-                return;
+                return null;
 
-            List<PlayerFlask> playerFlasks;
+            List<PlayerFlask> playerFlasks = new List<PlayerFlask>();
             foreach (var inventoryItem in flaskInventoryItems)
             {
                 PlayerFlask playerFlask = new PlayerFlask();
@@ -163,9 +142,23 @@ namespace PoeHUD.Hud.Health
                     continue;
                 }
 
-                
+                if (!MiscBuffInfo.flaskNameToBuffConversion.TryGetValue(
+                    flaskBaseName, out string flaskBuffOut))
+                {
+                    continue;
+                }
 
+                playerFlask.BuffString1 = flaskBuffOut;
+
+                if (!MiscBuffInfo.flaskNameToBuffConversion2.TryGetValue(flaskBaseName, out flaskBuffOut))
+                    playerFlask.BuffString2 = "";
+                else playerFlask.BuffString2 = flaskBuffOut;
+
+                HandleFlaskMods(playerFlask);
+                playerFlasks.Add(playerFlask);
             }
+
+            return playerFlasks;
         }
 
         private int CalculateUseCharges(float BaseUseCharges, List<ItemMod> flaskMods)
@@ -183,25 +176,117 @@ namespace PoeHUD.Hud.Health
             return (int)Math.Floor(BaseUseCharges);
         }
 
-        private void ProcessFlaskBase(string flaskBaseName, PlayerFlask playerFlask)
+        private void HandleFlaskMods(PlayerFlask flask)
         {
-            MiscBuffInfo.flaskNameToBuffConversion.TryGetValue(
-                flaskBaseName, out string flaskBuffOut1);
-            MiscBuffInfo.flaskNameToBuffConversion2.TryGetValue(flaskBaseName, out string flaskBuffOut2);
+            //Checking flask action based on flask name type.
+            if (FlaskInfo.FlaskTypes.TryGetValue(flask.Name, out FlaskActions flaskActionOut))
+                flask.Action1 = flaskActionOut;
 
-            if (flaskBaseName.Contains("Life"))
+            ItemRarity flaskItemRarity = flask.Mods.ItemRarity;
+
+            foreach (var mod in flask.Mods.ItemMods)
             {
-                playerFlask.GivesHealth = true;
+                string modName = mod.Name;
+                if (modName.ToLower().Contains("instant"))
+                {
+                    if (modName.Contains("FlaskPartialInstantRecovery"))
+                        flask.InstantType = FlaskInstantType.Partial;
+                    else if (modName.Contains("FlaskInstantRecoveryOnLowLife"))
+                        flask.InstantType = FlaskInstantType.LowLife;
+                    else if (modName.Contains("FlaskFullInstantRecovery"))
+                        flask.InstantType = FlaskInstantType.Full;
+                }
+
+                // We are ignoring unique flask's secondary
+                if (flaskItemRarity == ItemRarity.Unique)
+                    continue;
+
+                //Checking flask mods.
+                if (FlaskInfo.FlaskMods.TryGetValue(modName, out FlaskActions action2) && action2 != FlaskActions.Ignore)
+                    flask.Action2 = action2;
             }
-            else if (flaskBaseName.Contains("Mana"))
+        }
+
+        private PlayerFlask FindFlaskMatchingAnyAction(List<PlayerFlask> flasks, Life playerLifeComponent, List<string> playerBuffs, List<FlaskActions> flaskActions, Boolean? instant = null, Boolean ignoreBuffs = false, Func<List<FlaskActions>> ignoreFlasksWithAction = null, Boolean isCleansing = false)
+        {
+            // We have no flasks or settings for flasks?
+            if (flasks == null)
             {
-                playerFlask.GivesMana = true;
+                return null;
             }
-            else if (flaskBaseName.Contains("Hybrid"))
+
+            List<FlaskActions> ignoreFlaskActions = ignoreFlasksWithAction == null ? null : ignoreFlasksWithAction();
+
+            var flaskList = flasks
+                    .Where(x => 
+                    CanUsePotion(x, playerLifeComponent, isCleansing)
+                    && FlaskMatchesInstant(x, instant, playerLifeComponent)
+                    && (ignoreBuffs || MissingFlaskBuff(x, playerBuffs))
+                    ).OrderByDescending(x => flaskActions.Contains(x.Action1)).ThenByDescending(x => x.TotalUses).ToList();
+
+
+            if (flaskList == null || !flaskList.Any())
             {
-                playerFlask.GivesHealth = true;
-                playerFlask.GivesMana = true;
+                return null;
             }
+
+            return flaskList.FirstOrDefault();
+        }
+
+        public Boolean CanUsePotion(PlayerFlask flask, Life playerLifeComponent, bool ignoreActionType = false)
+        {
+            if (flask == null)
+            {
+                return false;
+            }
+
+            if (ignoreActionType)
+                return true;
+
+            if (flask.Action1 == FlaskActions.Life && playerLifeComponent.HPPercentage * 100 < 99)
+            {
+                return false;
+            }
+
+            if (flask.Action1 == FlaskActions.Mana && playerLifeComponent.MPPercentage * 100 < 99)
+            {
+                return false;
+            }
+
+            if (flask.Action1 == FlaskActions.Hybrid && !(playerLifeComponent.HPPercentage * 100 < 99 || playerLifeComponent.MPPercentage * 100 < 99))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private bool FlaskMatchesInstant(PlayerFlask playerFlask, Boolean? instant, Life playerLifeComponent)
+        {
+            return instant == null
+                   || instant == false && CanUseFlaskAsRegen(playerFlask)
+                   || instant == true && CanUseFlaskAsInstant(playerFlask, playerLifeComponent);
+        }
+
+        private bool CanUseFlaskAsInstant(PlayerFlask playerFlask, Life playerLifeComponent)
+        {
+            // If the flask is instant, no special logic needed
+            return playerFlask.InstantType == FlaskInstantType.Partial
+                   || playerFlask.InstantType == FlaskInstantType.Full
+                   || playerFlask.InstantType == FlaskInstantType.LowLife && playerLifeComponent.HPPercentage * 100 < 35;
+        }
+
+        private bool CanUseFlaskAsRegen(PlayerFlask playerFlask)
+        {
+            return playerFlask.InstantType == FlaskInstantType.None
+                   || playerFlask.InstantType == FlaskInstantType.Partial
+                   || playerFlask.InstantType == FlaskInstantType.LowLife;
+        }
+
+        private bool MissingFlaskBuff(PlayerFlask playerFlask, List<string> playerBuffs)
+        {
+            return !playerBuffs.Any(x => x == playerFlask.BuffString1 || x == playerFlask.BuffString2);
         }
     }
 }

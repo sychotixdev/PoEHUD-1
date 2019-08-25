@@ -7,7 +7,7 @@ using PoeHUD.Poe.Components;
 
 namespace PoeHUD.Hud.Flasker
 {
-    public enum PlayerFlaskInstantType
+    public enum FlaskInstantType
     {
         None,
         LowLife,
@@ -18,18 +18,16 @@ namespace PoeHUD.Hud.Flasker
     public class PlayerFlask
     {
         public int Index { get; set; } = 0;
-        public string Name { get; set; } = "None";
+        public String Name { get; set; } = "None";
         public int TotalUses { get; set; } = 0;
-        public string BuffString1 { get; set; } = "";
+        public String BuffString1 { get; set; } = "";
         //For Hybrid Flask as Hybrid flask have two buffs.
-        public string BuffString2 { get; set; } = "";
+        public String BuffString2 { get; set; } = "";
 
-        public bool GivesHealth { get; set; } = false;
-        public bool GivesMana { get; set; } = false;
-        public bool IsOffensive { get; set; } = false;
-        public bool IsDefensive { get; set; } = false;
-        public PlayerFlaskInstantType InstantType { get; set; }
-        public bool Instant => InstantType != PlayerFlaskInstantType.None;
+        public FlaskActions Action1 { get; set; } = FlaskActions.None;
+        public FlaskActions Action2 { get; set; } = FlaskActions.None;
+        public FlaskInstantType InstantType { get; set; }
+        public Boolean Instant => InstantType != FlaskInstantType.None;
         public Mods Mods { get; set; } = null;
     }
 }

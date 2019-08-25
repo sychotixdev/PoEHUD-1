@@ -13,6 +13,8 @@ namespace PoeHUD.Poe.Components
 
         private ModsRMO ModsStructure => GetObject<ModsRMO>(Address);
 
+        public ItemRarity ItemRarity => ModsStructure.ItemRarity;
+
         public List<ItemMod> ItemMods
         {
             get
@@ -46,6 +48,7 @@ namespace PoeHUD.Poe.Components
 
     public class ModsRMO : StructuredRemoteMemoryObject<EnumOffsets.Mods>
     {
+        public ItemRarity ItemRarity => (ItemRarity) Structure.itemRarity;
         public long ImplicitModsStart => (long)Structure.implicitModsStart;
         public long ImplicitModsEnd => (long)Structure.implicitModsEnd;
         public long ExplicitModsStart => (long)Structure.explicitModsStart;
