@@ -68,10 +68,11 @@ namespace PoeHUD.Hud.Health
                 // Grab flasks
                 var playerFlasks = GetFlasks();
 
+                var flasksToUse = new List<PlayerFlask>();
                 // First, check for life stuff
                 if (playerLifeComponent.HPPercentage * 100 < Settings.InstantHPPotion)
                 {
-
+                    
                 }
             }
             catch
