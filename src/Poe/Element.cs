@@ -20,7 +20,7 @@ namespace PoeHUD.Poe
         // then the rest is
         
         public long ChildCount => ((long)Structure.childEnd -  (long)Structure.childStart) / 8;
-        public bool IsVisibleLocal => (BitConverter.GetBytes(Structure.isVisibleLocal)[1] & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
+        public bool IsVisibleLocal => (BitConverter.GetBytes(Structure.isVisibleLocal)[2] & 4) == 4;//(M.ReadInt(Address + 0x111 + OffsetBuffers) & 1) == 1;
         public Element Root => GetObject<Element>((long)GetObjectAt<ElementRootPart2>((long)Structure.rootPart1).RootPart2);
         public Element Parent => GetObject<Element>((long)Structure.parent);
         public float X => Structure.x;

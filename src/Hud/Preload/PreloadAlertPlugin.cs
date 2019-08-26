@@ -218,8 +218,6 @@ namespace PoeHUD.Hud.Preload
                 Parse();
             }
 
-            var miniMap = GameController.Game.IngameState.IngameUi.Map.SmallMinimap;
-
             if (!holdKey && WinApi.IsKeyDown(Keys.F10))
             {
                 holdKey = true;

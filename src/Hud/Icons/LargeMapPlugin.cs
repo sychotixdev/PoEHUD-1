@@ -29,7 +29,7 @@ namespace PoeHUD.Hud.Icons
                 if (!Settings.Enable || !GameController.InGame || !Settings.IconsOnLargeMap
                     || !GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible)
                 {
-                    PluginLogger.LogError("Large Map Plugin returned at the top!", 5);
+                    PluginLogger.LogError($"Large Map Plugin returned at the top! {Settings.Enable} {GameController.InGame} {Settings.IconsOnLargeMap} {GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible}", 5);
                     return;
                 }
 
