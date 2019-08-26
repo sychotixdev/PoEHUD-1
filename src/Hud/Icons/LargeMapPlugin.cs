@@ -7,6 +7,7 @@ using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Poe;
 using Map = PoeHUD.Poe.Elements.Map;
 
 namespace PoeHUD.Hud.Icons
@@ -30,6 +31,21 @@ namespace PoeHUD.Hud.Icons
                     || !GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible)
                 {
                     PluginLogger.LogError($"Large Map Plugin returned at the top! Overall IsVisible {GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible} IsVisibleStruct: {GameController.Game.IngameState.IngameUi.Map.LargeMap.Structure.isVisibleLocal} IsVisibleLocal {GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisibleLocal} Parent {GameController.Game.IngameState.IngameUi.Map.LargeMap.Parent?.Address} Root {GameController.Game.IngameState.IngameUi.Map.LargeMap.Root?.Address}", 5);
+
+
+                    var list = new List<Element>();
+                    var hashSet = new HashSet<Element>();
+                    Element root = GameController.Game.IngameState.IngameUi.Map.LargeMap.Root;
+                    Element parent = GameController.Game.IngameState.IngameUi.Map.LargeMap.Parent;
+                    while (!hashSet.Contains(parent) && root.Address != parent.Address && parent.Address != 0)
+                    {
+                        list.Add(parent);
+                        hashSet.Add(parent);
+                        parent = parent.Parent;
+                    }
+
+                    PluginLogger.LogError($"Parent count: {list.Count} Parents not visible: {list.Count(x => x.IsVisibleLocal == false)}", 5);
+
                     return;
                 }
 
