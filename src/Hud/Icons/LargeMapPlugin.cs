@@ -34,7 +34,6 @@ namespace PoeHUD.Hud.Icons
                 }
 
                 Camera camera = GameController.Game.IngameState.Camera;
-                PluginLogger.LogError($"Camera- width:{camera.Width} height:{camera.Height} PosX:{camera.Position.X} PosY:{camera.Position.Y} PosZ:{camera.Position.Z} ZFar:{camera.ZFar}", 5);
 
                 Map mapWindow = GameController.Game.IngameState.IngameUi.Map;
                 RectangleF mapRect = mapWindow.GetClientRect();
@@ -42,7 +41,6 @@ namespace PoeHUD.Hud.Icons
                 Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
                 float posZ = GameController.Player.GetComponent<Render>().Z;
 
-                PluginLogger.LogError($"mapRect- Width {mapRect.Width} Height {mapRect.Height} X {mapRect.X} Y {mapRect.Y}", 5);
                 PluginLogger.LogError($"playerPos- x: {playerPos.X} y: {playerPos.Y} z: {posZ}", 5);
 
 
