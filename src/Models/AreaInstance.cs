@@ -6,19 +6,19 @@ namespace PoeHUD.Models
     public sealed class AreaInstance
     {
 
-        public uint Hash { get; }
+        public long CurrentWorldAreaPtr { get; }
 
         public DateTime TimeEntered = DateTime.Now;
 
 
-        public AreaInstance(uint hash)
+        public AreaInstance(long currentWorldAreaPtr)
         {
-            Hash = hash;
+            CurrentWorldAreaPtr = currentWorldAreaPtr;
         }
 
         public override string ToString()
         {
-            return $"#{Hash}";
+            return $"#{CurrentWorldAreaPtr}";
         }
 
         public static string GetTimeString(TimeSpan timeSpent)

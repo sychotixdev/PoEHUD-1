@@ -75,7 +75,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct IngameData
         {
-            [FieldOffset(0xCC)] public readonly uint currentAreaHash;
+            [FieldOffset(0x68)] public readonly IntPtr currentWorldArea;
             [FieldOffset(0x410)] public readonly IntPtr localPlayer;
             [FieldOffset(0x498)] public readonly EntityList entityList;
         }

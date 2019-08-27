@@ -34,7 +34,7 @@ namespace PoeHUD.Hud.Icons
                 }
 
                 Camera camera = GameController.Game.IngameState.Camera;
-                //Console.WriteLine($"Camera- width:{camera.Width} height:{camera.Height} PosX:{camera.Position.X} PosY:{camera.Position.Y} PosZ:{camera.Position.Z} ZFar:{camera.ZFar}");
+                PluginLogger.LogError($"Camera- width:{camera.Width} height:{camera.Height} PosX:{camera.Position.X} PosY:{camera.Position.Y} PosZ:{camera.Position.Z} ZFar:{camera.ZFar}", 5);
 
                 Map mapWindow = GameController.Game.IngameState.IngameUi.Map;
                 RectangleF mapRect = mapWindow.GetClientRect();
@@ -42,8 +42,8 @@ namespace PoeHUD.Hud.Icons
                 Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
                 float posZ = GameController.Player.GetComponent<Render>().Z;
 
-                //Console.WriteLine($"mapRect- Width {mapRect.Width} Height {mapRect.Height} X {mapRect.X} Y {mapRect.Y}");
-                //Console.WriteLine($"playerPos- x: {playerPos.X} y: {playerPos.Y} z: {posZ}");
+                PluginLogger.LogError($"mapRect- Width {mapRect.Width} Height {mapRect.Height} X {mapRect.X} Y {mapRect.Y}", 5);
+                PluginLogger.LogError($"playerPos- x: {playerPos.X} y: {playerPos.Y} z: {posZ}", 5);
 
 
                 Vector2 screenCenter = new Vector2(mapRect.Width / 2, mapRect.Height / 2).Translate(0, -20) + new Vector2(mapRect.X, mapRect.Y)
@@ -52,11 +52,11 @@ namespace PoeHUD.Hud.Icons
                 float k = camera.Width < 1024f ? 1120f : 1024f;
                 float scale = k / camera.Height * camera.Width * 3f / 4f / mapWindow.LargeMap.MapZoom;
 
-                //Console.WriteLine($"LargeMap IconsSize: {getIcons().Count()} OnlyVisible Count: {getIcons().Count(x => x.IsVisible())}");
+                PluginLogger.LogError($"LargeMap IconsSize: {getIcons().Count()} OnlyVisible Count: {getIcons().Count(x => x.IsVisible())}", 5);
 
                 foreach (MapIcon icon in getIcons().Where(x => x.IsVisible()))
                 {
-                    //Console.WriteLine($"Going through a map icon");
+                    PluginLogger.LogError($"Going through a map icon", 5);
 
                     float iconZ = icon.EntityWrapper.GetComponent<Render>().Z;
                     Vector2 point = screenCenter

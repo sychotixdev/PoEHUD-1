@@ -23,9 +23,9 @@ namespace PoeHUD.Controllers
                 return;
 
             var ingameData = _gController.Game.IngameState.Data;
-            var curAreaHash = ingameData.CurrentAreaHash;
+            var curAreaHash = (long)ingameData.CurrentWorldArea;
 
-            if (CurrentArea != null && curAreaHash == CurrentArea.Hash)
+            if (CurrentArea != null && curAreaHash == CurrentArea.CurrentWorldAreaPtr)
                 return;
 
             CurrentArea = new AreaInstance(curAreaHash);
