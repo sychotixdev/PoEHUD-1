@@ -29,40 +29,35 @@ namespace PoeHUD.Hud.Icons
             {
                 if (!Settings.Enable || !GameController.InGame || !Settings.IconsOnLargeMap
                     || !GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible)
-                {
-                    PluginLogger.LogError($"Large Map Plugin returned at the top! Overall IsVisible {GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisible} IsVisibleStruct: {GameController.Game.IngameState.IngameUi.Map.LargeMap.Structure.isVisibleLocal} IsVisibleLocal {GameController.Game.IngameState.IngameUi.Map.LargeMap.IsVisibleLocal} Parent {GameController.Game.IngameState.IngameUi.Map.LargeMap.Parent?.Address} Root {GameController.Game.IngameState.IngameUi.Map.LargeMap.Root?.Address}", 5);
-
-
-                    var list = new List<Element>();
-                    var hashSet = new HashSet<Element>();
-                    Element root = GameController.Game.IngameState.IngameUi.Map.LargeMap.Root;
-                    Element parent = GameController.Game.IngameState.IngameUi.Map.LargeMap.Parent;
-                    while (!hashSet.Contains(parent) && root.Address != parent.Address && parent.Address != 0)
-                    {
-                        list.Add(parent);
-                        hashSet.Add(parent);
-                        parent = parent.Parent;
-                    }
-
-                    PluginLogger.LogError($"Parent count: {list.Count} Parents not visible: {list.Count(x => x.IsVisibleLocal == false)}", 5);
-
+                { 
                     return;
                 }
 
                 Camera camera = GameController.Game.IngameState.Camera;
+                //Console.WriteLine($"Camera- width:{camera.Width} height:{camera.Height} PosX:{camera.Position.X} PosY:{camera.Position.Y} PosZ:{camera.Position.Z} ZFar:{camera.ZFar}");
+
                 Map mapWindow = GameController.Game.IngameState.IngameUi.Map;
                 RectangleF mapRect = mapWindow.GetClientRect();
 
                 Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
                 float posZ = GameController.Player.GetComponent<Render>().Z;
+
+                //Console.WriteLine($"mapRect- Width {mapRect.Width} Height {mapRect.Height} X {mapRect.X} Y {mapRect.Y}");
+                //Console.WriteLine($"playerPos- x: {playerPos.X} y: {playerPos.Y} z: {posZ}");
+
+
                 Vector2 screenCenter = new Vector2(mapRect.Width / 2, mapRect.Height / 2).Translate(0, -20) + new Vector2(mapRect.X, mapRect.Y)
                     + new Vector2(mapWindow.LargeMap.MapShiftX, mapWindow.LargeMap.MapShiftY);
                 var diag = (float)Math.Sqrt(camera.Width * camera.Width + camera.Height * camera.Height);
                 float k = camera.Width < 1024f ? 1120f : 1024f;
                 float scale = k / camera.Height * camera.Width * 3f / 4f / mapWindow.LargeMap.MapZoom;
 
+                //Console.WriteLine($"LargeMap IconsSize: {getIcons().Count()} OnlyVisible Count: {getIcons().Count(x => x.IsVisible())}");
+
                 foreach (MapIcon icon in getIcons().Where(x => x.IsVisible()))
                 {
+                    //Console.WriteLine($"Going through a map icon");
+
                     float iconZ = icon.EntityWrapper.GetComponent<Render>().Z;
                     Vector2 point = screenCenter
                         + MapIcon.DeltaInWorldToMinimapDelta(icon.WorldPosition - playerPos, diag, scale, (iconZ - posZ)/(9f/mapWindow.LargeMap.MapZoom));
