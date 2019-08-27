@@ -139,9 +139,11 @@ namespace PoeHUD.Poe
             var dictionary = new Dictionary<string, long>();
             long componentLookup = ComponentLookup;
             // the first address is a base object that doesn't contain a component, so read the first component
+            // Can be confirmed at FUN_HandlesEntityComponentLookupPlayer_HUD
             long addr = M.ReadLong(componentLookup);
             while (addr != componentLookup && addr != 0 && addr != -1)
             {
+                // Can be confirmed at FUN_HandlesEntityComponentLookupPlayer_HUD
                 string name = M.ReadString(M.ReadLong(addr + 0x10));
                 string nameStart = name;
                 if (!string.IsNullOrWhiteSpace(name))

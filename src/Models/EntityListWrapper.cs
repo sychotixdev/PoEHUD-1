@@ -3,6 +3,7 @@ using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
 using System;
 using System.Collections.Generic;
+using PoeHUD.Hud;
 
 namespace PoeHUD.Models
 {
@@ -68,23 +69,32 @@ namespace PoeHUD.Models
                 return;
 
             Dictionary<uint, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
+            PluginLogger.LogError($"Returned entities as dictionary: {newEntities.Count}", 5);
             var newCache = new Dictionary<uint, EntityWrapper>();
             foreach (var keyEntity in newEntities)
             {
                 if (!keyEntity.Value.IsValid)
+                {
+                    PluginLogger.LogError($"Entity {keyEntity.Key}  is invalid", 5);
                     continue;
+                }
 
                 var entityID = keyEntity.Key;
                 string uniqueEntityName = keyEntity.Value.Path + entityID;
 
                 if (ignoredEntities.Contains(uniqueEntityName))
+                {
+                    PluginLogger.LogError($"Entity {keyEntity.Key} Path {keyEntity.Value.Path} is ignored", 5);
                     continue;
+                }
 
                 if (entityCache.ContainsKey(entityID) && entityCache[entityID].IsValid)
                 {
                     newCache.Add(entityID, entityCache[entityID]);
                     entityCache[entityID].IsInList = true;
                     entityCache.Remove(entityID);
+
+                    PluginLogger.LogError($"Entity {keyEntity.Key} Path {keyEntity.Value.Path} already in cache", 5);
                     continue;
                 }
 
@@ -95,9 +105,11 @@ namespace PoeHUD.Models
                     entity.Path.StartsWith("Metadata/Monsters/Daemon"))
                 {
                     ignoredEntities.Add(uniqueEntityName);
+                    PluginLogger.LogError($"Entity {keyEntity.Key} Path {keyEntity.Value.Path} unique ignored", 5);
                     continue;
                 }
 
+                PluginLogger.LogError($"Entity {keyEntity.Key} Path {keyEntity.Value.Path} unique ignored", 5);
                 EntityAdded?.Invoke(entity);
                 newCache.Add(entityID, entity);
             }

@@ -32,7 +32,10 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         private void CollectEntities(long addr, Dictionary<uint, Entity> list)
         {
             long num = addr;
+            PluginLogger.LogError($"Collect entities being done. Address: {addr}", 5);
             addr = M.ReadLong(addr + 0x8);
+            PluginLogger.LogError($"Collect entities second part Address: {addr}", 5);
+
             var hashSet = new HashSet<long>();
             var queue = new Queue<long>();
             queue.Enqueue(addr);
@@ -63,6 +66,9 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
 					break;
                 }
             }
+
+            PluginLogger.LogError($"Collect entities finished: loop count {loopcount}", 5);
+
         }
     }
 
