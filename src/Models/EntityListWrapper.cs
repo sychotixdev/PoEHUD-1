@@ -76,7 +76,7 @@ namespace PoeHUD.Models
             {
                 if (!keyEntity.Value.IsValid)
                 {
-                    PluginLogger.LogError($"Entity {keyEntity.Key}  is invalid", 5);
+                    PluginLogger.LogError($"Entity Address: {keyEntity.Value.Address} Id: {keyEntity.Key}  Path: {keyEntity.Value.Path} ... is invalid", 5);
                     continue;
                 }
 
