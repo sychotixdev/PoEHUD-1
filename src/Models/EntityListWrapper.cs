@@ -69,14 +69,14 @@ namespace PoeHUD.Models
                 return;
 
             Dictionary<uint, Entity> newEntities = gameController.Game.IngameState.Data.EntityList.EntitiesAsDictionary;
-            PluginLogger.LogError($"gameController.Game.IngameState: {gameController.Game.IngameState.Address} IngameData: {gameController.Game.IngameState.Data.Address} EntityList: {gameController.Game.IngameState.Data.EntityList.Address}", 5);
+            PluginLogger.LogError($"gameController.Game.IngameState: {gameController.Game.IngameState.Address:X} IngameData: {gameController.Game.IngameState.Data.Address:X} EntityList: {gameController.Game.IngameState.Data.EntityList.Address:X}", 5);
             PluginLogger.LogError($"Returned entities as dictionary: {newEntities.Count}", 5);
             var newCache = new Dictionary<uint, EntityWrapper>();
             foreach (var keyEntity in newEntities)
             {
                 if (!keyEntity.Value.IsValid)
                 {
-                    PluginLogger.LogError($"Entity Address: {keyEntity.Value.Address} Id: {keyEntity.Key}  Path: {keyEntity.Value.Path} ... is invalid", 5);
+                    PluginLogger.LogError($"Entity Address: {keyEntity.Value.Address:X} Id: {keyEntity.Key}  Path: {keyEntity.Value.Path} ... is invalid", 5);
                     continue;
                 }
 
