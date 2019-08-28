@@ -268,8 +268,8 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Chest
         {
-            [FieldOffset(0x58)] public readonly byte isOpened;
-            [FieldOffset(0x98)] public readonly int isStrongbox;
+            [FieldOffset(0x74)] public readonly byte isOpened;
+            [FieldOffset(0xB4)] public readonly int isStrongbox;
         }
 
         [StructLayout(LayoutKind.Explicit)]
