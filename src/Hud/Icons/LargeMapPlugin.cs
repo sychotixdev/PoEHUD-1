@@ -41,21 +41,14 @@ namespace PoeHUD.Hud.Icons
                 Vector2 playerPos = GameController.Player.GetComponent<Positioned>().GridPos;
                 float posZ = GameController.Player.GetComponent<Render>().Z;
 
-                PluginLogger.LogError($"playerPos- x: {playerPos.X} y: {playerPos.Y} z: {posZ}", 5);
-
-
                 Vector2 screenCenter = new Vector2(mapRect.Width / 2, mapRect.Height / 2).Translate(0, -20) + new Vector2(mapRect.X, mapRect.Y)
                     + new Vector2(mapWindow.LargeMap.MapShiftX, mapWindow.LargeMap.MapShiftY);
                 var diag = (float)Math.Sqrt(camera.Width * camera.Width + camera.Height * camera.Height);
                 float k = camera.Width < 1024f ? 1120f : 1024f;
                 float scale = k / camera.Height * camera.Width * 3f / 4f / mapWindow.LargeMap.MapZoom;
 
-                PluginLogger.LogError($"LargeMap IconsSize: {getIcons().Count()} OnlyVisible Count: {getIcons().Count(x => x.IsVisible())}", 5);
-
                 foreach (MapIcon icon in getIcons().Where(x => x.IsVisible()))
                 {
-                    PluginLogger.LogError($"Going through a map icon", 5);
-
                     float iconZ = icon.EntityWrapper.GetComponent<Render>().Z;
                     Vector2 point = screenCenter
                         + MapIcon.DeltaInWorldToMinimapDelta(icon.WorldPosition - playerPos, diag, scale, (iconZ - posZ)/(9f/mapWindow.LargeMap.MapZoom));
