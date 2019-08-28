@@ -83,7 +83,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Entity
         {
-            [FieldOffset(0x0)] public readonly IntPtr entityInternal;
+            [FieldOffset(0x8)] public readonly IntPtr entityInternal;
             [FieldOffset(0x10)] public readonly IntPtr componentList;
             [FieldOffset(0x50)] public readonly uint id;
             [FieldOffset(0x60)] public readonly IntPtr positionedComp;
