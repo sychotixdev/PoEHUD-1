@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using PoeHUD.Hud.Flasker;
 using PoeHUD.Models.Enums;
@@ -24,6 +26,9 @@ namespace PoeHUD.Hud.Health
 {
     public class FlaskerPlugin : Plugin<FlaskerSettings>
     {
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
         public FlaskInformation FlaskInfo { get; set; } = null;
         public MiscBuffInfo MiscBuffInfo { get; set; } = null;
 
@@ -31,23 +36,19 @@ namespace PoeHUD.Hud.Health
         public FlaskerPlugin(GameController gameController, Graphics graphics, FlaskerSettings settings)
             : base(gameController, graphics, settings)
         {
-            /*CreatureType[] types = Enum.GetValues(typeof(CreatureType)).Cast<CreatureType>().ToArray();
-            healthBars = new Dictionary<CreatureType, List<HealthBar>>(types.Length);
-            foreach (CreatureType type in types)
-            {
-                healthBars.Add(type, new List<HealthBar>());
-            }
+            LoadSettingsFiles();
 
-            string json = File.ReadAllText("config/debuffPanel.json");
-            debuffPanelConfig = JsonConvert.DeserializeObject<DebuffPanelConfig>(json);
-            (new Coroutine(() => {foreach (var healthBar in healthBars)
-                {
-                    healthBar.Value.RemoveAll(hp => !hp.Entity.IsValid);
-                } }, new WaitRender(1), nameof(HealthBarPlugin), "RemoveAll"))
-                .AutoRestart(GameController.CoroutineRunner).Run();*/
+            (new Coroutine(() => Run()
+                    , new WaitTime(150), nameof(FlaskerPlugin), "FlaskerPlugin Run"))
+                .AutoRestart(GameController.CoroutineRunner).Run();
         }
 
         public override void Render()
+        {
+            
+        }
+
+        protected void Run()
         {
             try
             {
@@ -72,16 +73,78 @@ namespace PoeHUD.Hud.Health
                 // First, check for life stuff
                 if (playerLifeComponent.HPPercentage * 100 < Settings.InstantHPPotion)
                 {
-                    
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, true, true);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                    // Else, do we need to check for non-instant here?
                 }
+                else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion && playerBuffs.All(x => x.Name != "flask_effect_life"))
+                {
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                }
+
+                // Next, check mana stuff
+                if (playerLifeComponent.MPPercentage * 100 < Settings.InstantManaPotion)
+                {
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, true, true);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                    // Else, do we need to check for non-instant here?
+                }
+                else if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion && playerBuffs.All(x => x.Name != "flask_effect_mana"))
+                {
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                }
+
+                // Now check for cleansing
+
+                // Now check for defensive
+
+                // Now check for offsensive
+
+                // now check for speed
+
+                // Use flasks
+
+                foreach(var flask in flasksToUse)
+                {
+                    Keys flaskKey = Keys.D1;
+                    switch (flask.Index)
+                    {
+                        case 0:
+                            flaskKey = Settings.Flask1;
+                            break;
+                        case 1:
+                            flaskKey = Settings.Flask2;
+                            break;
+                        case 2:
+                            flaskKey = Settings.Flask3;
+                            break;
+                        case 3:
+                            flaskKey = Settings.Flask4;
+                            break;
+                        case 4:
+                            flaskKey = Settings.Flask5;
+                            break;
+                    }
+
+                    SendMessage(GameController.Window.Process.MainWindowHandle, 0x100, (int)flaskKey, 0);
+                    Thread.Sleep(15);
+                }
+
             }
-            catch
+            catch (Exception e)
             {
                 // do nothing
+                PluginLogger.LogError($"Flasker Exception: {e.ToString()}", 5);
             }
         }
 
-        protected virtual void LoadSettingsFiles()
+        protected void LoadSettingsFiles()
         {
             var flaskFilename =  @"/config/flaskinfo.json";
             var flaskBuffDetailsFileName =  @"/config/FlaskBuffDetails.json";
@@ -208,7 +271,7 @@ namespace PoeHUD.Hud.Health
             }
         }
 
-        private PlayerFlask FindFlaskMatchingAnyAction(List<PlayerFlask> flasks, Life playerLifeComponent, List<string> playerBuffs, List<FlaskActions> flaskActions, Boolean? instant = null, Boolean ignoreBuffs = false, Func<List<FlaskActions>> ignoreFlasksWithAction = null, Boolean isCleansing = false)
+        private PlayerFlask FindFlaskMatchingAnyAction(List<PlayerFlask> flasks, Life playerLifeComponent, List<Buff> playerBuffs, List<FlaskActions> flaskActions, Boolean? instant = null, Boolean ignoreBuffs = false, Func<List<FlaskActions>> ignoreFlasksWithAction = null, Boolean isCleansing = false)
         {
             // We have no flasks or settings for flasks?
             if (flasks == null)
@@ -285,9 +348,9 @@ namespace PoeHUD.Hud.Health
                    || playerFlask.InstantType == FlaskInstantType.LowLife;
         }
 
-        private bool MissingFlaskBuff(PlayerFlask playerFlask, List<string> playerBuffs)
+        private bool MissingFlaskBuff(PlayerFlask playerFlask, List<Buff> playerBuffs)
         {
-            return !playerBuffs.Any(x => x == playerFlask.BuffString1 || x == playerFlask.BuffString2);
+            return !playerBuffs.Any(x => x?.Name == playerFlask.BuffString1 || x?.Name == playerFlask.BuffString2);
         }
     }
 }

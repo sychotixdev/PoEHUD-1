@@ -60,6 +60,9 @@ namespace PoeHUD.Hud.Settings
         [JsonProperty("Health bar")]
         public HealthBarSettings HealthBarSettings { get; private set; }
 
+        [JsonProperty("Flasker")]
+        public FlaskerSettings FlaskerSettings { get; private set; }
+
         [JsonProperty("Performance")]
         public PerformanceSettings PerformanceSettings { get; private set; }
 
