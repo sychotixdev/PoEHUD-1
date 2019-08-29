@@ -77,6 +77,7 @@ namespace PoeHUD.Hud
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Monster alert", settingsHub.MonsterTrackerSettings) });  
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons", settingsHub.MapIconsSettings) });
 	        CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Map Icons Size", settingsHub.PoiTrackerSettings) });
+            CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Flasker", settingsHub.FlaskerSettings) });
             CoreMenu.Childs.Add(new InbuildPluginMenu() { Plugin = new PluginHolder("Perfomance", settingsHub.PerformanceSettings) });
 
             var themeEditorDraw = new ThemeEditor();

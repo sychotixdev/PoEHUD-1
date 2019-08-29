@@ -22,7 +22,7 @@ namespace PoeHUD.Poe.Components
 
         public class BaseRMO : StructuredRemoteMemoryObject<EnumOffsets.Base>
         {
-            public int NamePointer => Structure.namePointer;
+            public long NamePointer => (long)Structure.namePointer;
 
         }
 

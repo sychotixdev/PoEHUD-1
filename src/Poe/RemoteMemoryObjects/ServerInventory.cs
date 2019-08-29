@@ -89,7 +89,7 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             public int Key => Structure.key;
 
             //public readonly int Useless;
-            public InventSlotItem Value1 => GetObject<InventSlotItem>(Structure.value1);
+            public InventSlotItem Value1 => GetObject<InventSlotItem>((long)Structure.value1);
 
             //public readonly long Value2;
         }

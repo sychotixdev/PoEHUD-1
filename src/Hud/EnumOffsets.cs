@@ -193,10 +193,10 @@ namespace PoeHUD.Hud
         {
             [FieldOffset(0x0)] public readonly IntPtr previous;
             [FieldOffset(0x8)] public readonly IntPtr root;
-            [FieldOffset(0xC)] public readonly IntPtr next;
+            [FieldOffset(0x10)] public readonly IntPtr next;
             [FieldOffset(0x19)] public readonly byte isNull;
             [FieldOffset(0x20)] public readonly int key;
-            [FieldOffset(0x28)] public readonly int value1;
+            [FieldOffset(0x28)] public readonly IntPtr value1;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -242,7 +242,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Base
         {
-            [FieldOffset(0x10)] public readonly int namePointer;
+            [FieldOffset(0x10)] public readonly IntPtr namePointer;
         }
 
         [StructLayout(LayoutKind.Explicit)]

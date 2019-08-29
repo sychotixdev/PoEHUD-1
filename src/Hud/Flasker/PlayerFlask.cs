@@ -29,5 +29,10 @@ namespace PoeHUD.Hud.Flasker
         public FlaskInstantType InstantType { get; set; }
         public Boolean Instant => InstantType != FlaskInstantType.None;
         public Mods Mods { get; set; } = null;
+
+        public override string ToString()
+        {
+            return $"PlayerFlask[{Index}, {Name}, {Action1}, {Action2} {InstantType}]";
+        }
     }
 }

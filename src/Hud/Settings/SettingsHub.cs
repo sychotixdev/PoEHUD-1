@@ -39,6 +39,7 @@ namespace PoeHUD.Hud.Settings
             PoiTrackerSettings = new PoiTrackerSettings();
             PreloadAlertSettings = new PreloadAlertSettings();
             HealthBarSettings = new HealthBarSettings();
+            FlaskerSettings = new FlaskerSettings();
             PerformanceSettings = new PerformanceSettings();
         }
 
