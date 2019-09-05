@@ -114,14 +114,28 @@ namespace PoeHUD.Hud.Health
                 // Now check for cleansing
 
                 // Now check for defensive
+                if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
+                {
+                    PluginLogger.LogError("Should use defensive.", 5);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Defense }, true, true);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                }
 
                 // Now check for offsensive
+                if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentOffensive.Value)
+                {
+                    PluginLogger.LogError("Should use offensive.", 5);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                }
 
                 // now check for speed
 
                 // Use flasks
 
-                foreach(var flask in flasksToUse)
+                foreach (var flask in flasksToUse)
                 {
                     Keys flaskKey = Keys.D1;
                     switch (flask.Index)
