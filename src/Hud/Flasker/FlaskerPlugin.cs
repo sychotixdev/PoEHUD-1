@@ -117,7 +117,7 @@ namespace PoeHUD.Hud.Health
                 if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
                 {
                     PluginLogger.LogError("Should use defensive.", 5);
-                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Defense }, true, true);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Defense });
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
@@ -126,7 +126,7 @@ namespace PoeHUD.Hud.Health
                 if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentOffensive.Value)
                 {
                     PluginLogger.LogError("Should use offensive.", 5);
-                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
