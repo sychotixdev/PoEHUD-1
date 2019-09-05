@@ -176,11 +176,17 @@ namespace PoeHUD.Hud.Health
 
         private List<PlayerFlask> GetFlasks()
         {
-            var flaskInventoryItems = GameController.Game.IngameState.ServerData.PlayerInventories
+            var flaskInventoryItems = GameController.Game.IngameState.ServerData.PlayerInventories?
                 .FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems;
 
             if (flaskInventoryItems == null)
+            {
+                PluginLogger.LogError($"flaskInventoryItems was null PlayerInventories: { GameController.Game.IngameState.ServerData.PlayerInventories == null} " 
+                                      + $"flaskInventory: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask) == null} " 
+                                      + $"inventoryType: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory == null} "
+                                      + $"inventorySlotItems: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems == null} ", 5);
                 return null;
+            }
 
             List<PlayerFlask> playerFlasks = new List<PlayerFlask>();
             foreach (var inventoryItem in flaskInventoryItems)
@@ -191,7 +197,10 @@ namespace PoeHUD.Hud.Health
 
                 Entity flaskEntity = inventoryItem?.Item;
                 if (flaskEntity == null)
+                {
+                    PluginLogger.LogError("item null: " + inventoryItem?.ToString(), 5);
                     continue;
+                }
 
                 playerFlask.Index = (int)inventoryItem.InventoryPosition.X;
 
@@ -199,35 +208,53 @@ namespace PoeHUD.Hud.Health
                 var flaskPath = flaskEntity.Path;
                 if (String.IsNullOrEmpty(flaskPath))
                 {
+                    PluginLogger.LogError("flask path null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
                 var baseItem = GameController.Files.BaseItemTypes.Translate(flaskPath);
                 if (baseItem == null)
                 {
+                    PluginLogger.LogError("base item null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
                 Charges flaskChargesStruct = flaskEntity.GetComponent<Charges>();
+                if (flaskChargesStruct == null)
+                {
+                    PluginLogger.LogError("flask charges null: " + inventoryItem?.ToString(), 5);
+                    continue;
+                }
                 Mods flaskMods = flaskEntity.GetComponent<Mods>();
+                if (flaskMods == null)
+                {
+                    PluginLogger.LogError("flask mods null: " + inventoryItem?.ToString(), 5);
+                    continue;
+                }
                 playerFlask.Mods = flaskMods;
 
                 var useCharge = CalculateUseCharges(flaskChargesStruct.ChargesPerUse, flaskMods.ItemMods);
                 if (useCharge > 0)
                     playerFlask.TotalUses = flaskChargesStruct.NumCharges / useCharge;
 
-                var flaskBaseName = flaskEntity.GetComponent<Base>().Name;
-                playerFlask.Name = flaskBaseName;
-
-                PluginLogger.LogError("FlaskBaseName: " + flaskBaseName, 5);
-                if (String.IsNullOrEmpty(flaskBaseName))
+                var flaskBaseComponent = flaskEntity.GetComponent<Base>();
+                if (flaskBaseComponent == null)
                 {
+                    PluginLogger.LogError("flask base null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
+                var flaskBaseName = flaskBaseComponent.Name;
+                if (String.IsNullOrEmpty(flaskBaseName))
+                {
+                    PluginLogger.LogError("flask base name is null: " + inventoryItem?.ToString(), 5);
+                    continue;
+                }
+                playerFlask.Name = flaskBaseName;
 
                 if (!MiscBuffInfo.flaskNameToBuffConversion.TryGetValue(
                     flaskBaseName, out string flaskBuffOut))
                 {
+                    PluginLogger.LogError("flaskBuffOut is not found: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
@@ -267,6 +294,12 @@ namespace PoeHUD.Hud.Health
 
             PluginLogger.LogError($"Flask: {flask.Name} {flask.Mods == null}", 5);
             ItemRarity flaskItemRarity = flask.Mods.ItemRarity;
+
+            var itemMods = flask.Mods.ItemMods;
+            if (itemMods == null)
+            {
+                PluginLogger.LogError($"flask itemMods null: {flask}", 5);
+            }
 
             foreach (var mod in flask.Mods.ItemMods)
             {
