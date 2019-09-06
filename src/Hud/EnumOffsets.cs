@@ -7,9 +7,9 @@ namespace PoeHUD.Hud
 
     public class EnumOffsets
     {
-        public long AreaChangeCountOffset = 0x1D829E4;
-        public long FileRootBaseOffset = 0x1FC9870;
-        public long GameStateBaseOffset = 0x1FC3CA8;
+        public long AreaChangeCountOffset = 0x1D809E4;
+        public long FileRootBaseOffset = 0x1FC7850;
+        public long GameStateBaseOffset = 0x1FC1C98;
         [StructLayout(LayoutKind.Explicit)]
         public struct FileRoot
         {
