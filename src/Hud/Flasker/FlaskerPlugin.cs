@@ -30,6 +30,7 @@ namespace PoeHUD.Hud.Health
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
         public FlaskInformation FlaskInfo { get; set; } = null;
+        public DebuffPanelConfig DebuffPanelConfig { get; set; } = null;
         public MiscBuffInfo MiscBuffInfo { get; set; } = null;
 
 
@@ -112,6 +113,44 @@ namespace PoeHUD.Hud.Health
                 }
 
                 // Now check for cleansing
+                foreach (var buff in playerBuffs)
+                {
+                    if (float.IsInfinity(buff.Timer))
+                        continue;
+
+                    int filterId = 0;
+                    if (DebuffPanelConfig.Bleeding.TryGetValue(buff.Name, out filterId))
+                    {
+                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                        if (filterId == 0 || filterId != 1)
+                        {
+                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() {FlaskActions.BleedImmune}, isCleansing: true);
+                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                flasksToUse.Add(foundFlask);
+                        }
+                    }
+                    if (DebuffPanelConfig.Burning.TryGetValue(buff.Name, out filterId))
+                    {
+                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                        if (filterId == 0 || filterId != 1)
+                        {
+                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.IgniteImmune }, isCleansing: true);
+                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                flasksToUse.Add(foundFlask);
+                        }
+                    }
+                    if (DebuffPanelConfig.Corruption.TryGetValue(buff.Name, out filterId))
+                    {
+                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                        if (filterId == 0 || filterId != 1)
+                        {
+                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.BleedImmune }, isCleansing: true);
+                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                flasksToUse.Add(foundFlask);
+                        }
+                    }
+                }
+
 
                 // Now check for defensive
                 if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
@@ -171,10 +210,12 @@ namespace PoeHUD.Hud.Health
 
         protected void LoadSettingsFiles()
         {
-            var flaskFilename =  @"config/flaskinfo.json";
-            var flaskBuffDetailsFileName =  @"config/FlaskBuffDetails.json";
+            var flaskFilename =  "config/flaskinfo.json";
+            var debufFilename = "config/debuffPanel.json";
+            var flaskBuffDetailsFileName = @"config/FlaskBuffDetails.json";
 
             FlaskInfo = LoadSettingFile<FlaskInformation>(flaskFilename);
+            DebuffPanelConfig = LoadSettingFile<DebuffPanelConfig>(debufFilename);
             MiscBuffInfo = LoadSettingFile<MiscBuffInfo>(flaskBuffDetailsFileName);
         }
 
