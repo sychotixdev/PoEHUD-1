@@ -517,7 +517,7 @@ namespace PoeHUD.Hud.Health
             }
 
             //PluginLogger.LogError(flask + " ignoreActionType " + ignoreActionType, 5);
-            if (ignoreActionType)
+            if (ignoreActionType || flask.Action1 != FlaskActions.Life && flask.Action1 != FlaskActions.Mana && flask.Action1 != FlaskActions.Hybrid)
                 return true;
 
             //PluginLogger.LogError(flask + " life " + playerLifeComponent.HPPercentage,5 );
