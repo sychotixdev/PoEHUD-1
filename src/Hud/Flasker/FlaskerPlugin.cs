@@ -223,7 +223,7 @@ namespace PoeHUD.Hud.Health
 
 
                 // Now check for defensive
-                if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
+                if (Settings.DefensiveFlaskEnable && playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
                 {
                     //PluginLogger.LogError("Should use defensive.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Defense });
@@ -232,10 +232,10 @@ namespace PoeHUD.Hud.Health
                 }
 
                 // Now check for offsensive
-                if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentOffensive.Value)
+                if (Settings.OffensiveFlaskEnable && playerLifeComponent.HPPercentage * 100 < Settings.HPPercentOffensive.Value)
                 {
                     //PluginLogger.LogError("Should use offensive.", 5);
-                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN });
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
@@ -244,7 +244,7 @@ namespace PoeHUD.Hud.Health
                 if (Settings.SpeedFlaskEnable && Settings.MinMsPlayerMoving <= PlayerMovingStopwatch.ElapsedMilliseconds)
                 {
                     //PluginLogger.LogError("Should use offensive.", 5);
-                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Speedrun }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Speedrun }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN });
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
