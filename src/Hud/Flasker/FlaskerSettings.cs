@@ -22,7 +22,7 @@ namespace PoeHUD.Hud.Health
         [PoeHUD.Plugins.Menu("Mana Potion", 3, 0)]
         public RangeNode<int> ManaPotion { get; set; } = new RangeNode<int>(65, 0, 100);
 
-        [PoeHUD.Plugins.Menu("Instant Mana Potion", 3, 0)]
+        [PoeHUD.Plugins.Menu("Instant Mana Potion", 4, 0)]
         public RangeNode<int> InstantManaPotion { get; set; } = new RangeNode<int>(35, 0, 100);
 
         [PoeHUD.Plugins.Menu("Defensive Flask", 10)]
@@ -33,8 +33,10 @@ namespace PoeHUD.Hud.Health
         public ToggleNode OffensiveFlaskEnable { get; set; } = false;
         [PoeHUD.Plugins.Menu("Offensive Flask HP", 21, 20)]
         public RangeNode<int> HPPercentOffensive { get; set; } = new RangeNode<int>(50, 0, 100);
-        [PoeHUD.Plugins.Menu("Offensive Flask", 30)]
+        [PoeHUD.Plugins.Menu("Speed Flask", 30)]
         public ToggleNode SpeedFlaskEnable { get; set; } = false;
+        [PoeHUD.Plugins.Menu("Minimum ms moving", 31, 30)]
+        public RangeNode<int> MinMsPlayerMoving { get; set; } = new RangeNode<int>(1500, 1, 10000);
 
         [PoeHUD.Plugins.Menu("Remove Ailments", 40)]
         public ToggleNode RemAilment { get; set; } = false;

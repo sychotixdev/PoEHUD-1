@@ -33,6 +33,7 @@ namespace PoeHUD.Hud.Health
         public DebuffPanelConfig DebuffPanelConfig { get; set; } = null;
         public MiscBuffInfo MiscBuffInfo { get; set; } = null;
 
+        private Stopwatch PlayerMovingStopwatch { get; set; } = new Stopwatch();
 
         public FlaskerPlugin(GameController gameController, Graphics graphics, FlaskerSettings settings)
             : base(gameController, graphics, settings)
@@ -63,7 +64,10 @@ namespace PoeHUD.Hud.Health
                 if (!Settings.Enable || !GameController.InGame)
                 { return; }
 
-                var playerLifeComponent = GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Life>();
+                var localPlayer = GameController.Game.IngameState.Data.LocalPlayer;
+                UpdatePlayerMovingStopwatch(localPlayer);
+
+                var playerLifeComponent = localPlayer.GetComponent<Life>();
 
                 // Is player dead
                 if (playerLifeComponent.CurHP <= 0)
@@ -81,7 +85,7 @@ namespace PoeHUD.Hud.Health
                 // First, check for life stuff
                 if (playerLifeComponent.HPPercentage * 100 < Settings.InstantHPPotion.Value)
                 {
-                    PluginLogger.LogError("Should use instant hp.", 5);
+                    //PluginLogger.LogError("Should use instant hp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, true, true);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
@@ -89,7 +93,7 @@ namespace PoeHUD.Hud.Health
                 }
                 else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion.Value && playerBuffs.All(x => x.Name != "flask_effect_life"))
                 {
-                    PluginLogger.LogError("Should use hp.", 5);
+                    //PluginLogger.LogError("Should use hp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
@@ -98,7 +102,7 @@ namespace PoeHUD.Hud.Health
                 // Next, check mana stuff
                 if (playerLifeComponent.MPPercentage * 100 < Settings.InstantManaPotion.Value)
                 {
-                    PluginLogger.LogError("Should use instant mp.", 5);
+                    //PluginLogger.LogError("Should use instant mp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, true, true) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, true, true);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
@@ -106,56 +110,122 @@ namespace PoeHUD.Hud.Health
                 }
                 else if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion.Value && playerBuffs.All(x => x.Name != "flask_effect_mana"))
                 {
-                    PluginLogger.LogError("Should use mp.", 5);
+                    //PluginLogger.LogError("Should use mp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
 
-                // Now check for cleansing
-                foreach (var buff in playerBuffs)
+                if (Settings.RemAilment)
                 {
-                    if (float.IsInfinity(buff.Timer))
-                        continue;
+                    // Now check for cleansing
+                    foreach (var buff in playerBuffs)
+                    {
+                        if (float.IsInfinity(buff.Timer))
+                            continue;
 
-                    int filterId = 0;
-                    if (DebuffPanelConfig.Bleeding.TryGetValue(buff.Name, out filterId))
-                    {
-                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
-                        if (filterId == 0 || filterId != 1)
+                        int filterId = 0;
+                        if (Settings.RemBleed && DebuffPanelConfig.Bleeding.TryGetValue(buff.Name, out filterId))
                         {
-                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() {FlaskActions.BleedImmune}, isCleansing: true);
-                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
-                                flasksToUse.Add(foundFlask);
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() {FlaskActions.BleedImmune},
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
                         }
-                    }
-                    if (DebuffPanelConfig.Burning.TryGetValue(buff.Name, out filterId))
-                    {
-                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
-                        if (filterId == 0 || filterId != 1)
+
+                        if (Settings.RemBurning && DebuffPanelConfig.Burning.TryGetValue(buff.Name, out filterId))
                         {
-                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.IgniteImmune }, isCleansing: true);
-                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
-                                flasksToUse.Add(foundFlask);
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() {FlaskActions.IgniteImmune},
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
                         }
-                    }
-                    if (DebuffPanelConfig.Corruption.TryGetValue(buff.Name, out filterId))
-                    {
-                        // I'm not sure what the values are here, but this is the effective logic from the old plugin
-                        if (filterId == 0 || filterId != 1)
+
+                        if (Settings.CorruptCount > 0 &&
+                            DebuffPanelConfig.Corruption.TryGetValue(buff.Name, out filterId))
                         {
-                            var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.BleedImmune }, isCleansing: true);
-                            if (foundFlask != null && !flasksToUse.Contains(foundFlask))
-                                flasksToUse.Add(foundFlask);
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() {FlaskActions.BleedImmune},
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
+
+                        }
+
+                        if (Settings.RemFrozen && DebuffPanelConfig.Chilled.TryGetValue(buff.Name, out filterId))
+                        {
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() {FlaskActions.FreezeImmune},
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
+                        }
+
+                        if (Settings.RemPoison && DebuffPanelConfig.Poisoned.TryGetValue(buff.Name, out filterId))
+                        {
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() { FlaskActions.PoisonImmune },
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
+                        }
+
+                        if (Settings.RemCurse && DebuffPanelConfig.WeakenedSlowed.TryGetValue(buff.Name, out filterId))
+                        {
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() { FlaskActions.CurseImmune },
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
+                        }
+
+                        if (Settings.RemShocked && DebuffPanelConfig.Shocked.TryGetValue(buff.Name, out filterId))
+                        {
+                            // I'm not sure what the values are here, but this is the effective logic from the old plugin
+                            if (filterId == 0 || filterId != 1)
+                            {
+                                var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent,
+                                    playerBuffs, new List<FlaskActions>() { FlaskActions.ShockImmune },
+                                    isCleansing: true);
+                                if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                                    flasksToUse.Add(foundFlask);
+                            }
                         }
                     }
                 }
 
 
+
                 // Now check for defensive
                 if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentDefensive.Value)
                 {
-                    PluginLogger.LogError("Should use defensive.", 5);
+                    //PluginLogger.LogError("Should use defensive.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Defense });
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
@@ -164,13 +234,21 @@ namespace PoeHUD.Hud.Health
                 // Now check for offsensive
                 if (playerLifeComponent.HPPercentage * 100 < Settings.HPPercentOffensive.Value)
                 {
-                    PluginLogger.LogError("Should use offensive.", 5);
+                    //PluginLogger.LogError("Should use offensive.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Offense }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
                 }
 
                 // now check for speed
+                if (Settings.SpeedFlaskEnable && Settings.MinMsPlayerMoving <= PlayerMovingStopwatch.ElapsedMilliseconds)
+                {
+                    //PluginLogger.LogError("Should use offensive.", 5);
+                    var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Speedrun }) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.OFFENSE_AND_SPEEDRUN }, true, true);
+                    if (foundFlask != null && !flasksToUse.Contains(foundFlask))
+                        flasksToUse.Add(foundFlask);
+                }
+
 
                 // Use flasks
 
@@ -205,6 +283,20 @@ namespace PoeHUD.Hud.Health
             {
                 // do nothing
                 PluginLogger.LogError($"Flasker Exception: {e.ToString()}", 5);
+            }
+        }
+
+        private void UpdatePlayerMovingStopwatch(Entity localPlayer)
+        {
+            var player = localPlayer.GetComponent<Actor>();
+            if (player != null && player.Address != 0 && player.isMoving)
+            {
+                if (!PlayerMovingStopwatch.IsRunning)
+                    PlayerMovingStopwatch.Start();
+            }
+            else
+            {
+                PlayerMovingStopwatch.Reset();
             }
         }
 
@@ -248,7 +340,7 @@ namespace PoeHUD.Hud.Health
             {
                 PlayerFlask playerFlask = new PlayerFlask();
 
-                PluginLogger.LogError("InventorySlotItem: " + inventoryItem?.ToString(), 5);
+                //PluginLogger.LogError("InventorySlotItem: " + inventoryItem?.ToString(), 5);
 
                 Entity flaskEntity = inventoryItem?.Item;
                 if (flaskEntity == null)
@@ -347,7 +439,7 @@ namespace PoeHUD.Hud.Health
             if (FlaskInfo.FlaskTypes.TryGetValue(flask.Name, out FlaskActions flaskActionOut))
                 flask.Action1 = flaskActionOut;
 
-            PluginLogger.LogError($"Flask: {flask.Name} {flask.Mods == null}", 5);
+            //PluginLogger.LogError($"Flask: {flask.Name} {flask.Mods == null}", 5);
             ItemRarity flaskItemRarity = flask.Mods.ItemRarity;
 
             var itemMods = flask.Mods.ItemMods;
@@ -406,7 +498,7 @@ namespace PoeHUD.Hud.Health
 
             var foundFlask = flaskList.FirstOrDefault();
 
-            PluginLogger.LogError($"Flask found for action {flaskActions.FirstOrDefault()} flask: {foundFlask}", 5);
+            //PluginLogger.LogError($"Flask found for action {flaskActions.FirstOrDefault()} flask: {foundFlask}", 5);
 
             return flaskList.FirstOrDefault();
         }
@@ -424,23 +516,23 @@ namespace PoeHUD.Hud.Health
                 return false;
             }
 
-            PluginLogger.LogError(flask + " ignoreActionType " + ignoreActionType, 5);
+            //PluginLogger.LogError(flask + " ignoreActionType " + ignoreActionType, 5);
             if (ignoreActionType)
                 return true;
 
-            PluginLogger.LogError(flask + " life " + playerLifeComponent.HPPercentage,5 );
+            //PluginLogger.LogError(flask + " life " + playerLifeComponent.HPPercentage,5 );
             if (flask.Action1 == FlaskActions.Life && playerLifeComponent.HPPercentage * 100 < 99)
             {
                 return true;
             }
 
-            PluginLogger.LogError(flask + " life " + playerLifeComponent.MPPercentage, 5);
+            //PluginLogger.LogError(flask + " life " + playerLifeComponent.MPPercentage, 5);
             if (flask.Action1 == FlaskActions.Mana && playerLifeComponent.MPPercentage * 100 < 99)
             {
                 return true;
             }
 
-            PluginLogger.LogError(flask + " hybrid " + playerLifeComponent.MPPercentage, 5);
+            //PluginLogger.LogError(flask + " hybrid " + playerLifeComponent.MPPercentage, 5);
             if (flask.Action1 == FlaskActions.Hybrid && !(playerLifeComponent.HPPercentage * 100 < 99 || playerLifeComponent.MPPercentage * 100 < 99))
             {
                 return true;
