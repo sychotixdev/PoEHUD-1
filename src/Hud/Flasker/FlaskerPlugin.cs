@@ -328,10 +328,10 @@ namespace PoeHUD.Hud.Health
 
             if (flaskInventoryItems == null)
             {
-                PluginLogger.LogError($"flaskInventoryItems was null PlayerInventories: { GameController.Game.IngameState.ServerData.PlayerInventories == null} " 
+                /*PluginLogger.LogError($"flaskInventoryItems was null PlayerInventories: { GameController.Game.IngameState.ServerData.PlayerInventories == null} " 
                                       + $"flaskInventory: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask) == null} " 
                                       + $"inventoryType: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory == null} "
-                                      + $"inventorySlotItems: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems == null} ", 5);
+                                      + $"inventorySlotItems: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems == null} ", 5);*/
                 return null;
             }
 
@@ -492,7 +492,7 @@ namespace PoeHUD.Hud.Health
 
             if (flaskList == null || !flaskList.Any())
             {
-                PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()}", 5);
+                //PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()}", 5);
                 return null;
             }
 
