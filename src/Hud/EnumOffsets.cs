@@ -7,9 +7,9 @@ namespace PoeHUD.Hud
 
     public class EnumOffsets
     {
-        public long AreaChangeCountOffset = 0x1D809E4;
-        public long FileRootBaseOffset = 0x1FC7850;
-        public long GameStateBaseOffset = 0x1FC1C98;
+        public long AreaChangeCountOffset = 0x1E5E9B8;
+        public long FileRootBaseOffset = 0x20AEAA0;
+        public long GameStateBaseOffset = 0x20A8B18;
         [StructLayout(LayoutKind.Explicit)]
         public struct FileRoot
         {
@@ -57,7 +57,7 @@ namespace PoeHUD.Hud
             [FieldOffset(0x378)] public readonly IntPtr serverData;
             [FieldOffset(0x4A0)] public readonly IntPtr uiRoot;
             [FieldOffset(0xF4C)] public readonly Camera camera;
-            [FieldOffset(0x1388)] public readonly IntPtr ingameUi;
+            [FieldOffset(0x1378)] public readonly IntPtr ingameUi;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -69,7 +69,7 @@ namespace PoeHUD.Hud
             [FieldOffset(0xD4)] public readonly float positionX;
             [FieldOffset(0xD8)] public readonly float positionY;
             [FieldOffset(0xDC)] public readonly float positionZ;
-            [FieldOffset(0x1C8)] public readonly float zFar;
+            [FieldOffset(0x1E8)] public readonly float zFar;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -94,7 +94,7 @@ namespace PoeHUD.Hud
         public struct EntityInternal
         {
             [FieldOffset(0x18)] public readonly IntPtr path;
-            [FieldOffset(0x40)] public readonly IntPtr componentLookupPart1;
+            [FieldOffset(0x38)] public readonly IntPtr componentLookupPart1;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -176,8 +176,8 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct ServerData
         {
-            [FieldOffset(0x6F30)] public readonly IntPtr playerInventoriesFirstAddress;
-            [FieldOffset(0x6F38)] public readonly IntPtr playerInventoriesLastAddress;
+            [FieldOffset(0x7140)] public readonly IntPtr playerInventoriesFirstAddress;
+            [FieldOffset(0x7148)] public readonly IntPtr playerInventoriesLastAddress;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -248,7 +248,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Actor
         {
-            [FieldOffset(0xF8)] public readonly int action;
+            [FieldOffset(0x108)] public readonly int action;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -304,7 +304,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct ObjectMagicProperties
         {
-            [FieldOffset(0x7C)] public readonly int monsterRarity;
+            [FieldOffset(0x70)] public readonly int monsterRarity;
             [FieldOffset(0x98)] public readonly IntPtr modsStart;
             [FieldOffset(0xA0)] public readonly IntPtr modsEnd;
         }
@@ -313,8 +313,8 @@ namespace PoeHUD.Hud
         public struct Positioned
         {
             [FieldOffset(0x58)] public readonly byte reach;
-            [FieldOffset(0xEC)] public readonly int gridX;
-            [FieldOffset(0xF0)] public readonly int gridY;
+            [FieldOffset(0xE0)] public readonly int gridX;
+            [FieldOffset(0xE4)] public readonly int gridY;
         }
 
         [StructLayout(LayoutKind.Explicit)]
