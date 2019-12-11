@@ -124,7 +124,7 @@ namespace PoeHUD.Poe
         {
             long[] array = m.FindPatterns(fileRootPattern, areaChangePattern, GameStatePattern);
 
-            var fileRootOffset = 38;
+            var fileRootOffset = 15;
             FileRoot = m.ReadInt(m.AddressOfProcess + array[0] + fileRootOffset) + array[0] + fileRootOffset + 4;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
 
