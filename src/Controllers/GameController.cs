@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using PoeHUD.DebugPlug;
 using PoeHUD.Framework;
 using PoeHUD.Framework.Helpers;
+using PoeHUD.Hud;
 using PoeHUD.Hud.Performance;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Models;
@@ -116,6 +117,7 @@ namespace PoeHUD.Controllers
                 var coroutines = CoroutineRunner.Coroutines.Concat(CoroutineRunnerParallel.Coroutines).ToList();
                 if (!InGame || !IsForeGroundCache || IsLoading)
                 {
+                    PluginLogger.LogMessage("Not in game/forground/ is loading", 5);
                     Clear.SafeInvoke();
                     foreach (var cor in coroutines)
                     {

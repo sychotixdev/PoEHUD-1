@@ -55,7 +55,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public static bool IsLoginState => GameStateActive(LoginStatePtr);
         public static bool IsSelectCharacterState => GameStateActive(SelectCharacterStatePtr);
         public static bool IsWaitingState => GameStateActive(WaitingStatePtr);//This happens after selecting character, maybe other cases
-        public static bool IsInGameState => GameStateActive(InGameStatePtr) && !IsLoading;//In game, with selected character
+        public static bool IsInGameState
+        {
+            get
+            {
+                var isLoading = IsLoading;
+                var ingameStateStateActive = GameStateActive(InGameStatePtr);
+                PluginLogger.LogMessage($"isLoading {isLoading} ingameStateStateActive {ingameStateStateActive}", 5);
+                return ingameStateStateActive && !isLoading;
+            }
+        }
+
         public static bool IsLoading => LoadingState.IsLoading;
 
         private static bool GameStateActive(long stateAddress)
