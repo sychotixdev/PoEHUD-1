@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PoeHUD.Hud.DeveloperTool;
 using Color = System.Drawing.Color;
 using Graphics2D = PoeHUD.Hud.UI.Graphics;
 using Rectangle = System.Drawing.Rectangle;
@@ -126,6 +127,7 @@ namespace PoeHUD.Hud
             plugins.Add(new MonsterTracker(gameController, graphics, settings.MonsterTrackerSettings));
             plugins.Add(new PoiTracker(gameController, graphics, settings.PoiTrackerSettings));
             plugins.Add(new FlaskerPlugin(gameController, graphics, settings.FlaskerSettings));
+            plugins.Add(new DevTree(gameController, graphics, settings.DevTreeSettings));
 
             var leftPanel = new PluginPanel(GetLeftCornerMap);
             leftPanel.AddChildren(new PreloadAlertPlugin(gameController, graphics, settings.PreloadAlertSettings, settings));

@@ -130,6 +130,9 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Trinet.Core.IO.Ntfs, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
       <HintPath>packages\Trinet.Core.IO.Ntfs.4.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
@@ -155,6 +158,9 @@
     <Compile Include="Framework\WinApi.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPlugin.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPluginSettings.cs" />
+    <Compile Include="Hud\DeveloperTool\DevTree.cs" />
+    <Compile Include="Hud\DeveloperTool\Libs\ImGuiExtension.cs" />
+    <Compile Include="Hud\DeveloperTool\DevTreeSettings.cs" />
     <Compile Include="Hud\ExternalOverlay.cs">
       <SubType>Form</SubType>
     </Compile>

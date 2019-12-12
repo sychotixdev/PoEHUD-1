@@ -7,6 +7,7 @@ using PoeHUD.Hud.Settings.Converters;
 using PoeHUD.Hud.Trackers;
 using System;
 using System.IO;
+using PoeHUD.Hud.DeveloperTool;
 using PoeHUD.Hud.Performance;
 
 namespace PoeHUD.Hud.Settings
@@ -40,6 +41,7 @@ namespace PoeHUD.Hud.Settings
             PreloadAlertSettings = new PreloadAlertSettings();
             HealthBarSettings = new HealthBarSettings();
             FlaskerSettings = new FlaskerSettings();
+            DevTreeSettings = new DevTreeSettings();
             PerformanceSettings = new PerformanceSettings();
         }
 
@@ -63,6 +65,9 @@ namespace PoeHUD.Hud.Settings
 
         [JsonProperty("Flasker")]
         public FlaskerSettings FlaskerSettings { get; private set; }
+
+        [JsonProperty("DevTree")]
+        public DevTreeSettings DevTreeSettings { get; private set; }
 
         [JsonProperty("Performance")]
         public PerformanceSettings PerformanceSettings { get; private set; }
