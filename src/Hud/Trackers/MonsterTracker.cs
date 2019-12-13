@@ -228,7 +228,7 @@ namespace PoeHUD.Hud.Trackers
 
             string overrideIcon = null;
             var life = entity.GetComponent<Life>();
-            if (life.HasBuff("hidden_monster"))
+            if (life != null && life.HasBuff("hidden_monster"))
             {
                 overrideIcon = HiddenIcons[(int)monsterRarity];
             }

@@ -61,7 +61,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             {
                 var isLoading = IsLoading;
                 var ingameStateStateActive = GameStateActive(InGameStatePtr);
-                PluginLogger.LogMessage($"isLoading {isLoading} ingameStateStateActive {ingameStateStateActive}", 5);
                 return ingameStateStateActive && !isLoading;
             }
         }

@@ -117,7 +117,6 @@ namespace PoeHUD.Controllers
                 var coroutines = CoroutineRunner.Coroutines.Concat(CoroutineRunnerParallel.Coroutines).ToList();
                 if (!InGame || !IsForeGroundCache || IsLoading)
                 {
-                    PluginLogger.LogMessage("Not in game/forground/ is loading", 5);
                     Clear.SafeInvoke();
                     foreach (var cor in coroutines)
                     {

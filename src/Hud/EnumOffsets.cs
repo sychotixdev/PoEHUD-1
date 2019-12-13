@@ -7,9 +7,9 @@ namespace PoeHUD.Hud
 
     public class EnumOffsets
     {
-        public long AreaChangeCountOffset = 0x1E5E9B8;
-        public long FileRootBaseOffset = 0x20AEAA0;
-        public long GameStateBaseOffset = 0x20A8B18;
+        public long AreaChangeCountOffset = 0x1E769B8;
+        public long FileRootBaseOffset = 0x20C8300;
+        public long GameStateBaseOffset = 0x20C2388;
         [StructLayout(LayoutKind.Explicit)]
         public struct FileRoot
         {
@@ -93,7 +93,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct EntityInternal
         {
-            [FieldOffset(0x18)] public readonly IntPtr path;
+            [FieldOffset(0x10)] public readonly IntPtr path;
             [FieldOffset(0x38)] public readonly IntPtr componentLookupPart1;
         }
 
@@ -176,8 +176,8 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct ServerData
         {
-            [FieldOffset(0x7140)] public readonly IntPtr playerInventoriesFirstAddress;
-            [FieldOffset(0x7148)] public readonly IntPtr playerInventoriesLastAddress;
+            [FieldOffset(0x7240)] public readonly IntPtr playerInventoriesFirstAddress;
+            [FieldOffset(0x7248)] public readonly IntPtr playerInventoriesLastAddress;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -304,7 +304,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct ObjectMagicProperties
         {
-            [FieldOffset(0x70)] public readonly int monsterRarity;
+            [FieldOffset(0x7C)] public readonly int monsterRarity;
             [FieldOffset(0x98)] public readonly IntPtr modsStart;
             [FieldOffset(0xA0)] public readonly IntPtr modsEnd;
         }
