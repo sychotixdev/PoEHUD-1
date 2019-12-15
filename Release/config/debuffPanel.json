@@ -1,21 +1,21 @@
-/*
+﻿/*
 Filter:
 0 - any
 1 - hostiles
 2 - players & minions
 */
 {
-  "Bleeding": {
+"Bleeding": {
     "puncture":0,
     "puncture_moving":0,
     "physical_damage_and_bleed":0,
     "bleeding":0
-  },
-  "Corruption": {
+},
+"Corruption": {
     "corrupted_blood":0,
     "corrupted_blood_rain":0
-  },
-  "Poisoned": {
+},
+"Poisoned": {
     "poison":0,
     "viper_strike_orb":0,
     "monster_aura_pus_puke_degen":2,
@@ -24,18 +24,18 @@ Filter:
     "ground_desecration":0,
     "caustic_cloud":0,
     "chaos_bond_in_beam":0
-  },
-  "Frozen": {
+},
+"Frozen": {
     "frozen":0,
     "cold_damage_and_freeze":0
-  },
-  "Chilled": {
-	"chilled":0,
-	"ground_ice_chill":0,
-	"chilling_bond_in_beam":0,
-	"monster_aura_chill":2
-  },
-  "Burning": {
+},
+"Chilled": {
+    "chilled":0,
+    "ground_ice_chill":0,
+    "chilling_bond_in_beam":0,
+    "monster_aura_chill":2
+},
+"Burning": {
     "ground_fire_burn":0,
     "ignited":0,
     "searing_bond_in_beam":0,
@@ -43,15 +43,15 @@ Filter:
     "monster_aura_burning":2,
     "demon_righteous_fire_aura":2,
     "righteous_fire_aura":2
-  },
-  "Shocked": {
+},
+"Shocked": {
     "shocked":0,
     "ground_lightning_shock":0,
     "seawitch_lightning_beam":0,
     "lightning_damage_and_shock":0,
     "monster_aura_shock":2
-  },
-  "WeakenedSlowed": {
+},
+"WeakenedSlowed": {
     "monster_aura_slow":2,
     "curse_enfeeble":0,
     "curse_temporal_chains":0,
@@ -76,5 +76,5 @@ Filter:
     "pinned":0,
     "bleeding_movespeed_penalty":0,
     "stun_display_buff":0
-  }
+}
 }

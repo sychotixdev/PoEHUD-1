@@ -130,6 +130,7 @@
     "FlaskIncreasedRecoveryAmount": 0,
     "FlaskFullInstantRecovery": 0,
     "FlaskChanceRechargeOnCrit": 0,
+    "FlaskIncreasedHealingCharges": 0,
 
     "FlaskHealsMinions": 0,
     "FlaskBuffManaLeechPermyriadWhileHealing": 0,
@@ -146,14 +147,19 @@
     "FlaskBuffResistancesWhileHealing": 5,
     "FlaskRemovesBleeding": 13,
     "FlaskCurseImmunity": 14,
+    
 	"JunMasterLocalFlaskCriticalStrikeChanceDuringFlaskEffect": 8,
-	"JunMasterLocalFlaskCriticalStrikeChanceDuringFlaskEffect1": 8,
-    "JunMaster2LocalFlaskCriticalStrikeChanceDuringFlaskEffect1": 8,
 	"JunMasterLocalFlaskLifeLeechOnDamageTakenPermyriadDuringFlaskEffect": 2,
     "JunMasterLocalFlaskItemFoundRarityDuringFlaskEffect": 0,
     "JunMasterLocalFlaskSkillManaCostDuringFlaskEffect": 8,
     "JunMasterLocalFlaskAvoidStunChanceAndMovementSpeedDuringFlaskEffect": 7,
-    "JunMasterLocalFlaskLifeRegenerationPerMinuteDuringFlaskEffect": 8
-
+    "JunMasterLocalFlaskLifeRegenerationPerMinuteDuringFlaskEffect": 8,
+    "FlaskBuffFreezeShockIgniteChanceWhileHealing": 0,
+    "FlaskBuffCastSpeedWhileHealing": 0,
+    "FlaskBuffAttackSpeedWhileHealing": 0,
+    "FlaskManaRecoveryAtEnd" : 0,
+    "FlaskBuffReducedManaCostWhileHealing" : 0,
+    "FlaskFullRechargeOnHit" : 0,
+	"FlaskEffectNotRemovedOnFullMana" : 0
   }
 }

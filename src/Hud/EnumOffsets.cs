@@ -65,7 +65,7 @@ namespace PoeHUD.Hud
         {
             [FieldOffset(0x4)] public readonly int width;
             [FieldOffset(0x8)] public readonly int height;
-            [FieldOffset(0x5C)] public readonly Matrix4x4 worldToScreenMatrix;
+            [FieldOffset(0x7C)] public readonly Matrix4x4 worldToScreenMatrix;
             [FieldOffset(0xD4)] public readonly float positionX;
             [FieldOffset(0xD8)] public readonly float positionY;
             [FieldOffset(0xDC)] public readonly float positionZ;
