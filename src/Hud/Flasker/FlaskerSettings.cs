@@ -22,8 +22,6 @@ namespace PoeHUD.Hud.Health
         [PoeHUD.Plugins.Menu("Mana Potion", 3, 0)]
         public RangeNode<int> ManaPotion { get; set; } = new RangeNode<int>(65, 0, 100);
 
-        [PoeHUD.Plugins.Menu("Instant Mana Potion", 4, 0)]
-        public RangeNode<int> InstantManaPotion { get; set; } = new RangeNode<int>(35, 0, 100);
 
         [PoeHUD.Plugins.Menu("Defensive Flask", 10)]
         public ToggleNode DefensiveFlaskEnable { get; set; } = false;
