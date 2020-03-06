@@ -3,6 +3,7 @@ using PoeHUD.Poe;
 using PoeHUD.Poe.Elements;
 using System;
 using System.Collections.Generic;
+using PoeHUD.DebugPlug;
 using PoeHUD.Hud;
 
 namespace PoeHUD.Models
@@ -62,8 +63,16 @@ namespace PoeHUD.Models
         public void RefreshState()
         {
             UpdatePlayer();
-            if(player.IsAlive && player.IsValid && player.HasComponent<Poe.Components.Stats>())
-                UpdatePlayerStats();
+            try
+            {
+                if (player.IsAlive && player.IsValid && player.HasComponent<Poe.Components.Stats>())
+                    UpdatePlayerStats();
+            }
+            catch (Exception e)
+            {
+                DebugPlugin.LogMsg($"Updating player stats threw an exception: {e.Message}", 1);
+            }
+
 
             if (gameController.Area.CurrentArea == null)
                 return;

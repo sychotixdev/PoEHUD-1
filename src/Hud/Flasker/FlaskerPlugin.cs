@@ -91,7 +91,7 @@ namespace PoeHUD.Hud.Health
                         flasksToUse.Add(foundFlask);
                     // Else, do we need to check for non-instant here?
                 }
-                else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion.Value && playerBuffs.All(x => x.Name != "flask_effect_life"))
+                else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion.Value && playerBuffs.All(x => x.Name.StartsWith("flask_effect_life")))
                 {
                     //PluginLogger.LogError("Should use hp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
@@ -99,7 +99,7 @@ namespace PoeHUD.Hud.Health
                         flasksToUse.Add(foundFlask);
                 }
 
-                if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion.Value && playerBuffs.All(x => x.Name != "flask_effect_mana"))
+                if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion.Value && playerBuffs.All(x => x.Name.StartsWith("flask_effect_mana")))
                 {
                     //PluginLogger.LogError("Should use mp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
