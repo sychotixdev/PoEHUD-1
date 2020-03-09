@@ -7,9 +7,9 @@ namespace PoeHUD.Hud
 
     public class EnumOffsets
     {
-        public long AreaChangeCountOffset = 0x1F829B8;
-        public long FileRootBaseOffset = 0x21E35B0;
-        public long GameStateBaseOffset = 0x21DD1B8;
+        public long AreaChangeCountOffset = 0x1F8B9B8;
+        public long FileRootBaseOffset = 0x21ED5E0;
+        public long GameStateBaseOffset = 0x21E71D8;
         [StructLayout(LayoutKind.Explicit)]
         public struct FileRoot
         {
@@ -277,34 +277,34 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Life
         {
-            [FieldOffset(0xBC)] public readonly int maxMana;
-            [FieldOffset(0xC0)] public readonly int reservedFlatMana;
-            [FieldOffset(0xC4)] public readonly int curMana;
-            [FieldOffset(0xC8)] public readonly int reservedPercentMana;
-            [FieldOffset(0x158)] public readonly int reservedFlatHp;
-            [FieldOffset(0x160)] public readonly int reservedPercentHP;
             [FieldOffset(0x180)] public readonly IntPtr buffsStart;
             [FieldOffset(0x188)] public readonly IntPtr buffsEnd;
+            [FieldOffset(0x1BC)] public readonly int maxMana;
+            [FieldOffset(0x1C0)] public readonly int reservedFlatMana;
+            [FieldOffset(0x1C4)] public readonly int curMana;
+            [FieldOffset(0x1C8)] public readonly int reservedPercentMana;
             [FieldOffset(0x1F4)] public readonly int maxES;
             [FieldOffset(0x1FC)] public readonly int curES;
             [FieldOffset(0x254)] public readonly int maxHP;
+            [FieldOffset(0x258)] public readonly int reservedFlatHp;
             [FieldOffset(0x25C)] public readonly int curHp;
+            [FieldOffset(0x260)] public readonly int reservedPercentHP;
         }
 
         [StructLayout(LayoutKind.Explicit)]
         public struct Mods
         {
-            [FieldOffset(0x8C)] public readonly int itemRarity;
-            [FieldOffset(0x90)] public readonly IntPtr implicitModsStart;
-            [FieldOffset(0x98)] public readonly IntPtr implicitModsEnd;
-            [FieldOffset(0xA8)] public readonly IntPtr explicitModsStart;
-            [FieldOffset(0xB0)] public readonly IntPtr explicitModsEnd;
+            [FieldOffset(0xAC)] public readonly int itemRarity;
+            [FieldOffset(0xB0)] public readonly IntPtr implicitModsStart;
+            [FieldOffset(0xB8)] public readonly IntPtr implicitModsEnd;
+            [FieldOffset(0xC8)] public readonly IntPtr explicitModsStart;
+            [FieldOffset(0xD0)] public readonly IntPtr explicitModsEnd;
         }
 
         [StructLayout(LayoutKind.Explicit)]
         public struct ObjectMagicProperties
         {
-            [FieldOffset(0xBC)] public readonly int monsterRarity;
+            [FieldOffset(0x9C)] public readonly int monsterRarity;
             [FieldOffset(0xE0)] public readonly IntPtr modsStart;
             [FieldOffset(0xE8)] public readonly IntPtr modsEnd;
         }
@@ -312,7 +312,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Positioned
         {
-            [FieldOffset(0x58)] public readonly byte reach;
+            [FieldOffset(0x158)] public readonly byte reach;
             [FieldOffset(0x1E0)] public readonly int gridX;
             [FieldOffset(0x1E4)] public readonly int gridY;
         }
@@ -332,8 +332,8 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Stats
         {
-            [FieldOffset(0x98)] public readonly IntPtr statStart;
-            [FieldOffset(0xA0)] public readonly IntPtr statEnd;
+            [FieldOffset(0x48)] public readonly IntPtr statStart;
+            [FieldOffset(0x50)] public readonly IntPtr statEnd;
         }
 
         [StructLayout(LayoutKind.Explicit)]

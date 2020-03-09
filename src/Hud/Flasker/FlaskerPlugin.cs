@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -91,7 +92,7 @@ namespace PoeHUD.Hud.Health
                         flasksToUse.Add(foundFlask);
                     // Else, do we need to check for non-instant here?
                 }
-                else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion.Value && playerBuffs.All(x => x.Name.StartsWith("flask_effect_life")))
+                else if (playerLifeComponent.HPPercentage * 100 < Settings.HPPotion.Value && !playerBuffs.All(x => x.Name.StartsWith("flask_effect_life")))
                 {
                     //PluginLogger.LogError("Should use hp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Life }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
@@ -99,12 +100,17 @@ namespace PoeHUD.Hud.Health
                         flasksToUse.Add(foundFlask);
                 }
 
-                if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion.Value && playerBuffs.All(x => x.Name.StartsWith("flask_effect_mana")))
+                if (playerLifeComponent.MPPercentage * 100 < Settings.ManaPotion.Value && !playerBuffs.All(x => x.Name.StartsWith("flask_effect_mana")))
                 {
                     //PluginLogger.LogError("Should use mp.", 5);
                     var foundFlask = FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Mana }, false) ?? FindFlaskMatchingAnyAction(playerFlasks, playerLifeComponent, playerBuffs, new List<FlaskActions>() { FlaskActions.Hybrid }, false);
                     if (foundFlask != null && !flasksToUse.Contains(foundFlask))
                         flasksToUse.Add(foundFlask);
+                }
+
+                if (Settings.Debug)
+                {
+                    PluginLogger.LogMessage($"PlayerMP Percent: {playerLifeComponent.MPPercentage} ManaPotionValue: {Settings.ManaPotion.Value}, {String.Join(",",playerBuffs.Where(x => x.Name.ToLower().Contains("mana")).Select(x => x.Name))}", 5);
                 }
 
                 if (Settings.RemAilment)
@@ -319,10 +325,13 @@ namespace PoeHUD.Hud.Health
 
             if (flaskInventoryItems == null)
             {
-                /*PluginLogger.LogError($"flaskInventoryItems was null PlayerInventories: { GameController.Game.IngameState.ServerData.PlayerInventories == null} " 
-                                      + $"flaskInventory: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask) == null} " 
-                                      + $"inventoryType: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory == null} "
-                                      + $"inventorySlotItems: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems == null} ", 5);*/
+                if (Settings.Debug)
+                {
+                    PluginLogger.LogError($"flaskInventoryItems was null PlayerInventories: { GameController.Game.IngameState.ServerData.PlayerInventories == null} " 
+                                          + $"flaskInventory: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask) == null} " 
+                                          + $"inventoryType: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory == null} "
+                                          + $"inventorySlotItems: {GameController.Game.IngameState.ServerData.PlayerInventories?.FirstOrDefault(x => x.Inventory.InventType == InventoryTypeE.Flask)?.Inventory?.InventorySlotItems == null} ", 5);
+                }
                 return null;
             }
 
@@ -336,7 +345,8 @@ namespace PoeHUD.Hud.Health
                 Entity flaskEntity = inventoryItem?.Item;
                 if (flaskEntity == null)
                 {
-                    PluginLogger.LogError("item null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("item null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
@@ -346,27 +356,31 @@ namespace PoeHUD.Hud.Health
                 var flaskPath = flaskEntity.Path;
                 if (String.IsNullOrEmpty(flaskPath))
                 {
-                    PluginLogger.LogError("flask path null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flask path null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
                 var baseItem = GameController.Files.BaseItemTypes.Translate(flaskPath);
                 if (baseItem == null)
                 {
-                    PluginLogger.LogError("base item null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("base item null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
                 Charges flaskChargesStruct = flaskEntity.GetComponent<Charges>();
                 if (flaskChargesStruct == null)
                 {
-                    PluginLogger.LogError("flask charges null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flask charges null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
                 Mods flaskMods = flaskEntity.GetComponent<Mods>();
                 if (flaskMods == null)
                 {
-                    PluginLogger.LogError("flask mods null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flask mods null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
                 playerFlask.Mods = flaskMods;
@@ -378,13 +392,15 @@ namespace PoeHUD.Hud.Health
                 var flaskBaseComponent = flaskEntity.GetComponent<Base>();
                 if (flaskBaseComponent == null)
                 {
-                    PluginLogger.LogError("flask base null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flask base null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
                 var flaskBaseName = flaskBaseComponent.Name;
                 if (String.IsNullOrEmpty(flaskBaseName))
                 {
-                    PluginLogger.LogError("flask base name is null: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flask base name is null: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
                 playerFlask.Name = flaskBaseName;
@@ -392,7 +408,8 @@ namespace PoeHUD.Hud.Health
                 if (!MiscBuffInfo.flaskNameToBuffConversion.TryGetValue(
                     flaskBaseName, out string flaskBuffOut))
                 {
-                    PluginLogger.LogError("flaskBuffOut is not found: " + inventoryItem?.ToString(), 5);
+                    if (Settings.Debug)
+                        PluginLogger.LogError("flaskBuffOut is not found: " + inventoryItem?.ToString(), 5);
                     continue;
                 }
 
@@ -404,6 +421,14 @@ namespace PoeHUD.Hud.Health
 
                 HandleFlaskMods(playerFlask);
                 playerFlasks.Add(playerFlask);
+            }
+
+            if (Settings.Debug)
+            {
+                foreach(var flask in playerFlasks)
+                {
+                    PluginLogger.LogError(flask.ToString(), 5);
+                }
             }
 
             return playerFlasks;
@@ -436,7 +461,8 @@ namespace PoeHUD.Hud.Health
             var itemMods = flask.Mods.ItemMods;
             if (itemMods == null)
             {
-                PluginLogger.LogError($"flask itemMods null: {flask}", 5);
+                if (Settings.Debug)
+                    PluginLogger.LogError($"flask itemMods null: {flask}", 5);
             }
 
             foreach (var mod in flask.Mods.ItemMods)
@@ -456,6 +482,11 @@ namespace PoeHUD.Hud.Health
                 if (flaskItemRarity == ItemRarity.Unique)
                     continue;
 
+                if (mod.Name == "FlaskEffectNotRemovedOnFullMana")
+                {
+                    flask.BuffString2 = "flask_effect_mana_not_removed_when_full";
+                }
+
                 //Checking flask mods.
                 if (FlaskInfo.FlaskMods.TryGetValue(modName, out FlaskActions action2) && action2 != FlaskActions.Ignore)
                     flask.Action2 = action2;
@@ -467,7 +498,8 @@ namespace PoeHUD.Hud.Health
             // We have no flasks or settings for flasks?
             if (flasks == null)
             {
-                PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()} because flasks was null", 5);
+                if (Settings.Debug)
+                    PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()} because flasks was null", 5);
                 return null;
             }
 
@@ -483,13 +515,15 @@ namespace PoeHUD.Hud.Health
 
             if (flaskList == null || !flaskList.Any())
             {
-                //PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()}", 5);
+                if (Settings.Debug)
+                    PluginLogger.LogError($"No flask found for action {flaskActions.FirstOrDefault()}", 5);
                 return null;
             }
 
             var foundFlask = flaskList.FirstOrDefault();
 
-            //PluginLogger.LogError($"Flask found for action {flaskActions.FirstOrDefault()} flask: {foundFlask}", 5);
+            if (Settings.Debug)
+                PluginLogger.LogError($"Flask found for action {flaskActions.FirstOrDefault()} flask: {foundFlask}", 5);
 
             return flaskList.FirstOrDefault();
         }

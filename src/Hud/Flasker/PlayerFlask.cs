@@ -32,7 +32,7 @@ namespace PoeHUD.Hud.Flasker
 
         public override string ToString()
         {
-            return $"PlayerFlask[{Index}, {Name}, {Action1}, {Action2} {InstantType}]";
+            return $"PlayerFlask[{Index}, {Name}, {Action1}, {Action2}, {InstantType}, {BuffString1}, {BuffString2}]";
         }
     }
 }

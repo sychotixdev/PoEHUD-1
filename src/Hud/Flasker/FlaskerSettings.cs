@@ -65,5 +65,8 @@ namespace PoeHUD.Hud.Health
         [PoeHUD.Plugins.Menu("Flask 5", 55, 50)]
         public HotkeyNode Flask5 { get; set; } = new HotkeyNode(Keys.D5);
 
+        [PoeHUD.Plugins.Menu("Debug", 60)]
+        public ToggleNode Debug { get; set; } = new ToggleNode(false);
+
     }
 }
