@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AssemblyName>PoeHUD</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <WarningLevel>4</WarningLevel>
@@ -123,12 +123,15 @@
     <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -156,6 +159,8 @@
     <Compile Include="Framework\Tools\Generator.cs" />
     <Compile Include="Framework\Tools\Scrambler.cs" />
     <Compile Include="Framework\WinApi.cs" />
+    <Compile Include="Hud\AutoQuit\AutoQuitCore.cs" />
+    <Compile Include="Hud\AutoQuit\AutoQuitSettings.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPlugin.cs" />
     <Compile Include="Hud\DebugPlugin\DebugPluginSettings.cs" />
     <Compile Include="Hud\DeveloperTool\DevTree.cs" />
@@ -176,6 +181,13 @@
     <Compile Include="Hud\Icons\MapIconsSettings.cs" />
     <Compile Include="Hud\Interfaces\IPanelChild.cs" />
     <Compile Include="Hud\Interfaces\IPlugin.cs" />
+    <Compile Include="Hud\MapNav\MapNav.cs" />
+    <Compile Include="Hud\MapNav\MapNavSettings.cs" />
+    <Compile Include="Hud\MapNav\Utilities\ArrayUtils.cs" />
+    <Compile Include="Hud\MapNav\Utilities\Benchmark.cs" />
+    <Compile Include="Hud\MapNav\Utilities\BitmapUtil.cs" />
+    <Compile Include="Hud\MapNav\Utilities\MapNavData.cs" />
+    <Compile Include="Hud\MapNav\Utilities\Vector2Extension.cs" />
     <Compile Include="Hud\Menu\CoreSettings.cs" />
     <Compile Include="Hud\Menu\SettingsDrawers\BaseSettingsDrawer.cs" />
     <Compile Include="Hud\EnumOffsets.cs" />

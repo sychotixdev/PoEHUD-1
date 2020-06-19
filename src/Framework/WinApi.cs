@@ -103,7 +103,7 @@ namespace PoeHUD.Framework
         private static extern IntPtr DwmExtendFrameIntoClientArea(IntPtr hWnd, ref Margins pMarInset);
 
         [DllImport("user32.dll")]
-        private static extern short GetAsyncKeyState(Keys vKey);
+        public static extern short GetAsyncKeyState(Keys vKey);
 
         [DllImport("user32.dll")]
         private static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);

@@ -7,9 +7,9 @@ namespace PoeHUD.Hud
 
     public class EnumOffsets
     {
-        public long AreaChangeCountOffset = 0x1FA49B8;
-        public long FileRootBaseOffset = 0x2207BA0;
-        public long GameStateBaseOffset = 0x22017A8;
+        public long AreaChangeCountOffset = 0x1FA39B8;
+        public long FileRootBaseOffset = 0x2206B10;
+        public long GameStateBaseOffset = 0x2200718;
         [StructLayout(LayoutKind.Explicit)]
         public struct FileRoot
         {
@@ -65,10 +65,10 @@ namespace PoeHUD.Hud
         {
             [FieldOffset(0x4)] public readonly int width;
             [FieldOffset(0x8)] public readonly int height;
-            [FieldOffset(0x5C)] public readonly Matrix4x4 worldToScreenMatrix;
-            [FieldOffset(0xD4)] public readonly float positionX;
-            [FieldOffset(0xD8)] public readonly float positionY;
-            [FieldOffset(0xDC)] public readonly float positionZ;
+            [FieldOffset(0xA4)] public readonly Matrix4x4 worldToScreenMatrix;
+            [FieldOffset(0x11C)] public readonly float positionX;
+            [FieldOffset(0x120)] public readonly float positionY;
+            [FieldOffset(0x124)] public readonly float positionZ;
             [FieldOffset(0x210)] public readonly float zFar;
         }
 
@@ -148,7 +148,7 @@ namespace PoeHUD.Hud
         public struct IngameUIElements
         {
             [FieldOffset(0x260)] public readonly IntPtr flaskBarPart1;
-            [FieldOffset(0x5A0)] public readonly IntPtr map;
+            [FieldOffset(0x5A8)] public readonly IntPtr map;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -254,7 +254,7 @@ namespace PoeHUD.Hud
         [StructLayout(LayoutKind.Explicit)]
         public struct Charges
         {
-            [FieldOffset(0x8)] public readonly int numCharges;
+            [FieldOffset(0x18)] public readonly int numCharges;
             [FieldOffset(0x10)] public readonly IntPtr chargesInternal;
         }
 
@@ -326,7 +326,7 @@ namespace PoeHUD.Hud
             [FieldOffset(0x8C)] public readonly float boundX;
             [FieldOffset(0x90)] public readonly float boundY;
             [FieldOffset(0x94)] public readonly float boundZ;
-            [FieldOffset(0x98)] public readonly IntPtr name;
+            [FieldOffset(0xA0)] public readonly IntPtr name;
         }
 
         [StructLayout(LayoutKind.Explicit)]

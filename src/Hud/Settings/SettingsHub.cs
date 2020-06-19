@@ -7,7 +7,11 @@ using PoeHUD.Hud.Settings.Converters;
 using PoeHUD.Hud.Trackers;
 using System;
 using System.IO;
+using PoeHUD.Hud.AutoQuit;
 using PoeHUD.Hud.DeveloperTool;
+#if DEBUG
+    using PoeHUD.Hud.MapNav;
+#endif
 using PoeHUD.Hud.Performance;
 
 namespace PoeHUD.Hud.Settings
@@ -43,6 +47,10 @@ namespace PoeHUD.Hud.Settings
             FlaskerSettings = new FlaskerSettings();
             DevTreeSettings = new DevTreeSettings();
             PerformanceSettings = new PerformanceSettings();
+            AutoQuitSettings = new AutoQuitSettings();
+#if DEBUG
+            MapNavSettings = new MapNavSettings();
+#endif
         }
 
         [JsonProperty("Menu")]
@@ -65,12 +73,19 @@ namespace PoeHUD.Hud.Settings
 
         [JsonProperty("Flasker")]
         public FlaskerSettings FlaskerSettings { get; private set; }
+        [JsonProperty("AutoQuit")]
+        public AutoQuitSettings AutoQuitSettings { get; private set; }
 
         [JsonProperty("DevTree")]
         public DevTreeSettings DevTreeSettings { get; private set; }
 
         [JsonProperty("Performance")]
         public PerformanceSettings PerformanceSettings { get; private set; }
+
+#if DEBUG
+        [JsonProperty("MapNav")]
+        public MapNavSettings MapNavSettings { get; private set; }
+#endif
 
         public static SettingsHub Load()
         {

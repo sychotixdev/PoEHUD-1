@@ -51,7 +51,7 @@ namespace PoeHUD.Controllers
         {
             var fileList = new Dictionary<string, long>();
             long fileRoot = _mem.AddressOfProcess + _mem.offsets.FileRoot;
-            long start = _mem.ReadLong(fileRoot + 0x8);
+            long start = _mem.ReadLong(fileRoot + 0x18);
 
             for (var currFile = _mem.ReadLong(start); currFile != start && currFile != 0; currFile = _mem.ReadLong(currFile))
             {

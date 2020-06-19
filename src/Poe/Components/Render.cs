@@ -12,7 +12,7 @@ namespace PoeHUD.Poe.Components
         public float Z => Address != 0 ? RenderStructure.Z : 0f;
         public Vector3 Pos => new Vector3(X, Y, Z);
 
-        public string Name => GetObject<NativeStringReader>(Address + 0x98).Text;
+        public string Name => GetObject<NativeStringReader>(Address + 0xA0).Text;
         public Vector3 Bounds => new Vector3(RenderStructure.BoundX, RenderStructure.BoundY, RenderStructure.BoundZ);
 
     }

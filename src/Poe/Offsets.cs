@@ -125,16 +125,18 @@ namespace PoeHUD.Poe
 
             var fileRootOffset = 15;
             FileRoot = m.ReadInt(m.AddressOfProcess + array[0] + fileRootOffset) + array[0] + fileRootOffset + 4;
-            System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
+            System.Console.WriteLine("FileRoot Pointer: " + (FileRoot).ToString("x8"));
 
             var areaChangeCountOffset = 11;
 
             AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[1] + areaChangeCountOffset) + array[1] + areaChangeCountOffset + 4;
 			System.Console.WriteLine("AreaChangeCount: " + m.ReadInt(AreaChangeCount + m.AddressOfProcess).ToString());
+            System.Console.WriteLine("AreaChangeCount Pointer: " + (AreaChangeCount).ToString("x8"));
 
             var gameStateOffset = 37;
             GameStateOffset = m.ReadInt(m.AddressOfProcess + array[2] + gameStateOffset) + array[2] + gameStateOffset + 4;
-            System.Console.WriteLine("Game State Offset:" + (GameStateOffset + m.AddressOfProcess).ToString("x8"));
+            System.Console.WriteLine("GameStateOffset Pointer: " + (GameStateOffset).ToString("x8"));
+                                                                                                                                                                                                                                                                                                                                                                        System.Console.WriteLine("Game State Offset:" + (GameStateOffset + m.AddressOfProcess).ToString("x8"));
         }
     }
 }
